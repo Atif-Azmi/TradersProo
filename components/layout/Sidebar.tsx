@@ -13,13 +13,15 @@ import {
   BellRing, 
   Settings, 
   CreditCard,
-  LogOut
+  LogOut,
+  ShieldCheck
 } from 'lucide-react'
 import { createClient } from '@/lib/supabase/client'
 import { useRouter } from 'next/navigation'
 
 const navigation = [
   { name: 'Dashboard', href: '/dashboard', icon: LayoutDashboard },
+  { name: 'Superadmin Hub', href: '/superadmin', icon: ShieldCheck },
   { name: 'Customers', href: '/customers', icon: Users },
   { name: 'Products & Stock', href: '/products', icon: Package },
   { name: 'Sales & Billing', href: '/sales', icon: Receipt },
