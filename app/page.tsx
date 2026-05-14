@@ -22,9 +22,14 @@ export default function LandingPage() {
         <section className="relative px-6 lg:px-12 pt-24 pb-32 overflow-hidden">
           <div className="max-w-7xl mx-auto grid lg:grid-cols-2 gap-12 items-center">
             <div className="relative z-10">
-              <div className="text-[10px] font-black text-primary uppercase tracking-[0.3em] mb-6">
+              <a 
+                href="https://atif-dev.vercel.app/" 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                className="inline-block text-[10px] font-black text-primary uppercase tracking-[0.3em] mb-6 hover:text-green-600 transition-colors"
+              >
                 ATIF AZMI
-              </div>
+              </a>
               <h1 className="text-5xl lg:text-6xl font-black text-slate-900 leading-[1.1] tracking-tighter mb-8">
                 Fresh operations for your <br />
                 <span className="text-primary">hardware business</span>
@@ -174,7 +179,7 @@ export default function LandingPage() {
             <span className="text-xl font-black text-slate-900">TradersPro</span>
           </div>
           <p className="text-slate-400 text-sm font-medium">
-            © 2026 TradersPro SaaS by <span className="text-slate-900 font-bold">Atif Azmi</span>. All rights reserved.
+            © 2026 TradersPro SaaS by <a href="https://atif-dev.vercel.app/" target="_blank" rel="noopener noreferrer" className="text-slate-900 font-bold hover:text-primary transition-colors">Atif Azmi</a>. All rights reserved.
           </p>
           <div className="flex gap-6">
             <Link href="#" className="text-slate-400 hover:text-slate-900"><MessageSquare className="h-5 w-5" /></Link>
