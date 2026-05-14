@@ -7,35 +7,27 @@ export default function LandingPage() {
       {/* Header */}
       <header className="px-6 lg:px-12 h-20 flex items-center justify-between sticky top-0 bg-white/80 backdrop-blur-md z-50 border-b border-slate-100">
         <Link href="/" className="flex items-center gap-2">
-          <div className="w-10 h-10 bg-primary rounded-xl flex items-center justify-center shadow-lg shadow-green-200">
-            <TrendingUp className="text-white h-6 w-6" />
-          </div>
-          <span className="text-2xl font-black tracking-tight text-slate-900">TradersPro</span>
+          <span className="text-2xl font-black tracking-tight text-primary">TradersPro</span>
         </Link>
-        <nav className="hidden md:flex gap-8 items-center">
-          <Link href="#features" className="text-sm font-semibold text-slate-500 hover:text-primary transition-colors">Features</Link>
-          <Link href="#solutions" className="text-sm font-semibold text-slate-500 hover:text-primary transition-colors">Solutions</Link>
-          <Link href="#pricing" className="text-sm font-semibold text-slate-500 hover:text-primary transition-colors">Pricing</Link>
-        </nav>
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-8">
           <Link href="/login" className="text-sm font-bold text-slate-600 hover:text-primary transition-colors">Sign in</Link>
-          <Link href="/register" className="bg-primary text-white px-5 py-2.5 rounded-full text-sm font-bold hover:bg-green-600 transition-all shadow-lg shadow-green-100 flex items-center gap-2">
-            Get Started Free <ArrowRight className="h-4 w-4" />
+          <Link href="/register" className="bg-primary text-white px-5 py-2.5 rounded-lg text-sm font-bold hover:bg-green-600 transition-all shadow-lg shadow-green-100 flex items-center gap-2">
+            Get Started Free
           </Link>
         </div>
       </header>
 
       <main className="flex-1">
         {/* Hero Section */}
-        <section className="relative px-6 lg:px-12 pt-20 pb-32 overflow-hidden">
+        <section className="relative px-6 lg:px-12 pt-24 pb-32 overflow-hidden">
           <div className="max-w-7xl mx-auto grid lg:grid-cols-2 gap-12 items-center">
             <div className="relative z-10">
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-green-50 text-primary text-[10px] font-bold uppercase tracking-widest mb-6 border border-green-100">
-                <span className="w-2 h-2 rounded-full bg-primary animate-pulse"></span>
-                Next-Gen Trading SaaS
+              <div className="text-[10px] font-black text-primary uppercase tracking-[0.3em] mb-6">
+                ATIF AZMI
               </div>
-              <h1 className="text-5xl lg:text-7xl font-black text-slate-900 leading-[1.1] tracking-tighter mb-8">
-                Fresh operations for your <span className="text-primary italic">hardware business</span>
+              <h1 className="text-5xl lg:text-6xl font-black text-slate-900 leading-[1.1] tracking-tighter mb-8">
+                Fresh operations for your <br />
+                <span className="text-primary">hardware business</span>
               </h1>
               <p className="text-lg text-slate-500 leading-relaxed max-w-xl mb-10">
                 Track customers, sales, stock alerts, and bulk WhatsApp reminders in one calm, premium workspace — built for clarity, not clutter.
