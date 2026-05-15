@@ -113,9 +113,9 @@ export default function CustomersClient({ initialCustomers }: CustomersClientPro
   }
 
   const filteredCustomers = customers.filter(c => 
-    (c.customer_name?.toLowerCase().includes(search.toLowerCase()) || 
-     c.name?.toLowerCase().includes(search.toLowerCase()) || 
-     c.phone?.includes(search))
+    (c.customer_name?.toLowerCase() || '').includes(search.toLowerCase()) || 
+    (c.name?.toLowerCase() || '').includes(search.toLowerCase()) || 
+    (c.phone || '').includes(search)
   )
 
   return (

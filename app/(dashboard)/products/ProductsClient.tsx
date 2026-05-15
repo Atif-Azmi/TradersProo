@@ -228,7 +228,7 @@ export default function ProductsClient({ initialProducts }: ProductsClientProps)
                   <td className="px-6 py-5">
                     <div className="flex items-center gap-3">
                        <div className="w-9 h-9 rounded-full bg-slate-100 flex items-center justify-center text-slate-500 font-bold text-xs">
-                          {product.name[0].toUpperCase()}
+                          {(product.name || 'P')[0].toUpperCase()}
                        </div>
                        <div>
                           <p className="font-bold text-slate-900">{product.name}</p>

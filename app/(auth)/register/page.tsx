@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { createClient } from '@/lib/supabase/client'
 
-import { ArrowLeft } from 'lucide-react'
+import { ArrowLeft, ShieldCheck, Plus } from 'lucide-react'
 
 export default function RegisterPage() {
   const [fullName, setFullName] = useState('')

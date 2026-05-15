@@ -37,10 +37,10 @@ export default function SalesClient({ initialSales, shopProfile }: SalesClientPr
 
   const filteredSales = sales.filter(s => {
     const matchesSearch =
-      s.invoice_number?.toLowerCase().includes(search.toLowerCase()) ||
-      s.tp_customers?.name?.toLowerCase().includes(search.toLowerCase())
+      (s.invoice_number?.toLowerCase() || '').includes(search.toLowerCase()) ||
+      (s.tp_customers?.name?.toLowerCase() || '').includes(search.toLowerCase())
     if (filter === 'All') return matchesSearch
-    return matchesSearch && s.payment_status?.toLowerCase() === filter.toLowerCase()
+    return matchesSearch && (s.payment_status?.toLowerCase() || '') === filter.toLowerCase()
   })
 
   const openPaymentModal = (sale: any) => {

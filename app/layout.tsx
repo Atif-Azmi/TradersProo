@@ -7,6 +7,14 @@ const inter = Inter({ subsets: ['latin'] })
 export const metadata: Metadata = {
   title: 'TradersPro',
   description: 'Business Management SaaS',
+  manifest: '/manifest.json',
+  themeColor: '#0D9488',
+  viewport: 'width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0',
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: 'default',
+    title: 'TradersPro',
+  },
 }
 
 export default function RootLayout({

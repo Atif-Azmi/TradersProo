@@ -15,7 +15,9 @@ import {
   Settings, 
   CreditCard,
   LogOut,
-  ShieldCheck
+  ShieldCheck,
+  FileSpreadsheet,
+  X
 } from 'lucide-react'
 import { createClient } from '@/lib/supabase/client'
 import { useRouter } from 'next/navigation'
@@ -26,6 +28,7 @@ const navigation = [
   { name: 'Customers', href: '/customers', icon: Users },
   { name: 'Products & Stock', href: '/products', icon: Package },
   { name: 'Sales & Billing', href: '/sales', icon: Receipt },
+  { name: 'Billing', href: '/billing', icon: FileSpreadsheet },
   { name: 'Retail Sales', href: '/retail', icon: Store },
   { name: 'Advances & Payments', href: '/advances', icon: Banknote },
   { name: 'Reports', href: '/reports', icon: BarChart3 },
@@ -34,7 +37,8 @@ const navigation = [
   { name: 'Subscription', href: '/subscription', icon: CreditCard },
 ]
 
-export default function Sidebar({ isSuperAdmin }: { isSuperAdmin: boolean }) {
+
+export default function Sidebar({ isSuperAdmin, onClose }: { isSuperAdmin: boolean, onClose?: () => void }) {
   const pathname = usePathname()
   const router = useRouter()
   const supabase = createClient()
@@ -86,11 +90,18 @@ export default function Sidebar({ isSuperAdmin }: { isSuperAdmin: boolean }) {
 
   return (
     <div className="flex grow flex-col gap-y-5 overflow-y-auto bg-white border-r border-slate-200 px-6 pb-4">
-      <div className="flex h-16 shrink-0 items-center gap-2">
-        <div className="w-8 h-8 bg-[#0D9488] rounded-lg flex items-center justify-center text-white">
-           <ShieldCheck className="h-5 w-5" />
+      <div className="flex h-16 shrink-0 items-center justify-between gap-2">
+        <div className="flex items-center gap-2">
+          <div className="w-8 h-8 bg-[#0D9488] rounded-lg flex items-center justify-center text-white">
+             <ShieldCheck className="h-5 w-5" />
+          </div>
+          <span className="text-xl font-black tracking-tight text-slate-900">TradersPro</span>
         </div>
-        <span className="text-xl font-black tracking-tight text-slate-900">TradersPro</span>
+        {onClose && (
+          <button onClick={onClose} className="lg:hidden p-2 text-slate-400 hover:text-slate-900">
+            <X className="h-5 w-5" />
+          </button>
+        )}
       </div>
       
       <div className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mt-4 px-2">Menu</div>
@@ -111,6 +122,7 @@ export default function Sidebar({ isSuperAdmin }: { isSuperAdmin: boolean }) {
                   <li key={item.name}>
                     <Link
                       href={item.href}
+                      onClick={() => onClose?.()}
                       className={`
                         group flex gap-x-3 rounded-xl p-2.5 text-sm leading-6 font-semibold transition-all
                         ${isActive 
