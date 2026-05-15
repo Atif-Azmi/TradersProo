@@ -33,7 +33,7 @@ const navigation = [
   { name: 'Subscription', href: '/subscription', icon: CreditCard },
 ]
 
-export default function Sidebar() {
+export default function Sidebar({ isSuperAdmin }: { isSuperAdmin: boolean }) {
   const pathname = usePathname()
   const router = useRouter()
   const supabase = createClient()
@@ -52,7 +52,9 @@ export default function Sidebar() {
         <ul role="list" className="flex flex-1 flex-col gap-y-7">
           <li>
             <ul role="list" className="-mx-2 space-y-1">
-              {navigation.map((item) => {
+              {navigation
+                .filter(item => item.name !== 'Superadmin Hub' || isSuperAdmin)
+                .map((item) => {
                 const isActive = pathname.startsWith(item.href)
                 return (
                   <li key={item.name}>

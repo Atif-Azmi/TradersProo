@@ -44,6 +44,14 @@ export default function LandingPage() {
                 <Link href="/login" className="bg-white border-2 border-slate-100 text-slate-900 px-8 py-4 rounded-full text-lg font-bold hover:bg-slate-50 transition-all text-center">
                   Sign In
                 </Link>
+                <a 
+                  href="https://atif-dev.vercel.app/" 
+                  target="_blank" 
+                  rel="noopener noreferrer" 
+                  className="bg-slate-900 text-white px-8 py-4 rounded-full text-lg font-bold hover:bg-slate-800 transition-all text-center flex items-center justify-center gap-2"
+                >
+                  Explore Features
+                </a>
               </div>
               <div className="mt-12 flex items-center gap-6">
                  <div className="flex -space-x-3">

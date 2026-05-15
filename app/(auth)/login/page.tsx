@@ -10,7 +10,6 @@ export default function LoginPage() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [showPassword, setShowPassword] = useState(false)
-  const [role, setRole] = useState<'admin' | 'superadmin'>('admin')
   const [error, setError] = useState<string | null>(null)
   const [loading, setLoading] = useState(false)
   const router = useRouter()
@@ -30,10 +29,31 @@ export default function LoginPage() {
       setError(error.message)
       setLoading(false)
     } else {
-      // In a real app, we'd check the user's role in tp_user_profiles here
-      // For now, if they selected superadmin, we redirect to /superadmin
-      if (role === 'superadmin') {
-        router.push('/superadmin')
+      // Check if superadmin
+      const { data: sa } = await supabase
+        .from('tp_super_admin')
+        .select('id')
+        .eq('id', data.user.id)
+        .single()
+
+      const isHardcodedSuperAdmin = data.user.email === 'superadmin@trader.com'
+
+      if (sa || isHardcodedSuperAdmin) {
+        router.push('/superadmin/verify')
+        router.refresh()
+        return
+      }
+
+      // Check if user has a profile (handles manually created users in DB)
+      const { data: profile } = await supabase
+        .from('tp_profile')
+        .select('id')
+        .eq('user_id', data.user?.id)
+        .single()
+
+      if (!profile) {
+        // No profile found, redirect to onboarding
+        router.push('/onboarding')
       } else {
         router.push('/dashboard')
       }
@@ -54,22 +74,6 @@ export default function LoginPage() {
           <p className="mt-2 text-sm text-slate-500 font-medium">
             Please enter your credentials to continue.
           </p>
-        </div>
-
-        {/* Role Selector */}
-        <div className="flex p-1 bg-slate-100 rounded-xl mb-8">
-           <button 
-             onClick={() => setRole('admin')}
-             className={`flex-1 flex items-center justify-center gap-2 py-2 text-sm font-bold rounded-lg transition-all ${role === 'admin' ? 'bg-white text-primary shadow-sm' : 'text-slate-500 hover:text-slate-700'}`}
-           >
-              <User className="h-4 w-4" /> Admin
-           </button>
-           <button 
-             onClick={() => setRole('superadmin')}
-             className={`flex-1 flex items-center justify-center gap-2 py-2 text-sm font-bold rounded-lg transition-all ${role === 'superadmin' ? 'bg-white text-primary shadow-sm' : 'text-slate-500 hover:text-slate-700'}`}
-           >
-              <ShieldCheck className="h-4 w-4" /> Superadmin
-           </button>
         </div>
 
         <form className="mt-8 space-y-6" onSubmit={handleLogin}>
@@ -124,7 +128,7 @@ export default function LoginPage() {
             disabled={loading}
             className="w-full flex justify-center rounded-xl bg-primary py-4 text-sm font-bold text-white shadow-lg shadow-green-100 hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-primary disabled:opacity-50 transition-all uppercase tracking-widest"
           >
-            {loading ? 'Authenticating...' : `Sign in as ${role}`}
+            {loading ? 'Authenticating...' : 'Sign in to Console'}
           </button>
         </form>
 
