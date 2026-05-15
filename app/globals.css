@@ -12,7 +12,7 @@
     --card-foreground: 222.2 84% 4.9%;
     --popover: 0 0% 100%;
     --popover-foreground: 222.2 84% 4.9%;
-    --primary: 142 71% 45%;
+    --primary: 171 77% 31%; /* TradersPro Teal: #0D9488 */
     --primary-foreground: 210 40% 98%;
     --secondary: 210 40% 96.1%;
     --secondary-foreground: 222.2 47.4% 11.2%;
@@ -24,8 +24,8 @@
     --destructive-foreground: 210 40% 98%;
     --border: 214.3 31.8% 91.4%;
     --input: 214.3 31.8% 91.4%;
-    --ring: 142 71% 45%;
-    --radius: 1rem;
+    --ring: 171 77% 31%;
+    --radius: 0.75rem;
   }
 }
 
@@ -34,7 +34,7 @@
     @apply border-border;
   }
   body {
-    @apply bg-[#F8FAFC] text-foreground font-['Outfit',sans-serif];
+    @apply bg-[#F4F7F9] text-slate-900 font-['Outfit',sans-serif];
     font-feature-settings: "cv11", "ss01";
     -webkit-font-smoothing: antialiased;
   }
@@ -46,4 +46,17 @@
 
 .recharts-tooltip-cursor {
   fill: #f8fafc;
+}
+
+/* Custom TradersPro UI Utilities */
+.tp-card {
+  @apply bg-white border border-slate-100 shadow-[0_4px_20px_-10px_rgba(0,0,0,0.05)] rounded-xl;
+}
+
+.tp-button-primary {
+  @apply bg-[#0D9488] text-white font-bold px-6 py-2.5 rounded-lg hover:bg-[#0B7A70] transition-all;
+}
+
+.tp-input {
+  @apply bg-slate-50 border border-slate-200 rounded-lg px-4 py-2.5 focus:ring-2 focus:ring-[#0D9488]/20 focus:border-[#0D9488] outline-none transition-all;
 }

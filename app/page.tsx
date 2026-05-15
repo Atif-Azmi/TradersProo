@@ -1,17 +1,17 @@
 import Link from 'next/link'
-import { CheckCircle, TrendingUp, Users, ShieldCheck, ArrowRight, MessageSquare, BarChart3, ReceiptText } from 'lucide-react'
+import { CheckCircle, TrendingUp, Users, ShieldCheck, ArrowRight, MessageSquare, BarChart3, ReceiptText, Plus } from 'lucide-react'
 
 export default function LandingPage() {
   return (
-    <div className="flex flex-col min-h-screen bg-white text-slate-900 font-sans">
+    <div className="flex flex-col min-h-screen bg-white text-slate-900 font-['Outfit',sans-serif]">
       {/* Header */}
-      <header className="px-6 lg:px-12 h-20 flex items-center justify-between sticky top-0 bg-white/80 backdrop-blur-md z-50 border-b border-slate-100">
+      <header className="px-6 lg:px-20 h-24 flex items-center justify-between sticky top-0 bg-white/90 backdrop-blur-md z-50">
         <Link href="/" className="flex items-center gap-2">
-          <span className="text-2xl font-black tracking-tight text-primary">TradersPro</span>
+          <span className="text-2xl font-black tracking-tight text-[#0D9488]">TradersPro</span>
         </Link>
-        <div className="flex items-center gap-8">
-          <Link href="/login" className="text-sm font-bold text-slate-600 hover:text-primary transition-colors">Sign in</Link>
-          <Link href="/register" className="bg-primary text-white px-5 py-2.5 rounded-lg text-sm font-bold hover:bg-green-600 transition-all shadow-lg shadow-green-100 flex items-center gap-2">
+        <div className="flex items-center gap-10">
+          <Link href="/login" className="text-sm font-bold text-slate-900 hover:text-[#0D9488] transition-colors">Sign in</Link>
+          <Link href="/register" className="bg-[#0D9488] text-white px-6 py-3 rounded-lg text-sm font-bold hover:bg-[#0B7A70] transition-all shadow-lg shadow-[#0D9488]/20">
             Get Started Free
           </Link>
         </div>
@@ -19,179 +19,119 @@ export default function LandingPage() {
 
       <main className="flex-1">
         {/* Hero Section */}
-        <section className="relative px-6 lg:px-12 pt-24 pb-32 overflow-hidden">
-          <div className="max-w-7xl mx-auto grid lg:grid-cols-2 gap-12 items-center">
+        <section className="relative px-6 lg:px-20 pt-16 pb-24 overflow-hidden">
+          <div className="max-w-7xl mx-auto grid lg:grid-cols-2 gap-16 items-center">
             <div className="relative z-10">
-              <a 
-                href="https://atif-dev.vercel.app/" 
-                target="_blank" 
-                rel="noopener noreferrer" 
-                className="inline-block text-[10px] font-black text-primary uppercase tracking-[0.3em] mb-6 hover:text-green-600 transition-colors"
-              >
+              <p className="text-[10px] font-black text-[#0D9488] uppercase tracking-[0.4em] mb-6">
                 ATIF AZMI
-              </a>
-              <h1 className="text-5xl lg:text-6xl font-black text-slate-900 leading-[1.1] tracking-tighter mb-8">
-                Fresh operations for your <br />
-                <span className="text-primary">hardware business</span>
+              </p>
+              <h1 className="text-6xl lg:text-7xl font-black text-slate-900 leading-[1] tracking-tighter mb-8">
+                Fresh operations for <br />
+                your <br />
+                <span className="text-[#0D9488]">hardware business</span>
               </h1>
-              <p className="text-lg text-slate-500 leading-relaxed max-w-xl mb-10">
+              <p className="text-lg text-slate-400 font-medium leading-relaxed max-w-xl mb-12">
                 Track customers, sales, stock alerts, and bulk WhatsApp reminders in one calm, premium workspace — built for clarity, not clutter.
               </p>
-              <div className="flex flex-col sm:flex-row gap-4">
-                <Link href="/register" className="bg-primary text-white px-8 py-4 rounded-full text-lg font-bold hover:bg-green-600 transition-all shadow-xl shadow-green-100 text-center">
+              
+              <div className="flex flex-wrap gap-4 items-center">
+                <Link href="/register" className="bg-[#0D9488] text-white px-8 py-4 rounded-full text-sm font-bold hover:bg-[#0B7A70] transition-all shadow-xl shadow-[#0D9488]/20">
                   Get Started Free
                 </Link>
-                <Link href="/login" className="bg-white border-2 border-slate-100 text-slate-900 px-8 py-4 rounded-full text-lg font-bold hover:bg-slate-50 transition-all text-center">
+                <Link href="/login" className="bg-white border border-slate-100 text-slate-900 px-8 py-4 rounded-full text-sm font-bold hover:bg-slate-50 transition-all shadow-lg shadow-slate-100">
                   Sign In
                 </Link>
                 <a 
                   href="https://atif-dev.vercel.app/" 
                   target="_blank" 
                   rel="noopener noreferrer" 
-                  className="bg-slate-900 text-white px-8 py-4 rounded-full text-lg font-bold hover:bg-slate-800 transition-all text-center flex items-center justify-center gap-2"
+                  className="bg-slate-900 text-white px-8 py-4 rounded-full text-sm font-bold hover:bg-slate-800 transition-all shadow-xl shadow-slate-900/20 flex items-center gap-2"
                 >
-                  Explore Features
+                  View More Services
                 </a>
               </div>
-              <div className="mt-12 flex items-center gap-6">
+
+              <div className="mt-16 flex items-center gap-4">
                  <div className="flex -space-x-3">
                     {[1,2,3,4].map(i => (
-                       <div key={i} className={`w-10 h-10 rounded-full border-2 border-white bg-slate-${i*200} flex items-center justify-center overflow-hidden`}>
-                          <img src={`https://api.dicebear.com/7.x/avataaars/svg?seed=${i}`} alt="User" />
+                       <div key={i} className="w-10 h-10 rounded-full border-2 border-white bg-slate-100 overflow-hidden">
+                          <img src={`https://api.dicebear.com/7.x/avataaars/svg?seed=${i+10}`} alt="User" />
                        </div>
                     ))}
                  </div>
-                 <p className="text-sm text-slate-500 font-medium">
-                    Trusted by <span className="text-slate-900 font-bold">500+</span> hardware traders in Sehore
+                 <p className="text-xs text-slate-400 font-bold">
+                    Trusted by <span className="text-slate-900">500+</span> hardware traders in Sehore
                  </p>
               </div>
             </div>
             
             <div className="relative">
-              <div className="relative rounded-[2rem] overflow-hidden shadow-2xl shadow-slate-200 border-8 border-white">
+              <div className="relative rounded-[2.5rem] overflow-hidden shadow-2xl shadow-slate-200">
                 <img 
                   src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&q=80&w=2070" 
-                  alt="Dashboard Preview" 
+                  alt="TradersPro Professional" 
                   className="w-full object-cover aspect-[4/3]"
                 />
-                <div className="absolute inset-0 bg-gradient-to-tr from-green-500/20 to-transparent"></div>
               </div>
-              {/* Floating Card */}
-              <div className="absolute -bottom-10 -left-10 bg-white p-6 rounded-2xl shadow-2xl border border-slate-100 hidden lg:block animate-bounce-subtle">
+              
+              {/* Floating Performance Card */}
+              <div className="absolute -bottom-6 -left-12 bg-white p-6 rounded-2xl shadow-2xl border border-slate-50 hidden lg:block animate-bounce-subtle max-w-[240px] w-full">
                  <div className="flex items-center gap-4 mb-4">
-                    <div className="w-12 h-12 bg-green-50 rounded-full flex items-center justify-center">
-                       <TrendingUp className="text-primary h-6 w-6" />
+                    <div className="w-10 h-10 bg-emerald-50 rounded-full flex items-center justify-center text-emerald-500">
+                       <TrendingUp className="h-5 w-5" />
                     </div>
                     <div>
-                       <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Monthly Growth</p>
+                       <p className="text-[9px] font-bold text-slate-400 uppercase tracking-widest">Monthly Growth</p>
                        <p className="text-xl font-black text-slate-900">+₹4,12,500</p>
                     </div>
                  </div>
-                 <div className="h-1 w-full bg-slate-100 rounded-full overflow-hidden">
-                    <div className="h-full bg-primary w-[75%]"></div>
+                 <div className="h-1.5 w-full bg-slate-50 rounded-full overflow-hidden">
+                    <div className="h-full bg-emerald-500 w-[80%] rounded-full"></div>
                  </div>
               </div>
             </div>
           </div>
         </section>
 
-        {/* Features Grid */}
-        <section id="features" className="px-6 lg:px-12 py-32 bg-slate-50/50 border-t border-slate-100">
-          <div className="max-w-7xl mx-auto">
-            <div className="text-center mb-20">
-              <h2 className="text-3xl lg:text-5xl font-black text-slate-900 tracking-tight mb-4">Everything your trading desk needs</h2>
-              <p className="text-slate-500 max-w-2xl mx-auto">One system to rule all your operations. No more paper ledgers or confusing spreadsheets.</p>
-            </div>
-            
-            <div className="grid md:grid-cols-3 gap-8">
-              <div className="bg-white p-8 rounded-3xl border border-slate-100 shadow-sm hover:shadow-xl hover:-translate-y-2 transition-all group">
-                <div className="w-14 h-14 bg-green-50 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
-                  <Users className="text-primary h-7 w-7" />
-                </div>
-                <h3 className="text-xl font-bold text-slate-900 mb-3">Customers & Ledger</h3>
-                <p className="text-slate-500 text-sm leading-relaxed">Per-customer balances, payments, and full history in one premium ledger view. Clean and fast.</p>
+        {/* Core Value Props */}
+        <section className="px-6 lg:px-20 py-24 bg-slate-50/50">
+           <div className="max-w-7xl mx-auto grid md:grid-cols-3 gap-12">
+              <div className="space-y-4">
+                 <div className="w-12 h-12 bg-white rounded-xl shadow-sm border border-slate-100 flex items-center justify-center text-[#0D9488]">
+                    <Users className="h-6 w-6" />
+                 </div>
+                 <h3 className="text-xl font-bold text-slate-900">Unified Ledger</h3>
+                 <p className="text-slate-400 text-sm font-medium leading-relaxed">Manage every customer balance, collection, and statement in one high-fidelity view.</p>
               </div>
-
-              <div className="bg-white p-8 rounded-3xl border border-slate-100 shadow-sm hover:shadow-xl hover:-translate-y-2 transition-all group">
-                <div className="w-14 h-14 bg-green-50 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
-                  <BarChart3 className="text-primary h-7 w-7" />
-                </div>
-                <h3 className="text-xl font-bold text-slate-900 mb-3">Live Analytics</h3>
-                <p className="text-slate-500 text-sm leading-relaxed">Sales volume, collections, and outstanding balances by any period. Visual data at your fingertips.</p>
+              <div className="space-y-4">
+                 <div className="w-12 h-12 bg-white rounded-xl shadow-sm border border-slate-100 flex items-center justify-center text-[#0D9488]">
+                    <ReceiptText className="h-6 w-6" />
+                 </div>
+                 <h3 className="text-xl font-bold text-slate-900">Smart Billing</h3>
+                 <p className="text-slate-400 text-sm font-medium leading-relaxed">Generate professional GST-compliant receipts and share them via WhatsApp in a single click.</p>
               </div>
-
-              <div className="bg-white p-8 rounded-3xl border border-slate-100 shadow-sm hover:shadow-xl hover:-translate-y-2 transition-all group">
-                <div className="w-14 h-14 bg-green-50 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
-                  <ReceiptText className="text-primary h-7 w-7" />
-                </div>
-                <h3 className="text-xl font-bold text-slate-900 mb-3">Billing & Sharing</h3>
-                <p className="text-slate-500 text-sm leading-relaxed">Beautiful GST-compliant statements, PDF export, and one-click WhatsApp sharing for your customers.</p>
+              <div className="space-y-4">
+                 <div className="w-12 h-12 bg-white rounded-xl shadow-sm border border-slate-100 flex items-center justify-center text-[#0D9488]">
+                    <BarChart3 className="h-6 w-6" />
+                 </div>
+                 <h3 className="text-xl font-bold text-slate-900">Stock Intelligence</h3>
+                 <p className="text-slate-500 text-sm font-medium leading-relaxed">Automated low-stock alerts and movement tracking to ensure you never miss a sale.</p>
               </div>
-            </div>
-          </div>
-        </section>
-
-        {/* CTA Section */}
-        <section className="px-6 lg:px-12 py-32 overflow-hidden">
-          <div className="max-w-7xl mx-auto">
-            <div className="bg-slate-900 rounded-[3rem] p-8 lg:p-20 relative overflow-hidden">
-              <div className="absolute top-0 right-0 w-1/2 h-full bg-primary/10 blur-[120px]"></div>
-              <div className="relative z-10 grid lg:grid-cols-2 gap-12 items-center">
-                <div>
-                  <h2 className="text-4xl lg:text-6xl font-black text-white leading-tight mb-8">Ready to modernize your trade?</h2>
-                  <div className="space-y-4 mb-10">
-                    {['1-minute setup', 'Automatic GST reports', 'Bulk WhatsApp reminders', 'Multi-user superadmin support'].map((item, i) => (
-                      <div key={i} className="flex items-center gap-3">
-                        <CheckCircle className="text-primary h-5 w-5" />
-                        <span className="text-slate-300 font-medium">{item}</span>
-                      </div>
-                    ))}
-                  </div>
-                  <Link href="/register" className="inline-flex bg-primary text-white px-10 py-5 rounded-full text-lg font-bold hover:bg-green-600 transition-all shadow-2xl shadow-green-900/40">
-                    Create Your Account Now
-                  </Link>
-                </div>
-                <div className="relative">
-                   <div className="bg-slate-800 p-8 rounded-3xl border border-slate-700 shadow-2xl">
-                      <div className="flex justify-between items-center mb-6">
-                         <div className="flex gap-2">
-                            <div className="w-3 h-3 rounded-full bg-red-500/50"></div>
-                            <div className="w-3 h-3 rounded-full bg-amber-500/50"></div>
-                            <div className="w-3 h-3 rounded-full bg-green-500/50"></div>
-                         </div>
-                         <div className="text-[10px] font-bold text-slate-500 uppercase tracking-widest">Preview Mode</div>
-                      </div>
-                      <div className="space-y-4">
-                         <div className="h-4 bg-slate-700/50 rounded w-3/4"></div>
-                         <div className="h-4 bg-slate-700/30 rounded w-1/2"></div>
-                         <div className="grid grid-cols-2 gap-4 mt-8">
-                            <div className="h-20 bg-primary/20 rounded-2xl border border-primary/20"></div>
-                            <div className="h-20 bg-slate-700/20 rounded-2xl border border-slate-700"></div>
-                         </div>
-                      </div>
-                   </div>
-                </div>
-              </div>
-            </div>
-          </div>
+           </div>
         </section>
       </main>
 
-      {/* Footer */}
-      <footer className="px-6 lg:px-12 py-12 border-t border-slate-100">
+      <footer className="px-6 lg:px-20 py-12 border-t border-slate-100">
         <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-8">
           <div className="flex items-center gap-2">
-            <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
-              <TrendingUp className="text-white h-5 w-5" />
-            </div>
-            <span className="text-xl font-black text-slate-900">TradersPro</span>
+            <span className="text-xl font-black text-slate-900 tracking-tight">TradersPro</span>
           </div>
-          <p className="text-slate-400 text-sm font-medium">
-            © 2026 TradersPro SaaS by <a href="https://atif-dev.vercel.app/" target="_blank" rel="noopener noreferrer" className="text-slate-900 font-bold hover:text-primary transition-colors">Atif Azmi</a>. All rights reserved.
+          <p className="text-slate-400 text-[10px] font-bold uppercase tracking-[0.2em]">
+            © 2026 TradersPro • Made by <a href="https://atif-dev.vercel.app/" target="_blank" rel="noopener noreferrer" className="text-slate-900 hover:text-[#0D9488] transition-colors">Atif Azmi</a>
           </p>
           <div className="flex gap-6">
-            <Link href="#" className="text-slate-400 hover:text-slate-900"><MessageSquare className="h-5 w-5" /></Link>
-            <Link href="#" className="text-slate-400 hover:text-slate-900"><ShieldCheck className="h-5 w-5" /></Link>
+            <Link href="#" className="text-slate-400 hover:text-slate-900 transition-colors"><MessageSquare className="h-5 w-5" /></Link>
+            <Link href="#" className="text-slate-400 hover:text-slate-900 transition-colors"><ShieldCheck className="h-5 w-5" /></Link>
           </div>
         </div>
       </footer>

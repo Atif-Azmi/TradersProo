@@ -54,81 +54,133 @@ export default function OnboardingPage() {
   }
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-slate-50/50 px-4 py-12 sm:px-6 lg:px-8 font-sans">
-      <div className="w-full max-w-xl space-y-8 bg-white p-10 sm:p-16 rounded-[2.5rem] shadow-2xl shadow-slate-200 border border-slate-100">
+    <div className="flex min-h-screen items-center justify-center bg-[#F4F7F9] px-4 py-12 sm:px-6 lg:px-8 font-['Outfit',sans-serif]">
+      <div className="w-full max-w-xl space-y-10 bg-white p-10 sm:p-20 rounded-[3rem] shadow-2xl shadow-slate-200 border border-slate-50">
         <div className="text-center">
-          <div className="mx-auto w-16 h-16 bg-primary/10 rounded-2xl flex items-center justify-center mb-6">
-            <Building2 className="h-8 w-8 text-primary" />
+          <div className="mx-auto w-14 h-14 bg-[#EBF4F3] rounded-2xl flex items-center justify-center mb-8">
+            <Building2 className="h-7 w-7 text-[#0D9488]" />
           </div>
-          <h2 className="text-3xl font-black tracking-tight text-slate-900 uppercase italic">
+          <h2 className="text-3xl font-black tracking-tight text-[#0F172A] uppercase italic leading-none">
             Initialize Business
           </h2>
-          <p className="mt-3 text-sm font-bold text-slate-400 uppercase tracking-widest">
+          <p className="mt-4 text-[10px] font-bold text-slate-400 uppercase tracking-[0.25em]">
             Configure your enterprise identity
           </p>
         </div>
 
         {/* Progress Bar */}
-        <div className="relative pt-1">
+        <div className="relative pt-1 max-w-xs mx-auto">
           <div className="overflow-hidden h-1.5 text-xs flex rounded-full bg-slate-100">
             <div 
               style={{ width: `${(step / 2) * 100}%` }}
-              className="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-primary transition-all duration-700"
+              className="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-[#0D9488] transition-all duration-700 rounded-full"
             ></div>
           </div>
         </div>
 
         {step === 1 && (
-          <form className="mt-8 space-y-8" onSubmit={handleSaveBusinessDetails}>
+          <form className="mt-10 space-y-8" onSubmit={handleSaveBusinessDetails}>
             <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
               <div className="sm:col-span-2">
                 <label className="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2 ml-1">Business Legal Name *</label>
                 <div className="relative">
-                  <Building2 className="absolute left-4 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-300" />
-                  <input type="text" required value={businessName} onChange={(e) => setBusinessName(e.target.value)}
-                    className="block w-full rounded-2xl border border-slate-200 py-3.5 pl-11 pr-4 text-slate-900 text-sm font-bold focus:ring-2 focus:ring-primary outline-none transition-all" placeholder="E.g. F.K.S. Traders" />
+                  <div className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-300">
+                    <Building2 className="h-4 w-4" />
+                  </div>
+                  <input 
+                    type="text" 
+                    required 
+                    value={businessName} 
+                    onChange={(e) => setBusinessName(e.target.value)}
+                    className="block w-full rounded-2xl border border-slate-100 bg-[#F8FAFC] py-4 pl-12 pr-4 text-slate-900 text-sm font-bold focus:ring-2 focus:ring-[#0D9488]/20 focus:border-[#0D9488] outline-none transition-all placeholder:text-slate-300" 
+                    placeholder="E.g. F.K.S. Traders" 
+                  />
                 </div>
               </div>
+              
               <div>
                 <label className="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2 ml-1">Support Phone *</label>
                 <div className="relative">
-                  <Phone className="absolute left-4 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-300" />
-                  <input type="text" required value={phone} onChange={(e) => setPhone(e.target.value)}
-                    className="block w-full rounded-2xl border border-slate-200 py-3.5 pl-11 pr-4 text-slate-900 text-sm font-bold focus:ring-2 focus:ring-primary outline-none transition-all" placeholder="+91 00000 00000" />
+                  <div className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-300">
+                    <Phone className="h-4 w-4" />
+                  </div>
+                  <input 
+                    type="text" 
+                    required 
+                    value={phone} 
+                    onChange={(e) => setPhone(e.target.value)}
+                    className="block w-full rounded-2xl border border-slate-100 bg-[#F8FAFC] py-4 pl-12 pr-4 text-slate-900 text-sm font-bold focus:ring-2 focus:ring-[#0D9488]/20 focus:border-[#0D9488] outline-none transition-all placeholder:text-slate-300" 
+                    placeholder="+91 00000 00000" 
+                  />
                 </div>
               </div>
+
               <div>
                 <label className="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2 ml-1">GST Identification</label>
-                <input type="text" value={gst} onChange={(e) => setGst(e.target.value)}
-                  className="block w-full rounded-2xl border border-slate-200 py-3.5 px-4 text-slate-900 text-sm font-black focus:ring-2 focus:ring-primary outline-none transition-all uppercase" placeholder="23ABCDE1234F1Z5" />
+                <input 
+                  type="text" 
+                  value={gst} 
+                  onChange={(e) => setGst(e.target.value)}
+                  className="block w-full rounded-2xl border border-slate-100 bg-[#F8FAFC] py-4 px-6 text-slate-900 text-sm font-black focus:ring-2 focus:ring-[#0D9488]/20 focus:border-[#0D9488] outline-none transition-all uppercase placeholder:text-slate-300" 
+                  placeholder="23ABCDE1234F1Z5" 
+                />
               </div>
+
               <div className="sm:col-span-2">
                 <label className="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2 ml-1">Registered Address *</label>
                 <div className="relative">
-                  <MapPin className="absolute left-4 top-4 h-4 w-4 text-slate-300" />
-                  <textarea required value={address} onChange={(e) => setAddress(e.target.value)}
-                    className="block w-full rounded-2xl border border-slate-200 py-3.5 pl-11 pr-4 text-slate-900 text-sm font-medium focus:ring-2 focus:ring-primary outline-none transition-all" rows={2} placeholder="Full business address..." />
+                  <div className="absolute left-4 top-5 text-slate-300">
+                    <MapPin className="h-4 w-4" />
+                  </div>
+                  <textarea 
+                    required 
+                    value={address} 
+                    onChange={(e) => setAddress(e.target.value)}
+                    className="block w-full rounded-2xl border border-slate-100 bg-[#F8FAFC] py-4 pl-12 pr-4 text-slate-900 text-sm font-medium focus:ring-2 focus:ring-[#0D9488]/20 focus:border-[#0D9488] outline-none transition-all placeholder:text-slate-300" 
+                    rows={2} 
+                    placeholder="Full business address..." 
+                  />
                 </div>
               </div>
+
               <div>
                 <label className="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2 ml-1">City</label>
-                <input type="text" required value={city} onChange={(e) => setCity(e.target.value)}
-                  className="block w-full rounded-2xl border border-slate-200 py-3.5 px-4 text-slate-900 text-sm font-bold focus:ring-2 focus:ring-primary outline-none transition-all" />
+                <input 
+                  type="text" 
+                  required 
+                  value={city} 
+                  onChange={(e) => setCity(e.target.value)}
+                  className="block w-full rounded-2xl border border-slate-100 bg-[#F8FAFC] py-4 px-6 text-slate-900 text-sm font-bold focus:ring-2 focus:ring-[#0D9488]/20 focus:border-[#0D9488] outline-none transition-all" 
+                />
               </div>
+
               <div>
                 <label className="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2 ml-1">State</label>
-                <input type="text" required value={state} onChange={(e) => setState(e.target.value)}
-                  className="block w-full rounded-2xl border border-slate-200 py-3.5 px-4 text-slate-900 text-sm font-bold focus:ring-2 focus:ring-primary outline-none transition-all" />
+                <input 
+                  type="text" 
+                  required 
+                  value={state} 
+                  onChange={(e) => setState(e.target.value)}
+                  className="block w-full rounded-2xl border border-slate-100 bg-[#F8FAFC] py-4 px-6 text-slate-900 text-sm font-bold focus:ring-2 focus:ring-[#0D9488]/20 focus:border-[#0D9488] outline-none transition-all" 
+                />
               </div>
             </div>
 
-            {error && <div className="text-red-500 text-xs font-black text-center bg-red-50 p-4 rounded-xl border border-red-100 uppercase tracking-widest">{error}</div>}
+            {error && <div className="text-red-500 text-[10px] font-black text-center bg-red-50 p-4 rounded-xl border border-red-100 uppercase tracking-widest">{error}</div>}
 
-            <div className="flex gap-4 pt-6">
-              <button type="button" onClick={handleSkip} className="flex-1 rounded-2xl bg-white px-6 py-4 text-xs font-black text-slate-500 uppercase tracking-widest border border-slate-100 hover:bg-slate-50 transition-all">
+            <div className="flex gap-4 pt-4">
+              <button 
+                type="button" 
+                onClick={handleSkip} 
+                className="flex-1 rounded-2xl bg-white px-6 py-4 text-[10px] font-black text-slate-400 uppercase tracking-widest border border-slate-100 hover:bg-slate-50 transition-all"
+              >
                 Setup Later
               </button>
-              <button type="submit" disabled={loading} className="flex-1 rounded-2xl bg-primary px-6 py-4 text-xs font-black text-white uppercase tracking-widest shadow-xl shadow-green-100 hover:bg-green-600 transition-all disabled:opacity-50 flex items-center justify-center gap-2">
+              <button 
+                type="submit" 
+                disabled={loading} 
+                className="flex-1 rounded-2xl bg-[#0D9488] px-6 py-4 text-[10px] font-black text-white uppercase tracking-widest shadow-xl shadow-[#0D9488]/20 hover:bg-[#0B7A70] transition-all disabled:opacity-50 flex items-center justify-center gap-2"
+              >
                 {loading ? <Loader2 className="h-4 w-4 animate-spin" /> : 'Finalize Identity'}
                 <ArrowRight className="h-4 w-4" />
               </button>

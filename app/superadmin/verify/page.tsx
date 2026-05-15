@@ -4,7 +4,7 @@ import { useRouter } from 'next/navigation'
 import { createClient } from '@/lib/supabase/client'
 import { ShieldCheck, Lock, Eye, EyeOff } from 'lucide-react'
 
-const VAULT_PASSWORD = 'wrongpossword'
+const VAULT_PASSWORD = 'atifdev7'
 
 export default function SuperadminVerifyPage() {
   const [password, setPassword] = useState('')

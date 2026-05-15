@@ -158,63 +158,62 @@ export default function ProductsClient({ initialProducts }: ProductsClientProps)
   const criticalStockCount = products.filter(p => p.current_stock <= 0).length
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 max-w-[1600px] mx-auto pb-10">
       <div className="flex sm:items-center justify-between flex-col sm:flex-row gap-4">
         <div>
-          <h2 className="text-2xl font-black tracking-tight text-slate-900">Inventory</h2>
-          <p className="text-slate-500 font-medium text-sm mt-1">Manage products, pricing, and automated stock levels.</p>
+          <h2 className="text-xl font-bold text-slate-900">Inventory</h2>
         </div>
         <div>
           <button 
             onClick={() => { resetForm(); setShowAddModal(true); }}
-            className="flex items-center gap-2 rounded-xl bg-primary px-5 py-2.5 text-sm font-bold text-white shadow-lg shadow-green-100 hover:bg-green-600 transition-all"
+            className="tp-button-primary flex items-center gap-2"
           >
             <Plus className="h-4 w-4" /> Add Product
           </button>
         </div>
       </div>
 
-      <div className="grid gap-4 md:grid-cols-3">
-        <div className="rounded-2xl border border-slate-100 bg-white p-5 flex items-center gap-4 shadow-sm">
-           <div className="bg-slate-50 p-3 rounded-xl"><Plus className="h-5 w-5 text-slate-600" /></div>
+      <div className="grid gap-6 md:grid-cols-3">
+        <div className="tp-card p-6 flex items-center gap-4">
+           <div className="bg-emerald-50 p-3 rounded-full text-emerald-600"><Plus className="h-5 w-5" /></div>
            <div>
-              <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Total Items</p>
-              <p className="text-2xl font-black text-slate-900">{products.length}</p>
+              <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Total Items</p>
+              <p className="text-xl font-black text-slate-900">{products.length}</p>
            </div>
         </div>
-        <div className="rounded-2xl border border-slate-100 bg-white p-5 flex items-center gap-4 shadow-sm">
-           <div className="bg-amber-50 p-3 rounded-xl"><TrendingDown className="h-5 w-5 text-amber-600" /></div>
+        <div className="tp-card p-6 flex items-center gap-4">
+           <div className="bg-amber-50 p-3 rounded-full text-amber-600"><TrendingDown className="h-5 w-5" /></div>
            <div>
-              <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Low Stock</p>
-              <p className="text-2xl font-black text-amber-600">{lowStockCount}</p>
+              <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Low Stock</p>
+              <p className="text-xl font-black text-amber-600">{lowStockCount}</p>
            </div>
         </div>
-        <div className="rounded-2xl border border-slate-100 bg-white p-5 flex items-center gap-4 shadow-sm">
-           <div className="bg-red-50 p-3 rounded-xl"><AlertCircle className="h-5 w-5 text-red-600" /></div>
+        <div className="tp-card p-6 flex items-center gap-4">
+           <div className="bg-rose-50 p-3 rounded-full text-red-600"><AlertCircle className="h-5 w-5" /></div>
            <div>
-              <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Critical</p>
-              <p className="text-2xl font-black text-red-600">{criticalStockCount}</p>
+              <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Critical</p>
+              <p className="text-xl font-black text-red-600">{criticalStockCount}</p>
            </div>
         </div>
       </div>
 
-      <div className="flex flex-col sm:flex-row gap-4 justify-between bg-white p-4 rounded-2xl border border-slate-100 shadow-sm">
+      <div className="flex flex-col sm:flex-row gap-4 justify-between bg-white p-4 rounded-xl border border-slate-100 shadow-sm">
         <div className="relative flex-1 max-w-md">
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400" />
           <input
             type="text"
             placeholder="Search products by name or category..."
-            className="w-full pl-9 pr-4 py-2.5 border border-slate-200 rounded-xl text-sm focus:ring-2 focus:ring-primary outline-none transition-all"
+            className="w-full pl-9 pr-4 py-2 text-sm border border-slate-200 rounded-lg focus:ring-2 focus:ring-[#0D9488]/20 focus:border-[#0D9488] outline-none transition-all"
             value={search}
             onChange={(e) => setSearch(e.target.value)}
           />
         </div>
       </div>
 
-      <div className="bg-white rounded-2xl border border-slate-100 shadow-sm overflow-hidden">
+      <div className="tp-card overflow-hidden">
         <div className="overflow-x-auto">
           <table className="w-full text-sm text-left">
-            <thead className="text-[10px] font-black text-slate-400 uppercase bg-slate-50/50 tracking-widest">
+            <thead className="text-[10px] font-bold text-slate-400 uppercase bg-slate-50/50 tracking-widest">
               <tr>
                 <th className="px-6 py-4">Product Name</th>
                 <th className="px-6 py-4">Category</th>
@@ -225,29 +224,37 @@ export default function ProductsClient({ initialProducts }: ProductsClientProps)
             </thead>
             <tbody className="divide-y divide-slate-50">
               {filteredProducts.map((product) => (
-                <tr key={product.id} className="hover:bg-slate-50/50 transition-colors group">
-                  <td className="px-6 py-4">
-                    <div className="font-bold text-slate-900">{product.name}</div>
-                    <div className="text-[10px] font-medium text-slate-400 tracking-tight uppercase">Unit: {product.unit}</div>
+                <tr key={product.id} className="hover:bg-slate-50/50 transition-all group">
+                  <td className="px-6 py-5">
+                    <div className="flex items-center gap-3">
+                       <div className="w-9 h-9 rounded-full bg-slate-100 flex items-center justify-center text-slate-500 font-bold text-xs">
+                          {product.name[0].toUpperCase()}
+                       </div>
+                       <div>
+                          <p className="font-bold text-slate-900">{product.name}</p>
+                          <p className="text-[10px] font-medium text-slate-400 uppercase">Unit: {product.unit}</p>
+                       </div>
+                    </div>
                   </td>
-                  <td className="px-6 py-4 text-slate-600 font-medium">{product.category || 'N/A'}</td>
-                  <td className="px-6 py-4 text-right font-black text-slate-900">₹{product.selling_rate.toLocaleString('en-IN')}</td>
-                  <td className="px-6 py-4 text-right">
-                    <span className={`inline-flex items-center gap-1.5 py-1 px-3 rounded-lg text-[10px] font-black uppercase tracking-widest border ${
+                  <td className="px-6 py-5">
+                     <span className="text-slate-600 font-medium px-3 py-1 bg-slate-100 rounded-full text-[10px] font-bold uppercase tracking-tight">{product.category || 'General'}</span>
+                  </td>
+                  <td className="px-6 py-5 text-right font-black text-slate-900">₹{product.selling_rate.toLocaleString('en-IN')}</td>
+                  <td className="px-6 py-5 text-right">
+                    <span className={`inline-flex items-center gap-1.5 py-1 px-3 rounded-full text-[10px] font-bold uppercase tracking-widest border ${
                       product.current_stock <= 0 
-                        ? 'bg-red-50 text-red-600 border-red-100' 
+                        ? 'bg-rose-50 text-red-600 border-red-100' 
                         : product.current_stock <= product.min_stock_alert
                         ? 'bg-amber-50 text-amber-600 border-amber-100'
-                        : 'bg-green-50 text-green-600 border-green-100'
+                        : 'bg-emerald-50 text-emerald-600 border-emerald-100'
                     }`}>
                       {product.current_stock} {product.unit}
                     </span>
                   </td>
-                  <td className="px-6 py-4 text-right">
-                     <div className="flex justify-end gap-3">
-                       <button onClick={() => openEdit(product)} className="text-primary font-bold hover:underline text-xs tracking-tight">Edit</button>
-                       <span className="text-slate-200">|</span>
-                       <button onClick={() => openAdjust(product)} className="text-slate-400 font-bold hover:text-slate-900 text-xs tracking-tight transition-colors">Adjust</button>
+                  <td className="px-6 py-5 text-right">
+                     <div className="flex justify-end gap-2">
+                       <button onClick={() => openEdit(product)} className="px-3 py-1.5 text-[10px] font-bold uppercase text-[#0D9488] hover:bg-[#0D9488]/5 rounded-lg transition-all">Edit</button>
+                       <button onClick={() => openAdjust(product)} className="px-3 py-1.5 text-[10px] font-bold uppercase text-slate-400 hover:text-slate-900 hover:bg-slate-100 rounded-lg transition-all">Adjust</button>
                      </div>
                   </td>
                 </tr>
