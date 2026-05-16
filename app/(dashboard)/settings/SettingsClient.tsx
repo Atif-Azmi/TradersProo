@@ -1,8 +1,10 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Save, Loader2 } from 'lucide-react'
 import { createClient } from '@/lib/supabase/client'
+import { useBusinessProfile, saveBusinessProfile } from '@/hooks/useBusinessProfile'
+import toast from 'react-hot-toast'
 
 interface SettingsClientProps {
   initialProfile: any
@@ -11,16 +13,58 @@ interface SettingsClientProps {
 export default function SettingsClient({ initialProfile }: SettingsClientProps) {
   const [activeTab, setActiveTab] = useState('profile')
   const [saving, setSaving] = useState(false)
-  const [profile, setProfile] = useState<any>(initialProfile || {
-    business_name: '',
+  const supabase = createClient()
+
+  // ---- NEW BUSINESS PROFILE TAB LOGIC ----
+  const { profile: bizProfile, loading: bizLoading, refetch: refetchBiz } = useBusinessProfile()
+  const [bizForm, setBizForm] = useState({
+    businessName: '',
     tagline: '',
-    phone: '',
-    phone2: '',
-    email: '',
-    address: '',
+    supportPhone: '',
+    gstNumber: '',
+    registeredAddress: '',
     city: '',
     state: '',
-    gst_number: '',
+  })
+
+  useEffect(() => {
+    if (bizProfile) {
+      setBizForm({
+        businessName: bizProfile.business_name || '',
+        tagline: bizProfile.tagline || '',
+        supportPhone: bizProfile.support_phone || '',
+        gstNumber: bizProfile.gst_number || '',
+        registeredAddress: bizProfile.registered_address || '',
+        city: bizProfile.city || '',
+        state: bizProfile.state || '',
+      })
+    }
+  }, [bizProfile])
+
+  const handleBizChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    setBizForm(prev => ({ ...prev, [e.target.name]: e.target.value }))
+  }
+
+  const handleBizSubmit = async (e: React.FormEvent) => {
+    e.preventDefault()
+    if (!bizForm.businessName.trim()) {
+      toast.error('Business name is required')
+      return
+    }
+    setSaving(true)
+    try {
+      await saveBusinessProfile(bizForm)
+      toast.success('Business profile saved!')
+      refetchBiz()
+    } catch (err: any) {
+      toast.error(err.message || 'Failed to save profile')
+    } finally {
+      setSaving(false)
+    }
+  }
+
+  // ---- OLD PROFILE (TP_PROFILE) LOGIC FOR OTHER TABS ----
+  const [profile, setProfile] = useState<any>(initialProfile || {
     bank_name: '',
     account_number: '',
     ifsc_code: '',
@@ -28,14 +72,12 @@ export default function SettingsClient({ initialProfile }: SettingsClientProps) 
     bill_prefix: 'INV'
   })
 
-  const supabase = createClient()
-
-  const handleSaveProfile = async (e: React.FormEvent) => {
+  const handleSaveOtherProfile = async (e: React.FormEvent) => {
     e.preventDefault()
     setSaving(true)
     
-    // Rule #8: NO manual user_id.
-    const { id, user_id, created_at, ...updateData } = profile
+    // Ensure we don't accidentally update old business profile fields if they existed
+    const { id, user_id, created_at, business_name, tagline, phone, phone2, address, city, state, gst_number, ...updateData } = profile
     
     const { error } = await supabase
       .from('tp_profile')
@@ -45,9 +87,9 @@ export default function SettingsClient({ initialProfile }: SettingsClientProps) 
       })
 
     if (error) {
-      alert(error.message)
+      toast.error(error.message)
     } else {
-      alert('Business profile updated successfully!')
+      toast.success('Settings updated successfully!')
     }
     setSaving(false)
   }
@@ -87,100 +129,111 @@ export default function SettingsClient({ initialProfile }: SettingsClientProps) 
       </div>
 
       <div className="bg-white rounded-[2rem] border border-slate-100 shadow-xl shadow-slate-100 p-10">
-          <>
-            {activeTab === 'profile' && (
-              <form className="space-y-8" onSubmit={handleSaveProfile}>
-                <div>
-                  <h3 className="text-lg font-black text-slate-900 uppercase tracking-widest text-xs mb-6">Identity & Contact</h3>
-                  <div className="grid grid-cols-1 gap-8 sm:grid-cols-2">
-                    <div className="sm:col-span-2">
-                      <label className="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2 ml-1">Business Name *</label>
-                      <input type="text" value={profile.business_name} onChange={(e) => updateField('business_name', e.target.value)} required className="w-full border border-slate-200 rounded-xl px-4 py-3 text-sm font-bold focus:ring-2 focus:ring-primary outline-none transition-all" />
-                    </div>
-                    <div className="sm:col-span-2">
-                      <label className="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2 ml-1">Tagline / Specialization</label>
-                      <input type="text" value={profile.tagline || ''} onChange={(e) => updateField('tagline', e.target.value)} className="w-full border border-slate-200 rounded-xl px-4 py-3 text-sm font-medium focus:ring-2 focus:ring-primary outline-none transition-all" />
-                    </div>
-                    <div>
-                      <label className="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2 ml-1">Primary Support Phone</label>
-                      <input type="text" value={profile.phone || ''} onChange={(e) => updateField('phone', e.target.value)} className="w-full border border-slate-200 rounded-xl px-4 py-3 text-sm font-bold focus:ring-2 focus:ring-primary outline-none transition-all" />
-                    </div>
-                    <div>
-                      <label className="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2 ml-1">GST Identification Number</label>
-                      <input type="text" value={profile.gst_number || ''} onChange={(e) => updateField('gst_number', e.target.value)} className="w-full border border-slate-200 rounded-xl px-4 py-3 text-sm font-black focus:ring-2 focus:ring-primary outline-none transition-all" />
-                    </div>
-                    <div className="sm:col-span-2">
-                      <label className="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2 ml-1">Registered Address</label>
-                      <textarea rows={2} value={profile.address || ''} onChange={(e) => updateField('address', e.target.value)} className="w-full border border-slate-200 rounded-xl px-4 py-3 text-sm font-medium focus:ring-2 focus:ring-primary outline-none transition-all" />
-                    </div>
-                  </div>
-                </div>
-                <div className="flex justify-end pt-8 border-t border-slate-50">
-                   <button type="submit" disabled={saving} className="flex items-center gap-3 rounded-xl bg-primary px-8 py-3 text-xs font-black uppercase tracking-widest text-white shadow-lg shadow-green-100 hover:bg-green-600 disabled:opacity-50 transition-all">
-                     {saving ? <Loader2 className="h-4 w-4 animate-spin" /> : <Save className="h-4 w-4" />}
-                     Commit Changes
-                   </button>
-                </div>
-              </form>
-            )}
-
-            {activeTab === 'payment' && (
-              <form className="space-y-8" onSubmit={handleSaveProfile}>
-                <h3 className="text-lg font-black text-slate-900 uppercase tracking-widest text-xs mb-6">Financial Endpoints</h3>
+        {activeTab === 'profile' && (
+          <form className="space-y-8" onSubmit={handleBizSubmit}>
+            <div>
+              <h3 className="text-lg font-black text-slate-900 uppercase tracking-widest text-xs mb-6">Identity & Contact</h3>
+              
+              {bizLoading ? (
+                <div className="flex justify-center p-10"><Loader2 className="animate-spin text-primary w-8 h-8" /></div>
+              ) : (
                 <div className="grid grid-cols-1 gap-8 sm:grid-cols-2">
-                  <div>
-                    <label className="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2 ml-1">Bank Name</label>
-                    <input type="text" value={profile.bank_name || ''} onChange={(e) => updateField('bank_name', e.target.value)} className="w-full border border-slate-200 rounded-xl px-4 py-3 text-sm font-bold focus:ring-2 focus:ring-primary outline-none transition-all" />
+                  <div className="sm:col-span-2">
+                    <label className="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2 ml-1">Business Name *</label>
+                    <input type="text" name="businessName" value={bizForm.businessName} onChange={handleBizChange} required className="w-full border border-slate-200 rounded-xl px-4 py-3 text-sm font-bold focus:ring-2 focus:ring-primary outline-none transition-all" />
+                  </div>
+                  <div className="sm:col-span-2">
+                    <label className="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2 ml-1">Tagline / Specialization</label>
+                    <input type="text" name="tagline" value={bizForm.tagline} onChange={handleBizChange} className="w-full border border-slate-200 rounded-xl px-4 py-3 text-sm font-medium focus:ring-2 focus:ring-primary outline-none transition-all" />
                   </div>
                   <div>
-                    <label className="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2 ml-1">Account Number</label>
-                    <input type="text" value={profile.account_number || ''} onChange={(e) => updateField('account_number', e.target.value)} className="w-full border border-slate-200 rounded-xl px-4 py-3 text-sm font-black focus:ring-2 focus:ring-primary outline-none transition-all" />
+                    <label className="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2 ml-1">Primary Support Phone</label>
+                    <input type="text" name="supportPhone" value={bizForm.supportPhone} onChange={handleBizChange} className="w-full border border-slate-200 rounded-xl px-4 py-3 text-sm font-bold focus:ring-2 focus:ring-primary outline-none transition-all" />
                   </div>
                   <div>
-                    <label className="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2 ml-1">IFSC Code</label>
-                    <input type="text" value={profile.ifsc_code || ''} onChange={(e) => updateField('ifsc_code', e.target.value)} className="w-full border border-slate-200 rounded-xl px-4 py-3 text-sm font-black focus:ring-2 focus:ring-primary outline-none transition-all" />
+                    <label className="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2 ml-1">GST Identification Number</label>
+                    <input type="text" name="gstNumber" value={bizForm.gstNumber} onChange={handleBizChange} className="w-full border border-slate-200 rounded-xl px-4 py-3 text-sm font-black focus:ring-2 focus:ring-primary outline-none transition-all uppercase" />
+                  </div>
+                  <div className="sm:col-span-2">
+                    <label className="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2 ml-1">Registered Address</label>
+                    <textarea rows={2} name="registeredAddress" value={bizForm.registeredAddress} onChange={handleBizChange} className="w-full border border-slate-200 rounded-xl px-4 py-3 text-sm font-medium focus:ring-2 focus:ring-primary outline-none transition-all" />
                   </div>
                   <div>
-                    <label className="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2 ml-1">UPI ID (For QR Code)</label>
-                    <input type="text" value={profile.upi_id || ''} onChange={(e) => updateField('upi_id', e.target.value)} className="w-full border border-slate-200 rounded-xl px-4 py-3 text-sm font-black focus:ring-2 focus:ring-primary outline-none transition-all" />
+                    <label className="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2 ml-1">City</label>
+                    <input type="text" name="city" value={bizForm.city} onChange={handleBizChange} className="w-full border border-slate-200 rounded-xl px-4 py-3 text-sm font-medium focus:ring-2 focus:ring-primary outline-none transition-all" />
+                  </div>
+                  <div>
+                    <label className="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2 ml-1">State</label>
+                    <input type="text" name="state" value={bizForm.state} onChange={handleBizChange} className="w-full border border-slate-200 rounded-xl px-4 py-3 text-sm font-medium focus:ring-2 focus:ring-primary outline-none transition-all" />
                   </div>
                 </div>
-                <div className="flex justify-end pt-8 border-t border-slate-50">
-                   <button type="submit" disabled={saving} className="flex items-center gap-3 rounded-xl bg-primary px-8 py-3 text-xs font-black uppercase tracking-widest text-white shadow-lg shadow-green-100 hover:bg-green-600 disabled:opacity-50 transition-all">
-                     {saving ? <Loader2 className="h-4 w-4 animate-spin" /> : <Save className="h-4 w-4" />}
-                     Secure Save
-                   </button>
-                </div>
-              </form>
-            )}
+              )}
+            </div>
+            <div className="flex justify-end pt-8 border-t border-slate-50">
+               <button type="submit" disabled={saving || bizLoading} className="flex items-center gap-3 rounded-xl bg-primary px-8 py-3 text-xs font-black uppercase tracking-widest text-white shadow-lg shadow-green-100 hover:bg-green-600 disabled:opacity-50 transition-all">
+                 {saving ? <Loader2 className="h-4 w-4 animate-spin" /> : <Save className="h-4 w-4" />}
+                 Commit Changes
+               </button>
+            </div>
+          </form>
+        )}
 
-            {activeTab === 'invoice' && (
-              <form className="space-y-8" onSubmit={handleSaveProfile}>
-                <h3 className="text-lg font-black text-slate-900 uppercase tracking-widest text-xs mb-6">Billing Configurations</h3>
-                <div className="max-w-xs">
-                  <label className="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2 ml-1">Invoice Number Prefix</label>
-                  <input type="text" value={profile.bill_prefix || 'INV'} onChange={(e) => updateField('bill_prefix', e.target.value)} className="w-full border border-slate-200 rounded-xl px-4 py-3 text-sm font-black focus:ring-2 focus:ring-primary outline-none transition-all" />
-                  <p className="mt-3 text-[10px] font-black text-slate-400 uppercase tracking-widest">Preview: {profile.bill_prefix || 'INV'}-0001</p>
-                </div>
-                <div className="flex justify-end pt-8 border-t border-slate-50">
-                   <button type="submit" disabled={saving} className="flex items-center gap-3 rounded-xl bg-primary px-8 py-3 text-xs font-black uppercase tracking-widest text-white shadow-lg shadow-green-100 hover:bg-green-600 disabled:opacity-50 transition-all">
-                     {saving ? <Loader2 className="h-4 w-4 animate-spin" /> : <Save className="h-4 w-4" />}
-                     Apply Global Settings
-                   </button>
-                </div>
-              </form>
-            )}
-
-            {activeTab === 'account' && (
-              <div className="py-20 text-center">
-                 <div className="mb-6 inline-block p-4 bg-slate-50 rounded-full">
-                    <Loader2 className="h-10 w-10 text-slate-200" />
-                 </div>
-                 <h4 className="text-sm font-black text-slate-900 uppercase tracking-[0.2em]">TradersPro Elite Plan</h4>
-                 <p className="text-xs font-bold text-slate-400 mt-2 uppercase tracking-widest">Active Subscription • Lifetime Access</p>
+        {activeTab === 'payment' && (
+          <form className="space-y-8" onSubmit={handleSaveOtherProfile}>
+            <h3 className="text-lg font-black text-slate-900 uppercase tracking-widest text-xs mb-6">Financial Endpoints</h3>
+            <div className="grid grid-cols-1 gap-8 sm:grid-cols-2">
+              <div>
+                <label className="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2 ml-1">Bank Name</label>
+                <input type="text" value={profile.bank_name || ''} onChange={(e) => updateField('bank_name', e.target.value)} className="w-full border border-slate-200 rounded-xl px-4 py-3 text-sm font-bold focus:ring-2 focus:ring-primary outline-none transition-all" />
               </div>
-            )}
-          </>
+              <div>
+                <label className="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2 ml-1">Account Number</label>
+                <input type="text" value={profile.account_number || ''} onChange={(e) => updateField('account_number', e.target.value)} className="w-full border border-slate-200 rounded-xl px-4 py-3 text-sm font-black focus:ring-2 focus:ring-primary outline-none transition-all" />
+              </div>
+              <div>
+                <label className="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2 ml-1">IFSC Code</label>
+                <input type="text" value={profile.ifsc_code || ''} onChange={(e) => updateField('ifsc_code', e.target.value)} className="w-full border border-slate-200 rounded-xl px-4 py-3 text-sm font-black focus:ring-2 focus:ring-primary outline-none transition-all" />
+              </div>
+              <div>
+                <label className="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2 ml-1">UPI ID (For QR Code)</label>
+                <input type="text" value={profile.upi_id || ''} onChange={(e) => updateField('upi_id', e.target.value)} className="w-full border border-slate-200 rounded-xl px-4 py-3 text-sm font-black focus:ring-2 focus:ring-primary outline-none transition-all" />
+              </div>
+            </div>
+            <div className="flex justify-end pt-8 border-t border-slate-50">
+               <button type="submit" disabled={saving} className="flex items-center gap-3 rounded-xl bg-primary px-8 py-3 text-xs font-black uppercase tracking-widest text-white shadow-lg shadow-green-100 hover:bg-green-600 disabled:opacity-50 transition-all">
+                 {saving ? <Loader2 className="h-4 w-4 animate-spin" /> : <Save className="h-4 w-4" />}
+                 Secure Save
+               </button>
+            </div>
+          </form>
+        )}
+
+        {activeTab === 'invoice' && (
+          <form className="space-y-8" onSubmit={handleSaveOtherProfile}>
+            <h3 className="text-lg font-black text-slate-900 uppercase tracking-widest text-xs mb-6">Billing Configurations</h3>
+            <div className="max-w-xs">
+              <label className="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2 ml-1">Invoice Number Prefix</label>
+              <input type="text" value={profile.bill_prefix || 'INV'} onChange={(e) => updateField('bill_prefix', e.target.value)} className="w-full border border-slate-200 rounded-xl px-4 py-3 text-sm font-black focus:ring-2 focus:ring-primary outline-none transition-all" />
+              <p className="mt-3 text-[10px] font-black text-slate-400 uppercase tracking-widest">Preview: {profile.bill_prefix || 'INV'}-0001</p>
+            </div>
+            <div className="flex justify-end pt-8 border-t border-slate-50">
+               <button type="submit" disabled={saving} className="flex items-center gap-3 rounded-xl bg-primary px-8 py-3 text-xs font-black uppercase tracking-widest text-white shadow-lg shadow-green-100 hover:bg-green-600 disabled:opacity-50 transition-all">
+                 {saving ? <Loader2 className="h-4 w-4 animate-spin" /> : <Save className="h-4 w-4" />}
+                 Apply Global Settings
+               </button>
+            </div>
+          </form>
+        )}
+
+        {activeTab === 'account' && (
+          <div className="py-20 text-center">
+             <div className="mb-6 inline-block p-4 bg-slate-50 rounded-full">
+                <Loader2 className="h-10 w-10 text-slate-200" />
+             </div>
+             <h4 className="text-sm font-black text-slate-900 uppercase tracking-[0.2em]">TradersPro Elite Plan</h4>
+             <p className="text-xs font-bold text-slate-400 mt-2 uppercase tracking-widest">Active Subscription • Lifetime Access</p>
+          </div>
+        )}
       </div>
     </div>
   )

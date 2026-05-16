@@ -4,16 +4,21 @@ import { useState, useRef, useEffect } from 'react'
 import { 
   FileText, Upload, Copy, MessageCircle, Printer, Plus, 
   CheckCircle, Loader2, ChevronDown, Calendar, User, 
-  ArrowRight, Search, X, ShieldCheck
+  ArrowRight, Search, X, ShieldCheck, Download, Building2
 } from 'lucide-react'
 import { generateBillData, uploadBillPDF, saveBillShare, shortenUrl } from '@/lib/billing'
+import { useBusinessProfile } from '@/hooks/useBusinessProfile'
+import { generateBillPDF } from '@/utils/generateBillPDF'
+import { sendWhatsAppDuePayment } from '@/utils/sendWhatsAppDue'
+import { toast } from 'react-hot-toast'
 
-interface Props { userId: string; customers: any[]; shopProfile: any }
+interface Props { userId: string; customers: any[] }
 
 const fmt = (n: number) => n.toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 })
 const fmtDate = (d: string) => d ? new Date(d).toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: 'numeric' }) : ''
 
-export default function BillingClient({ userId, customers, shopProfile }: Props) {
+export default function BillingClient({ userId, customers }: Props) {
+  const { profile, loading: profileLoading } = useBusinessProfile()
   const today = new Date().toISOString().split('T')[0]
   const [selectedCust, setSelectedCust] = useState('')
   const [custSearch, setCustSearch] = useState('')
@@ -54,7 +59,7 @@ export default function BillingClient({ userId, customers, shopProfile }: Props)
   const selectedCustomer = customers.find(c => c.id === selectedCust)
 
   async function handleGenerate() {
-    if (!selectedCust) return alert('Please select a customer.')
+    if (!selectedCust) return toast.error('Please select a customer.')
     setLoading(true)
     setStatus('')
     setShareLink('')
@@ -62,8 +67,26 @@ export default function BillingClient({ userId, customers, shopProfile }: Props)
       const data = await generateBillData({ customerId: selectedCust, startDate, endDate })
       setBillData(data)
       setStatus('generated')
-    } catch (e: any) { alert('Error: ' + e.message) }
+    } catch (e: any) { toast.error('Error: ' + e.message) }
     setLoading(false)
+  }
+
+  async function handleDownloadPDF() {
+    if (!profile || !billData) return toast.error('Business profile or bill data missing')
+    
+    const saleData = {
+      bill_number: `INV-${Date.now().toString().slice(-5)}`,
+      created_at: new Date().toISOString(),
+      customer_name: billData.customer.name,
+      customer_phone: billData.customer.phone,
+      selling_price: billData.totalSales,
+      down_payment: billData.totalPaid,
+      remaining_balance: billData.netPayable,
+      items: billData.ledgerRows,
+    }
+    
+    generateBillPDF(profile, saleData)
+    toast.success('PDF Generated successfully')
   }
 
   async function handleUpload() {
@@ -85,22 +108,56 @@ export default function BillingClient({ userId, customers, shopProfile }: Props)
 
       const { signedUrl, path } = await uploadBillPDF({ userId, customerId: selectedCust, pdfBlob: blob, startDate, endDate })
       const short = await shortenUrl(signedUrl)
-      await saveBillShare({ userId, customer_id: selectedCust, storagePath: path, periodStart: startDate, periodEnd: endDate })
+      await saveBillShare({ 
+        userId, 
+        customer_id: selectedCust, 
+        storagePath: path, 
+        periodStart: startDate, 
+        periodEnd: endDate,
+        customerName: billData.customer?.name,
+        customerPhone: billData.customer?.phone,
+        totalAmount: billData.netPayable,
+      })
       setShareLink(short)
       setStatus('uploaded')
-    } catch (e: any) { alert('Upload failed: ' + e.message) }
+      toast.success('Bill uploaded successfully')
+    } catch (e: any) { toast.error('Upload failed: ' + e.message) }
     setUploading(false)
   }
 
   return (
     <div className="space-y-8 animate-in fade-in duration-700 pb-20">
-      <div>
+      <style>{`
+        @media print {
+          @page {
+            size: A4 portrait;
+            margin: 8mm;
+          }
+          body * { visibility: hidden !important; }
+          #print-invoice, #print-invoice * { visibility: visible !important; }
+          #print-invoice {
+            position: fixed !important;
+            top: 0; left: 0;
+            width: 100% !important;
+            transform-origin: top left;
+          }
+        }
+      `}</style>
+      {!profile && !profileLoading && (
+        <div className="bg-amber-50 border border-amber-200 p-4 rounded-2xl flex items-center gap-4 text-amber-800 print:hidden">
+          <ShieldCheck className="h-5 w-5" />
+          <p className="text-xs font-bold uppercase tracking-widest">Business identity not configured. Bills may be incomplete.</p>
+          <button onClick={() => window.location.href='/onboarding'} className="ml-auto bg-amber-200 hover:bg-amber-300 px-4 py-2 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all">Setup Now</button>
+        </div>
+      )}
+
+      <div className="print:hidden">
         <h2 className="text-3xl font-black tracking-tight text-slate-900">Billing Center</h2>
         <p className="text-slate-500 font-medium text-sm mt-1">Generate professional invoices and share them instantly.</p>
       </div>
 
       {/* SELECT CRITERIA */}
-      <div className="bg-white border border-slate-100 rounded-[2rem] p-10 shadow-xl shadow-slate-200/40 relative z-40">
+      <div className="bg-white border border-slate-100 rounded-[2rem] p-10 shadow-xl shadow-slate-200/40 relative z-40 print:hidden">
         <div className="flex items-center gap-6 mb-10">
           <h3 className="font-black text-sm text-slate-900 uppercase tracking-[0.3em]">Invoice Setup</h3>
           <div className="flex-1 h-px bg-slate-100" />
@@ -129,12 +186,12 @@ export default function BillingClient({ userId, customers, shopProfile }: Props)
 
           <div className="space-y-3">
             <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1">Start Date</label>
-            <input type="date" value={startDate} onChange={e=>setStartDate(e.target.value)} className="w-full bg-slate-50 border-2 border-transparent rounded-2xl px-6 py-4 text-sm font-black text-slate-900 focus:bg-white outline-none transition-all" />
+            <input type="date" value={startDate} onClick={(e) => { try { e.currentTarget.showPicker() } catch(err) {} }} onChange={e=>setStartDate(e.target.value)} className="w-full bg-slate-50 border-2 border-transparent rounded-2xl px-6 py-4 text-sm font-black text-slate-900 focus:bg-white outline-none transition-all cursor-pointer" />
           </div>
 
           <div className="space-y-3">
             <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1">End Date</label>
-            <input type="date" value={endDate} onChange={e=>setEndDate(e.target.value)} className="w-full bg-slate-50 border-2 border-transparent rounded-2xl px-6 py-4 text-sm font-black text-slate-900 focus:bg-white outline-none transition-all" />
+            <input type="date" value={endDate} onClick={(e) => { try { e.currentTarget.showPicker() } catch(err) {} }} onChange={e=>setEndDate(e.target.value)} className="w-full bg-slate-50 border-2 border-transparent rounded-2xl px-6 py-4 text-sm font-black text-slate-900 focus:bg-white outline-none transition-all cursor-pointer" />
           </div>
 
           <button onClick={handleGenerate} disabled={loading} className="w-full bg-slate-900 hover:bg-black text-white rounded-2xl py-4 font-black text-xs uppercase tracking-widest shadow-xl flex items-center justify-center gap-3 transition-all hover:-translate-y-1 disabled:opacity-50">
@@ -146,8 +203,9 @@ export default function BillingClient({ userId, customers, shopProfile }: Props)
 
       {/* ACTIONS */}
       {billData && (
-        <div className="flex flex-wrap gap-4 animate-in fade-in slide-in-from-bottom-4">
+        <div className="flex flex-wrap gap-4 animate-in fade-in slide-in-from-bottom-4 print:hidden">
           <button onClick={() => window.print()} className="flex items-center gap-3 px-8 py-4 rounded-2xl bg-white border-2 border-slate-100 text-slate-900 text-xs font-black uppercase tracking-widest hover:border-slate-300 transition-all shadow-lg"><Printer className="h-4 w-4" /> Print</button>
+          <button onClick={handleDownloadPDF} className="flex items-center gap-3 px-8 py-4 rounded-2xl bg-slate-900 text-white text-xs font-black uppercase tracking-widest shadow-lg hover:bg-black transition-all"><Download className="h-4 w-4" /> Download PDF</button>
           <button onClick={handleUpload} disabled={uploading} className="flex items-center gap-3 px-8 py-4 rounded-2xl bg-emerald-500 text-white text-xs font-black uppercase tracking-widest shadow-xl shadow-emerald-100 hover:bg-emerald-600 transition-all disabled:opacity-50">
             {uploading ? <Loader2 className="h-4 w-4 animate-spin" /> : <Upload className="h-4 w-4" />}
             {uploading ? 'Uploading...' : 'Upload & Get Link'}
@@ -159,8 +217,7 @@ export default function BillingClient({ userId, customers, shopProfile }: Props)
                 {copied ? 'Copied' : 'Copy Link'}
               </button>
               <button onClick={() => {
-                const msg = `Dear ${selectedCustomer?.name},\nGreetings from ${shopProfile?.business_name}! 💠\n\nFriendly reminder regarding your pending payment of ₹${fmt(billData.netPayable)}.\n\n💠 View/Download Bill: ${shareLink}`
-                window.open(`https://wa.me/${selectedCustomer?.phone?.replace(/\D/g,'')}?text=${encodeURIComponent(msg)}`, '_blank')
+                sendWhatsAppDuePayment(profile, selectedCustomer, billData, shareLink)
               }} className="flex items-center gap-3 px-8 py-4 rounded-2xl bg-green-500 text-white text-xs font-black uppercase tracking-widest shadow-xl hover:bg-green-600 transition-all"><MessageCircle className="h-4 w-4" /> WhatsApp</button>
             </div>
           )}
@@ -169,35 +226,40 @@ export default function BillingClient({ userId, customers, shopProfile }: Props)
 
       {/* BILL PREVIEW - MATCHING THE BLUE & WHITE INVOICE */}
       {billData && (
-        <div className="p-10 bg-slate-100 rounded-[3rem] overflow-hidden flex justify-center">
-          <div ref={billRef} className="bg-white shadow-2xl w-full max-w-[210mm] min-h-[297mm] p-12 relative" style={{ fontFamily: "'Inter', sans-serif", color: '#1e293b' }}>
+        <div className="p-10 bg-slate-100 rounded-[3rem] overflow-hidden flex justify-center print:p-0 print:bg-transparent print:rounded-none">
+          <div
+            id="print-invoice"
+            ref={billRef}
+            className="bg-white shadow-2xl w-full max-w-[210mm] p-12 relative print:shadow-none print:w-full print:max-w-full print:p-4"
+            style={{ fontFamily: "'Inter', sans-serif", color: '#1e293b' }}
+          >
             
             <div style={{ textAlign: 'center', marginBottom: '40px' }}>
-              <h1 style={{ fontSize: '42px', fontWeight: 900, color: '#2563eb', textTransform: 'uppercase', letterSpacing: '4px' }}>INVOICE</h1>
+              <h1 style={{ fontSize: '42px', fontWeight: 900, color: '#0D9488', textTransform: 'uppercase', letterSpacing: '4px' }}>INVOICE</h1>
             </div>
 
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '40px' }}>
               <div style={{ maxWidth: '400px' }}>
-                <h3 style={{ fontSize: '20px', fontWeight: 900, color: '#2563eb', marginBottom: '8px' }}>{shopProfile?.business_name || 'F.K.S. Traders'}</h3>
+                <h3 style={{ fontSize: '20px', fontWeight: 900, color: '#0D9488', marginBottom: '8px' }}>{profile?.business_name || 'F.K.S. Traders'}</h3>
                 <p style={{ fontSize: '13px', color: '#475569', lineHeight: '1.6' }}>
-                  {shopProfile?.address}<br/>
-                  {shopProfile?.city}, {shopProfile?.state}<br/>
-                  Mobile: {shopProfile?.phone}<br/>
-                  Email: {shopProfile?.email}
+                  {profile?.registered_address}<br/>
+                  {profile?.city}, {profile?.state}<br/>
+                  Mobile: {profile?.support_phone}<br/>
+                  {profile?.gst_number && <>GSTIN: {profile.gst_number}</>}
                 </p>
               </div>
               <div style={{ textAlign: 'right' }}>
                 <div style={{ width: '120px', height: '120px', background: '#f8fafc', border: '1px solid #e2e8f0', display: 'flex', alignItems: 'center', justifyItems: 'center', fontSize: '12px', fontWeight: 900, color: '#94a3b8' }}>
-                  <img src={shopProfile?.logo_url || "https://via.placeholder.com/120x120.png?text=LOGO"} style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
+                  <Building2 className="h-12 w-12 text-slate-200 mx-auto" />
                 </div>
               </div>
             </div>
 
-            <div style={{ height: '2px', background: '#2563eb', opacity: 0.2, marginBottom: '40px' }} />
+            <div style={{ height: '2px', background: '#0D9488', opacity: 0.2, marginBottom: '40px' }} />
 
             <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '40px' }}>
               <div>
-                <p style={{ fontSize: '14px', fontWeight: 900, color: '#2563eb', marginBottom: '12px' }}>Bill To</p>
+                <p style={{ fontSize: '14px', fontWeight: 900, color: '#0D9488', marginBottom: '12px' }}>Bill To</p>
                 <h4 style={{ fontSize: '18px', fontWeight: 900, color: '#0f172a', marginBottom: '4px' }}>{billData.customer.name}</h4>
                 <p style={{ fontSize: '13px', color: '#64748b', lineHeight: '1.6' }}>
                   {billData.customer.address || 'No address provided'}<br/>
@@ -220,12 +282,12 @@ export default function BillingClient({ userId, customers, shopProfile }: Props)
 
             <table style={{ width: '100%', borderCollapse: 'collapse', marginBottom: '40px' }}>
               <thead>
-                <tr style={{ background: '#2563eb', color: 'white' }}>
-                  <th style={{ padding: '12px', fontSize: '12px', fontWeight: 900, textAlign: 'left', border: '1px solid #2563eb' }}>Sl.</th>
-                  <th style={{ padding: '12px', fontSize: '12px', fontWeight: 900, textAlign: 'left', border: '1px solid #2563eb' }}>Description</th>
-                  <th style={{ padding: '12px', fontSize: '12px', fontWeight: 900, textAlign: 'right', border: '1px solid #2563eb' }}>Qty</th>
-                  <th style={{ padding: '12px', fontSize: '12px', fontWeight: 900, textAlign: 'right', border: '1px solid #2563eb' }}>Rate</th>
-                  <th style={{ padding: '12px', fontSize: '12px', fontWeight: 900, textAlign: 'right', border: '1px solid #2563eb' }}>Amount</th>
+                <tr style={{ background: '#0D9488', color: 'white' }}>
+                  <th style={{ padding: '12px', fontSize: '12px', fontWeight: 900, textAlign: 'left', border: '1px solid #0D9488' }}>Sl.</th>
+                  <th style={{ padding: '12px', fontSize: '12px', fontWeight: 900, textAlign: 'left', border: '1px solid #0D9488' }}>Description</th>
+                  <th style={{ padding: '12px', fontSize: '12px', fontWeight: 900, textAlign: 'right', border: '1px solid #0D9488' }}>Qty</th>
+                  <th style={{ padding: '12px', fontSize: '12px', fontWeight: 900, textAlign: 'right', border: '1px solid #0D9488' }}>Rate</th>
+                  <th style={{ padding: '12px', fontSize: '12px', fontWeight: 900, textAlign: 'right', border: '1px solid #0D9488' }}>Amount</th>
                 </tr>
               </thead>
               <tbody>
@@ -233,9 +295,11 @@ export default function BillingClient({ userId, customers, shopProfile }: Props)
                   <tr key={i} style={{ background: i % 2 === 0 ? '#f8fafc' : 'white' }}>
                     <td style={{ padding: '12px', fontSize: '13px', border: '1px solid #e2e8f0' }}>{i+1}</td>
                     <td style={{ padding: '12px', fontSize: '13px', border: '1px solid #e2e8f0', fontWeight: 600 }}>{r.detail}</td>
-                    <td style={{ padding: '12px', fontSize: '13px', border: '1px solid #e2e8f0', textAlign: 'right' }}>1</td>
-                    <td style={{ padding: '12px', fontSize: '13px', border: '1px solid #e2e8f0', textAlign: 'right' }}>₹{fmt(r.debit || r.credit || 0)}</td>
-                    <td style={{ padding: '12px', fontSize: '13px', border: '1px solid #e2e8f0', textAlign: 'right', fontWeight: 800 }}>₹{fmt(r.debit || r.credit || 0)}</td>
+                    <td style={{ padding: '12px', fontSize: '13px', border: '1px solid #e2e8f0', textAlign: 'right' }}>{r.qty || '-'}</td>
+                    <td style={{ padding: '12px', fontSize: '13px', border: '1px solid #e2e8f0', textAlign: 'right' }}>{r.rate ? `₹${fmt(r.rate)}` : '-'}</td>
+                    <td style={{ padding: '12px', fontSize: '13px', border: '1px solid #e2e8f0', textAlign: 'right', fontWeight: 800 }}>
+                      {r.debit ? `₹${fmt(r.debit)}` : r.credit ? `-₹${fmt(r.credit)}` : '-'}
+                    </td>
                   </tr>
                 )) : (
                   <tr><td colSpan={5} style={{ padding: '40px', textAlign: 'center', color: '#94a3b8', fontStyle: 'italic', border: '1px solid #e2e8f0' }}>No items recorded for this period.</td></tr>
@@ -245,12 +309,13 @@ export default function BillingClient({ userId, customers, shopProfile }: Props)
 
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end' }}>
               <div style={{ maxWidth: '300px' }}>
-                <p style={{ fontSize: '12px', fontWeight: 900, color: '#2563eb', marginBottom: '8px' }}>Payment Instructions</p>
+                <p style={{ fontSize: '12px', fontWeight: 900, color: '#0D9488', marginBottom: '8px' }}>Payment Instructions</p>
                 <p style={{ fontSize: '11px', color: '#64748b', lineHeight: '1.5' }}>
                   Please pay via Cheque/Online Transfer to:<br/>
-                  <b>{shopProfile?.bank_name || 'Authorized Signatory Name'}</b><br/>
-                  A/C: {shopProfile?.account_number || '0000000000'}<br/>
-                  IFSC: {shopProfile?.ifsc_code || 'ABCD0001234'}
+                  <b>{profile?.business_name}</b><br/>
+                  Bank Name: Your Bank Name<br/>
+                  A/C: 000000000000<br/>
+                  IFSC: ABCD0001234
                 </p>
               </div>
               <div style={{ minWidth: '300px' }}>
@@ -258,7 +323,7 @@ export default function BillingClient({ userId, customers, shopProfile }: Props)
                   <div style={{ fontWeight: 800, color: '#475569' }}>Subtotal</div>
                   <div style={{ fontWeight: 900, color: '#0f172a' }}>₹{fmt(billData.totalSales)}</div>
                   
-                  <div style={{ borderTop: '2px solid #2563eb', gridColumn: 'span 2', margin: '4px 0' }} />
+                  <div style={{ borderTop: '2px solid #0D9488', gridColumn: 'span 2', margin: '4px 0' }} />
                   
                   <div style={{ fontWeight: 900, color: '#0f172a', fontSize: '16px' }}>Total</div>
                   <div style={{ fontWeight: 900, color: '#0f172a', fontSize: '16px' }}>₹{fmt(billData.totalSales)}</div>
@@ -272,7 +337,7 @@ export default function BillingClient({ userId, customers, shopProfile }: Props)
 
                 <div style={{ textAlign: 'center' }}>
                   <div style={{ height: '60px', width: '200px', margin: '0 auto', display: 'flex', alignItems: 'flex-end', justifyContent: 'center' }}>
-                    <div style={{ borderBottom: '1px solid #0f172a', width: '100%', fontStyle: 'italic', fontSize: '18px' }}>{shopProfile?.business_name?.split(' ')[0]}</div>
+                    <div style={{ borderBottom: '1px solid #0f172a', width: '100%', fontStyle: 'italic', fontSize: '18px' }}>{profile?.business_name?.split(' ')[0]}</div>
                   </div>
                   <p style={{ fontSize: '12px', fontWeight: 900, color: '#0f172a', marginTop: '10px' }}>Authorized Signatory</p>
                 </div>

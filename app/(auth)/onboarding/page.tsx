@@ -3,48 +3,85 @@
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { createClient } from '@/lib/supabase/client'
-import { Building2, ArrowRight, Loader2, MapPin, Phone } from 'lucide-react'
+import { Building2, ArrowRight, Loader2, MapPin, Phone, Check } from 'lucide-react'
+import { toast, Toaster } from 'react-hot-toast'
 
 export default function OnboardingPage() {
   const [step, setStep] = useState(1)
   const [loading, setLoading] = useState(false)
-  const [error, setError] = useState<string | null>(null)
   
   // Form state
   const [businessName, setBusinessName] = useState('')
-  const [phone, setPhone] = useState('')
+  const [supportPhone, setSupportPhone] = useState('')
   const [address, setAddress] = useState('')
   const [city, setCity] = useState('')
   const [state, setState] = useState('')
   const [gst, setGst] = useState('')
+  const [errors, setErrors] = useState<Record<string, string>>({})
 
   const router = useRouter()
   const supabase = createClient()
 
+  const validate = () => {
+    const newErrors: Record<string, string> = {}
+
+    if (!businessName.trim())
+      newErrors.businessName = 'Business name is required'
+
+    if (!supportPhone.trim())
+      newErrors.supportPhone = 'Support phone is required'
+    else if (!/^\+91\s?\d{5}\s?\d{5}$/.test(supportPhone.trim()))
+      newErrors.supportPhone = 'Format must be +91 XXXXX XXXXX'
+
+    if (gst && !/^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[1-9A-Z]{1}Z[0-9A-Z]{1}$/.test(gst.trim()))
+      newErrors.gst = 'Invalid GST format'
+
+    if (!address.trim())
+      newErrors.address = 'Registered address is required'
+
+    setErrors(newErrors)
+    return Object.keys(newErrors).length === 0
+  }
+
   const handleSaveBusinessDetails = async (e: React.FormEvent) => {
     e.preventDefault()
+    if (!validate()) return
+
     setLoading(true)
-    setError(null)
     
-    // Rule #8: NO manual user_id.
+    const { data: { user } } = await supabase.auth.getUser()
+    if (!user) {
+      toast.error('Session expired. Please login again.')
+      router.push('/login')
+      return
+    }
+
+    const formData = { 
+      user_id: user.id,
+      business_name: businessName.trim(),
+      support_phone: supportPhone.trim(),
+      registered_address: address.trim(),
+      city: city.trim() || null,
+      state: state.trim() || null,
+      gst_number: gst.trim() || null,
+      updated_at: new Date().toISOString()
+    }
+
     const { error: profileError } = await supabase
-      .from('tp_profile')
-      .upsert({ 
-        business_name: businessName,
-        phone,
-        address,
-        city,
-        state,
-        gst_number: gst,
-        updated_at: new Date().toISOString()
-      })
+      .from('business_profile')
+      .upsert(formData, { onConflict: 'user_id' })
 
     if (profileError) {
-      setError(profileError.message)
+      console.error('Save error:', profileError)
+      toast.error(profileError.message)
       setLoading(false)
       return
     }
 
+    // Save to localStorage as cache
+    localStorage.setItem('business_profile', JSON.stringify(formData))
+    
+    toast.success('Business identity saved successfully')
     setLoading(false)
     setStep(2)
   }
@@ -55,6 +92,7 @@ export default function OnboardingPage() {
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-[#F4F7F9] px-4 py-12 sm:px-6 lg:px-8 font-['Outfit',sans-serif]">
+      <Toaster position="top-right" />
       <div className="w-full max-w-xl space-y-10 bg-white p-10 sm:p-20 rounded-[3rem] shadow-2xl shadow-slate-200 border border-slate-50">
         <div className="text-center">
           <div className="mx-auto w-14 h-14 bg-[#EBF4F3] rounded-2xl flex items-center justify-center mb-8">
@@ -89,13 +127,13 @@ export default function OnboardingPage() {
                   </div>
                   <input 
                     type="text" 
-                    required 
                     value={businessName} 
                     onChange={(e) => setBusinessName(e.target.value)}
-                    className="block w-full rounded-2xl border border-slate-100 bg-[#F8FAFC] py-4 pl-12 pr-4 text-slate-900 text-sm font-bold focus:ring-2 focus:ring-[#0D9488]/20 focus:border-[#0D9488] outline-none transition-all placeholder:text-slate-300" 
+                    className={`block w-full rounded-2xl border ${errors.businessName ? 'border-red-500' : 'border-slate-100'} bg-[#F8FAFC] py-4 pl-12 pr-4 text-slate-900 text-sm font-bold focus:ring-2 focus:ring-[#0D9488]/20 focus:border-[#0D9488] outline-none transition-all placeholder:text-slate-300`} 
                     placeholder="E.g. F.K.S. Traders" 
                   />
                 </div>
+                {errors.businessName && <p className="mt-1 text-[10px] text-red-500 font-bold uppercase ml-1">{errors.businessName}</p>}
               </div>
               
               <div>
@@ -106,13 +144,13 @@ export default function OnboardingPage() {
                   </div>
                   <input 
                     type="text" 
-                    required 
-                    value={phone} 
-                    onChange={(e) => setPhone(e.target.value)}
-                    className="block w-full rounded-2xl border border-slate-100 bg-[#F8FAFC] py-4 pl-12 pr-4 text-slate-900 text-sm font-bold focus:ring-2 focus:ring-[#0D9488]/20 focus:border-[#0D9488] outline-none transition-all placeholder:text-slate-300" 
+                    value={supportPhone} 
+                    onChange={(e) => setSupportPhone(e.target.value)}
+                    className={`block w-full rounded-2xl border ${errors.supportPhone ? 'border-red-500' : 'border-slate-100'} bg-[#F8FAFC] py-4 pl-12 pr-4 text-slate-900 text-sm font-bold focus:ring-2 focus:ring-[#0D9488]/20 focus:border-[#0D9488] outline-none transition-all placeholder:text-slate-300`} 
                     placeholder="+91 00000 00000" 
                   />
                 </div>
+                {errors.supportPhone && <p className="mt-1 text-[10px] text-red-500 font-bold uppercase ml-1">{errors.supportPhone}</p>}
               </div>
 
               <div>
@@ -121,9 +159,10 @@ export default function OnboardingPage() {
                   type="text" 
                   value={gst} 
                   onChange={(e) => setGst(e.target.value)}
-                  className="block w-full rounded-2xl border border-slate-100 bg-[#F8FAFC] py-4 px-6 text-slate-900 text-sm font-black focus:ring-2 focus:ring-[#0D9488]/20 focus:border-[#0D9488] outline-none transition-all uppercase placeholder:text-slate-300" 
+                  className={`block w-full rounded-2xl border ${errors.gst ? 'border-red-500' : 'border-slate-100'} bg-[#F8FAFC] py-4 px-6 text-slate-900 text-sm font-black focus:ring-2 focus:ring-[#0D9488]/20 focus:border-[#0D9488] outline-none transition-all uppercase placeholder:text-slate-300`} 
                   placeholder="23ABCDE1234F1Z5" 
                 />
+                {errors.gst && <p className="mt-1 text-[10px] text-red-500 font-bold uppercase ml-1">{errors.gst}</p>}
               </div>
 
               <div className="sm:col-span-2">
@@ -133,21 +172,20 @@ export default function OnboardingPage() {
                     <MapPin className="h-4 w-4" />
                   </div>
                   <textarea 
-                    required 
                     value={address} 
                     onChange={(e) => setAddress(e.target.value)}
-                    className="block w-full rounded-2xl border border-slate-100 bg-[#F8FAFC] py-4 pl-12 pr-4 text-slate-900 text-sm font-medium focus:ring-2 focus:ring-[#0D9488]/20 focus:border-[#0D9488] outline-none transition-all placeholder:text-slate-300" 
+                    className={`block w-full rounded-2xl border ${errors.address ? 'border-red-500' : 'border-slate-100'} bg-[#F8FAFC] py-4 pl-12 pr-4 text-slate-900 text-sm font-medium focus:ring-2 focus:ring-[#0D9488]/20 focus:border-[#0D9488] outline-none transition-all placeholder:text-slate-300`} 
                     rows={2} 
                     placeholder="Full business address..." 
                   />
                 </div>
+                {errors.address && <p className="mt-1 text-[10px] text-red-500 font-bold uppercase ml-1">{errors.address}</p>}
               </div>
 
               <div>
                 <label className="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2 ml-1">City</label>
                 <input 
                   type="text" 
-                  required 
                   value={city} 
                   onChange={(e) => setCity(e.target.value)}
                   className="block w-full rounded-2xl border border-slate-100 bg-[#F8FAFC] py-4 px-6 text-slate-900 text-sm font-bold focus:ring-2 focus:ring-[#0D9488]/20 focus:border-[#0D9488] outline-none transition-all" 
@@ -158,15 +196,12 @@ export default function OnboardingPage() {
                 <label className="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2 ml-1">State</label>
                 <input 
                   type="text" 
-                  required 
                   value={state} 
                   onChange={(e) => setState(e.target.value)}
                   className="block w-full rounded-2xl border border-slate-100 bg-[#F8FAFC] py-4 px-6 text-slate-900 text-sm font-bold focus:ring-2 focus:ring-[#0D9488]/20 focus:border-[#0D9488] outline-none transition-all" 
                 />
               </div>
             </div>
-
-            {error && <div className="text-red-500 text-[10px] font-black text-center bg-red-50 p-4 rounded-xl border border-red-100 uppercase tracking-widest">{error}</div>}
 
             <div className="flex gap-4 pt-4">
               <button 
@@ -191,7 +226,7 @@ export default function OnboardingPage() {
         {step === 2 && (
           <div className="mt-8 text-center py-12">
             <div className="mx-auto w-20 h-20 bg-green-50 rounded-full flex items-center justify-center mb-8">
-               <div className="w-10 h-10 bg-primary rounded-full flex items-center justify-center shadow-lg shadow-green-200">
+               <div className="w-10 h-10 bg-[#0D9488] rounded-full flex items-center justify-center shadow-lg shadow-green-200">
                   <Check className="h-6 w-6 text-white" />
                </div>
             </div>
@@ -206,24 +241,5 @@ export default function OnboardingPage() {
         )}
       </div>
     </div>
-  )
-}
-
-function Check(props: any) {
-  return (
-    <svg
-      {...props}
-      xmlns="http://www.w3.org/2000/svg"
-      width="24"
-      height="24"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="3"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <polyline points="20 6 9 17 4 12" />
-    </svg>
   )
 }
