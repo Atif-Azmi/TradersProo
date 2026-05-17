@@ -11,6 +11,11 @@ export interface BusinessProfile {
   registered_address?: string;
   city?: string;
   state?: string;
+  bank_name?: string;
+  account_number?: string;
+  ifsc_code?: string;
+  upi_id?: string;
+  bill_prefix?: string;
 }
 
 export const useBusinessProfile = () => {
@@ -35,17 +40,23 @@ export const useBusinessProfile = () => {
       const { data: { user } } = await supabase.auth.getUser();
       if (!user) { setLoading(false); return; }
 
-      const { data, error } = await supabase
-        .from('business_profile')
-        .select('*')
-        .eq('user_id', user.id)
-        .single();
+      const [bpRes, tpRes] = await Promise.all([
+        supabase.from('business_profile').select('*').eq('user_id', user.id).maybeSingle(),
+        supabase.from('tp_profile').select('*').maybeSingle()
+      ]);
 
-      if (data) {
-        setProfile(data);
-        localStorage.setItem('bp', JSON.stringify(data));
-      } else if (error && error.code !== 'PGRST116') {
-        console.error('Fetch profile error:', error);
+      if (bpRes.data || tpRes.data) {
+        const mergedData: BusinessProfile = {
+          ...bpRes.data,
+          bank_name: tpRes.data?.bank_name || '',
+          account_number: tpRes.data?.account_number || '',
+          ifsc_code: tpRes.data?.ifsc_code || '',
+          upi_id: tpRes.data?.upi_id || '',
+          bill_prefix: tpRes.data?.bill_prefix || 'INV',
+          business_name: bpRes.data?.business_name || 'Generic Business Node'
+        };
+        setProfile(mergedData);
+        localStorage.setItem('bp', JSON.stringify(mergedData));
       }
     } catch (err) {
       console.error('Unexpected error:', err);

@@ -106,12 +106,31 @@ export const generateBillPDF = (profile: BusinessProfile, sale: SaleData) => {
 
   // Footer
   const finalY = (doc as any).lastAutoTable.finalY + 15;
+  let currentFooterY = finalY;
+
+  if (profile?.bank_name) {
+    doc.setFontSize(9);
+    doc.setFont('helvetica', 'bold');
+    doc.setTextColor(15, 23, 42);
+    doc.text('Payment Bank Details:', 14, currentFooterY);
+    
+    doc.setFont('helvetica', 'normal');
+    doc.setTextColor(100, 116, 139);
+    doc.text(`Bank: ${profile.bank_name}  |  A/C Number: ${profile.account_number}  |  IFSC: ${profile.ifsc_code}`, 14, currentFooterY + 5);
+    if (profile.upi_id) {
+      doc.text(`UPI ID: ${profile.upi_id}`, 14, currentFooterY + 10);
+      currentFooterY += 16;
+    } else {
+      currentFooterY += 11;
+    }
+  }
+
   doc.setFontSize(9);
   doc.setFont('helvetica', 'italic');
   doc.setTextColor(100, 116, 139);
   doc.text(
     `Thank you for choosing ${biz.business_name ?? 'us'}!`,
-    105, finalY, { align: 'center' }
+    105, currentFooterY, { align: 'center' }
   );
 
   doc.save(`Bill_${sale.bill_number}.pdf`);

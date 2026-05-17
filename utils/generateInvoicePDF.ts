@@ -183,10 +183,27 @@ export const generateInvoicePDF = (profile: BusinessProfile | null, invoice: any
     doc.text(`• ${term}`, margin + 4, termsY + 7 + (i * 6));
   });
 
+  // Payment Bank details on the right
+  if (profile?.bank_name) {
+    const bankX = 115;
+    doc.setFont('helvetica', 'bold');
+    doc.setTextColor(...DARK);
+    doc.text('Payment Bank Details :', bankX, termsY);
+    
+    doc.setFont('helvetica', 'normal');
+    doc.setTextColor(80, 80, 80);
+    doc.text(`Bank Name : ${profile.bank_name}`, bankX, termsY + 6);
+    doc.text(`A/C Number: ${profile.account_number}`, bankX, termsY + 11);
+    doc.text(`IFSC Code : ${profile.ifsc_code}`, bankX, termsY + 16);
+    if (profile.upi_id) {
+      doc.text(`UPI ID    : ${profile.upi_id}`, bankX, termsY + 21);
+    }
+  }
+
   // Signature
   doc.setFont('helvetica', 'italic');
   doc.setTextColor(...DARK);
-  doc.text('Signature', W - margin, termsY + 20, { align: 'right' });
+  doc.text('Signature', W - margin, termsY + 30, { align: 'right' });
 
   // ── BOTTOM DECORATIVE BAR ──
   const pageH = doc.internal.pageSize.height;

@@ -310,13 +310,23 @@ export default function BillingClient({ userId, customers }: Props) {
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end' }}>
               <div style={{ maxWidth: '300px' }}>
                 <p style={{ fontSize: '12px', fontWeight: 900, color: '#0D9488', marginBottom: '8px' }}>Payment Instructions</p>
-                <p style={{ fontSize: '11px', color: '#64748b', lineHeight: '1.5' }}>
-                  Please pay via Cheque/Online Transfer to:<br/>
-                  <b>{profile?.business_name}</b><br/>
-                  Bank Name: Your Bank Name<br/>
-                  A/C: 000000000000<br/>
-                  IFSC: ABCD0001234
-                </p>
+                {profile?.bank_name ? (
+                  <p style={{ fontSize: '11px', color: '#64748b', lineHeight: '1.5' }}>
+                    Please pay via NetBanking/UPI to:<br/>
+                    <b>{profile?.business_name}</b><br/>
+                    Bank: {profile.bank_name}<br/>
+                    A/C No: {profile.account_number}<br/>
+                    IFSC: {profile.ifsc_code}
+                    {profile.upi_id && <><br/>UPI ID: {profile.upi_id}</>}
+                  </p>
+                ) : (
+                  <p style={{ fontSize: '11px', color: '#64748b', lineHeight: '1.5' }}>
+                    Please pay via Cash/UPI to:<br/>
+                    <b>{profile?.business_name}</b><br/>
+                    For banking details, please contact us at:<br/>
+                    Phone: {profile?.support_phone || 'Support'}
+                  </p>
+                )}
               </div>
               <div style={{ minWidth: '300px' }}>
                 <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px', fontSize: '14px', textAlign: 'right', marginBottom: '40px' }}>
