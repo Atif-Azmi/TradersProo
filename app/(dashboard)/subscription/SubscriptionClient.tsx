@@ -226,39 +226,53 @@ _TradersPro — Professional Billing Suite_
         </div>
 
         {/* Plan Card */}
-        <div className="tp-card p-6 md:p-8 bg-slate-900 ring-2 ring-slate-900 text-white md:col-span-2 relative overflow-hidden flex flex-col justify-between">
-          <div className={`absolute top-6 right-6 text-white text-[9px] font-bold uppercase tracking-widest px-2.5 py-1 rounded-md ${isElite ? 'bg-emerald-600' : 'bg-[#0D9488]'}`}>
+        <div className="p-6 md:p-8 bg-gradient-to-br from-slate-900 via-slate-950 to-slate-900 rounded-3xl ring-2 ring-slate-800 text-white md:col-span-2 relative overflow-hidden flex flex-col justify-between shadow-2xl border border-slate-800/60">
+          {/* Subtle accent light effect */}
+          <div className="absolute -top-40 -right-40 w-80 h-80 bg-teal-500/10 rounded-full blur-3xl pointer-events-none" />
+
+          <div className={`absolute top-6 right-6 text-white text-[9px] font-bold uppercase tracking-widest px-3 py-1.5 rounded-full shadow-lg ${isElite ? 'bg-emerald-500 shadow-emerald-500/20' : 'bg-teal-500 shadow-teal-500/20'}`}>
             {isElite ? 'Elite Member' : 'Best Value'}
           </div>
 
           <div>
-            <span className={`text-[10px] font-bold uppercase tracking-widest ${isElite ? 'text-emerald-400' : 'text-[#0D9B8A]'}`}>
+            <span className={`text-[10px] font-black uppercase tracking-widest ${isElite ? 'text-emerald-400' : 'text-teal-400'}`}>
               Elite Annual Pass
             </span>
 
-            <h3 className="text-2xl font-black uppercase italic tracking-tight text-white mt-1">
+            <h3 className="text-2xl sm:text-3xl font-black uppercase italic tracking-tight text-white mt-1">
               ALL-IN-ONE BUSINESS SUITE
             </h3>
 
-            <p className="mt-6 flex items-baseline gap-x-2">
-              <span className="text-4xl font-black tracking-tighter text-white">₹4,959</span>
-              <span className="text-xs font-bold uppercase tracking-widest text-slate-400">/year</span>
-            </p>
+            {/* HIGHLY VISIBLE & ATTRACTIVE PRICING SECTION */}
+            <div className="mt-6 mb-4 flex items-center gap-x-3 bg-slate-950/80 p-5 rounded-2xl border border-slate-800/80 w-fit">
+              <div className="flex items-baseline gap-x-2">
+                <span className="text-5xl font-extrabold tracking-tight text-emerald-400 drop-shadow-[0_4px_12px_rgba(52,211,153,0.3)]">
+                  ₹4,959
+                </span>
+                <span className="text-xs font-bold uppercase tracking-widest text-slate-400">
+                  / Year
+                </span>
+              </div>
+              <div className="h-8 w-px bg-slate-800" />
+              <span className="text-[10px] font-bold uppercase tracking-wider text-emerald-400/90 bg-emerald-500/10 px-2.5 py-1 rounded-md border border-emerald-500/20">
+                Full Access
+              </span>
+            </div>
 
-            <div className="mt-3 inline-flex items-center gap-2 bg-slate-800/80 px-3 py-1.5 rounded-lg border border-slate-700/50 text-[9px] font-bold text-slate-300 uppercase tracking-widest">
-              <RefreshCw className="h-3 w-3 text-[#0D9488] animate-spin duration-1000" /> 
+            <div className="mt-4 inline-flex items-center gap-2 bg-slate-800/50 px-3.5 py-2 rounded-xl border border-slate-700/30 text-[9px] font-bold text-slate-300 uppercase tracking-widest">
+              <RefreshCw className="h-3 w-3 text-teal-400 animate-spin duration-[4000ms]" /> 
               <span>Renewal Price Lock: Renew at ₹4,959/year (Same Cost Guaranteed)</span>
             </div>
 
-            <div className="mt-8 border-t border-slate-800 pt-6">
-              <h4 className={`text-[10px] font-bold uppercase tracking-widest mb-4 ${isElite ? 'text-emerald-400' : 'text-[#0D9488]'}`}>
+            <div className="mt-8 border-t border-slate-800/80 pt-6">
+              <h4 className={`text-[10px] font-bold uppercase tracking-widest mb-4 ${isElite ? 'text-emerald-400' : 'text-teal-400'}`}>
                 Enterprise Features Included:
               </h4>
-              <ul role="list" className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs font-medium text-slate-300">
+              <ul role="list" className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-3 text-xs font-medium text-slate-300">
                 {features.map((feature) => (
-                  <li key={feature} className="flex gap-x-2 items-start">
-                    <CheckCircle2 className={`h-4 w-4 flex-none mt-0.5 ${isElite ? 'text-emerald-400' : 'text-[#0D9488]'}`} aria-hidden="true" />
-                    <span>{feature}</span>
+                  <li key={feature} className="flex gap-x-2.5 items-start">
+                    <CheckCircle2 className={`h-4 w-4 flex-none mt-0.5 ${isElite ? 'text-emerald-400' : 'text-teal-400'}`} aria-hidden="true" />
+                    <span className="text-slate-200">{feature}</span>
                   </li>
                 ))}
               </ul>
@@ -268,7 +282,7 @@ _TradersPro — Professional Billing Suite_
           {isElite ? (
             <button
               disabled
-              className="mt-8 block w-full rounded-lg bg-emerald-600 text-white py-3.5 text-center text-xs font-bold uppercase tracking-widest transition-all cursor-default shadow-lg shadow-emerald-900/10 font-bold"
+              className="mt-8 block w-full rounded-xl bg-emerald-500 text-white py-4 text-center text-xs font-bold uppercase tracking-widest cursor-default shadow-lg shadow-emerald-500/20 font-bold border border-emerald-400/20"
             >
               Elite Premium Active ✓
             </button>
@@ -276,7 +290,7 @@ _TradersPro — Professional Billing Suite_
             <button
               onClick={handleUpgrade}
               disabled={loading}
-              className="mt-8 w-full rounded-lg bg-[#0D9488] hover:bg-teal-600 text-white py-3.5 text-center text-xs font-bold uppercase tracking-widest transition-all cursor-pointer shadow-lg shadow-teal-900/30 flex items-center justify-center gap-2 font-bold"
+              className="mt-8 w-full rounded-xl bg-teal-500 hover:bg-teal-600 text-white py-4 text-center text-xs font-bold uppercase tracking-widest transition-all cursor-pointer shadow-lg shadow-teal-500/20 flex items-center justify-center gap-2 font-bold hover:scale-[1.01]"
             >
               {loading ? (
                 <>
