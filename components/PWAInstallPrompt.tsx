@@ -33,23 +33,16 @@ export default function PWAInstallPrompt() {
     const handleBeforeInstallPrompt = (e: Event) => {
       e.preventDefault()
       setDeferredPrompt(e)
-      // Check if the user previously dismissed the prompt in this session
-      const dismissed = sessionStorage.getItem('pwa-prompt-dismissed')
-      if (!dismissed) {
-        setShowPrompt(true)
-      }
+      setShowPrompt(true)
     }
 
     window.addEventListener('beforeinstallprompt', handleBeforeInstallPrompt)
 
     // 4. For iOS / Safari, we show the custom tooltip if not installed
     if (iosDetect && !checkStandalone()) {
-      const dismissed = sessionStorage.getItem('pwa-prompt-dismissed')
-      if (!dismissed) {
-        // Let's delay the iOS banner slightly to feel more organic
-        const timer = setTimeout(() => setShowPrompt(true), 3000)
-        return () => clearTimeout(timer)
-      }
+      // Let's delay the iOS banner slightly to feel more organic
+      const timer = setTimeout(() => setShowPrompt(true), 3000)
+      return () => clearTimeout(timer)
     }
 
     return () => {
@@ -73,7 +66,6 @@ export default function PWAInstallPrompt() {
   }
 
   const handleDismiss = () => {
-    sessionStorage.setItem('pwa-prompt-dismissed', 'true')
     setShowPrompt(false)
   }
 
