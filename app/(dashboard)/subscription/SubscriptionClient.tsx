@@ -111,7 +111,7 @@ _TradersPro — Professional Billing Suite_
     }
 
     const options = {
-      key: 'rzp_test_tradersprokey', // Test Razorpay Key ID
+      key: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID || 'rzp_test_tradersprokey', // Dynamic Razorpay Key ID
       amount: 495900, // INR 4,959 in paise (₹4,959.00)
       currency: 'INR',
       name: 'TradersPro',

@@ -23,11 +23,12 @@ const securityHeaders = [
     key: 'Content-Security-Policy',
     value: `
       default-src 'self';
-      script-src 'self' 'unsafe-eval' 'unsafe-inline' https://cdnjs.cloudflare.com;
+      script-src 'self' 'unsafe-eval' 'unsafe-inline' https://cdnjs.cloudflare.com https://checkout.razorpay.com;
       style-src 'self' 'unsafe-inline' https://fonts.googleapis.com;
       font-src 'self' https://fonts.gstatic.com;
-      img-src 'self' data: blob: https://api.dicebear.com https://images.unsplash.com https://www.google.com;
-      connect-src 'self' https://*.supabase.co https://tinyurl.com;
+      img-src 'self' data: blob: https://api.dicebear.com https://images.unsplash.com https://www.google.com https://checkout.razorpay.com;
+      connect-src 'self' https://*.supabase.co https://tinyurl.com https://*.razorpay.com;
+      frame-src 'self' https://*.razorpay.com;
     `.replace(/\s{2,}/g, ' ').trim()
   }
 ];
