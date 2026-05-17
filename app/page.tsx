@@ -48,11 +48,10 @@ export default function LandingPage() {
                  <div className="flex -space-x-3">
                     {[1, 2, 3, 4].map(i => (
                        <div key={i} className="w-10 h-10 rounded-full border-2 border-white bg-slate-100 overflow-hidden relative">
-                          <Image 
+                          <img 
                             src={`https://api.dicebear.com/7.x/avataaars/svg?seed=${i + 10}`} 
                             alt={`Dicebear Avatar User ${i}`}
-                            fill
-                            sizes="40px"
+                            className="w-full h-full object-cover"
                             loading="lazy"
                           />
                        </div>
@@ -65,15 +64,12 @@ export default function LandingPage() {
             </div>
             
             <div className="relative">
-              <div className="relative rounded-[2.5rem] overflow-hidden shadow-2xl shadow-slate-200 aspect-[4/3] w-full">
-                <Image 
-                  src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&q=80&w=2070" 
+              <div className="relative rounded-[2.5rem] overflow-hidden shadow-2xl shadow-slate-200 aspect-[4/3] w-full bg-slate-100">
+                <img 
+                  src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&q=80&w=1200" 
                   alt="TradersPro Professional Hardware Operations Workspace" 
-                  fill
-                  sizes="(max-width: 1024px) 100vw, 50vw"
-                  className="object-cover"
+                  className="w-full h-full object-cover absolute inset-0"
                   loading="lazy"
-                  priority={false}
                 />
               </div>
               

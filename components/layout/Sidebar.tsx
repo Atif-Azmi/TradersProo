@@ -89,7 +89,7 @@ export default function Sidebar({ isSuperAdmin, onClose }: { isSuperAdmin: boole
     : 0
 
   return (
-    <div className="flex grow flex-col gap-y-5 overflow-y-auto bg-white border-r border-slate-200 px-6 pb-4">
+    <div className="flex grow flex-col gap-y-5 overflow-y-auto bg-white border-r border-slate-200 px-6 pb-4 h-screen max-h-screen sticky top-0">
       <div className="flex h-16 shrink-0 items-center justify-between gap-2">
         <div className="flex items-center gap-2">
           <div className="w-8 h-8 bg-[#0D9488] rounded-lg flex items-center justify-center text-white">

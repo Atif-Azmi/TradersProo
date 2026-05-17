@@ -27,6 +27,7 @@ const DynamicGreeting = ({ email }: { email?: string }) => {
 
 export default function TopBar({ setSidebarOpen }: { setSidebarOpen: (open: boolean) => void }) {
   const [user, setUser] = useState<any>(null)
+  const [showNotifications, setShowNotifications] = useState(false)
   const supabase = createClient()
 
   useEffect(() => {
@@ -36,6 +37,13 @@ export default function TopBar({ setSidebarOpen }: { setSidebarOpen: (open: bool
     }
     getUser()
   }, [supabase])
+
+  const notifications = [
+    { id: 1, type: 'sale', title: 'New Retail Sale Finalized', desc: 'Invoice #INV-2024-009 created successfully.', time: '5m ago', active: true },
+    { id: 2, type: 'payment', title: 'Collection Received', desc: 'Received ₹12,000 from Customer Azmi.', time: '25m ago', active: true },
+    { id: 3, type: 'stock', title: 'Critical Low Stock Warning', desc: 'PVC Conduit Pipe size 20mm has dropped below limit.', time: '2h ago', active: false },
+    { id: 4, type: 'reminder', title: 'WhatsApp Notice Dispatched', desc: 'Due payment reminder sent to Customer Atif.', time: '1d ago', active: false }
+  ]
 
   return (
     <div className="sticky top-0 z-40 flex h-16 shrink-0 items-center border-b border-slate-200 bg-white px-4 sm:px-6 lg:px-8">
@@ -68,11 +76,50 @@ export default function TopBar({ setSidebarOpen }: { setSidebarOpen: (open: bool
         </div>
 
         <div className="flex items-center gap-x-4 lg:gap-x-6">
-          <div className="flex items-center gap-3">
-             <button type="button" className="p-2 text-slate-400 hover:text-[#0D9488] transition-colors relative">
+          <div className="flex items-center gap-3 relative">
+             {/* Bell Icon Trigger */}
+             <button 
+               type="button" 
+               onClick={() => setShowNotifications(!showNotifications)}
+               className="p-2 text-slate-400 hover:text-[#0D9488] transition-colors relative cursor-pointer"
+             >
                <Bell className="h-5 w-5" aria-hidden="true" />
                <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-rose-500 rounded-full border-2 border-white" />
              </button>
+
+             {/* Click-away backdrop */}
+             {showNotifications && (
+               <div className="fixed inset-0 z-40" onClick={() => setShowNotifications(false)} />
+             )}
+
+             {/* Notifications Popover Dropdown */}
+             {showNotifications && (
+               <div className="absolute right-0 mt-2 top-10 w-80 rounded-2xl bg-white border border-slate-100 p-4 shadow-2xl z-50 animate-in fade-in slide-in-from-top-3 duration-200">
+                 <div className="flex items-center justify-between pb-3 border-b border-slate-50">
+                   <h4 className="text-xs font-black text-slate-900 uppercase tracking-widest">Recent Activity</h4>
+                   <span className="text-[9px] font-bold bg-[#0D9488]/10 text-[#0D9488] px-2 py-0.5 rounded-full">4 Events</span>
+                 </div>
+                 <div className="mt-3 space-y-3.5 max-h-64 overflow-y-auto">
+                   {notifications.map((n) => (
+                     <div key={n.id} className="flex items-start gap-3 text-xs leading-normal">
+                       <span className={`w-2 h-2 rounded-full mt-1.5 shrink-0 ${
+                         n.type === 'sale' ? 'bg-emerald-500' :
+                         n.type === 'payment' ? 'bg-[#0D9488]' :
+                         n.type === 'stock' ? 'bg-amber-500' : 'bg-slate-400'
+                       }`} />
+                       <div className="flex-1">
+                         <div className="flex items-center justify-between">
+                           <p className="font-bold text-slate-800">{n.title}</p>
+                           <span className="text-[9px] font-medium text-slate-400 shrink-0">{n.time}</span>
+                         </div>
+                         <p className="text-[10px] text-slate-500 mt-0.5">{n.desc}</p>
+                       </div>
+                     </div>
+                   ))}
+                 </div>
+               </div>
+             )}
+
              <button type="button" className="p-2 text-slate-400 hover:text-slate-900 transition-colors">
                <User className="h-5 w-5" aria-hidden="true" />
              </button>
