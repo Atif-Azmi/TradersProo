@@ -192,30 +192,32 @@ export default function LoginForm() {
             />
           </div>
           
-          <div className="relative">
+          <div>
             <div className="flex justify-between items-center mb-2">
                <label className="block text-[10px] font-bold text-slate-400 uppercase tracking-widest ml-1">Password</label>
                <Link href="/forgot-password" className="text-[10px] font-bold text-[#0D9488] hover:underline transition-colors min-h-[44px] flex items-center">Forgot password?</Link>
             </div>
-            <input
-              type={showPassword ? 'text' : 'password'}
-              required
-              className="tp-input w-full min-h-[44px]"
-              placeholder="Enter your password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              disabled={loading || !!lockoutTime}
-              autoComplete="current-password"
-            />
-            <button 
-              type="button"
-              onClick={() => setShowPassword(!showPassword)}
-              className="absolute right-4 top-[38px] text-slate-400 hover:text-slate-600 transition-colors p-2 cursor-pointer"
-              aria-label={showPassword ? 'Hide password' : 'Show password'}
-              disabled={loading || !!lockoutTime}
-            >
-              {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
-            </button>
+            <div className="relative">
+              <input
+                type={showPassword ? 'text' : 'password'}
+                required
+                className="tp-input w-full min-h-[44px] pr-12"
+                placeholder="Enter your password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                disabled={loading || !!lockoutTime}
+                autoComplete="current-password"
+              />
+              <button 
+                type="button"
+                onClick={() => setShowPassword(!showPassword)}
+                className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 transition-colors p-2 cursor-pointer flex items-center justify-center"
+                aria-label={showPassword ? 'Hide password' : 'Show password'}
+                disabled={loading || !!lockoutTime}
+              >
+                {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+              </button>
+            </div>
           </div>
 
           <div className="flex items-center gap-2">
