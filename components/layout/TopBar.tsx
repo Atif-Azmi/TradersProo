@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { Bell, Search, Menu, User } from 'lucide-react'
+import { Bell, Search, Menu, User, Loader2 } from 'lucide-react'
 import { createClient } from '@/lib/supabase/client'
 import dynamic from 'next/dynamic'
 
@@ -28,6 +28,8 @@ const DynamicGreeting = ({ email }: { email?: string }) => {
 export default function TopBar({ setSidebarOpen }: { setSidebarOpen: (open: boolean) => void }) {
   const [user, setUser] = useState<any>(null)
   const [showNotifications, setShowNotifications] = useState(false)
+  const [activities, setActivities] = useState<any[]>([])
+  const [loadingActivities, setLoadingActivities] = useState(false)
   const supabase = createClient()
 
   useEffect(() => {
@@ -38,12 +40,94 @@ export default function TopBar({ setSidebarOpen }: { setSidebarOpen: (open: bool
     getUser()
   }, [supabase])
 
-  const notifications = [
-    { id: 1, type: 'sale', title: 'New Retail Sale Finalized', desc: 'Invoice #INV-2024-009 created successfully.', time: '5m ago', active: true },
-    { id: 2, type: 'payment', title: 'Collection Received', desc: 'Received ₹12,000 from Customer Azmi.', time: '25m ago', active: true },
-    { id: 3, type: 'stock', title: 'Critical Low Stock Warning', desc: 'PVC Conduit Pipe size 20mm has dropped below limit.', time: '2h ago', active: false },
-    { id: 4, type: 'reminder', title: 'WhatsApp Notice Dispatched', desc: 'Due payment reminder sent to Customer Atif.', time: '1d ago', active: false }
-  ]
+  const fetchActivities = async () => {
+    if (!user) return
+    setLoadingActivities(true)
+    try {
+      const formatTimeAgo = (dateStr: string) => {
+        const diff = Date.now() - new Date(dateStr).getTime()
+        const minutes = Math.floor(diff / 60000)
+        if (minutes < 1) return 'Just now'
+        if (minutes < 60) return `${minutes}m ago`
+        const hours = Math.floor(minutes / 60)
+        if (hours < 24) return `${hours}h ago`
+        const days = Math.floor(hours / 24)
+        return `${days}d ago`
+      }
+
+      // 1. Fetch live Sales
+      const { data: sales } = await supabase
+        .from('tp_sales')
+        .select('id, invoice_number, total_amount, created_at, tp_customers(name)')
+        .order('created_at', { ascending: false })
+        .limit(4)
+
+      const saleLogs = (sales || []).map((s: any) => ({
+        id: `sale-${s.id}`,
+        type: 'sale',
+        title: 'New Retail Sale',
+        desc: `Invoice #${s.invoice_number} created for ${s.tp_customers?.name || 'Customer'} (₹${s.total_amount})`,
+        time: formatTimeAgo(s.created_at),
+        timestamp: new Date(s.created_at).getTime()
+      }))
+
+      // 2. Fetch live Payments
+      const { data: payments } = await supabase
+        .from('tp_payments_received')
+        .select('id, type, amount, created_at, tp_customers(name)')
+        .order('created_at', { ascending: false })
+        .limit(4)
+
+      const paymentLogs = (payments || []).map((p: any) => ({
+        id: `payment-${p.id}`,
+        type: p.type === 'advance' ? 'advance' : 'payment',
+        title: p.type === 'advance' ? 'Advance Received' : 'Collection Received',
+        desc: `Received ₹${p.amount} from ${p.tp_customers?.name || 'Customer'}`,
+        time: formatTimeAgo(p.created_at),
+        timestamp: new Date(p.created_at).getTime()
+      }))
+
+      // 3. Fetch live low stock products
+      const { data: products } = await supabase
+        .from('tp_products')
+        .select('id, name, current_stock, min_stock_alert, created_at')
+        .order('created_at', { ascending: false })
+
+      const lowStockLogs = (products || [])
+        .filter((p: any) => p.current_stock <= (p.min_stock_alert || 5))
+        .map((p: any) => ({
+          id: `stock-${p.id}`,
+          type: 'stock',
+          title: 'Low Stock Warning',
+          desc: `Product "${p.name}" has dropped to ${p.current_stock} remaining`,
+          time: 'Alert',
+          timestamp: new Date(p.created_at || Date.now()).getTime()
+        }))
+
+      // Merge and sort
+      const merged = [...saleLogs, ...paymentLogs, ...lowStockLogs]
+        .sort((a, b) => b.timestamp - a.timestamp)
+        .slice(0, 5)
+
+      setActivities(merged)
+    } catch (err) {
+      console.error('Error fetching dynamic activities:', err)
+    } finally {
+      setLoadingActivities(false)
+    }
+  }
+
+  useEffect(() => {
+    if (user) {
+      fetchActivities()
+    }
+  }, [user])
+
+  useEffect(() => {
+    if (user && showNotifications) {
+      fetchActivities()
+    }
+  }, [user, showNotifications])
 
   return (
     <div className="sticky top-0 z-40 flex h-16 shrink-0 items-center border-b border-slate-200 bg-white px-4 sm:px-6 lg:px-8">
@@ -73,7 +157,7 @@ export default function TopBar({ setSidebarOpen }: { setSidebarOpen: (open: bool
         
         <div className="flex-1 flex justify-center">
            <DynamicGreeting email={user?.email} />
-        </div>
+         </div>
 
         <div className="flex items-center gap-x-4 lg:gap-x-6">
           <div className="flex items-center gap-3 relative">
@@ -84,7 +168,9 @@ export default function TopBar({ setSidebarOpen }: { setSidebarOpen: (open: bool
                className="p-2 text-slate-400 hover:text-[#0D9488] transition-colors relative cursor-pointer"
              >
                <Bell className="h-5 w-5" aria-hidden="true" />
-               <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-rose-500 rounded-full border-2 border-white" />
+               {activities.length > 0 && (
+                 <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-rose-500 rounded-full border-2 border-white" />
+               )}
              </button>
 
              {/* Click-away backdrop */}
@@ -97,25 +183,41 @@ export default function TopBar({ setSidebarOpen }: { setSidebarOpen: (open: bool
                <div className="absolute right-0 mt-2 top-10 w-80 rounded-2xl bg-white border border-slate-100 p-4 shadow-2xl z-50 animate-in fade-in slide-in-from-top-3 duration-200">
                  <div className="flex items-center justify-between pb-3 border-b border-slate-50">
                    <h4 className="text-xs font-black text-slate-900 uppercase tracking-widest">Recent Activity</h4>
-                   <span className="text-[9px] font-bold bg-[#0D9488]/10 text-[#0D9488] px-2 py-0.5 rounded-full">4 Events</span>
+                   <span className="text-[9px] font-bold bg-[#0D9488]/10 text-[#0D9488] px-2.5 py-0.5 rounded-full">
+                     {loadingActivities ? '...' : `${activities.length} Events`}
+                   </span>
                  </div>
+                 
                  <div className="mt-3 space-y-3.5 max-h-64 overflow-y-auto">
-                   {notifications.map((n) => (
-                     <div key={n.id} className="flex items-start gap-3 text-xs leading-normal">
-                       <span className={`w-2 h-2 rounded-full mt-1.5 shrink-0 ${
-                         n.type === 'sale' ? 'bg-emerald-500' :
-                         n.type === 'payment' ? 'bg-[#0D9488]' :
-                         n.type === 'stock' ? 'bg-amber-500' : 'bg-slate-400'
-                       }`} />
-                       <div className="flex-1">
-                         <div className="flex items-center justify-between">
-                           <p className="font-bold text-slate-800">{n.title}</p>
-                           <span className="text-[9px] font-medium text-slate-400 shrink-0">{n.time}</span>
-                         </div>
-                         <p className="text-[10px] text-slate-500 mt-0.5">{n.desc}</p>
-                       </div>
+                   {loadingActivities ? (
+                     <div className="flex flex-col items-center justify-center py-6 text-slate-400 gap-2">
+                       <Loader2 className="h-5 w-5 animate-spin text-[#0D9488]" />
+                       <span className="text-[10px] font-bold uppercase tracking-wider">Syncing live operations...</span>
                      </div>
-                   ))}
+                   ) : activities.length === 0 ? (
+                     <div className="text-center py-8 px-4 text-slate-400">
+                       <p className="text-[11px] font-bold uppercase tracking-wider">No Recent Operations</p>
+                       <p className="text-[9px] text-slate-400 mt-1">Start adding products, sales, and payments to see live operations logged here!</p>
+                     </div>
+                   ) : (
+                     activities.map((n) => (
+                       <div key={n.id} className="flex items-start gap-3 text-xs leading-normal">
+                         <span className={`w-2 h-2 rounded-full mt-1.5 shrink-0 ${
+                           n.type === 'sale' ? 'bg-emerald-500' :
+                           n.type === 'payment' ? 'bg-[#0D9488]' :
+                           n.type === 'advance' ? 'bg-indigo-500' :
+                           n.type === 'stock' ? 'bg-amber-500' : 'bg-slate-400'
+                         }`} />
+                         <div className="flex-1">
+                           <div className="flex items-center justify-between">
+                             <p className="font-bold text-slate-800">{n.title}</p>
+                             <span className="text-[9px] font-medium text-slate-400 shrink-0">{n.time}</span>
+                           </div>
+                           <p className="text-[10px] text-slate-500 mt-0.5">{n.desc}</p>
+                         </div>
+                       </div>
+                     ))
+                   )}
                  </div>
                </div>
              )}

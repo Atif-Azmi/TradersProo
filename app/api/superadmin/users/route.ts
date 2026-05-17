@@ -24,14 +24,19 @@ export async function PATCH(request: Request) {
     return NextResponse.json({ error: 'Invalid input' }, { status: 400 })
   }
 
-  const { data, error } = await adminSupabase
-    .rpc('tp_superadmin_update_trial', {
-      target_user_id: user_id,
-      new_trial_days: parseInt(new_trial_days)
+  const daysInt = parseInt(new_trial_days)
+  const targetExpiry = new Date()
+  targetExpiry.setDate(targetExpiry.getDate() + daysInt)
+
+  const { error } = await adminSupabase
+    .from('tp_profile')
+    .update({ 
+      plan_expiry: targetExpiry.toISOString()
     })
+    .eq('id', user_id)
 
   if (error) return NextResponse.json({ error: error.message }, { status: 500 })
-  return NextResponse.json({ result: data })
+  return NextResponse.json({ result: { success: true } })
 }
 
 export async function POST(request: Request) {
