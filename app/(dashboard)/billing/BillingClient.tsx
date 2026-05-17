@@ -4,13 +4,14 @@ import { useState, useRef, useEffect } from 'react'
 import { 
   FileText, Upload, Copy, MessageCircle, Printer, Plus, 
   CheckCircle, Loader2, ChevronDown, Calendar, User, 
-  ArrowRight, Search, X, ShieldCheck, Download, Building2
+  ArrowRight, Search, X, ShieldCheck, Download, Building2, AlertCircle, TrendingDown
 } from 'lucide-react'
 import { generateBillData, uploadBillPDF, saveBillShare, shortenUrl } from '@/lib/billing'
 import { useBusinessProfile } from '@/hooks/useBusinessProfile'
 import { generateBillPDF } from '@/utils/generateBillPDF'
 import { sendWhatsAppDuePayment } from '@/utils/sendWhatsAppDue'
 import { toast } from 'react-hot-toast'
+import { createClient } from '@/lib/supabase/client'
 
 interface Props { userId: string; customers: any[] }
 
@@ -125,8 +126,25 @@ export default function BillingClient({ userId, customers }: Props) {
     setUploading(false)
   }
 
+  const [shares, setShares] = useState<any[]>([])
+  const supabase = createClient()
+
+  useEffect(() => {
+    async function fetchShares() {
+      const { data } = await supabase
+        .from('tp_bill_shares')
+        .select('*')
+        .order('created_at', { ascending: false })
+      if (data) setShares(data)
+    }
+    fetchShares()
+  }, [supabase])
+
+  const totalBills = shares.length
+  const totalOutstanding = shares.reduce((acc, curr) => acc + parseFloat(curr.total_amount || 0), 0)
+
   return (
-    <div className="space-y-8 animate-in fade-in duration-700 pb-20">
+    <div className="space-y-6 max-w-[1600px] mx-auto pb-10">
       <style>{`
         @media print {
           @page {
@@ -144,39 +162,66 @@ export default function BillingClient({ userId, customers }: Props) {
         }
       `}</style>
       {!profile && !profileLoading && (
-        <div className="bg-amber-50 border border-amber-200 p-4 rounded-2xl flex items-center gap-4 text-amber-800 print:hidden">
+        <div className="bg-amber-50 border border-amber-200 p-4 rounded-xl flex items-center gap-4 text-amber-800 print:hidden">
           <ShieldCheck className="h-5 w-5" />
           <p className="text-xs font-bold uppercase tracking-widest">Business identity not configured. Bills may be incomplete.</p>
           <button onClick={() => window.location.href='/onboarding'} className="ml-auto bg-amber-200 hover:bg-amber-300 px-4 py-2 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all">Setup Now</button>
         </div>
       )}
 
-      <div className="print:hidden">
-        <h2 className="text-3xl font-black tracking-tight text-slate-900">Billing Center</h2>
-        <p className="text-slate-500 font-medium text-sm mt-1">Generate professional invoices and share them instantly.</p>
+      <div className="flex sm:items-center justify-between flex-col sm:flex-row gap-4 print:hidden">
+        <div>
+          <h2 className="text-xl font-bold text-slate-900">Billing</h2>
+        </div>
+        <button 
+          onClick={handleGenerate}
+          className="tp-button-primary flex items-center gap-2"
+        >
+          <Plus className="h-4 w-4" /> New Bill
+        </button>
+      </div>
+
+      {/* Row of 3 Stat Cards */}
+      <div className="grid gap-6 md:grid-cols-3 print:hidden">
+        <div className="tp-card p-6 flex items-center gap-4">
+           <div className="bg-emerald-50 p-3 rounded-full text-[#0D9B8A]"><FileText className="h-5 w-5" /></div>
+           <div>
+              <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Total Bills</p>
+              <p className="text-xl font-black text-slate-900">{totalBills}</p>
+           </div>
+        </div>
+        <div className="tp-card p-6 flex items-center gap-4">
+           <div className="bg-emerald-50 p-3 rounded-full text-[#0D9B8A]"><Plus className="h-5 w-5" /></div>
+           <div>
+              <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Total Clients</p>
+              <p className="text-xl font-black text-slate-900">{customers.length}</p>
+           </div>
+        </div>
+        <div className="tp-card p-6 flex items-center gap-4">
+           <div className="bg-rose-50 p-3 rounded-full text-red-600"><AlertCircle className="h-5 w-5" /></div>
+           <div>
+              <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Outstanding Bills</p>
+              <p className="text-xl font-black text-red-600">₹{totalOutstanding.toLocaleString('en-IN')}</p>
+           </div>
+        </div>
       </div>
 
       {/* SELECT CRITERIA */}
-      <div className="bg-white border border-slate-100 rounded-[2rem] p-10 shadow-xl shadow-slate-200/40 relative z-40 print:hidden">
-        <div className="flex items-center gap-6 mb-10">
-          <h3 className="font-black text-sm text-slate-900 uppercase tracking-[0.3em]">Invoice Setup</h3>
-          <div className="flex-1 h-px bg-slate-100" />
-        </div>
-
-        <div className="grid grid-cols-1 lg:grid-cols-4 gap-8 items-end">
-          <div className="space-y-3 relative" ref={dropdownRef}>
-            <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1">Bill To</label>
-            <div onClick={() => setShowCustDropdown(!showCustDropdown)} className="w-full bg-slate-50 border-2 border-transparent hover:border-slate-200 rounded-2xl px-6 py-4 text-sm font-black text-slate-900 cursor-pointer flex items-center justify-between transition-all">
+      <div className="bg-white border border-slate-100 rounded-xl p-6 shadow-sm relative z-40 print:hidden">
+        <div className="grid grid-cols-1 lg:grid-cols-4 gap-6 items-end">
+          <div className="space-y-2 relative" ref={dropdownRef}>
+            <label className="text-[10px] font-bold text-slate-400 uppercase tracking-widest ml-1">Bill To</label>
+            <div onClick={() => setShowCustDropdown(!showCustDropdown)} className="w-full bg-slate-50 border border-slate-200 hover:border-slate-300 rounded-lg px-4 py-2.5 text-sm font-black text-slate-900 cursor-pointer flex items-center justify-between transition-all">
               <span className={selectedCust ? 'text-slate-900' : 'text-slate-400'}>{selectedCustomer ? selectedCustomer.name : 'Select customer...'}</span>
-              <ChevronDown className="h-5 w-5 text-slate-400" />
+              <ChevronDown className="h-4 w-4 text-slate-400" />
             </div>
             {showCustDropdown && (
-              <div className="absolute top-full left-0 right-0 mt-2 bg-white border border-slate-100 rounded-2xl shadow-2xl overflow-hidden z-50">
-                <div className="p-3 border-b border-slate-50"><input autoFocus type="text" placeholder="Search..." value={custSearch} onChange={e=>setCustSearch(e.target.value)} onClick={e=>e.stopPropagation()} className="w-full bg-slate-50 border-none rounded-xl px-4 py-2 text-sm font-bold focus:ring-2 focus:ring-primary outline-none" /></div>
+              <div className="absolute top-full left-0 right-0 mt-2 bg-white border border-slate-100 rounded-xl shadow-xl overflow-hidden z-50">
+                <div className="p-3 border-b border-slate-50"><input autoFocus type="text" placeholder="Search..." value={custSearch} onChange={e=>setCustSearch(e.target.value)} onClick={e=>e.stopPropagation()} className="w-full bg-slate-50 border-none rounded-lg px-4 py-2 text-sm font-bold focus:ring-2 focus:ring-primary outline-none" /></div>
                 <div className="max-h-60 overflow-y-auto">
                   {filteredCustomers.map(c => (
-                    <div key={c.id} onClick={() => { setSelectedCust(c.id); setShowCustDropdown(false) }} className="px-5 py-4 hover:bg-slate-50 cursor-pointer flex items-center justify-between group">
-                      <div><p className="font-black text-slate-900 text-sm group-hover:text-primary transition-colors">{c.name}</p><p className="text-[10px] font-bold text-slate-400">{c.phone}</p></div>
+                    <div key={c.id} onClick={() => { setSelectedCust(c.id); setShowCustDropdown(false) }} className="px-4 py-3 hover:bg-slate-50 cursor-pointer flex items-center justify-between group">
+                      <div><p className="font-bold text-slate-900 text-sm group-hover:text-primary transition-colors">{c.name}</p><p className="text-[10px] font-bold text-slate-400">{c.phone}</p></div>
                     </div>
                   ))}
                 </div>
@@ -184,17 +229,17 @@ export default function BillingClient({ userId, customers }: Props) {
             )}
           </div>
 
-          <div className="space-y-3">
-            <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1">Start Date</label>
-            <input type="date" value={startDate} onClick={(e) => { try { e.currentTarget.showPicker() } catch(err) {} }} onChange={e=>setStartDate(e.target.value)} className="w-full bg-slate-50 border-2 border-transparent rounded-2xl px-6 py-4 text-sm font-black text-slate-900 focus:bg-white outline-none transition-all cursor-pointer" />
+          <div className="space-y-2">
+            <label className="text-[10px] font-bold text-slate-400 uppercase tracking-widest ml-1">Start Date</label>
+            <input type="date" value={startDate} onClick={(e) => { try { e.currentTarget.showPicker() } catch(err) {} }} onChange={e=>setStartDate(e.target.value)} className="w-full bg-slate-50 border border-slate-200 rounded-lg px-4 py-2 text-sm font-bold text-slate-900 focus:bg-white outline-none transition-all cursor-pointer" />
           </div>
 
-          <div className="space-y-3">
-            <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1">End Date</label>
-            <input type="date" value={endDate} onClick={(e) => { try { e.currentTarget.showPicker() } catch(err) {} }} onChange={e=>setEndDate(e.target.value)} className="w-full bg-slate-50 border-2 border-transparent rounded-2xl px-6 py-4 text-sm font-black text-slate-900 focus:bg-white outline-none transition-all cursor-pointer" />
+          <div className="space-y-2">
+            <label className="text-[10px] font-bold text-slate-400 uppercase tracking-widest ml-1">End Date</label>
+            <input type="date" value={endDate} onClick={(e) => { try { e.currentTarget.showPicker() } catch(err) {} }} onChange={e=>setEndDate(e.target.value)} className="w-full bg-slate-50 border border-slate-200 rounded-lg px-4 py-2 text-sm font-bold text-slate-900 focus:bg-white outline-none transition-all cursor-pointer" />
           </div>
 
-          <button onClick={handleGenerate} disabled={loading} className="w-full bg-slate-900 hover:bg-black text-white rounded-2xl py-4 font-black text-xs uppercase tracking-widest shadow-xl flex items-center justify-center gap-3 transition-all hover:-translate-y-1 disabled:opacity-50">
+          <button onClick={handleGenerate} disabled={loading} className="w-full tp-button-primary py-3 flex items-center justify-center gap-2 transition-all disabled:opacity-50">
             {loading ? <Loader2 className="h-4 w-4 animate-spin" /> : <FileText className="h-4 w-4" />}
             Generate Invoice
           </button>
@@ -204,21 +249,19 @@ export default function BillingClient({ userId, customers }: Props) {
       {/* ACTIONS */}
       {billData && (
         <div className="flex flex-wrap gap-4 animate-in fade-in slide-in-from-bottom-4 print:hidden">
-          <button onClick={() => window.print()} className="flex items-center gap-3 px-8 py-4 rounded-2xl bg-white border-2 border-slate-100 text-slate-900 text-xs font-black uppercase tracking-widest hover:border-slate-300 transition-all shadow-lg"><Printer className="h-4 w-4" /> Print</button>
-          <button onClick={handleDownloadPDF} className="flex items-center gap-3 px-8 py-4 rounded-2xl bg-slate-900 text-white text-xs font-black uppercase tracking-widest shadow-lg hover:bg-black transition-all"><Download className="h-4 w-4" /> Download PDF</button>
-          <button onClick={handleUpload} disabled={uploading} className="flex items-center gap-3 px-8 py-4 rounded-2xl bg-emerald-500 text-white text-xs font-black uppercase tracking-widest shadow-xl shadow-emerald-100 hover:bg-emerald-600 transition-all disabled:opacity-50">
-            {uploading ? <Loader2 className="h-4 w-4 animate-spin" /> : <Upload className="h-4 w-4" />}
+          <button onClick={() => window.print()} className="px-4 py-2 text-[10px] font-bold uppercase text-slate-900 hover:bg-slate-100 rounded-lg transition-all border border-slate-200">Print</button>
+          <button onClick={handleDownloadPDF} className="px-4 py-2 text-[10px] font-bold uppercase bg-slate-900 text-white hover:bg-black rounded-lg transition-all">Download PDF</button>
+          <button onClick={handleUpload} disabled={uploading} className="px-4 py-2 text-[10px] font-bold uppercase text-[#0D9488] hover:bg-[#0D9488]/5 rounded-lg transition-all">
             {uploading ? 'Uploading...' : 'Upload & Get Link'}
           </button>
           {shareLink && (
             <div className="flex gap-4">
-              <button onClick={() => { navigator.clipboard.writeText(shareLink); setCopied(true); setTimeout(()=>setCopied(false), 2000) }} className="flex items-center gap-3 px-8 py-4 rounded-2xl bg-white border-2 border-slate-100 text-slate-900 text-xs font-black uppercase tracking-widest shadow-lg transition-all">
-                {copied ? <CheckCircle className="h-4 w-4 text-emerald-500" /> : <Copy className="h-4 w-4" />}
+              <button onClick={() => { navigator.clipboard.writeText(shareLink); setCopied(true); setTimeout(()=>setCopied(false), 2000) }} className="px-4 py-2 text-[10px] font-bold uppercase text-slate-900 hover:bg-slate-100 rounded-lg transition-all">
                 {copied ? 'Copied' : 'Copy Link'}
               </button>
               <button onClick={() => {
                 sendWhatsAppDuePayment(profile, selectedCustomer, billData, shareLink)
-              }} className="flex items-center gap-3 px-8 py-4 rounded-2xl bg-green-500 text-white text-xs font-black uppercase tracking-widest shadow-xl hover:bg-green-600 transition-all"><MessageCircle className="h-4 w-4" /> WhatsApp</button>
+              }} className="px-4 py-2 text-[10px] font-bold uppercase text-emerald-600 hover:bg-emerald-50 rounded-lg transition-all">WhatsApp</button>
             </div>
           )}
         </div>

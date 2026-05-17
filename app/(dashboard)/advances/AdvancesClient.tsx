@@ -143,16 +143,15 @@ export default function AdvancesClient({ initialPayments, customers }: AdvancesC
   }
 
   return (
-    <div className="space-y-8 animate-in fade-in duration-700">
-      <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
+    <div className="space-y-6 max-w-[1600px] mx-auto pb-10">
+      <div className="flex sm:items-center justify-between flex-col sm:flex-row gap-4">
         <div>
-          <h2 className="text-3xl font-black tracking-tight text-slate-900">Advances & Payments</h2>
-          <p className="text-slate-500 font-medium text-sm mt-1">Manage all cash flows, advances, and bank transactions.</p>
+          <h2 className="text-xl font-bold text-slate-900">Advances & Payments</h2>
         </div>
         <div className="flex gap-3">
           <button 
             onClick={() => { resetForm(); setShowAddModal(true); }}
-            className="bg-primary hover:bg-green-600 text-white px-6 py-4 rounded-2xl font-black text-xs uppercase tracking-widest shadow-xl shadow-green-100 flex items-center gap-3 transition-all cursor-pointer"
+            className="tp-button-primary flex items-center gap-2"
           >
             <Plus className="h-4 w-4" /> Add Payment / Advance
           </button>
@@ -160,73 +159,62 @@ export default function AdvancesClient({ initialPayments, customers }: AdvancesC
       </div>
 
       {/* SUMMARY BAR */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <div className="bg-white border border-slate-100 p-8 rounded-[2rem] shadow-sm flex items-center gap-6">
-          <div className="w-14 h-14 rounded-2xl bg-emerald-50 flex items-center justify-center text-emerald-600">
-            <Wallet className="h-6 w-6" />
-          </div>
-          <div>
-            <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Cash in Hand</p>
-            <p className="text-2xl font-black text-slate-900 mt-1">₹{cashInHand.toLocaleString('en-IN', { minimumFractionDigits: 2 })}</p>
-          </div>
+      <div className="grid gap-6 md:grid-cols-3">
+        <div className="tp-card p-6 flex items-center gap-4">
+           <div className="bg-emerald-50 p-3 rounded-full text-emerald-600"><Wallet className="h-5 w-5" /></div>
+           <div>
+              <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Cash in Hand</p>
+              <p className="text-xl font-black text-slate-900">₹{cashInHand.toLocaleString('en-IN', { minimumFractionDigits: 2 })}</p>
+           </div>
         </div>
-        <div className="bg-white border border-slate-100 p-8 rounded-[2rem] shadow-sm flex items-center gap-6">
-          <div className="w-14 h-14 rounded-2xl bg-blue-50 flex items-center justify-center text-blue-600">
-            <Landmark className="h-6 w-6" />
-          </div>
-          <div>
-            <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Bank Balance</p>
-            <p className="text-2xl font-black text-slate-900 mt-1">₹{bankBalance.toLocaleString('en-IN', { minimumFractionDigits: 2 })}</p>
-          </div>
+        <div className="tp-card p-6 flex items-center gap-4">
+           <div className="bg-emerald-50 p-3 rounded-full text-emerald-600"><Landmark className="h-5 w-5" /></div>
+           <div>
+              <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Bank Balance</p>
+              <p className="text-xl font-black text-slate-900">₹{bankBalance.toLocaleString('en-IN', { minimumFractionDigits: 2 })}</p>
+           </div>
         </div>
-        <div className="bg-white border border-slate-100 p-8 rounded-[2rem] shadow-sm flex items-center gap-6">
-          <div className="w-14 h-14 rounded-2xl bg-orange-50 flex items-center justify-center text-orange-600">
-            <History className="h-6 w-6" />
-          </div>
-          <div>
-            <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Advances Held</p>
-            <p className="text-2xl font-black text-slate-900 mt-1">₹{advancesHeld.toLocaleString('en-IN', { minimumFractionDigits: 2 })}</p>
-          </div>
+        <div className="tp-card p-6 flex items-center gap-4">
+           <div className="bg-amber-50 p-3 rounded-full text-amber-600"><History className="h-5 w-5" /></div>
+           <div>
+              <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Advances Held</p>
+              <p className="text-xl font-black text-slate-900">₹{advancesHeld.toLocaleString('en-IN', { minimumFractionDigits: 2 })}</p>
+           </div>
         </div>
       </div>
 
       {/* FILTER & ACTION CARD */}
-      <div className="bg-white border border-slate-100 rounded-[2rem] p-6 shadow-sm space-y-4">
-        <div className="relative">
-          <Search className="absolute left-6 top-1/2 -translate-y-1/2 h-5 w-5 text-slate-400" />
+      <div className="flex flex-col sm:flex-row gap-4 justify-between bg-white p-4 rounded-xl border border-slate-100 shadow-sm">
+        <div className="relative flex-1 max-w-md">
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400" />
           <input 
             type="text" 
-            placeholder="Search by customer name, note, or reference number..." 
+            placeholder="Search transactions..." 
             value={search}
             onChange={e => setSearch(e.target.value)}
-            className="w-full bg-slate-50 border-none rounded-2xl pl-16 pr-8 py-4 text-sm font-bold focus:ring-2 focus:ring-primary outline-none transition-all"
+            className="w-full pl-9 pr-4 py-2 text-sm border border-slate-200 rounded-lg focus:ring-2 focus:ring-[#0D9488]/20 focus:border-[#0D9488] outline-none transition-all"
           />
         </div>
-        <div className="flex gap-4 flex-wrap text-[10px] font-black uppercase tracking-widest pt-2">
-          {/* Payment Mode Filters */}
+        <div className="flex gap-4 flex-wrap text-[10px] font-black uppercase tracking-widest items-center">
           <div className="flex items-center gap-2">
             <span className="text-slate-400">Mode:</span>
             {['All', 'Cash', 'UPI', 'Online'].map((mode) => (
               <button
                 key={mode}
                 onClick={() => setFilterMode(mode)}
-                className={`px-3 py-1.5 rounded-lg transition-all cursor-pointer ${filterMode === mode ? 'bg-slate-900 text-white' : 'bg-slate-50 text-slate-500 hover:bg-slate-100'}`}
+                className={`px-3 py-1 rounded-lg transition-all cursor-pointer ${filterMode === mode ? 'bg-slate-900 text-white' : 'bg-slate-50 text-slate-500 hover:bg-slate-100'}`}
               >
                 {mode}
               </button>
             ))}
           </div>
-
-          <div className="h-6 w-[1px] bg-slate-200 hidden md:block" />
-
-          {/* Type Filters */}
           <div className="flex items-center gap-2">
             <span className="text-slate-400">Type:</span>
             {['All', 'Payment', 'Advance'].map((t) => (
               <button
                 key={t}
                 onClick={() => setFilterType(t)}
-                className={`px-3 py-1.5 rounded-lg transition-all cursor-pointer ${filterType === t ? 'bg-slate-900 text-white' : 'bg-slate-50 text-slate-500 hover:bg-slate-100'}`}
+                className={`px-3 py-1 rounded-lg transition-all cursor-pointer ${filterType === t ? 'bg-slate-900 text-white' : 'bg-slate-50 text-slate-500 hover:bg-slate-100'}`}
               >
                 {t}
               </button>
@@ -236,71 +224,63 @@ export default function AdvancesClient({ initialPayments, customers }: AdvancesC
       </div>
 
       {/* DATA LIST */}
-      <div className="bg-white border border-slate-100 rounded-[2.5rem] shadow-sm overflow-hidden">
-        <div className="p-8 border-b border-slate-50 flex items-center justify-between">
-          <h3 className="font-black text-xs text-slate-400 uppercase tracking-widest">Transaction History</h3>
-          <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Showing {filteredPayments.length} transactions</span>
-        </div>
-        
-        <div className="divide-y divide-slate-50">
-          {filteredPayments.length === 0 ? (
-            <div className="p-16 text-center text-slate-400 text-xs font-black uppercase tracking-widest">
-              No transactions found matching your criteria.
-            </div>
-          ) : (
-            filteredPayments.map((txn) => (
-              <div key={txn.id} className="p-8 hover:bg-slate-50/50 transition-colors flex items-center justify-between group relative">
-                <div className="flex items-center gap-6">
-                  <div className={`w-12 h-12 rounded-2xl flex items-center justify-center ${txn.type === 'advance' ? 'bg-orange-50 text-orange-600' : 'bg-emerald-50 text-emerald-600'}`}>
-                    {txn.type === 'advance' ? <History className="h-6 w-6" /> : <ArrowDownCircle className="h-6 w-6" />}
-                  </div>
-                  <div>
-                    <p className="font-black text-slate-900 text-lg group-hover:text-primary transition-colors">{txn.tp_customers?.name || 'Walk-in'}</p>
-                    <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mt-1">
-                      {txn.type} • {txn.payment_mode} • {txn.payment_date} {txn.reference_number && `• Ref: ${txn.reference_number}`}
-                    </p>
-                    {txn.note && (
-                      <p className="text-xs text-slate-500 font-medium mt-1">
-                        Note: {txn.note}
-                      </p>
-                    )}
-                  </div>
-                </div>
-
-                <div className="flex items-center gap-12">
-                  <div className="text-right">
-                    <p className="font-black text-xl text-emerald-600">
-                      + ₹{txn.amount.toLocaleString('en-IN', { minimumFractionDigits: 2 })}
-                    </p>
-                  </div>
-                  <div className="relative">
-                    <button 
-                      onClick={() => setActionMenuOpen(actionMenuOpen === txn.id ? null : txn.id)}
-                      className="p-3 hover:bg-white hover:shadow-md rounded-xl text-slate-300 hover:text-slate-900 transition-all cursor-pointer"
-                    >
-                      <MoreVertical className="h-5 w-5" />
-                    </button>
-                    {actionMenuOpen === txn.id && (
-                      <div className="absolute right-0 mt-2 w-48 bg-white border border-slate-100 rounded-2xl shadow-xl z-20 py-2">
-                        <button 
-                          onClick={() => openReceipt(txn)}
-                          className="w-full text-left px-4 py-2 text-xs font-bold text-slate-700 hover:bg-slate-50 flex items-center gap-2 cursor-pointer"
-                        >
-                          <Printer className="h-4 w-4" /> Print Receipt
-                        </button>
-                        <button 
-                          onClick={() => handleDeleteTransaction(txn.id)}
-                          className="w-full text-left px-4 py-2 text-xs font-bold text-red-600 hover:bg-red-50 flex items-center gap-2 cursor-pointer"
-                        >
-                          <Trash2 className="h-4 w-4" /> Delete Payment
-                        </button>
+      <div className="tp-card overflow-hidden">
+        <div className="overflow-x-auto">
+          <table className="w-full text-sm text-left">
+            <thead className="text-[10px] font-bold text-slate-400 uppercase bg-slate-50/50 tracking-widest">
+              <tr>
+                <th className="px-6 py-4">Customer</th>
+                <th className="px-6 py-4">Type</th>
+                <th className="px-6 py-4">Mode</th>
+                <th className="px-6 py-4">Date</th>
+                <th className="px-6 py-4 text-right">Amount</th>
+                <th className="px-6 py-4 text-right">Actions</th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-slate-50">
+              {filteredPayments.length === 0 ? (
+                <tr>
+                  <td colSpan={6} className="px-6 py-16 text-center text-slate-400 text-xs font-bold uppercase tracking-widest">
+                    No transactions found
+                  </td>
+                </tr>
+              ) : (
+                filteredPayments.map((txn) => (
+                  <tr key={txn.id} className="hover:bg-slate-50/50 transition-all group">
+                    <td className="px-6 py-5">
+                      <div className="flex items-center gap-3">
+                         <div className="w-9 h-9 rounded-full bg-slate-100 flex items-center justify-center text-slate-500 font-bold text-xs">
+                            {(txn.tp_customers?.name || 'W')[0].toUpperCase()}
+                         </div>
+                         <div>
+                            <p className="font-bold text-slate-900">{txn.tp_customers?.name || 'Walk-in'}</p>
+                            {txn.reference_number && <p className="text-[10px] font-medium text-slate-400 uppercase">Ref: {txn.reference_number}</p>}
+                         </div>
                       </div>
-                    )}
-                  </div>
-                </div>
-              </div>
-            ))
-          )}
+                    </td>
+                    <td className="px-6 py-5">
+                       <span className={`inline-flex items-center gap-1.5 py-1 px-3 rounded-full text-[10px] font-bold uppercase tracking-widest border ${
+                         txn.type === 'advance' 
+                           ? 'bg-amber-50 text-amber-600 border-amber-100' 
+                           : 'bg-emerald-50 text-emerald-600 border-emerald-100'
+                       }`}>{txn.type}</span>
+                    </td>
+                    <td className="px-6 py-5">
+                       <span className="text-slate-600 font-medium px-3 py-1 bg-slate-100 rounded-full text-[10px] font-bold uppercase tracking-tight">{txn.payment_mode}</span>
+                    </td>
+                    <td className="px-6 py-5 text-slate-600 font-medium">{txn.payment_date}</td>
+                    <td className="px-6 py-5 text-right font-black text-slate-900">₹{txn.amount.toLocaleString('en-IN', { minimumFractionDigits: 2 })}</td>
+                    <td className="px-6 py-5 text-right">
+                       <div className="flex justify-end gap-2">
+                         <button onClick={() => openReceipt(txn)} className="px-3 py-1.5 text-[10px] font-bold uppercase text-[#0D9488] hover:bg-[#0D9488]/5 rounded-lg transition-all">Receipt</button>
+                         <button onClick={() => handleDeleteTransaction(txn.id)} className="px-3 py-1.5 text-[10px] font-bold uppercase text-red-600 hover:bg-rose-50 rounded-lg transition-all">Delete</button>
+                       </div>
+                    </td>
+                  </tr>
+                ))
+              )}
+            </tbody>
+          </table>
         </div>
       </div>
 

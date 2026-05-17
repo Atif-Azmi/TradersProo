@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { Plus, Search, FileText, MessageCircle, IndianRupee, X, CheckCircle, Loader2 } from 'lucide-react'
+import { Plus, Search, FileText, MessageCircle, IndianRupee, X, CheckCircle, Loader2, AlertCircle, TrendingDown } from 'lucide-react'
 import Link from 'next/link'
 import { createClient } from '@/lib/supabase/client'
 
@@ -222,19 +222,51 @@ export default function SalesClient({ initialSales, shopProfile }: SalesClientPr
     window.open(url, '_blank')
   }
 
+  const todaysSales = sales
+    .filter(s => new Date(s.invoice_date).toDateString() === new Date().toDateString())
+    .reduce((acc, curr) => acc + parseFloat(curr.total_amount || 0), 0)
+  
+  const totalPending = sales.reduce((acc, curr) => acc + getBalance(curr), 0)
+  
+  const totalInvoiced = sales.reduce((acc, curr) => acc + parseFloat(curr.total_amount || 0), 0)
+
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 max-w-[1600px] mx-auto pb-10">
       <div className="flex sm:items-center justify-between flex-col sm:flex-row gap-4">
         <div>
-          <h2 className="text-2xl font-black tracking-tight text-slate-900">Sales Ledger</h2>
-          <p className="text-slate-500 font-medium text-sm mt-1">Track all invoices, payments, and outstanding collections.</p>
+          <h2 className="text-xl font-bold text-slate-900">Sales & Billing</h2>
         </div>
-        <Link href="/sales/new" className="flex items-center gap-2 rounded-xl bg-primary px-5 py-2.5 text-sm font-bold text-white shadow-lg shadow-green-100 hover:bg-green-600 transition-all">
-          <Plus className="h-4 w-4" /> Create Invoice
+        <Link href="/sales/new" className="tp-button-primary flex items-center gap-2">
+          <Plus className="h-4 w-4" /> New Sale
         </Link>
       </div>
 
-      <div className="flex flex-col sm:flex-row gap-4 justify-between bg-white p-4 rounded-2xl border border-slate-100 shadow-sm">
+      {/* Row of 3 Stat Cards */}
+      <div className="grid gap-6 md:grid-cols-3">
+        <div className="tp-card p-6 flex items-center gap-4">
+           <div className="bg-emerald-50 p-3 rounded-full text-[#0D9B8A]"><Plus className="h-5 w-5" /></div>
+           <div>
+              <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Today's Sales</p>
+              <p className="text-xl font-black text-slate-900">₹{todaysSales.toLocaleString('en-IN')}</p>
+           </div>
+        </div>
+        <div className="tp-card p-6 flex items-center gap-4">
+           <div className="bg-amber-50 p-3 rounded-full text-amber-600"><TrendingDown className="h-5 w-5" /></div>
+           <div>
+              <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Pending</p>
+              <p className="text-xl font-black text-amber-600">₹{totalPending.toLocaleString('en-IN')}</p>
+           </div>
+        </div>
+        <div className="tp-card p-6 flex items-center gap-4">
+           <div className="bg-emerald-50 p-3 rounded-full text-[#0D9B8A]"><Plus className="h-5 w-5" /></div>
+           <div>
+              <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Total Invoiced</p>
+              <p className="text-xl font-black text-slate-900">₹{totalInvoiced.toLocaleString('en-IN')}</p>
+           </div>
+        </div>
+      </div>
+
+      <div className="flex flex-col sm:flex-row gap-4 justify-between bg-white p-4 rounded-xl border border-slate-100 shadow-sm">
         <div className="flex gap-2 text-[10px] font-black uppercase tracking-widest overflow-x-auto">
           {['All', 'Paid', 'Partial', 'Pending'].map(f => (
             <button key={f} onClick={() => setFilter(f)}
@@ -247,14 +279,14 @@ export default function SalesClient({ initialSales, shopProfile }: SalesClientPr
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400" />
           <input type="text" placeholder="Search invoice or customer..." value={search}
             onChange={e => setSearch(e.target.value)}
-            className="w-full pl-9 pr-4 py-2.5 border border-slate-200 rounded-xl text-sm focus:ring-2 focus:ring-primary outline-none transition-all" />
+            className="w-full pl-9 pr-4 py-2 text-sm border border-slate-200 rounded-lg focus:ring-2 focus:ring-[#0D9488]/20 focus:border-[#0D9488] outline-none transition-all" />
         </div>
       </div>
 
-      <div className="bg-white rounded-2xl border border-slate-100 shadow-sm overflow-hidden">
+      <div className="tp-card overflow-hidden">
         <div className="overflow-x-auto">
           <table className="w-full text-sm text-left">
-            <thead className="text-[10px] font-black text-slate-400 uppercase bg-slate-50/50 tracking-widest">
+            <thead className="text-[10px] font-bold text-slate-400 uppercase bg-slate-50/50 tracking-widest">
               <tr>
                 <th className="px-6 py-4">Invoice #</th>
                 <th className="px-6 py-4">Date</th>
@@ -270,38 +302,47 @@ export default function SalesClient({ initialSales, shopProfile }: SalesClientPr
               {filteredSales.map(sale => {
                 const balance = getBalance(sale)
                 return (
-                  <tr key={sale.id} className="hover:bg-slate-50/50 transition-colors">
-                    <td className="px-6 py-4">
-                      <Link href={`/sales/${sale.id}`} className="font-bold text-primary hover:underline">#{sale.invoice_number || '—'}</Link>
+                  <tr key={sale.id} className="hover:bg-slate-50/50 transition-all group">
+                    <td className="px-6 py-5">
+                      <Link href={`/sales/${sale.id}`} className="font-bold text-[#0D9488] hover:underline">#{sale.invoice_number || '—'}</Link>
                     </td>
-                    <td className="px-6 py-4 text-slate-500 font-medium">{new Date(sale.invoice_date).toLocaleDateString('en-IN')}</td>
-                    <td className="px-6 py-4 font-bold text-slate-900">{sale.tp_customers?.name || 'Walk-in'}</td>
-                    <td className="px-6 py-4 text-right font-black text-slate-900">₹{parseFloat(sale.total_amount || 0).toLocaleString('en-IN')}</td>
-                    <td className="px-6 py-4 text-right font-bold text-emerald-600">₹{parseFloat(sale.amount_paid || 0).toLocaleString('en-IN')}</td>
-                    <td className="px-6 py-4 text-right font-bold text-rose-600">₹{balance.toLocaleString('en-IN')}</td>
-                    <td className="px-6 py-4 text-center">
-                      <span className={`inline-flex px-2 py-1 rounded text-[9px] font-black border uppercase tracking-widest ${
-                        sale.payment_status === 'paid' ? 'bg-green-50 text-green-600 border-green-100'
+                    <td className="px-6 py-5 text-slate-500 font-medium">{new Date(sale.invoice_date).toLocaleDateString('en-IN')}</td>
+                    <td className="px-6 py-5">
+                      <div className="flex items-center gap-3">
+                         <div className="w-9 h-9 rounded-full bg-slate-100 flex items-center justify-center text-slate-500 font-bold text-xs">
+                            {(sale.tp_customers?.name || 'W')[0].toUpperCase()}
+                         </div>
+                         <div>
+                            <p className="font-bold text-slate-900">{sale.tp_customers?.name || 'Walk-in'}</p>
+                         </div>
+                      </div>
+                    </td>
+                    <td className="px-6 py-5 text-right font-black text-slate-900">₹{parseFloat(sale.total_amount || 0).toLocaleString('en-IN')}</td>
+                    <td className="px-6 py-5 text-right font-bold text-emerald-600">₹{parseFloat(sale.amount_paid || 0).toLocaleString('en-IN')}</td>
+                    <td className="px-6 py-5 text-right font-bold text-rose-600">₹{balance.toLocaleString('en-IN')}</td>
+                    <td className="px-6 py-5 text-center">
+                      <span className={`inline-flex items-center gap-1.5 py-1 px-3 rounded-full text-[10px] font-bold uppercase tracking-widest border ${
+                        sale.payment_status === 'paid' ? 'bg-emerald-50 text-emerald-600 border-emerald-100'
                         : sale.payment_status === 'partial' ? 'bg-amber-50 text-amber-600 border-amber-100'
-                        : 'bg-red-50 text-red-600 border-red-100'}`}>
+                        : 'bg-rose-50 text-red-600 border-red-100'}`}>
                         {sale.payment_status}
                       </span>
                     </td>
-                    <td className="px-6 py-4 text-right">
+                    <td className="px-6 py-5 text-right">
                       <div className="flex justify-end gap-2">
                         {sale.payment_status !== 'paid' && (
                           <button onClick={() => openPaymentModal(sale)}
-                            className="flex items-center gap-1 px-3 py-1.5 rounded-lg bg-emerald-500 hover:bg-emerald-600 text-white text-[10px] font-black uppercase tracking-widest transition-all">
-                            <IndianRupee className="h-3 w-3" /> Pay
+                            className="px-3 py-1.5 text-[10px] font-bold uppercase text-[#0D9488] hover:bg-[#0D9488]/5 rounded-lg transition-all">
+                            Pay
                           </button>
                         )}
                         <button onClick={() => handlePrintBill(sale)}
-                          className="p-2 text-slate-400 hover:text-primary rounded-lg bg-slate-50 hover:bg-slate-100 transition-colors" title="Print Bill">
-                          <FileText className="h-4 w-4" />
+                          className="px-3 py-1.5 text-[10px] font-bold uppercase text-slate-900 hover:bg-slate-100 rounded-lg transition-all">
+                          Print
                         </button>
                         <button onClick={() => handleWhatsApp(sale)}
-                          className="p-2 text-slate-400 hover:text-green-600 rounded-lg bg-slate-50 hover:bg-green-50 transition-colors" title="WhatsApp">
-                          <MessageCircle className="h-4 w-4" />
+                          className="px-3 py-1.5 text-[10px] font-bold uppercase text-emerald-600 hover:bg-emerald-50 rounded-lg transition-all">
+                          Share
                         </button>
                       </div>
                     </td>

@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { Plus, Search, MessageCircle, Loader2, Edit2 } from 'lucide-react'
+import { Plus, Search, MessageCircle, Loader2, Edit2, AlertCircle } from 'lucide-react'
 import { createClient } from '@/lib/supabase/client'
 import Link from 'next/link'
 
@@ -118,30 +118,65 @@ export default function CustomersClient({ initialCustomers }: CustomersClientPro
     (c.phone || '').includes(search)
   )
 
+  const totalCustomers = customers.length
+  const activeCustomers = customers.filter(c => parseFloat(c.total_billed || 0) > 0).length
+  const overdueCustomers = customers.filter(c => parseFloat(c.outstanding_dues || 0) > 0).length
+
+  const finalFilteredCustomers = filteredCustomers.filter(c => {
+    if (filter === 'With Dues') {
+      return parseFloat(c.outstanding_dues || 0) > 0
+    }
+    return true
+  })
+
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 max-w-[1600px] mx-auto pb-10">
       <div className="flex sm:items-center justify-between flex-col sm:flex-row gap-4">
         <div>
-          <h2 className="text-2xl font-black tracking-tight text-slate-900">Customers</h2>
-          <p className="text-slate-500 font-medium text-sm mt-1">Manage your business connections and track balances.</p>
+          <h2 className="text-xl font-bold text-slate-900">Customers</h2>
         </div>
         <div>
           <button 
             onClick={() => { resetForm(); setShowAddModal(true); }}
-            className="flex items-center gap-2 rounded-xl bg-primary px-5 py-2.5 text-sm font-bold text-white shadow-lg shadow-green-100 hover:bg-green-600 transition-all"
+            className="tp-button-primary flex items-center gap-2"
           >
             <Plus className="h-4 w-4" /> Add Customer
           </button>
         </div>
       </div>
 
-      <div className="flex flex-col sm:flex-row gap-4 justify-between bg-white p-4 rounded-2xl border border-slate-100 shadow-sm">
+      {/* Row of 3 Stat Cards */}
+      <div className="grid gap-6 md:grid-cols-3">
+        <div className="tp-card p-6 flex items-center gap-4">
+           <div className="bg-emerald-50 p-3 rounded-full text-[#0D9B8A]"><Plus className="h-5 w-5" /></div>
+           <div>
+              <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Total Customers</p>
+              <p className="text-xl font-black text-slate-900">{totalCustomers}</p>
+           </div>
+        </div>
+        <div className="tp-card p-6 flex items-center gap-4">
+           <div className="bg-emerald-50 p-3 rounded-full text-[#0D9B8A]"><Plus className="h-5 w-5" /></div>
+           <div>
+              <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Active Customers</p>
+              <p className="text-xl font-black text-slate-900">{activeCustomers}</p>
+           </div>
+        </div>
+        <div className="tp-card p-6 flex items-center gap-4">
+           <div className="bg-rose-50 p-3 rounded-full text-red-600"><AlertCircle className="h-5 w-5" /></div>
+           <div>
+              <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Overdue</p>
+              <p className="text-xl font-black text-red-600">{overdueCustomers}</p>
+           </div>
+        </div>
+      </div>
+
+      <div className="flex flex-col sm:flex-row gap-4 justify-between bg-white p-4 rounded-xl border border-slate-100 shadow-sm">
         <div className="relative flex-1 max-w-md">
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400" />
           <input
             type="text"
-            placeholder="Search by name or phone..."
-            className="w-full pl-9 pr-4 py-2.5 border border-slate-200 rounded-xl text-sm focus:ring-2 focus:ring-primary outline-none transition-all"
+            placeholder="Search customers by name or phone..."
+            className="w-full pl-9 pr-4 py-2 text-sm border border-slate-200 rounded-lg focus:ring-2 focus:ring-[#0D9488]/20 focus:border-[#0D9488] outline-none transition-all"
             value={search}
             onChange={(e) => setSearch(e.target.value)}
           />
@@ -163,10 +198,10 @@ export default function CustomersClient({ initialCustomers }: CustomersClientPro
         </div>
       </div>
 
-      <div className="bg-white rounded-2xl border border-slate-100 shadow-sm overflow-hidden">
+      <div className="tp-card overflow-hidden">
         <div className="overflow-x-auto">
           <table className="w-full text-sm text-left">
-            <thead className="text-[10px] font-black text-slate-400 uppercase bg-slate-50/50 tracking-widest">
+            <thead className="text-[10px] font-bold text-slate-400 uppercase bg-slate-50/50 tracking-widest">
               <tr>
                 <th className="px-6 py-4">Name / Company</th>
                 <th className="px-6 py-4">Phone</th>
@@ -176,41 +211,40 @@ export default function CustomersClient({ initialCustomers }: CustomersClientPro
               </tr>
             </thead>
             <tbody className="divide-y divide-slate-50">
-              {filteredCustomers.map((customer) => (
-                <tr key={customer.customer_id || customer.id} className="hover:bg-slate-50/50 transition-colors">
-                  <td className="px-6 py-4">
-                    <div className="font-bold text-slate-900">{customer.customer_name || customer.name}</div>
-                    <div className="text-[10px] font-medium text-slate-400 uppercase tracking-tight">{customer.company_name || 'Individual'}</div>
+              {finalFilteredCustomers.map((customer) => (
+                <tr key={customer.customer_id || customer.id} className="hover:bg-slate-50/50 transition-all group">
+                  <td className="px-6 py-5">
+                    <div className="flex items-center gap-3">
+                       <div className="w-9 h-9 rounded-full bg-slate-100 flex items-center justify-center text-slate-500 font-bold text-xs">
+                          {(customer.customer_name || customer.name || 'C')[0].toUpperCase()}
+                       </div>
+                       <div>
+                          <p className="font-bold text-slate-900">{customer.customer_name || customer.name}</p>
+                          <p className="text-[10px] font-medium text-slate-400 uppercase">{customer.company_name || 'Individual'}</p>
+                       </div>
+                    </div>
                   </td>
-                  <td className="px-6 py-4 text-slate-600 font-medium">{customer.phone || 'N/A'}</td>
-                  <td className="px-6 py-4 text-right text-slate-600 font-medium">₹{parseFloat(customer.total_billed || 0).toLocaleString('en-IN')}</td>
-                  <td className="px-6 py-4 text-right">
-                    <span className={`font-black tracking-tight ${parseFloat(customer.outstanding_dues || 0) > 0 ? 'text-red-600' : 'text-green-600'}`}>
+                  <td className="px-6 py-5 text-slate-600 font-medium">{customer.phone || 'N/A'}</td>
+                  <td className="px-6 py-5 text-right font-black text-slate-900">₹{parseFloat(customer.total_billed || 0).toLocaleString('en-IN')}</td>
+                  <td className="px-6 py-5 text-right">
+                    <span className={`inline-flex items-center gap-1.5 py-1 px-3 rounded-full text-[10px] font-bold uppercase tracking-widest border ${
+                      parseFloat(customer.outstanding_dues || 0) > 0 
+                        ? 'bg-rose-50 text-red-600 border-red-100' 
+                        : 'bg-emerald-50 text-emerald-600 border-emerald-100'
+                    }`}>
                       ₹{parseFloat(customer.outstanding_dues || 0).toLocaleString('en-IN')}
                     </span>
                   </td>
-                  <td className="px-6 py-4 text-right">
-                      <div className="flex justify-end gap-3 items-center">
-                        <button 
-                          onClick={() => handleWhatsAppReminder(customer)}
-                          className="p-2 text-slate-400 hover:text-green-600 rounded-lg bg-slate-50 hover:bg-green-50 transition-colors" 
-                          title="WhatsApp Reminder"
-                        >
-                          <MessageCircle className="h-4 w-4" />
-                        </button>
-                        <button 
-                          onClick={() => startEdit(customer)}
-                          className="p-2 text-slate-400 hover:text-primary rounded-lg bg-slate-50 hover:bg-slate-100 transition-colors" 
-                          title="Edit Customer"
-                        >
-                          <Edit2 className="h-4 w-4" />
-                        </button>
-                        <Link href={`/customers/${customer.customer_id || customer.id}`} className="text-primary font-bold hover:underline text-xs tracking-tight">View</Link>
-                      </div>
+                  <td className="px-6 py-5 text-right">
+                     <div className="flex justify-end gap-2">
+                       <button onClick={() => startEdit(customer)} className="px-3 py-1.5 text-[10px] font-bold uppercase text-slate-900 hover:bg-slate-100 rounded-lg transition-all">Edit</button>
+                       <button onClick={() => handleWhatsAppReminder(customer)} className="px-3 py-1.5 text-[10px] font-bold uppercase text-[#0D9488] hover:bg-[#0D9488]/5 rounded-lg transition-all">Remind</button>
+                       <Link href={`/customers/${customer.customer_id || customer.id}`} className="px-3 py-1.5 text-[10px] font-bold uppercase text-slate-400 hover:text-slate-900 hover:bg-slate-100 rounded-lg transition-all flex items-center justify-center">View</Link>
+                     </div>
                   </td>
                 </tr>
               ))}
-              {filteredCustomers.length === 0 && (
+              {finalFilteredCustomers.length === 0 && (
                 <tr>
                   <td colSpan={5} className="px-6 py-16 text-center text-slate-400 text-xs font-bold uppercase tracking-widest">
                     No customers found

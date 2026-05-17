@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { Plus, Search, Store, Loader2, Check, X, Trash2 } from 'lucide-react'
+import { Plus, Search, Store, Loader2, Check, X, Trash2, AlertCircle, TrendingDown } from 'lucide-react'
 import { createClient } from '@/lib/supabase/client'
 import { useRouter } from 'next/navigation'
 
@@ -171,63 +171,62 @@ export default function RetailClient({ products, customers, todaySales }: Retail
   })
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 max-w-[1600px] mx-auto pb-10">
       <div className="flex sm:items-center justify-between flex-col sm:flex-row gap-4">
         <div>
-          <h2 className="text-2xl font-black tracking-tight text-slate-900">Retail Outlet</h2>
-          <p className="text-slate-500 font-medium text-sm mt-1">Quick counter sales and walk-in transactions.</p>
+          <h2 className="text-xl font-bold text-slate-900">Retail Sales</h2>
         </div>
         <div>
           <button 
             onClick={() => { resetForm(); setShowModal(true); }}
-            className="flex items-center gap-2 rounded-xl bg-primary px-5 py-2.5 text-sm font-bold text-white shadow-lg shadow-green-100 hover:bg-green-600 transition-all cursor-pointer"
+            className="tp-button-primary flex items-center gap-2"
           >
             <Plus className="h-4 w-4" /> Add Retail Sale
           </button>
         </div>
       </div>
 
-      <div className="grid gap-4 md:grid-cols-3">
-        <div className="rounded-2xl border border-slate-100 bg-white p-6 shadow-sm flex items-center gap-4">
-           <div className="bg-slate-50 p-3 rounded-xl"><Store className="h-5 w-5 text-slate-600" /></div>
+      <div className="grid gap-6 md:grid-cols-3">
+        <div className="tp-card p-6 flex items-center gap-4">
+           <div className="bg-emerald-50 p-3 rounded-full text-[#0D9B8A]"><Store className="h-5 w-5" /></div>
            <div>
-              <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Today's Sales</p>
-              <p className="text-2xl font-black text-slate-900">₹{totalToday.toLocaleString('en-IN', { minimumFractionDigits: 2 })}</p>
+              <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Today's Sales</p>
+              <p className="text-xl font-black text-slate-900">₹{totalToday.toLocaleString('en-IN', { minimumFractionDigits: 2 })}</p>
            </div>
         </div>
-        <div className="rounded-2xl border border-slate-100 bg-white p-6 shadow-sm flex items-center gap-4">
-           <div className="bg-green-50 p-3 rounded-xl"><span className="text-green-600 font-black">₹</span></div>
+        <div className="tp-card p-6 flex items-center gap-4">
+           <div className="bg-emerald-50 p-3 rounded-full text-emerald-600"><span className="text-[#0D9B8A] font-black">₹</span></div>
            <div>
-              <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Cash Collection</p>
-              <p className="text-2xl font-black text-green-600">₹{cashToday.toLocaleString('en-IN', { minimumFractionDigits: 2 })}</p>
+              <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Cash Collection</p>
+              <p className="text-xl font-black text-emerald-600">₹{cashToday.toLocaleString('en-IN', { minimumFractionDigits: 2 })}</p>
            </div>
         </div>
-        <div className="rounded-2xl border border-slate-100 bg-white p-6 shadow-sm flex items-center gap-4">
-           <div className="bg-blue-50 p-3 rounded-xl"><span className="text-blue-600 font-black text-[10px] tracking-widest px-1">UPI</span></div>
+        <div className="tp-card p-6 flex items-center gap-4">
+           <div className="bg-blue-50 p-3 rounded-full text-blue-600"><span className="text-blue-600 font-black text-[10px] tracking-widest px-1">UPI</span></div>
            <div>
-              <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest">UPI / Online</p>
-              <p className="text-2xl font-black text-blue-600">₹{upiToday.toLocaleString('en-IN', { minimumFractionDigits: 2 })}</p>
+              <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">UPI / Online</p>
+              <p className="text-xl font-black text-blue-600">₹{upiToday.toLocaleString('en-IN', { minimumFractionDigits: 2 })}</p>
            </div>
         </div>
       </div>
 
-      <div className="bg-white rounded-2xl border border-slate-100 shadow-sm overflow-hidden">
-        <div className="p-6 border-b border-slate-50 flex justify-between items-center bg-slate-50/30">
-           <h3 className="font-black text-slate-900 text-[10px] uppercase tracking-widest">Recent Transactions</h3>
-           <div className="relative w-full max-w-xs">
-             <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400" />
-             <input
-               type="text"
-               placeholder="Search sales..."
-               value={search}
-               onChange={(e) => setSearch(e.target.value)}
-               className="w-full pl-9 pr-4 py-2 border border-slate-200 rounded-xl text-sm focus:ring-2 focus:ring-primary outline-none transition-all"
-             />
-           </div>
+      <div className="flex flex-col sm:flex-row gap-4 justify-between bg-white p-4 rounded-xl border border-slate-100 shadow-sm">
+        <div className="relative flex-1 max-w-md">
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400" />
+          <input
+            type="text"
+            placeholder="Search sales..."
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            className="w-full pl-9 pr-4 py-2 text-sm border border-slate-200 rounded-lg focus:ring-2 focus:ring-[#0D9488]/20 focus:border-[#0D9488] outline-none transition-all"
+          />
         </div>
+      </div>
+
+      <div className="tp-card overflow-hidden">
         <div className="overflow-x-auto">
           <table className="w-full text-sm text-left">
-            <thead className="text-[10px] font-black text-slate-400 uppercase bg-slate-50/50 tracking-widest">
+            <thead className="text-[10px] font-bold text-slate-400 uppercase bg-slate-50/50 tracking-widest">
               <tr>
                 <th className="px-6 py-4">Time</th>
                 <th className="px-6 py-4">Invoice #</th>
@@ -240,7 +239,7 @@ export default function RetailClient({ products, customers, todaySales }: Retail
             <tbody className="divide-y divide-slate-50">
                {filteredSales.length === 0 ? (
                  <tr>
-                   <td colSpan={6} className="px-6 py-20 text-center text-slate-400 text-[10px] font-black uppercase tracking-widest">
+                   <td colSpan={6} className="px-6 py-20 text-center text-slate-400 text-[10px] font-bold uppercase tracking-widest">
                       No transactions recorded today
                    </td>
                  </tr>
@@ -256,15 +255,15 @@ export default function RetailClient({ products, customers, todaySales }: Retail
                      .join(', ') || 'N/A'
 
                    return (
-                     <tr key={sale.id} className="hover:bg-slate-50/50 transition-all">
-                       <td className="px-6 py-4 font-medium text-slate-600">{time}</td>
-                       <td className="px-6 py-4 font-bold text-slate-900">{sale.invoice_number}</td>
-                       <td className="px-6 py-4 font-medium text-slate-600">{sale.tp_customers?.name || 'Walk-in'}</td>
-                       <td className="px-6 py-4 text-slate-500 max-w-xs truncate">{productsList}</td>
-                       <td className="px-6 py-4 text-right font-black text-slate-900">₹{sale.total_amount.toLocaleString('en-IN', { minimumFractionDigits: 2 })}</td>
-                       <td className="px-6 py-4">
-                         <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-bold uppercase tracking-wider ${
-                           sale.payment_mode === 'cash' ? 'bg-green-100 text-green-800' : 'bg-blue-100 text-blue-800'
+                     <tr key={sale.id} className="hover:bg-slate-50/50 transition-all group">
+                       <td className="px-6 py-5 font-medium text-slate-600">{time}</td>
+                       <td className="px-6 py-5 font-bold text-slate-900">{sale.invoice_number}</td>
+                       <td className="px-6 py-5 font-medium text-slate-600">{sale.tp_customers?.name || 'Walk-in'}</td>
+                       <td className="px-6 py-5 text-slate-500 max-w-xs truncate">{productsList}</td>
+                       <td className="px-6 py-5 text-right font-black text-slate-900">₹{sale.total_amount.toLocaleString('en-IN', { minimumFractionDigits: 2 })}</td>
+                       <td className="px-6 py-5">
+                         <span className={`inline-flex items-center gap-1.5 py-1 px-3 rounded-full text-[10px] font-bold uppercase tracking-widest border ${
+                           sale.payment_mode === 'cash' ? 'bg-emerald-50 text-emerald-600 border-emerald-100' : 'bg-blue-50 text-blue-600 border-blue-100'
                          }`}>
                            {sale.payment_mode}
                          </span>

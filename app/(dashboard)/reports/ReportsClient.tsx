@@ -612,243 +612,244 @@ _Generated via TradersPro Accounting Systems_
   }
 
   return (
-    <div className="space-y-10 animate-in fade-in duration-700">
-      <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
+    <div className="space-y-6 max-w-[1600px] mx-auto pb-10">
+      <div className="flex sm:items-center justify-between flex-col sm:flex-row gap-4">
         <div>
-          <h2 className="text-4xl font-black tracking-tight text-[#0f172a]">Analytics & Reports</h2>
-          <p className="text-slate-500 font-medium text-lg mt-1">Deep insights into your business performance and growth.</p>
+          <h2 className="text-xl font-bold text-slate-900">Reports</h2>
         </div>
-        <div className="flex items-center gap-3 bg-white px-6 py-3 rounded-2xl shadow-sm border border-slate-100">
-          <Calendar className="h-5 w-5 text-primary" />
-          <span className="text-sm font-black text-slate-900">May 2026</span>
+        <div className="flex items-center gap-2 bg-white px-4 py-2 rounded-lg border border-slate-200">
+          <Calendar className="h-4 w-4 text-[#0D9488]" />
+          <span className="text-xs font-bold text-slate-900">May 2026</span>
         </div>
       </div>
 
       {/* SUMMARY STATS BAR */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <div className="bg-white border border-slate-100 p-8 rounded-[2rem] shadow-sm flex items-center gap-6">
-          <div className="w-14 h-14 rounded-2xl bg-blue-50 flex items-center justify-center text-blue-600">
-            <TrendingUp className="h-6 w-6" />
-          </div>
-          <div>
-            <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Monthly Growth</p>
-            <p className="text-2xl font-black text-slate-900 mt-1">+{computedGrowth.toFixed(1)}%</p>
-          </div>
+      <div className="grid gap-6 md:grid-cols-3">
+        <div className="tp-card p-6 flex items-center gap-4">
+           <div className="bg-emerald-50 p-3 rounded-full text-[#0D9B8A]"><TrendingUp className="h-5 w-5" /></div>
+           <div>
+              <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Monthly Growth</p>
+              <p className="text-xl font-black text-slate-900">+{computedGrowth.toFixed(1)}%</p>
+           </div>
         </div>
-        <div className="bg-white border border-slate-100 p-8 rounded-[2rem] shadow-sm flex items-center gap-6">
-          <div className="w-14 h-14 rounded-2xl bg-emerald-50 flex items-center justify-center text-emerald-600">
-            <ShieldCheck className="h-6 w-6" />
-          </div>
-          <div>
-            <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Collection Rate</p>
-            <p className="text-2xl font-black text-slate-900 mt-1">{collectionRate.toFixed(1)}%</p>
-          </div>
+        <div className="tp-card p-6 flex items-center gap-4">
+           <div className="bg-emerald-50 p-3 rounded-full text-[#0D9B8A]"><ShieldCheck className="h-5 w-5" /></div>
+           <div>
+              <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Collection Rate</p>
+              <p className="text-xl font-black text-slate-900">{collectionRate.toFixed(1)}%</p>
+           </div>
         </div>
-        <div className="bg-white border border-slate-100 p-8 rounded-[2rem] shadow-sm flex items-center gap-6">
-          <div className="w-14 h-14 rounded-2xl bg-orange-50 flex items-center justify-center text-orange-600">
-            <PieChart className="h-6 w-6" />
-          </div>
-          <div>
-            <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Profit Margin</p>
-            <p className="text-2xl font-black text-slate-900 mt-1">{avgMargin.toFixed(1)}%</p>
-          </div>
+        <div className="tp-card p-6 flex items-center gap-4">
+           <div className="bg-emerald-50 p-3 rounded-full text-[#0D9B8A]"><PieChart className="h-5 w-5" /></div>
+           <div>
+              <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Profit Margin</p>
+              <p className="text-xl font-black text-slate-900">{avgMargin.toFixed(1)}%</p>
+           </div>
         </div>
       </div>
 
       {/* REPORT GRID */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         
         {/* Report 1: Daily Sales */}
-        <div className="bg-white border border-slate-100 rounded-[2.5rem] p-10 shadow-xl shadow-slate-200/40 hover:shadow-2xl hover:shadow-slate-200/60 transition-all group">
-          <div className="flex items-start justify-between">
-            <div className="w-16 h-16 rounded-[1.2rem] bg-blue-500 flex items-center justify-center text-white shadow-lg transition-transform group-hover:scale-110">
-              <TrendingUp className="h-8 w-8" />
+        <div className="tp-card p-6 flex flex-col justify-between group">
+          <div>
+            <div className="flex items-start justify-between">
+              <div className="w-12 h-12 rounded-lg bg-emerald-50 flex items-center justify-center text-[#0D9B8A]">
+                <TrendingUp className="h-6 w-6" />
+              </div>
+              <div className="flex gap-2">
+                <button 
+                  onClick={handleExportDailySales}
+                  disabled={loadingReport !== null}
+                  title="Download PDF"
+                  className="p-2 hover:bg-slate-100 rounded-lg transition-all cursor-pointer disabled:opacity-50"
+                >
+                  {loadingReport === 'daily_export' ? <Loader2 className="h-4 w-4 animate-spin" /> : <Download className="h-4 w-4 text-slate-500" />}
+                </button>
+                <button 
+                  onClick={handleShareDailySales}
+                  disabled={loadingReport !== null}
+                  title="Share on WhatsApp"
+                  className="p-2 hover:bg-emerald-50 rounded-lg transition-all cursor-pointer disabled:opacity-50"
+                >
+                  {loadingReport === 'daily_share' ? <Loader2 className="h-4 w-4 animate-spin" /> : <MessageSquare className="h-4 w-4 text-emerald-600" />}
+                </button>
+              </div>
             </div>
-            <div className="flex gap-2">
-              <button 
-                onClick={handleExportDailySales}
-                disabled={loadingReport !== null}
-                title="Download PDF"
-                className="p-3 bg-slate-50 hover:bg-[#0D9488]/10 text-slate-600 hover:text-[#0D9488] rounded-xl transition-all cursor-pointer disabled:opacity-50"
-              >
-                {loadingReport === 'daily_export' ? <Loader2 className="h-5 w-5 animate-spin" /> : <Download className="h-5 w-5" />}
-              </button>
-              <button 
-                onClick={handleShareDailySales}
-                disabled={loadingReport !== null}
-                title="Share on WhatsApp"
-                className="p-3 bg-green-50 hover:bg-green-100 text-green-600 hover:text-green-700 rounded-xl transition-all cursor-pointer disabled:opacity-50"
-              >
-                {loadingReport === 'daily_share' ? <Loader2 className="h-5 w-5 animate-spin" /> : <MessageSquare className="h-5 w-5" />}
-              </button>
+            <div className="mt-4">
+              <h3 className="text-base font-bold text-slate-900">Daily Sales Report</h3>
+              <p className="text-xs text-slate-500 mt-1 leading-relaxed">Summary of all sales made today across all categories.</p>
             </div>
           </div>
-          <div className="mt-8">
-            <h3 className="text-2xl font-black text-[#0f172a]">Daily Sales Report</h3>
-            <p className="text-slate-500 font-medium mt-3 leading-relaxed">Summary of all sales made today across all categories.</p>
-          </div>
-          <div className="mt-10 pt-8 border-t border-slate-50 flex items-center justify-between">
-            <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Type: Sales Ledger</span>
+          <div className="mt-6 pt-4 border-t border-slate-50 flex items-center justify-between">
+            <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Type: Sales Ledger</span>
             <div className="flex gap-4">
               <button 
                 onClick={handleExportDailySales}
                 disabled={loadingReport !== null}
-                className="flex items-center gap-2 text-[#0D9488] font-black text-xs uppercase tracking-widest hover:gap-3 transition-all cursor-pointer disabled:opacity-50"
+                className="text-[10px] font-bold uppercase text-[#0D9488] hover:underline flex items-center gap-1.5 cursor-pointer disabled:opacity-50"
               >
-                {loadingReport === 'daily_export' ? 'Exporting...' : 'Export PDF'} <Download className="h-4 w-4" />
+                {loadingReport === 'daily_export' ? 'Exporting...' : 'Export PDF'}
               </button>
               <button 
                 onClick={handleShareDailySales}
                 disabled={loadingReport !== null}
-                className="flex items-center gap-2 text-green-600 font-black text-xs uppercase tracking-widest hover:gap-3 transition-all cursor-pointer disabled:opacity-50"
+                className="text-[10px] font-bold uppercase text-emerald-600 hover:underline flex items-center gap-1.5 cursor-pointer disabled:opacity-50"
               >
-                {loadingReport === 'daily_share' ? 'Uploading...' : 'WhatsApp Share'} <Share2 className="h-4 w-4" />
+                {loadingReport === 'daily_share' ? 'Uploading...' : 'WhatsApp Share'}
               </button>
             </div>
           </div>
         </div>
 
         {/* Report 2: Customer Ledger */}
-        <div className="bg-white border border-slate-100 rounded-[2.5rem] p-10 shadow-xl shadow-slate-200/40 hover:shadow-2xl hover:shadow-slate-200/60 transition-all group">
-          <div className="flex items-start justify-between">
-            <div className="w-16 h-16 rounded-[1.2rem] bg-emerald-500 flex items-center justify-center text-white shadow-lg transition-transform group-hover:scale-110">
-              <FileText className="h-8 w-8" />
+        <div className="tp-card p-6 flex flex-col justify-between group">
+          <div>
+            <div className="flex items-start justify-between">
+              <div className="w-12 h-12 rounded-lg bg-emerald-50 flex items-center justify-center text-[#0D9B8A]">
+                <FileText className="h-6 w-6" />
+              </div>
+              <div className="flex gap-2">
+                <button 
+                  onClick={() => { setLedgerActionType('export'); setShowLedgerModal(true); }}
+                  title="Select & Download"
+                  className="p-2 hover:bg-slate-100 rounded-lg transition-all cursor-pointer"
+                >
+                  <Download className="h-4 w-4 text-slate-500" />
+                </button>
+                <button 
+                  onClick={() => { setLedgerActionType('share'); setShowLedgerModal(true); }}
+                  title="Select & Share"
+                  className="p-2 hover:bg-emerald-50 rounded-lg transition-all cursor-pointer"
+                >
+                  <MessageSquare className="h-4 w-4 text-emerald-600" />
+                </button>
+              </div>
             </div>
-            <div className="flex gap-2">
-              <button 
-                onClick={() => { setLedgerActionType('export'); setShowLedgerModal(true); }}
-                title="Select & Download"
-                className="p-3 bg-slate-50 hover:bg-[#0D9488]/10 text-slate-600 hover:text-[#0D9488] rounded-xl transition-all cursor-pointer"
-              >
-                <Download className="h-5 w-5" />
-              </button>
-              <button 
-                onClick={() => { setLedgerActionType('share'); setShowLedgerModal(true); }}
-                title="Select & Share"
-                className="p-3 bg-green-50 hover:bg-green-100 text-green-600 hover:text-green-700 rounded-xl transition-all cursor-pointer"
-              >
-                <MessageSquare className="h-5 w-5" />
-              </button>
+            <div className="mt-4">
+              <h3 className="text-base font-bold text-slate-900">Customer Ledger</h3>
+              <p className="text-xs text-slate-500 mt-1 leading-relaxed">Detailed chronological debit/credit statement history for any customer.</p>
             </div>
           </div>
-          <div className="mt-8">
-            <h3 className="text-2xl font-black text-[#0f172a]">Customer Ledger</h3>
-            <p className="text-slate-500 font-medium mt-3 leading-relaxed">Detailed chronological debit/credit statement history for any customer.</p>
-          </div>
-          <div className="mt-10 pt-8 border-t border-slate-50 flex items-center justify-between">
-            <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Type: Ledger Statement</span>
+          <div className="mt-6 pt-4 border-t border-slate-50 flex items-center justify-between">
+            <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Type: Ledger Statement</span>
             <div className="flex gap-4">
               <button 
                 onClick={() => { setLedgerActionType('export'); setShowLedgerModal(true); }}
-                className="flex items-center gap-2 text-[#0D9488] font-black text-xs uppercase tracking-widest hover:gap-3 transition-all cursor-pointer"
+                className="text-[10px] font-bold uppercase text-[#0D9488] hover:underline flex items-center gap-1.5 cursor-pointer"
               >
-                Select & Export <Download className="h-4 w-4" />
+                Select & Export
               </button>
               <button 
                 onClick={() => { setLedgerActionType('share'); setShowLedgerModal(true); }}
-                className="flex items-center gap-2 text-green-600 font-black text-xs uppercase tracking-widest hover:gap-3 transition-all cursor-pointer"
+                className="text-[10px] font-bold uppercase text-emerald-600 hover:underline flex items-center gap-1.5 cursor-pointer"
               >
-                Select & Share <Share2 className="h-4 w-4" />
+                Select & Share
               </button>
             </div>
           </div>
         </div>
 
         {/* Report 3: Stock Movement */}
-        <div className="bg-white border border-slate-100 rounded-[2.5rem] p-10 shadow-xl shadow-slate-200/40 hover:shadow-2xl hover:shadow-slate-200/60 transition-all group">
-          <div className="flex items-start justify-between">
-            <div className="w-16 h-16 rounded-[1.2rem] bg-orange-500 flex items-center justify-center text-white shadow-lg transition-transform group-hover:scale-110">
-              <Zap className="h-8 w-8" />
+        <div className="tp-card p-6 flex flex-col justify-between group">
+          <div>
+            <div className="flex items-start justify-between">
+              <div className="w-12 h-12 rounded-lg bg-emerald-50 flex items-center justify-center text-[#0D9B8A]">
+                <Zap className="h-6 w-6" />
+              </div>
+              <div className="flex gap-2">
+                <button 
+                  onClick={handleExportStockMovement}
+                  disabled={loadingReport !== null}
+                  title="Download PDF"
+                  className="p-2 hover:bg-slate-100 rounded-lg transition-all cursor-pointer disabled:opacity-50"
+                >
+                  {loadingReport === 'stock_export' ? <Loader2 className="h-4 w-4 animate-spin" /> : <Download className="h-4 w-4 text-slate-500" />}
+                </button>
+                <button 
+                  onClick={handleShareStockMovement}
+                  disabled={loadingReport !== null}
+                  title="Share on WhatsApp"
+                  className="p-2 hover:bg-emerald-50 rounded-lg transition-all cursor-pointer disabled:opacity-50"
+                >
+                  {loadingReport === 'stock_share' ? <Loader2 className="h-4 w-4 animate-spin" /> : <MessageSquare className="h-4 w-4 text-emerald-600" />}
+                </button>
+              </div>
             </div>
-            <div className="flex gap-2">
-              <button 
-                onClick={handleExportStockMovement}
-                disabled={loadingReport !== null}
-                title="Download PDF"
-                className="p-3 bg-slate-50 hover:bg-[#0D9488]/10 text-slate-600 hover:text-[#0D9488] rounded-xl transition-all cursor-pointer disabled:opacity-50"
-              >
-                {loadingReport === 'stock_export' ? <Loader2 className="h-5 w-5 animate-spin" /> : <Download className="h-5 w-5" />}
-              </button>
-              <button 
-                onClick={handleShareStockMovement}
-                disabled={loadingReport !== null}
-                title="Share on WhatsApp"
-                className="p-3 bg-green-50 hover:bg-green-100 text-green-600 hover:text-green-700 rounded-xl transition-all cursor-pointer disabled:opacity-50"
-              >
-                {loadingReport === 'stock_share' ? <Loader2 className="h-5 w-5 animate-spin" /> : <MessageSquare className="h-5 w-5" />}
-              </button>
+            <div className="mt-4">
+              <h3 className="text-base font-bold text-slate-900">Stock Status</h3>
+              <p className="text-xs text-slate-500 mt-1 leading-relaxed">Track inventory stock levels, categories, rates and alerts.</p>
             </div>
           </div>
-          <div className="mt-8">
-            <h3 className="text-2xl font-black text-[#0f172a]">Stock Movement</h3>
-            <p className="text-slate-500 font-medium mt-3 leading-relaxed">Track inventory inflow, outflow, and current stock status.</p>
-          </div>
-          <div className="mt-10 pt-8 border-t border-slate-50 flex items-center justify-between">
-            <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Type: Inventory Ledger</span>
+          <div className="mt-6 pt-4 border-t border-slate-50 flex items-center justify-between">
+            <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Type: Inventory Status</span>
             <div className="flex gap-4">
               <button 
                 onClick={handleExportStockMovement}
                 disabled={loadingReport !== null}
-                className="flex items-center gap-2 text-[#0D9488] font-black text-xs uppercase tracking-widest hover:gap-3 transition-all cursor-pointer disabled:opacity-50"
+                className="text-[10px] font-bold uppercase text-[#0D9488] hover:underline flex items-center gap-1.5 cursor-pointer disabled:opacity-50"
               >
-                {loadingReport === 'stock_export' ? 'Exporting...' : 'Export PDF'} <Download className="h-4 w-4" />
+                {loadingReport === 'stock_export' ? 'Exporting...' : 'Export PDF'}
               </button>
               <button 
                 onClick={handleShareStockMovement}
                 disabled={loadingReport !== null}
-                className="flex items-center gap-2 text-green-600 font-black text-xs uppercase tracking-widest hover:gap-3 transition-all cursor-pointer disabled:opacity-50"
+                className="text-[10px] font-bold uppercase text-emerald-600 hover:underline flex items-center gap-1.5 cursor-pointer disabled:opacity-50"
               >
-                {loadingReport === 'stock_share' ? 'Uploading...' : 'WhatsApp Share'} <Share2 className="h-4 w-4" />
+                {loadingReport === 'stock_share' ? 'Uploading...' : 'WhatsApp Share'}
               </button>
             </div>
           </div>
         </div>
 
         {/* Report 4: Payment Collections */}
-        <div className="bg-white border border-slate-100 rounded-[2.5rem] p-10 shadow-xl shadow-slate-200/40 hover:shadow-2xl hover:shadow-slate-200/60 transition-all group">
-          <div className="flex items-start justify-between">
-            <div className="w-16 h-16 rounded-[1.2rem] bg-rose-500 flex items-center justify-center text-white shadow-lg transition-transform group-hover:scale-110">
-              <Target className="h-8 w-8" />
+        <div className="tp-card p-6 flex flex-col justify-between group">
+          <div>
+            <div className="flex items-start justify-between">
+              <div className="w-12 h-12 rounded-lg bg-emerald-50 flex items-center justify-center text-[#0D9B8A]">
+                <Target className="h-6 w-6" />
+              </div>
+              <div className="flex gap-2">
+                <button 
+                  onClick={handleExportPaymentCollections}
+                  disabled={loadingReport !== null}
+                  title="Download PDF"
+                  className="p-2 hover:bg-slate-100 rounded-lg transition-all cursor-pointer disabled:opacity-50"
+                >
+                  {loadingReport === 'collections_export' ? <Loader2 className="h-4 w-4 animate-spin" /> : <Download className="h-4 w-4 text-slate-500" />}
+                </button>
+                <button 
+                  onClick={handleSharePaymentCollections}
+                  disabled={loadingReport !== null}
+                  title="Share on WhatsApp"
+                  className="p-2 hover:bg-emerald-50 rounded-lg transition-all cursor-pointer disabled:opacity-50"
+                >
+                  {loadingReport === 'collections_share' ? <Loader2 className="h-4 w-4 animate-spin" /> : <MessageSquare className="h-4 w-4 text-emerald-600" />}
+                </button>
+              </div>
             </div>
-            <div className="flex gap-2">
-              <button 
-                onClick={handleExportPaymentCollections}
-                disabled={loadingReport !== null}
-                title="Download PDF"
-                className="p-3 bg-slate-50 hover:bg-[#0D9488]/10 text-slate-600 hover:text-[#0D9488] rounded-xl transition-all cursor-pointer disabled:opacity-50"
-              >
-                {loadingReport === 'collections_export' ? <Loader2 className="h-5 w-5 animate-spin" /> : <Download className="h-5 w-5" />}
-              </button>
-              <button 
-                onClick={handleSharePaymentCollections}
-                disabled={loadingReport !== null}
-                title="Share on WhatsApp"
-                className="p-3 bg-green-50 hover:bg-green-100 text-green-600 hover:text-green-700 rounded-xl transition-all cursor-pointer disabled:opacity-50"
-              >
-                {loadingReport === 'collections_share' ? <Loader2 className="h-5 w-5 animate-spin" /> : <MessageSquare className="h-5 w-5" />}
-              </button>
+            <div className="mt-4">
+              <h3 className="text-base font-bold text-slate-900">Payment Collections</h3>
+              <p className="text-xs text-slate-500 mt-1 leading-relaxed">Analysis of pending vs received payments and overall collection rates.</p>
             </div>
           </div>
-          <div className="mt-8">
-            <h3 className="text-2xl font-black text-[#0f172a]">Payment Collections</h3>
-            <p className="text-slate-500 font-medium mt-3 leading-relaxed">Analysis of pending vs received payments for this month.</p>
-          </div>
-          <div className="mt-10 pt-8 border-t border-slate-50 flex items-center justify-between">
-            <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Type: Cash Collection</span>
+          <div className="mt-6 pt-4 border-t border-slate-50 flex items-center justify-between">
+            <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Type: Cash Collection</span>
             <div className="flex gap-4">
               <button 
                 onClick={handleExportPaymentCollections}
                 disabled={loadingReport !== null}
-                className="flex items-center gap-2 text-[#0D9488] font-black text-xs uppercase tracking-widest hover:gap-3 transition-all cursor-pointer disabled:opacity-50"
+                className="text-[10px] font-bold uppercase text-[#0D9488] hover:underline flex items-center gap-1.5 cursor-pointer disabled:opacity-50"
               >
-                {loadingReport === 'collections_export' ? 'Exporting...' : 'Export PDF'} <Download className="h-4 w-4" />
+                {loadingReport === 'collections_export' ? 'Exporting...' : 'Export PDF'}
               </button>
               <button 
                 onClick={handleSharePaymentCollections}
                 disabled={loadingReport !== null}
-                className="flex items-center gap-2 text-green-600 font-black text-xs uppercase tracking-widest hover:gap-3 transition-all cursor-pointer disabled:opacity-50"
+                className="text-[10px] font-bold uppercase text-emerald-600 hover:underline flex items-center gap-1.5 cursor-pointer disabled:opacity-50"
               >
-                {loadingReport === 'collections_share' ? 'Uploading...' : 'WhatsApp Share'} <Share2 className="h-4 w-4" />
+                {loadingReport === 'collections_share' ? 'Uploading...' : 'WhatsApp Share'}
               </button>
             </div>
           </div>

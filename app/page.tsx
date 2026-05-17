@@ -1,21 +1,13 @@
 import Link from 'next/link'
-import { CheckCircle, TrendingUp, Users, ShieldCheck, ArrowRight, MessageSquare, BarChart3, ReceiptText, Plus } from 'lucide-react'
+import Image from 'next/image'
+import Navbar from '@/components/Navbar'
+import { TrendingUp, Users, ReceiptText, BarChart3, MessageSquare, ShieldCheck } from 'lucide-react'
 
 export default function LandingPage() {
   return (
-    <div className="flex flex-col min-h-screen bg-white text-slate-900 font-['Outfit',sans-serif]">
+    <div className="flex flex-col min-h-screen bg-white text-slate-900 font-sans">
       {/* Header */}
-      <header className="px-6 lg:px-20 h-24 flex items-center justify-between sticky top-0 bg-white/90 backdrop-blur-md z-50">
-        <Link href="/" className="flex items-center gap-2">
-          <span className="text-2xl font-black tracking-tight text-[#0D9488]">TradersPro</span>
-        </Link>
-        <div className="flex items-center gap-10">
-          <Link href="/login" className="text-sm font-bold text-slate-900 hover:text-[#0D9488] transition-colors">Sign in</Link>
-          <Link href="/register" className="bg-[#0D9488] text-white px-6 py-3 rounded-lg text-sm font-bold hover:bg-[#0B7A70] transition-all shadow-lg shadow-[#0D9488]/20">
-            Get Started Free
-          </Link>
-        </div>
-      </header>
+      <Navbar />
 
       <main className="flex-1">
         {/* Hero Section */}
@@ -25,7 +17,7 @@ export default function LandingPage() {
               <p className="text-[10px] font-black text-[#0D9488] uppercase tracking-[0.4em] mb-6">
                 ATIF AZMI
               </p>
-              <h1 className="text-6xl lg:text-7xl font-black text-slate-900 leading-[1] tracking-tighter mb-8">
+              <h1 className="text-[clamp(2.2rem,6.5vw,4.5rem)] font-black text-slate-900 leading-[1.05] tracking-tighter mb-8">
                 Fresh operations for <br />
                 your <br />
                 <span className="text-[#0D9488]">hardware business</span>
@@ -35,17 +27,18 @@ export default function LandingPage() {
               </p>
               
               <div className="flex flex-wrap gap-4 items-center">
-                <Link href="/register" className="bg-[#0D9488] text-white px-8 py-4 rounded-full text-sm font-bold hover:bg-[#0B7A70] transition-all shadow-xl shadow-[#0D9488]/20">
+                <Link href="/register" className="bg-[#0D9488] text-white px-8 py-4 rounded-full text-sm font-bold hover:bg-[#0B7A70] transition-all shadow-xl shadow-[#0D9488]/20 min-h-[44px] flex items-center justify-center w-full sm:w-auto">
                   Get Started Free
                 </Link>
-                <Link href="/login" className="bg-white border border-slate-100 text-slate-900 px-8 py-4 rounded-full text-sm font-bold hover:bg-slate-50 transition-all shadow-lg shadow-slate-100">
+                <Link href="/login" className="bg-white border border-slate-100 text-slate-900 px-8 py-4 rounded-full text-sm font-bold hover:bg-slate-50 transition-all shadow-lg shadow-slate-100 min-h-[44px] flex items-center justify-center w-full sm:w-auto">
                   Sign In
                 </Link>
                 <a 
                   href="https://atif-dev.vercel.app/" 
                   target="_blank" 
                   rel="noopener noreferrer" 
-                  className="bg-slate-900 text-white px-8 py-4 rounded-full text-sm font-bold hover:bg-slate-800 transition-all shadow-xl shadow-slate-900/20 flex items-center gap-2"
+                  className="bg-slate-900 text-white px-8 py-4 rounded-full text-sm font-bold hover:bg-slate-800 transition-all shadow-xl shadow-slate-900/20 flex items-center justify-center gap-2 min-h-[44px] w-full sm:w-auto cursor-pointer"
+                  aria-label="View developer profile page (opens in new tab)"
                 >
                   View More Services
                 </a>
@@ -53,9 +46,15 @@ export default function LandingPage() {
 
               <div className="mt-16 flex items-center gap-4">
                  <div className="flex -space-x-3">
-                    {[1,2,3,4].map(i => (
-                       <div key={i} className="w-10 h-10 rounded-full border-2 border-white bg-slate-100 overflow-hidden">
-                          <img src={`https://api.dicebear.com/7.x/avataaars/svg?seed=${i+10}`} alt="User" />
+                    {[1, 2, 3, 4].map(i => (
+                       <div key={i} className="w-10 h-10 rounded-full border-2 border-white bg-slate-100 overflow-hidden relative">
+                          <Image 
+                            src={`https://api.dicebear.com/7.x/avataaars/svg?seed=${i + 10}`} 
+                            alt={`Dicebear Avatar User ${i}`}
+                            fill
+                            sizes="40px"
+                            loading="lazy"
+                          />
                        </div>
                     ))}
                  </div>
@@ -66,11 +65,15 @@ export default function LandingPage() {
             </div>
             
             <div className="relative">
-              <div className="relative rounded-[2.5rem] overflow-hidden shadow-2xl shadow-slate-200">
-                <img 
+              <div className="relative rounded-[2.5rem] overflow-hidden shadow-2xl shadow-slate-200 aspect-[4/3] w-full">
+                <Image 
                   src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&q=80&w=2070" 
-                  alt="TradersPro Professional" 
-                  className="w-full object-cover aspect-[4/3]"
+                  alt="TradersPro Professional Hardware Operations Workspace" 
+                  fill
+                  sizes="(max-width: 1024px) 100vw, 50vw"
+                  className="object-cover"
+                  loading="lazy"
+                  priority={false}
                 />
               </div>
               
@@ -127,11 +130,23 @@ export default function LandingPage() {
             <span className="text-xl font-black text-slate-900 tracking-tight">TradersPro</span>
           </div>
           <p className="text-slate-400 text-[10px] font-bold uppercase tracking-[0.2em]">
-            © 2026 TradersPro • Made by <a href="https://atif-dev.vercel.app/" target="_blank" rel="noopener noreferrer" className="text-slate-900 hover:text-[#0D9488] transition-colors">Atif Azmi</a>
+            © 2026 TradersPro • Made by <a href="https://atif-dev.vercel.app/" target="_blank" rel="noopener noreferrer" className="text-slate-900 hover:text-[#0D9488] transition-colors min-h-[44px] inline-flex items-center px-1">Atif Azmi</a>
           </p>
           <div className="flex gap-6">
-            <Link href="#" className="text-slate-400 hover:text-slate-900 transition-colors"><MessageSquare className="h-5 w-5" /></Link>
-            <Link href="#" className="text-slate-400 hover:text-slate-900 transition-colors"><ShieldCheck className="h-5 w-5" /></Link>
+            <a 
+              href="mailto:support@traderspro.com" 
+              className="text-slate-400 hover:text-slate-900 transition-colors p-3 min-h-[44px] min-w-[44px] flex items-center justify-center cursor-pointer"
+              aria-label="Send support email to TradersPro"
+            >
+              <MessageSquare className="h-5 w-5" />
+            </a>
+            <Link 
+              href="/login" 
+              className="text-slate-400 hover:text-slate-900 transition-colors p-3 min-h-[44px] min-w-[44px] flex items-center justify-center cursor-pointer"
+              aria-label="View security and auth portal"
+            >
+              <ShieldCheck className="h-5 w-5" />
+            </Link>
           </div>
         </div>
       </footer>
