@@ -132,22 +132,27 @@ export const generateInvoicePDF = (profile: BusinessProfile | null, invoice: any
   
   autoTable(doc, {
     startY: y,
-    head: [['Sl.No.', 'Description', 'Qty.', 'Rate', 'Amount']],
-    body: items.map((item: any, i: number) => [
-      i + 1,
-      item.name,
-      item.quantity,
-      `₹${parseFloat(item.rate || 0).toLocaleString('en-IN')}`,
-      `₹${((item.quantity || 0) * (item.rate || 0)).toLocaleString('en-IN')}`,
-    ]),
-    foot: [['', '', '', 'Total', `₹${parseFloat(invoice.total_amount || 0).toLocaleString('en-IN')}`]],
+    head: [['Sl.No.', 'Description', 'Qty.', 'Rate (Rs.)', 'Amount (Rs.)']],
+    body: items.map((item: any, i: number) => {
+      const qtyVal = Number(item.quantity || 0);
+      const formattedQty = qtyVal ? (qtyVal % 1 === 0 ? qtyVal.toString() : qtyVal.toFixed(3).replace(/\.?0+$/, '')) : '';
+      return [
+        i + 1,
+        item.name,
+        formattedQty ? `${formattedQty} ${item.unit || ''}`.trim() : '-',
+        `Rs. ${parseFloat(item.rate || 0).toLocaleString('en-IN')}`,
+        `Rs. ${((item.quantity || 0) * (item.rate || 0)).toLocaleString('en-IN')}`,
+      ];
+    }),
+    foot: [['', '', '', 'Total', `Rs. ${parseFloat(invoice.total_amount || 0).toLocaleString('en-IN')}`]],
     styles: { fontSize: 10, cellPadding: 3 },
     headStyles: { fillColor: TEAL, textColor: 255, fontStyle: 'bold' },
     footStyles: { fillColor: [240, 255, 253], textColor: DARK, fontStyle: 'bold' },
     columnStyles: {
-      0: { cellWidth: 15, halign: 'center' },
-      2: { cellWidth: 20, halign: 'center' },
-      3: { cellWidth: 30, halign: 'right' },
+      0: { cellWidth: 12, halign: 'center' },
+      1: { cellWidth: 74 },
+      2: { cellWidth: 26, halign: 'center' },
+      3: { cellWidth: 35, halign: 'right' },
       4: { cellWidth: 35, halign: 'right' },
     },
     margin: { left: margin, right: margin },

@@ -11,7 +11,7 @@ export async function generateBillData({ customerId, startDate, endDate }: {
     supabase.from('tp_customers').select('id, name, phone, address').eq('id', customerId).single(),
     supabase.from('tp_profile').select('business_name, tagline, address, city, state, phone, gst_number').single(),
     supabase.from('tp_sales')
-      .select('id, invoice_date, total_amount, invoice_number, payment_status, tp_sale_items(product_name, quantity, rate, discount_percent, gst_percent)')
+      .select('id, invoice_date, total_amount, invoice_number, payment_status, tp_sale_items(product_name, quantity, unit, rate, discount_percent, gst_percent)')
       .eq('customer_id', customerId)
       .gte('invoice_date', startDate)
       .lte('invoice_date', endDate)
@@ -60,6 +60,7 @@ export async function generateBillData({ customerId, startDate, endDate }: {
           type: 'Sale Item',
           detail: item.product_name,
           qty: item.quantity,
+          unit: item.unit,
           rate: item.rate,
           debit: total,
           credit: null,

@@ -6,7 +6,7 @@ export const shareInvoiceWhatsApp = (profile: BusinessProfile | null, invoice: a
   
   const items = invoice.items && invoice.items.length > 0 
     ? invoice.items.map((item: any, i: number) =>
-        `${i + 1}. ${item.name} — Qty: ${item.quantity} × ₹${item.rate} = ₹${((item.quantity || 0) * (item.rate || 0)).toLocaleString('en-IN')}`
+        `${i + 1}. ${item.name} — Qty: ${item.quantity} ${item.unit || ''} × Rs. ${item.rate} = Rs. ${((item.quantity || 0) * (item.rate || 0)).toLocaleString('en-IN')}`
       ).join('\n')
     : 'No items';
 
@@ -22,7 +22,7 @@ ${profile?.tagline ? `_${profile.tagline}_\n` : ''}
 ${items}
 
 ━━━━━━━━━━━━━━━━
-*TOTAL: ₹${parseFloat(invoice.total_amount || 0).toLocaleString('en-IN')}*
+*TOTAL: Rs. ${parseFloat(invoice.total_amount || 0).toLocaleString('en-IN')}*
 _(${numberToWords(parseFloat(invoice.total_amount || 0))})_
 
 ${pdfBlobUrl ? `📎 *Download Invoice PDF:*\n${pdfBlobUrl}\n` : ''}

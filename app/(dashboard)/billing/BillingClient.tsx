@@ -334,19 +334,25 @@ export default function BillingClient({ userId, customers }: Props) {
             <table style={{ width: '100%', borderCollapse: 'collapse', marginBottom: '40px' }}>
               <thead>
                 <tr style={{ background: '#0D9488', color: 'white' }}>
-                  <th style={{ padding: '12px', fontSize: '12px', fontWeight: 900, textAlign: 'left', border: '1px solid #0D9488' }}>Sl.</th>
+                  <th style={{ padding: '12px', fontSize: '12px', fontWeight: 900, textAlign: 'center', border: '1px solid #0D9488', width: '50px' }}>Sl.</th>
                   <th style={{ padding: '12px', fontSize: '12px', fontWeight: 900, textAlign: 'left', border: '1px solid #0D9488' }}>Description</th>
-                  <th style={{ padding: '12px', fontSize: '12px', fontWeight: 900, textAlign: 'right', border: '1px solid #0D9488' }}>Qty</th>
-                  <th style={{ padding: '12px', fontSize: '12px', fontWeight: 900, textAlign: 'right', border: '1px solid #0D9488' }}>Rate</th>
-                  <th style={{ padding: '12px', fontSize: '12px', fontWeight: 900, textAlign: 'right', border: '1px solid #0D9488' }}>Amount</th>
+                  <th style={{ padding: '12px', fontSize: '12px', fontWeight: 900, textAlign: 'center', border: '1px solid #0D9488', width: '100px' }}>Qty</th>
+                  <th style={{ padding: '12px', fontSize: '12px', fontWeight: 900, textAlign: 'right', border: '1px solid #0D9488', width: '140px' }}>Rate</th>
+                  <th style={{ padding: '12px', fontSize: '12px', fontWeight: 900, textAlign: 'right', border: '1px solid #0D9488', width: '140px' }}>Amount</th>
                 </tr>
               </thead>
               <tbody>
                 {billData.ledgerRows.length > 0 ? billData.ledgerRows.map((r:any, i:number) => (
                   <tr key={i} style={{ background: i % 2 === 0 ? '#f8fafc' : 'white' }}>
-                    <td style={{ padding: '12px', fontSize: '13px', border: '1px solid #e2e8f0' }}>{i+1}</td>
+                    <td style={{ padding: '12px', fontSize: '13px', border: '1px solid #e2e8f0', textAlign: 'center' }}>{i+1}</td>
                     <td style={{ padding: '12px', fontSize: '13px', border: '1px solid #e2e8f0', fontWeight: 600 }}>{r.detail}</td>
-                    <td style={{ padding: '12px', fontSize: '13px', border: '1px solid #e2e8f0', textAlign: 'right' }}>{r.qty || '-'}</td>
+                    <td style={{ padding: '12px', fontSize: '13px', border: '1px solid #e2e8f0', textAlign: 'center' }}>
+                      {(() => {
+                        const qtyVal = Number(r.qty || 0);
+                        const formattedQty = qtyVal ? (qtyVal % 1 === 0 ? qtyVal.toString() : qtyVal.toFixed(3).replace(/\.?0+$/, '')) : '';
+                        return formattedQty ? `${formattedQty} ${r.unit || ''}`.trim() : '-';
+                      })()}
+                    </td>
                     <td style={{ padding: '12px', fontSize: '13px', border: '1px solid #e2e8f0', textAlign: 'right' }}>{r.rate ? `₹${fmt(r.rate)}` : '-'}</td>
                     <td style={{ padding: '12px', fontSize: '13px', border: '1px solid #e2e8f0', textAlign: 'right', fontWeight: 800 }}>
                       {r.debit ? `₹${fmt(r.debit)}` : r.credit ? `-₹${fmt(r.credit)}` : '-'}

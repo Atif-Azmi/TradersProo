@@ -97,6 +97,7 @@ export default function RetailClient({ products, customers, todaySales }: Retail
       if (rpcError) throw rpcError
 
       const invoiceDate = new Date().toISOString().split('T')[0]
+      const isCredit = paymentMode === 'credit'
 
       // 2. Create Sale Header
       const { data: sale, error: saleError } = await supabase
@@ -110,9 +111,9 @@ export default function RetailClient({ products, customers, todaySales }: Retail
           gst_percent: gstPercent,
           gst_amount: gstAmount,
           total_amount: grandTotal,
-          amount_paid: grandTotal, // Retail is fully paid by default
+          amount_paid: isCredit ? 0 : grandTotal, // Retail is fully paid by default, except credit
           payment_mode: paymentMode,
-          payment_status: 'paid',
+          payment_status: isCredit ? 'pending' : 'paid',
           notes: notes
         })
         .select()
@@ -135,17 +136,19 @@ export default function RetailClient({ products, customers, todaySales }: Retail
       const { error: itemsError } = await supabase.from('tp_sale_items').insert(saleItems)
       if (itemsError) throw itemsError
 
-      // 4. Record Payment Received (fully paid)
-      const { error: paymentError } = await supabase.from('tp_payments_received').insert({
-        customer_id: selectedCustomerId,
-        sale_id: sale.id,
-        type: 'payment',
-        amount: grandTotal,
-        payment_mode: paymentMode,
-        payment_date: invoiceDate
-      })
+      // 4. Record Payment Received (fully paid except credit)
+      if (!isCredit) {
+        const { error: paymentError } = await supabase.from('tp_payments_received').insert({
+          customer_id: selectedCustomerId,
+          sale_id: sale.id,
+          type: 'payment',
+          amount: grandTotal,
+          payment_mode: paymentMode,
+          payment_date: invoiceDate
+        })
 
-      if (paymentError) throw paymentError
+        if (paymentError) throw paymentError
+      }
 
       setShowModal(false)
       resetForm()
@@ -263,9 +266,13 @@ export default function RetailClient({ products, customers, todaySales }: Retail
                        <td className="px-6 py-5 text-right font-black text-slate-900">₹{sale.total_amount.toLocaleString('en-IN', { minimumFractionDigits: 2 })}</td>
                        <td className="px-6 py-5">
                          <span className={`inline-flex items-center gap-1.5 py-1 px-3 rounded-full text-[10px] font-bold uppercase tracking-widest border ${
-                           sale.payment_mode === 'cash' ? 'bg-emerald-50 text-emerald-600 border-emerald-100' : 'bg-blue-50 text-blue-600 border-blue-100'
+                           sale.payment_mode === 'cash' 
+                              ? 'bg-emerald-50 text-emerald-600 border-emerald-100' 
+                              : sale.payment_mode === 'credit'
+                              ? 'bg-rose-50 text-rose-600 border-rose-100'
+                              : 'bg-blue-50 text-blue-600 border-blue-100'
                          }`}>
-                           {sale.payment_mode}
+                           {sale.payment_mode === 'credit' ? 'pay later' : sale.payment_mode}
                          </span>
                        </td>
                      </tr>
@@ -320,6 +327,7 @@ export default function RetailClient({ products, customers, todaySales }: Retail
                     <option value="cash">Cash Payment</option>
                     <option value="upi">UPI / Digital</option>
                     <option value="online">Bank Transfer</option>
+                    <option value="credit">Pay Later (Credit)</option>
                   </select>
                 </div>
                 <div>
@@ -398,9 +406,10 @@ export default function RetailClient({ products, customers, todaySales }: Retail
                           <td className="p-2">
                             <input 
                               type="number" 
-                              min="1"
+                              min="0.001"
+                              step="any"
                               value={item.qty}
-                              onChange={(e) => updateItem(item.id, 'qty', parseInt(e.target.value) || 0)}
+                              onChange={(e) => updateItem(item.id, 'qty', parseFloat(e.target.value) || 0)}
                               className="w-full px-3 py-1.5 border border-slate-100 rounded-lg focus:ring-2 focus:ring-primary outline-none font-bold text-center text-xs"
                             />
                           </td>

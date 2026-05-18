@@ -76,31 +76,35 @@ export const generateBillPDF = (profile: BusinessProfile, sale: SaleData, autoDo
 
   // Items table — using autoTable as a direct function (Next.js compatible)
   const tableData = sale.items && sale.items.length > 0 
-    ? sale.items.map(i => [
-        i.detail || i.product_name || '-',
-        i.qty || i.quantity || '1',
-        `₹${Number(i.rate || i.debit || i.credit || 0).toLocaleString('en-IN')}`,
-        `₹${Number(i.debit || i.credit || 0).toLocaleString('en-IN')}`
-      ])
+    ? sale.items.map(i => {
+        const qtyVal = Number(i.qty || i.quantity || 0);
+        const formattedQty = qtyVal ? (qtyVal % 1 === 0 ? qtyVal.toString() : qtyVal.toFixed(3).replace(/\.?0+$/, '')) : '';
+        return [
+          i.detail || i.product_name || '-',
+          formattedQty ? `${formattedQty} ${i.unit || ''}`.trim() : '-',
+          `Rs. ${Number(i.rate || i.debit || i.credit || 0).toLocaleString('en-IN')}`,
+          `Rs. ${Number(i.debit || i.credit || 0).toLocaleString('en-IN')}`
+        ];
+      })
     : [['No items recorded', '-', '-', '-']];
 
   autoTable(doc, {
     startY: currentY + 8,
-    head: [['Description', 'Qty', 'Rate (₹)', 'Amount (₹)']],
+    head: [['Description', 'Qty', 'Rate (Rs.)', 'Amount (Rs.)']],
     body: tableData,
     foot: [
-      ['', '', 'Total', `₹${Number(sale.selling_price || 0).toLocaleString('en-IN')}`],
-      ['', '', 'Paid', `₹${Number(sale.down_payment || 0).toLocaleString('en-IN')}`],
-      ['', '', 'Due', `₹${Number(sale.remaining_balance || 0).toLocaleString('en-IN')}`],
+      ['', '', 'Total', `Rs. ${Number(sale.selling_price || 0).toLocaleString('en-IN')}`],
+      ['', '', 'Paid', `Rs. ${Number(sale.down_payment || 0).toLocaleString('en-IN')}`],
+      ['', '', 'Due', `Rs. ${Number(sale.remaining_balance || 0).toLocaleString('en-IN')}`],
     ],
     theme: 'striped',
     headStyles: { fillColor: [13, 148, 136] },
     footStyles: { fillColor: [248, 250, 252], textColor: [15, 23, 42], fontStyle: 'bold' },
     columnStyles: {
-      0: { cellWidth: 90 },
-      1: { halign: 'center' },
-      2: { halign: 'right' },
-      3: { halign: 'right' }
+      0: { cellWidth: 82 },
+      1: { cellWidth: 28, halign: 'center' },
+      2: { cellWidth: 36, halign: 'right' },
+      3: { cellWidth: 36, halign: 'right' }
     }
   });
 

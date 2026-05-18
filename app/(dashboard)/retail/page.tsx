@@ -15,7 +15,7 @@ export default async function RetailSalesPage() {
   const today = new Date().toISOString().split('T')[0]
   const { data: todaySales } = await supabase
     .from('tp_sales')
-    .select('*, tp_customers(name), tp_sale_items(product_name, quantity, rate, total_amount, gst_percent)')
+    .select('*, tp_customers(name), tp_sale_items(product_name, quantity, unit, rate, total_amount, gst_percent)')
     .eq('invoice_date', today)
     .order('created_at', { ascending: false })
 
