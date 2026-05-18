@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Sidebar from '@/components/layout/Sidebar'
 import TopBar from '@/components/layout/TopBar'
 import BottomNav from '@/components/layout/BottomNav'
@@ -19,10 +19,18 @@ export default function DashboardLayoutClient({
   const [sidebarOpen, setSidebarOpen] = useState(false)
   const { profile, loading } = useBusinessProfile()
   const [showBanner, setShowBanner] = useState(true)
+  const [isMobile, setIsMobile] = useState(false)
+
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 768)
+    checkMobile()
+    window.addEventListener('resize', checkMobile)
+    return () => window.removeEventListener('resize', checkMobile)
+  }, [])
 
   return (
     <div className="min-h-screen bg-[#F4F7F9]">
-      <Toaster position="top-right" />
+      <Toaster position={isMobile ? "top-center" : "top-right"} />
       
       {/* Mobile sidebar */}
       {sidebarOpen && (

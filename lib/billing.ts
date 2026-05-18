@@ -130,6 +130,7 @@ export async function saveBillShare({
   customerName,
   customerPhone,
   totalAmount,
+  pdfUrl,
 }: any) {
   // Verify session before database insert
   const { data: { user } } = await supabase.auth.getUser()
@@ -146,6 +147,7 @@ export async function saveBillShare({
       customer_name: customerName ?? null,
       customer_phone: customerPhone ?? null,
       total_amount: totalAmount ?? null,
+      pdf_url: pdfUrl,
       expires_at: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString(), // 7 days
     })
     .select()

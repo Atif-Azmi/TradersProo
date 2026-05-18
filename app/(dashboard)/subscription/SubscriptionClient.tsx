@@ -112,7 +112,7 @@ _TradersPro — Professional Billing Suite_
 
     const options = {
       key: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID || 'rzp_live_SqWfJLIbyRHS4s', // Dynamic Razorpay Key ID with Live Fallback
-      amount: 495900, // INR 4,959 in paise (₹4,959.00)
+      amount: 795900, // INR 7,959 in paise (₹7,959.00)
       currency: 'INR',
       name: 'TradersPro',
       description: 'Elite Annual Pass Subscription',
@@ -247,7 +247,7 @@ _TradersPro — Professional Billing Suite_
             <div className="mt-6 mb-4 flex items-center gap-x-3 bg-slate-950/80 p-5 rounded-2xl border border-slate-800/80 w-fit">
               <div className="flex items-baseline gap-x-2">
                 <span className="text-5xl font-extrabold tracking-tight text-emerald-400 drop-shadow-[0_4px_12px_rgba(52,211,153,0.3)]">
-                  ₹4,959
+                  ₹7,959
                 </span>
                 <span className="text-xs font-bold uppercase tracking-widest text-slate-400">
                   / Year
@@ -261,7 +261,7 @@ _TradersPro — Professional Billing Suite_
 
             <div className="mt-4 inline-flex items-center gap-2 bg-slate-800/50 px-3.5 py-2 rounded-xl border border-slate-700/30 text-[9px] font-bold text-slate-300 uppercase tracking-widest">
               <RefreshCw className="h-3 w-3 text-teal-400 animate-spin duration-[4000ms]" /> 
-              <span>Renewal Price Lock: Renew at ₹4,959/year (Same Cost Guaranteed)</span>
+              <span>Renewal Price Lock: Renew at ₹7,959/year (Same Cost Guaranteed)</span>
             </div>
 
             <div className="mt-8 border-t border-slate-800/80 pt-6">

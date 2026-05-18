@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react'
 import { Bell, Search, Menu, User, Loader2 } from 'lucide-react'
 import { createClient } from '@/lib/supabase/client'
 import dynamic from 'next/dynamic'
+import LoadingSpinner from '@/components/common/LoadingSpinner'
 
 // Create a small internal component for the greeting that only runs on the client
 const DynamicGreeting = ({ email }: { email?: string }) => {
@@ -180,7 +181,7 @@ export default function TopBar({ setSidebarOpen }: { setSidebarOpen: (open: bool
 
              {/* Notifications Popover Dropdown */}
              {showNotifications && (
-               <div className="absolute right-0 mt-2 top-10 w-80 rounded-2xl bg-white border border-slate-100 p-4 shadow-2xl z-50 animate-in fade-in slide-in-from-top-3 duration-200">
+               <div className="fixed md:absolute right-4 left-4 md:right-0 md:left-auto mt-2 top-16 md:top-10 w-[calc(100vw-32px)] md:w-80 rounded-2xl bg-white border border-slate-100 p-4 shadow-2xl z-50 animate-in fade-in slide-in-from-top-3 duration-200">
                  <div className="flex items-center justify-between pb-3 border-b border-slate-50">
                    <h4 className="text-xs font-black text-slate-900 uppercase tracking-widest">Recent Activity</h4>
                    <span className="text-[9px] font-bold bg-[#0D9488]/10 text-[#0D9488] px-2.5 py-0.5 rounded-full">
@@ -190,9 +191,8 @@ export default function TopBar({ setSidebarOpen }: { setSidebarOpen: (open: bool
                  
                  <div className="mt-3 space-y-3.5 max-h-64 overflow-y-auto">
                    {loadingActivities ? (
-                     <div className="flex flex-col items-center justify-center py-6 text-slate-400 gap-2">
-                       <Loader2 className="h-5 w-5 animate-spin text-[#0D9488]" />
-                       <span className="text-[10px] font-bold uppercase tracking-wider">Syncing live operations...</span>
+                     <div className="flex flex-col items-center justify-center py-8 text-slate-400 gap-2">
+                       <LoadingSpinner size="sm" text="SYNCING OPERATIONS..." textColor="text-slate-400" />
                      </div>
                    ) : activities.length === 0 ? (
                      <div className="text-center py-8 px-4 text-slate-400">

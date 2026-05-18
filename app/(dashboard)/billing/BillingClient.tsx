@@ -91,25 +91,27 @@ export default function BillingClient({ userId, customers }: Props) {
   }
 
   async function handleUpload() {
-    if (!billData || !billRef.current || !libReady) return
+    if (!billData || !profile) return
     setUploading(true)
     try {
-      const element = billRef.current.cloneNode(true) as HTMLElement
-      // @ts-ignore
-      const blob: Blob = await window.html2pdf()
-        .set({ 
-          margin: 10, 
-          filename: `Invoice_${billData.customer.name}.pdf`, 
-          image: { type: 'jpeg', quality: 0.98 }, 
-          html2canvas: { scale: 3, useCORS: true, letterRendering: true }, 
-          jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
-          pagebreak: { mode: ['avoid-all', 'css', 'legacy'] }
-        })
-        .from(element).outputPdf('blob')
+      const saleData = {
+        bill_number: `INV-${Date.now().toString().slice(-5)}`,
+        created_at: new Date().toISOString(),
+        customer_name: billData.customer.name,
+        customer_phone: billData.customer.phone,
+        selling_price: billData.totalSales,
+        down_payment: billData.totalPaid,
+        remaining_balance: billData.netPayable,
+        items: billData.ledgerRows,
+      }
+
+      // Generate perfect, high-fidelity vector PDF programmatically using jsPDF
+      const { doc } = generateBillPDF(profile, saleData, false)
+      const blob: Blob = doc.output('blob')
 
       const { signedUrl, path } = await uploadBillPDF({ userId, customerId: selectedCust, pdfBlob: blob, startDate, endDate })
-      const short = await shortenUrl(signedUrl)
-      await saveBillShare({ 
+      
+      const shareData = await saveBillShare({ 
         userId, 
         customer_id: selectedCust, 
         storagePath: path, 
@@ -118,7 +120,13 @@ export default function BillingClient({ userId, customers }: Props) {
         customerName: billData.customer?.name,
         customerPhone: billData.customer?.phone,
         totalAmount: billData.netPayable,
+        pdfUrl: signedUrl,
       })
+      
+      const origin = window.location.origin
+      const publicBillPageUrl = `${origin}/shared-bill/${shareData.id}`
+      const short = await shortenUrl(publicBillPageUrl)
+      
       setShareLink(short)
       setStatus('uploaded')
       toast.success('Bill uploaded successfully')
@@ -269,11 +277,11 @@ export default function BillingClient({ userId, customers }: Props) {
 
       {/* BILL PREVIEW - MATCHING THE BLUE & WHITE INVOICE */}
       {billData && (
-        <div className="p-10 bg-slate-100 rounded-[3rem] overflow-hidden flex justify-center print:p-0 print:bg-transparent print:rounded-none">
+        <div className="p-4 sm:p-10 bg-slate-100 rounded-3xl sm:rounded-[3rem] overflow-x-auto flex justify-start sm:justify-center print:p-0 print:bg-transparent print:rounded-none">
           <div
             id="print-invoice"
             ref={billRef}
-            className="bg-white shadow-2xl w-full max-w-[210mm] p-12 relative print:shadow-none print:w-full print:max-w-full print:p-4"
+            className="bg-white shadow-2xl w-[800px] sm:w-full max-w-[210mm] p-8 sm:p-12 relative print:shadow-none print:w-full print:max-w-full print:p-4 shrink-0"
             style={{ fontFamily: "'Inter', sans-serif", color: '#1e293b' }}
           >
             

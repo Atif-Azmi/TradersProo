@@ -13,7 +13,7 @@ export interface SaleData {
   items?: any[];
 }
 
-export const generateBillPDF = (profile: BusinessProfile, sale: SaleData) => {
+export const generateBillPDF = (profile: BusinessProfile, sale: SaleData, autoDownload: boolean = true) => {
   const doc = new jsPDF();
   const biz = profile ?? ({} as BusinessProfile);
 
@@ -133,5 +133,8 @@ export const generateBillPDF = (profile: BusinessProfile, sale: SaleData) => {
     105, currentFooterY, { align: 'center' }
   );
 
-  doc.save(`Bill_${sale.bill_number}.pdf`);
+  if (autoDownload) {
+    doc.save(`Bill_${sale.bill_number}.pdf`);
+  }
+  return { doc, filename: `Bill_${sale.bill_number}.pdf` };
 };
