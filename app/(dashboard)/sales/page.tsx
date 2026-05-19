@@ -2,6 +2,9 @@ import { createClient } from '@/lib/supabase/server'
 import { redirect } from 'next/navigation'
 import SalesClient from './SalesClient'
 
+export const dynamic = 'force-dynamic'
+export const revalidate = 0
+
 export default async function SalesPage() {
   const supabase = createClient()
   
@@ -12,6 +15,7 @@ export default async function SalesPage() {
     supabase
       .from('tp_sales')
       .select('*, tp_customers(name, phone)')
+      .eq('user_id', user.id)
       .order('created_at', { ascending: false }),
     supabase
       .from('tp_profile')
@@ -22,5 +26,5 @@ export default async function SalesPage() {
 
   if (salesRes.error) console.error('Error fetching sales:', salesRes.error.message)
 
-  return <SalesClient initialSales={salesRes.data || []} shopProfile={profileRes.data || {}} />
+  return <SalesClient userId={user.id} initialSales={salesRes.data || []} shopProfile={profileRes.data || {}} />
 }

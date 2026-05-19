@@ -76,13 +76,21 @@ export default function SettingsClient({ initialProfile }: SettingsClientProps) 
     e.preventDefault()
     setSaving(true)
     
+    const { data: { user } } = await supabase.auth.getUser()
+    if (!user) {
+      toast.error('Not authenticated')
+      setSaving(false)
+      return
+    }
+
     // Ensure we don't accidentally update old business profile fields if they existed
     const { id, user_id, created_at, business_name, tagline, phone, phone2, address, city, state, gst_number, ...updateData } = profile
-    
+
     const { error } = await supabase
       .from('tp_profile')
       .upsert({
         ...updateData,
+        id: user.id,
         updated_at: new Date().toISOString()
       })
 

@@ -142,11 +142,12 @@ export default function BillingClient({ userId, customers }: Props) {
       const { data } = await supabase
         .from('tp_bill_shares')
         .select('*')
+        .eq('user_id', userId)
         .order('created_at', { ascending: false })
       if (data) setShares(data)
     }
     fetchShares()
-  }, [supabase])
+  }, [supabase, userId])
 
   const totalBills = shares.length
   const totalOutstanding = shares.reduce((acc, curr) => acc + parseFloat(curr.total_amount || 0), 0)

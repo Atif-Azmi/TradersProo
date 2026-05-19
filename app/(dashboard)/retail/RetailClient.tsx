@@ -114,7 +114,8 @@ export default function RetailClient({ products, customers, todaySales }: Retail
           amount_paid: isCredit ? 0 : grandTotal, // Retail is fully paid by default, except credit
           payment_mode: paymentMode,
           payment_status: isCredit ? 'pending' : 'paid',
-          notes: notes
+          notes: notes,
+          user_id: user.id
         })
         .select()
         .single()
@@ -130,7 +131,8 @@ export default function RetailClient({ products, customers, todaySales }: Retail
         quantity: item.qty,
         rate: item.rate,
         discount_percent: 0,
-        gst_percent: gstPercent
+        gst_percent: gstPercent,
+        user_id: user.id
       }))
 
       const { error: itemsError } = await supabase.from('tp_sale_items').insert(saleItems)
@@ -144,7 +146,8 @@ export default function RetailClient({ products, customers, todaySales }: Retail
           type: 'payment',
           amount: grandTotal,
           payment_mode: paymentMode,
-          payment_date: invoiceDate
+          payment_date: invoiceDate,
+          user_id: user.id
         })
 
         if (paymentError) throw paymentError

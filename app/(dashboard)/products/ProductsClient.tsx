@@ -34,13 +34,17 @@ export default function ProductsClient({ initialProducts }: ProductsClientProps)
 
   const fetchProducts = async () => {
     setLoading(true)
-    const { data, error } = await supabase
-      .from('tp_products')
-      .select('*')
-      .order('created_at', { ascending: false })
+    const { data: { user } } = await supabase.auth.getUser()
+    if (user) {
+      const { data, error } = await supabase
+        .from('tp_products')
+        .select('*')
+        .eq('user_id', user.id)
+        .order('created_at', { ascending: false })
 
-    if (!error) {
-      setProducts(data || [])
+      if (!error) {
+        setProducts(data || [])
+      }
     }
     setLoading(false)
   }
@@ -49,6 +53,13 @@ export default function ProductsClient({ initialProducts }: ProductsClientProps)
     e.preventDefault()
     setLoading(true)
     
+    const { data: { user } } = await supabase.auth.getUser()
+    if (!user) {
+      alert('Not authenticated')
+      setLoading(false)
+      return
+    }
+
     const { error } = await supabase
       .from('tp_products')
       .insert({
@@ -58,7 +69,8 @@ export default function ProductsClient({ initialProducts }: ProductsClientProps)
         selling_rate: parseFloat(sellingRate),
         purchase_rate: parseFloat(purchaseRate) || 0,
         current_stock: parseFloat(initialStock),
-        min_stock_alert: parseFloat(minStock)
+        min_stock_alert: parseFloat(minStock),
+        user_id: user.id
       })
 
     if (error) {
@@ -76,6 +88,13 @@ export default function ProductsClient({ initialProducts }: ProductsClientProps)
     if (!selectedProduct) return
     setLoading(true)
     
+    const { data: { user } } = await supabase.auth.getUser()
+    if (!user) {
+      alert('Not authenticated')
+      setLoading(false)
+      return
+    }
+
     const { error } = await supabase
       .from('tp_products')
       .update({
@@ -87,6 +106,7 @@ export default function ProductsClient({ initialProducts }: ProductsClientProps)
         min_stock_alert: parseFloat(minStock)
       })
       .eq('id', selectedProduct.id)
+      .eq('user_id', user.id)
 
     if (error) {
       alert(error.message)
@@ -102,6 +122,13 @@ export default function ProductsClient({ initialProducts }: ProductsClientProps)
     if (!selectedProduct) return
     setLoading(true)
     
+    const { data: { user } } = await supabase.auth.getUser()
+    if (!user) {
+      alert('Not authenticated')
+      setLoading(false)
+      return
+    }
+
     const change = parseFloat(adjustmentValue)
     const newStock = adjustmentType === 'add' 
       ? selectedProduct.current_stock + change 
@@ -111,6 +138,7 @@ export default function ProductsClient({ initialProducts }: ProductsClientProps)
       .from('tp_products')
       .update({ current_stock: newStock })
       .eq('id', selectedProduct.id)
+      .eq('user_id', user.id)
 
     if (error) {
       alert(error.message)

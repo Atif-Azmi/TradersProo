@@ -131,8 +131,11 @@ export default function ReportsClient({
 
   // --- UPLOAD TO SUPABASE & GENERATE 7-DAY SIGNED URL LINK ---
   const uploadAndGetShareLink = async (doc: jsPDF, fileName: string): Promise<string> => {
+    const { data: { user } } = await supabase.auth.getUser()
+    if (!user) throw new Error('Not authenticated')
+
     const pdfBlob = doc.output('blob')
-    const path = `reports/${fileName}_${Date.now()}.pdf`
+    const path = `reports/${user.id}/${fileName}_${Date.now()}.pdf`
     
     const { error: uploadError } = await supabase.storage
       .from('bills')

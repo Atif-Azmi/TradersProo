@@ -2,6 +2,9 @@ import { createClient } from '@/lib/supabase/server'
 import { redirect } from 'next/navigation'
 import DashboardClient from './DashboardClient'
 
+export const dynamic = 'force-dynamic'
+export const revalidate = 0
+
 export default async function DashboardPage() {
   const supabase = createClient()
   
@@ -13,15 +16,18 @@ export default async function DashboardPage() {
     supabase
       .from('tp_sales')
       .select('total_amount, amount_paid, balance_due, invoice_date, payment_status, invoice_number, id, created_at, tp_customers(name)')
+      .eq('user_id', user.id)
       .order('created_at', { ascending: false }),
     
     supabase
       .from('tp_customers')
-      .select('id', { count: 'exact' }),
+      .select('id', { count: 'exact' })
+      .eq('user_id', user.id),
     
     supabase
       .from('tp_stock_alerts')
       .select('*, tp_products(name)')
+      .eq('user_id', user.id)
       .eq('is_resolved', false)
       .order('created_at', { ascending: false })
       .limit(5)

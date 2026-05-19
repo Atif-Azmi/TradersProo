@@ -2,20 +2,24 @@ import { createClient } from '@/lib/supabase/server'
 import { redirect } from 'next/navigation'
 import RetailClient from './RetailClient'
 
+export const dynamic = 'force-dynamic'
+export const revalidate = 0
+
 export default async function RetailSalesPage() {
   const supabase = createClient()
   
   const { data: { user } } = await supabase.auth.getUser()
   if (!user) redirect('/login')
 
-  const { data: products } = await supabase.from('tp_products').select('*').order('name')
-  const { data: customers } = await supabase.from('tp_customers').select('*').order('name')
+  const { data: products } = await supabase.from('tp_products').select('*').eq('user_id', user.id).order('name')
+  const { data: customers } = await supabase.from('tp_customers').select('*').eq('user_id', user.id).order('name')
   
   // Fetch today's sales
   const today = new Date().toISOString().split('T')[0]
   const { data: todaySales } = await supabase
     .from('tp_sales')
     .select('*, tp_customers(name), tp_sale_items(product_name, quantity, unit, rate, total_amount, gst_percent)')
+    .eq('user_id', user.id)
     .eq('invoice_date', today)
     .order('created_at', { ascending: false })
 

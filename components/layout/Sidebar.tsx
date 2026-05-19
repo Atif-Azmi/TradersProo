@@ -79,6 +79,9 @@ export default function Sidebar({ isSuperAdmin, onClose }: { isSuperAdmin: boole
   }, [supabase])
 
   const handleSignOut = async () => {
+    if (typeof window !== 'undefined') {
+      localStorage.removeItem('bp')
+    }
     await supabase.auth.signOut()
     router.push('/login')
   }

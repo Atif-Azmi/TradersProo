@@ -99,7 +99,8 @@ export default function NewInvoiceClient({ initialCustomers, initialProducts }: 
           amount_paid: parseFloat(amountPaid),
           payment_mode: paymentMode,
           payment_status: parseFloat(amountPaid) >= totalAmount ? 'paid' : parseFloat(amountPaid) > 0 ? 'partial' : 'pending',
-          notes: notes
+          notes: notes,
+          user_id: user.id
         })
         .select()
         .single()
@@ -115,7 +116,8 @@ export default function NewInvoiceClient({ initialCustomers, initialProducts }: 
         quantity: item.qty,
         rate: item.rate,
         discount_percent: item.discPercent,
-        gst_percent: item.taxPercent
+        gst_percent: item.taxPercent,
+        user_id: user.id
       }))
 
       const { error: itemsError } = await supabase.from('tp_sale_items').insert(saleItems)
@@ -129,7 +131,8 @@ export default function NewInvoiceClient({ initialCustomers, initialProducts }: 
           type: 'payment',
           amount: parseFloat(amountPaid),
           payment_mode: paymentMode === 'credit' ? 'cash' : paymentMode,
-          payment_date: invoiceDate
+          payment_date: invoiceDate,
+          user_id: user.id
         })
       }
 

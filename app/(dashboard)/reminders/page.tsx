@@ -2,6 +2,9 @@ import { createClient } from '@/lib/supabase/server'
 import { redirect } from 'next/navigation'
 import RemindersClient from './RemindersClient'
 
+export const dynamic = 'force-dynamic'
+export const revalidate = 0
+
 export default async function RemindersPage() {
   const supabase = createClient()
   
@@ -9,8 +12,8 @@ export default async function RemindersPage() {
   if (!user) redirect('/login')
 
   const [custRes, profileRes] = await Promise.all([
-    supabase.from('tp_customer_balances').select('*').gt('outstanding_dues', 0),
-    supabase.from('tp_profile').select('*').single() // RLS handles user_id filter
+    supabase.from('tp_customer_balances').select('*').eq('user_id', user.id).gt('outstanding_dues', 0),
+    supabase.from('tp_profile').select('*').eq('id', user.id).single()
   ])
 
   return (

@@ -7,18 +7,23 @@ export async function generateBillData({ customerId, startDate, endDate }: {
   startDate: string
   endDate: string
 }) {
+  const { data: { user } } = await supabase.auth.getUser()
+  if (!user) throw new Error("Not authenticated")
+
   const [customerRes, profileRes, salesRes, paymentsRes, prevSalesRes, prevPayRes] = await Promise.all([
-    supabase.from('tp_customers').select('id, name, phone, address').eq('id', customerId).single(),
-    supabase.from('tp_profile').select('business_name, tagline, address, city, state, phone, gst_number').single(),
+    supabase.from('tp_customers').select('id, name, phone, address').eq('id', customerId).eq('user_id', user.id).single(),
+    supabase.from('tp_profile').select('business_name, tagline, address, city, state, phone, gst_number').eq('id', user.id).single(),
     supabase.from('tp_sales')
       .select('id, invoice_date, total_amount, invoice_number, payment_status, tp_sale_items(product_name, quantity, unit, rate, discount_percent, gst_percent)')
       .eq('customer_id', customerId)
+      .eq('user_id', user.id)
       .gte('invoice_date', startDate)
       .lte('invoice_date', endDate)
       .order('invoice_date', { ascending: true }),
     supabase.from('tp_advances')
       .select('id, date, amount, type, payment_mode, notes')
       .eq('customer_id', customerId)
+      .eq('user_id', user.id)
       .in('type', ['received', 'payment', 'advance'])
       .gte('date', startDate)
       .lte('date', endDate)
@@ -26,10 +31,12 @@ export async function generateBillData({ customerId, startDate, endDate }: {
     supabase.from('tp_sales')
       .select('total_amount')
       .eq('customer_id', customerId)
+      .eq('user_id', user.id)
       .lt('invoice_date', startDate),
     supabase.from('tp_advances')
       .select('amount')
       .eq('customer_id', customerId)
+      .eq('user_id', user.id)
       .in('type', ['received', 'payment', 'advance'])
       .lt('date', startDate),
   ])

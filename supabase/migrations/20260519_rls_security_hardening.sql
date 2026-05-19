@@ -8,8 +8,8 @@ ALTER TABLE tp_customers ENABLE ROW LEVEL SECURITY;
 ALTER TABLE tp_products ENABLE ROW LEVEL SECURITY;
 ALTER TABLE tp_sales ENABLE ROW LEVEL SECURITY;
 ALTER TABLE tp_payments_received ENABLE ROW LEVEL SECURITY;
-ALTER TABLE tp_advances ENABLE ROW LEVEL SECURITY;
 ALTER TABLE tp_bill_shares ENABLE ROW LEVEL SECURITY;
+ALTER TABLE tp_sale_items ENABLE ROW LEVEL SECURITY;
 
 -- 2. Drop existing policies to prevent conflicts
 DROP POLICY IF EXISTS "Users can manage their own profile" ON tp_profile;
@@ -17,8 +17,8 @@ DROP POLICY IF EXISTS "Users can manage their own customers" ON tp_customers;
 DROP POLICY IF EXISTS "Users can manage their own products" ON tp_products;
 DROP POLICY IF EXISTS "Users can manage their own sales" ON tp_sales;
 DROP POLICY IF EXISTS "Users can manage their own payments" ON tp_payments_received;
-DROP POLICY IF EXISTS "Users can manage their own advances" ON tp_advances;
 DROP POLICY IF EXISTS "Users can manage their own bill shares" ON tp_bill_shares;
+DROP POLICY IF EXISTS "Users can manage their own sale items" ON tp_sale_items;
 
 -- 3. Create comprehensive RLS Policies for Multi-Tenancy isolation
 
@@ -52,14 +52,14 @@ CREATE POLICY "Users can manage their own payments" ON tp_payments_received
   USING (auth.uid() = user_id)
   WITH CHECK (auth.uid() = user_id);
 
--- TP Advances: Users can only see/edit their own advance transactions (keyed by 'user_id')
-CREATE POLICY "Users can manage their own advances" ON tp_advances
+-- TP Bill Shares: Users can only see/edit their own shared bills (keyed by 'user_id')
+CREATE POLICY "Users can manage their own bill shares" ON tp_bill_shares
   FOR ALL
   USING (auth.uid() = user_id)
   WITH CHECK (auth.uid() = user_id);
 
--- TP Bill Shares: Users can only see/edit their own shared bills (keyed by 'user_id')
-CREATE POLICY "Users can manage their own bill shares" ON tp_bill_shares
+-- TP Sale Items: Users can only see/edit their own sale items (keyed by 'user_id')
+CREATE POLICY "Users can manage their own sale items" ON tp_sale_items
   FOR ALL
   USING (auth.uid() = user_id)
   WITH CHECK (auth.uid() = user_id);
@@ -70,14 +70,14 @@ CREATE INDEX IF NOT EXISTS idx_tp_products_user_id ON tp_products(user_id);
 CREATE INDEX IF NOT EXISTS idx_tp_sales_user_id ON tp_sales(user_id);
 CREATE INDEX IF NOT EXISTS idx_tp_sales_customer_id ON tp_sales(customer_id);
 CREATE INDEX IF NOT EXISTS idx_tp_payments_received_user_id ON tp_payments_received(user_id);
-CREATE INDEX IF NOT EXISTS idx_tp_advances_user_id ON tp_advances(user_id);
 CREATE INDEX IF NOT EXISTS idx_tp_bill_shares_user_id ON tp_bill_shares(user_id);
+CREATE INDEX IF NOT EXISTS idx_tp_sale_items_user_id ON tp_sale_items(user_id);
 
 -- 5. Create Materialized Dashboard View for extreme speed
 CREATE MATERIALIZED VIEW IF NOT EXISTS mv_tenant_dashboard_stats AS
 SELECT 
   user_id,
-  COALESCE(SUM(grand_total), 0) as total_sales,
+  COALESCE(SUM(total_amount), 0) as total_sales,
   COALESCE((SELECT SUM(amount) FROM tp_payments_received WHERE tp_payments_received.user_id = tp_sales.user_id), 0) as total_payments
 FROM tp_sales
 GROUP BY user_id;

@@ -9,8 +9,8 @@ export default async function CreateInvoicePage() {
   if (!user) redirect('/login')
 
   const [custRes, prodRes] = await Promise.all([
-    supabase.from('tp_customers').select('id, name, company_name'),
-    supabase.from('tp_products').select('id, name, selling_rate, unit')
+    supabase.from('tp_customers').select('id, name, company_name').eq('user_id', user.id),
+    supabase.from('tp_products').select('id, name, selling_rate, unit').eq('user_id', user.id)
   ])
 
   return (

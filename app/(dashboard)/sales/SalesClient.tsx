@@ -6,11 +6,12 @@ import Link from 'next/link'
 import { createClient } from '@/lib/supabase/client'
 
 interface SalesClientProps {
+  userId: string
   initialSales: any[]
   shopProfile: any
 }
 
-export default function SalesClient({ initialSales, shopProfile }: SalesClientProps) {
+export default function SalesClient({ userId, initialSales, shopProfile }: SalesClientProps) {
   const [sales, setSales] = useState<any[]>(initialSales)
   const [filter, setFilter] = useState('All')
   const [search, setSearch] = useState('')
@@ -31,6 +32,7 @@ export default function SalesClient({ initialSales, shopProfile }: SalesClientPr
     const { data } = await supabase
       .from('tp_sales')
       .select('*, tp_customers(name, phone)')
+      .eq('user_id', userId)
       .order('created_at', { ascending: false })
     if (data) setSales(data)
   }
@@ -65,6 +67,7 @@ export default function SalesClient({ initialSales, shopProfile }: SalesClientPr
       .from('tp_sales')
       .update({ amount_paid: newPaid, payment_status: newStatus })
       .eq('id', paymentModal.id)
+      .eq('user_id', userId)
 
     if (!error) {
       setPaymentSuccess(true)

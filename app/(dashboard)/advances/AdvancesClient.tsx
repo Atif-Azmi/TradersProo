@@ -64,6 +64,9 @@ export default function AdvancesClient({ initialPayments, customers }: AdvancesC
     setLoading(true)
 
     try {
+      const { data: { user } } = await supabase.auth.getUser()
+      if (!user) throw new Error('Not authenticated')
+
       const { error } = await supabase
         .from('tp_payments_received')
         .insert({
@@ -73,7 +76,8 @@ export default function AdvancesClient({ initialPayments, customers }: AdvancesC
           payment_mode: paymentMode,
           payment_date: paymentDate,
           reference_number: referenceNumber || null,
-          note: note || null
+          note: note || null,
+          user_id: user.id
         })
 
       if (error) throw error
@@ -93,10 +97,14 @@ export default function AdvancesClient({ initialPayments, customers }: AdvancesC
     if (!confirm('Are you sure you want to delete this transaction? This will automatically restore the customer\'s outstanding balance.')) return
 
     try {
+      const { data: { user } } = await supabase.auth.getUser()
+      if (!user) throw new Error('Not authenticated')
+
       const { error } = await supabase
         .from('tp_payments_received')
         .delete()
         .eq('id', id)
+        .eq('user_id', user.id)
 
       if (error) throw error
       router.refresh()

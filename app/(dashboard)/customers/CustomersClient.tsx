@@ -30,12 +30,16 @@ export default function CustomersClient({ initialCustomers }: CustomersClientPro
 
   const fetchCustomers = async () => {
     setLoading(true)
-    const { data, error } = await supabase
-      .from('tp_customer_balances')
-      .select('*')
+    const { data: { user } } = await supabase.auth.getUser()
+    if (user) {
+      const { data, error } = await supabase
+        .from('tp_customer_balances')
+        .select('*')
+        .eq('user_id', user.id)
 
-    if (!error) {
-      setCustomers(data || [])
+      if (!error) {
+        setCustomers(data || [])
+      }
     }
     setLoading(false)
   }
@@ -55,7 +59,13 @@ export default function CustomersClient({ initialCustomers }: CustomersClientPro
     e.preventDefault()
     setLoading(true)
     
-    // Rule #8: DO NOT manually set user_id. DB DEFAULT auth.uid() handles it.
+    const { data: { user } } = await supabase.auth.getUser()
+    if (!user) {
+      alert('Not authenticated')
+      setLoading(false)
+      return
+    }
+
     const customerData = {
       name,
       company_name: company,
@@ -63,7 +73,8 @@ export default function CustomersClient({ initialCustomers }: CustomersClientPro
       email,
       address,
       gst_number: gst,
-      opening_balance: parseFloat(openingBalance)
+      opening_balance: parseFloat(openingBalance),
+      user_id: user.id
     }
 
     let error;
@@ -72,6 +83,7 @@ export default function CustomersClient({ initialCustomers }: CustomersClientPro
         .from('tp_customers')
         .update(customerData)
         .eq('id', editingCustomer.id || editingCustomer.customer_id)
+        .eq('user_id', user.id)
       error = editError
     } else {
       const { error: addError } = await supabase

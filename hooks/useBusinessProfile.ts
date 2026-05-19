@@ -42,7 +42,7 @@ export const useBusinessProfile = () => {
 
       const [bpRes, tpRes] = await Promise.all([
         supabase.from('business_profile').select('*').eq('user_id', user.id).maybeSingle(),
-        supabase.from('tp_profile').select('*').maybeSingle()
+        supabase.from('tp_profile').select('*').eq('id', user.id).maybeSingle()
       ]);
 
       if (bpRes.data || tpRes.data) {
