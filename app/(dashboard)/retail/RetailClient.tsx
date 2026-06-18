@@ -230,7 +230,8 @@ export default function RetailClient({ products, customers, todaySales }: Retail
       </div>
 
       <div className="tp-card overflow-hidden">
-        <div className="overflow-x-auto">
+        {/* Desktop View Table */}
+        <div className="hidden md:block overflow-x-auto">
           <table className="w-full text-sm text-left">
             <thead className="text-[10px] font-bold text-slate-400 uppercase bg-slate-50/50 tracking-widest">
               <tr>
@@ -284,6 +285,61 @@ export default function RetailClient({ products, customers, todaySales }: Retail
                )}
             </tbody>
           </table>
+        </div>
+
+        {/* Mobile View Card List */}
+        <div className="block md:hidden divide-y divide-slate-100 bg-white">
+          {filteredSales.length === 0 ? (
+            <div className="p-16 text-center text-slate-400 text-[10px] font-bold uppercase tracking-widest">
+               No transactions recorded today
+            </div>
+          ) : (
+            filteredSales.map((sale) => {
+              const time = new Date(sale.created_at).toLocaleTimeString('en-US', {
+                hour: '2-digit',
+                minute: '2-digit',
+                hour12: true
+              })
+              const productsList = sale.tp_sale_items
+                ?.map((item: any) => `${item.product_name} (${item.quantity} ${item.unit || 'pcs'})`)
+                .join(', ') || 'N/A'
+
+              return (
+                <div key={sale.id} className="p-4 space-y-2.5">
+                  <div className="flex justify-between items-start">
+                    <div>
+                      <p className="font-black text-slate-900 text-sm">{sale.invoice_number}</p>
+                      <p className="text-[10px] font-medium text-slate-400 mt-0.5">{time}</p>
+                    </div>
+                    <span className={`inline-flex items-center gap-1.5 py-1 px-2.5 rounded-full text-[9px] font-bold uppercase tracking-widest border ${
+                      sale.payment_mode === 'cash' 
+                          ? 'bg-emerald-50 text-emerald-600 border-emerald-100' 
+                          : sale.payment_mode === 'credit'
+                          ? 'bg-rose-50 text-rose-600 border-rose-100'
+                          : 'bg-blue-50 text-blue-600 border-blue-100'
+                    }`}>
+                      {sale.payment_mode === 'credit' ? 'pay later' : sale.payment_mode}
+                    </span>
+                  </div>
+                  
+                  <div className="space-y-1">
+                    <p className="text-[9px] font-black text-slate-400 uppercase">Customer</p>
+                    <p className="font-semibold text-slate-700 text-xs">{sale.tp_customers?.name || 'Walk-in'}</p>
+                  </div>
+
+                  <div className="space-y-1">
+                    <p className="text-[9px] font-black text-slate-400 uppercase">Products</p>
+                    <p className="text-slate-500 text-xs line-clamp-2">{productsList}</p>
+                  </div>
+                  
+                  <div className="flex justify-between items-center pt-2 border-t border-slate-50">
+                    <p className="text-[10px] font-black text-slate-400 uppercase">Total Amount</p>
+                    <p className="font-black text-slate-900 text-sm">₹{sale.total_amount.toLocaleString('en-IN', { minimumFractionDigits: 2 })}</p>
+                  </div>
+                </div>
+              )
+            })
+          )}
         </div>
       </div>
 
@@ -379,7 +435,8 @@ export default function RetailClient({ products, customers, todaySales }: Retail
                   </button>
                 </div>
 
-                <div className="border border-slate-100 rounded-2xl overflow-hidden shadow-sm">
+                {/* Desktop View Table */}
+                <div className="border border-slate-100 rounded-2xl overflow-hidden shadow-sm hidden md:block">
                   <table className="w-full text-sm text-left">
                     <thead className="bg-slate-50 text-[10px] font-black text-slate-400 uppercase tracking-widest">
                       <tr>
@@ -444,6 +501,70 @@ export default function RetailClient({ products, customers, todaySales }: Retail
                     </tbody>
                   </table>
                 </div>
+
+                {/* Mobile View Card List */}
+                <div className="block md:hidden space-y-4">
+                  {items.map((item, index) => (
+                    <div key={item.id} className="p-4 rounded-xl border border-slate-100 bg-slate-50/50 space-y-3">
+                      <div className="flex justify-between items-center pb-1.5 border-b border-slate-100">
+                        <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Item #{index + 1}</span>
+                        <button 
+                          type="button"
+                          onClick={() => setItems(items.filter(i => i.id !== item.id))}
+                          disabled={items.length === 1}
+                          className="p-1 text-slate-300 hover:text-red-500 rounded-lg hover:bg-red-50 disabled:opacity-0 transition-all"
+                        >
+                          <Trash2 className="h-4 w-4" />
+                        </button>
+                      </div>
+
+                      <div>
+                        <label className="block text-[9px] font-black text-slate-400 uppercase tracking-widest mb-1 ml-1">Product Description</label>
+                        <select 
+                          value={item.product_id}
+                          onChange={(e) => updateItem(item.id, 'product_id', e.target.value)}
+                          required
+                          className="w-full px-3 py-2 border border-slate-100 rounded-lg focus:ring-2 focus:ring-primary outline-none bg-white font-medium text-xs"
+                        >
+                          <option value="">Select Product</option>
+                          {products.map(p => (
+                            <option key={p.id} value={p.id}>{p.name} (Stock: {p.current_stock})</option>
+                          ))}
+                        </select>
+                      </div>
+
+                      <div className="grid grid-cols-2 gap-3">
+                        <div>
+                          <label className="block text-[9px] font-black text-slate-400 uppercase tracking-widest mb-1 ml-1">Qty {item.unit ? `(${item.unit})` : ''}</label>
+                          <input 
+                            type="number" 
+                            min="0.001"
+                            step="any"
+                            value={item.qty}
+                            onChange={(e) => updateItem(item.id, 'qty', parseFloat(e.target.value) || 0)}
+                            className="w-full px-3 py-1.5 border border-slate-100 rounded-lg focus:ring-2 focus:ring-primary outline-none font-bold text-center text-xs"
+                          />
+                        </div>
+                        <div>
+                          <label className="block text-[9px] font-black text-slate-400 uppercase tracking-widest mb-1 ml-1">Rate (₹)</label>
+                          <input 
+                            type="number" 
+                            min="0" 
+                            step="any"
+                            value={item.rate}
+                            onChange={(e) => updateItem(item.id, 'rate', parseFloat(e.target.value) || 0)}
+                            className="w-full px-3 py-1.5 border border-slate-100 rounded-lg focus:ring-2 focus:ring-primary outline-none font-bold text-right text-xs"
+                          />
+                        </div>
+                      </div>
+
+                      <div className="flex justify-between items-center pt-2 border-t border-slate-100">
+                        <span className="text-[9px] font-black text-slate-400 uppercase ml-1">Total</span>
+                        <span className="font-black text-slate-900 text-xs">₹{item.total.toLocaleString('en-IN', { minimumFractionDigits: 2 })}</span>
+                      </div>
+                    </div>
+                  ))}
+                </div>
               </div>
 
               <div>
@@ -466,24 +587,36 @@ export default function RetailClient({ products, customers, todaySales }: Retail
                   <span>GST ({gstPercent}% STANDARD / CUSTOM)</span>
                   <span className="text-slate-900">₹{gstAmount.toLocaleString('en-IN', { minimumFractionDigits: 2 })}</span>
                 </div>
+                {gstAmount > 0 && (
+                  <div className="pl-4 border-l-2 border-slate-200 space-y-2">
+                    <div className="flex justify-between text-[11px] font-bold uppercase tracking-widest text-slate-400">
+                       <span>CGST ({gstPercent / 2}%)</span>
+                       <span>₹{(gstAmount / 2).toLocaleString('en-IN', { minimumFractionDigits: 2 })}</span>
+                    </div>
+                    <div className="flex justify-between text-[11px] font-bold uppercase tracking-widest text-slate-400">
+                       <span>SGST ({gstPercent / 2}%)</span>
+                       <span>₹{(gstAmount / 2).toLocaleString('en-IN', { minimumFractionDigits: 2 })}</span>
+                    </div>
+                  </div>
+                )}
                 <div className="border-t border-slate-200 pt-3 flex justify-between items-center">
                   <span className="font-black text-slate-900 uppercase tracking-widest text-xs">Grand Total</span>
                   <span className="font-black text-slate-900 text-xl tracking-tighter">₹{grandTotal.toLocaleString('en-IN', { minimumFractionDigits: 2 })}</span>
                 </div>
               </div>
 
-              <div className="flex gap-3 pt-2">
+              <div className="flex flex-col sm:flex-row gap-3 pt-2">
                 <button 
                   type="button" 
                   onClick={() => setShowModal(false)}
-                  className="flex-1 px-6 py-3 border border-slate-200 rounded-xl text-xs font-black uppercase tracking-widest text-slate-600 hover:bg-slate-50 transition-all cursor-pointer"
+                  className="w-full sm:w-1/2 px-6 py-3.5 sm:py-3 border border-slate-200 rounded-xl text-xs font-black uppercase tracking-widest text-slate-600 hover:bg-slate-50 transition-all cursor-pointer text-center"
                 >
                   Cancel
                 </button>
                 <button 
                   type="submit" 
                   disabled={loading}
-                  className="flex-1 px-6 py-3 bg-primary text-white rounded-xl text-xs font-black uppercase tracking-widest hover:bg-green-600 shadow-lg shadow-green-100 transition-all disabled:opacity-50 flex items-center justify-center gap-2 cursor-pointer"
+                  className="w-full sm:w-1/2 px-6 py-3.5 sm:py-3 bg-primary text-white rounded-xl text-xs font-black uppercase tracking-widest hover:bg-green-600 shadow-lg shadow-green-100 transition-all disabled:opacity-50 flex items-center justify-center gap-2 cursor-pointer"
                 >
                   {loading ? <Loader2 className="h-4 w-4 animate-spin" /> : <Check className="h-4 w-4" />}
                   Finalize counter Sale

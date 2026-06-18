@@ -239,7 +239,8 @@ export default function ProductsClient({ initialProducts }: ProductsClientProps)
       </div>
 
       <div className="tp-card overflow-hidden">
-        <div className="overflow-x-auto">
+        {/* Desktop View Table */}
+        <div className="hidden md:block overflow-x-auto">
           <table className="w-full text-sm text-left">
             <thead className="text-[10px] font-bold text-slate-400 uppercase bg-slate-50/50 tracking-widest">
               <tr>
@@ -290,6 +291,67 @@ export default function ProductsClient({ initialProducts }: ProductsClientProps)
             </tbody>
           </table>
         </div>
+
+        {/* Mobile View Product Cards */}
+        <div className="block md:hidden divide-y divide-slate-100 bg-white">
+          {filteredProducts.map((product) => (
+            <div key={product.id} className="p-4 space-y-3">
+              <div className="flex justify-between items-start">
+                <div className="flex items-center gap-3">
+                  <div className="w-9 h-9 rounded-full bg-slate-100 flex items-center justify-center text-slate-500 font-bold text-xs">
+                     {(product.name || 'P')[0].toUpperCase()}
+                  </div>
+                  <div>
+                    <p className="font-bold text-slate-900 text-sm">{product.name}</p>
+                    <p className="text-[10px] font-medium text-slate-400 uppercase">Unit: {product.unit}</p>
+                  </div>
+                </div>
+                <span className="text-slate-600 font-medium px-2.5 py-1 bg-slate-100 rounded-full text-[9px] font-bold uppercase tracking-tight">
+                  {product.category || 'General'}
+                </span>
+              </div>
+              
+              <div className="flex justify-between items-center bg-slate-50/50 p-2.5 rounded-xl border border-slate-100/50">
+                <div>
+                  <p className="text-[9px] font-black text-slate-400 uppercase">Selling Rate</p>
+                  <p className="font-black text-slate-900 text-xs mt-0.5">₹{product.selling_rate.toLocaleString('en-IN')}</p>
+                </div>
+                <div className="text-right">
+                  <p className="text-[9px] font-black text-slate-400 uppercase mb-0.5">Current Stock</p>
+                  <span className={`inline-flex items-center gap-1.5 py-0.5 px-2 rounded-full text-[9px] font-bold uppercase tracking-widest border ${
+                    product.current_stock <= 0 
+                      ? 'bg-rose-50 text-red-600 border-red-100' 
+                      : product.current_stock <= product.min_stock_alert
+                      ? 'bg-amber-50 text-amber-600 border-amber-100'
+                      : 'bg-emerald-50 text-emerald-600 border-emerald-100'
+                  }`}>
+                    {product.current_stock} {product.unit}
+                  </span>
+                </div>
+              </div>
+              
+              <div className="flex justify-end gap-2">
+                <button 
+                  onClick={() => openEdit(product)} 
+                  className="px-3 py-1.5 bg-[#0D9488]/10 text-[9px] font-black uppercase text-[#0D9488] rounded-xl hover:bg-[#0D9488]/20 transition-all"
+                >
+                  Edit
+                </button>
+                <button 
+                  onClick={() => openAdjust(product)} 
+                  className="px-3 py-1.5 bg-slate-50 text-[9px] font-black uppercase text-slate-500 rounded-xl hover:bg-slate-100 transition-all"
+                >
+                  Adjust
+                </button>
+              </div>
+            </div>
+          ))}
+          {filteredProducts.length === 0 && (
+            <div className="p-16 text-center text-slate-400 text-[10px] font-black uppercase tracking-widest">
+              No products found
+            </div>
+          )}
+        </div>
       </div>
 
       {/* Add Product Modal */}
@@ -337,9 +399,9 @@ export default function ProductsClient({ initialProducts }: ProductsClientProps)
                     <input type="number" value={minStock} onChange={(e) => setMinStock(e.target.value)} className="w-full border border-slate-200 rounded-xl px-4 py-3 text-sm focus:ring-2 focus:ring-primary outline-none transition-all" />
                   </div>
                </div>
-               <div className="pt-6 flex gap-4">
-                 <button type="button" onClick={() => setShowAddModal(false)} className="flex-1 px-6 py-3 border border-slate-200 rounded-xl text-sm font-bold text-slate-600 hover:bg-slate-50 transition-all">Cancel</button>
-                 <button type="submit" disabled={loading} className="flex-1 px-6 py-3 bg-primary text-white rounded-xl text-sm font-bold hover:bg-green-600 shadow-lg shadow-green-100 transition-all disabled:opacity-50">
+               <div className="pt-6 flex flex-col sm:flex-row gap-3">
+                 <button type="button" onClick={() => setShowAddModal(false)} className="w-full sm:w-1/2 px-6 py-3 border border-slate-200 rounded-xl text-sm font-bold text-slate-600 hover:bg-slate-50 transition-all text-center">Cancel</button>
+                 <button type="submit" disabled={loading} className="w-full sm:w-1/2 px-6 py-3 bg-primary text-white rounded-xl text-sm font-bold hover:bg-green-600 shadow-lg shadow-green-100 transition-all disabled:opacity-50 text-center">
                     {loading ? 'Processing...' : 'Save Product'}
                  </button>
                </div>
@@ -389,9 +451,9 @@ export default function ProductsClient({ initialProducts }: ProductsClientProps)
                     <input type="number" value={minStock} onChange={(e) => setMinStock(e.target.value)} className="w-full border border-slate-200 rounded-xl px-4 py-3 text-sm focus:ring-2 focus:ring-primary outline-none transition-all" />
                   </div>
                </div>
-               <div className="pt-6 flex gap-4">
-                 <button type="button" onClick={() => setShowEditModal(false)} className="flex-1 px-6 py-3 border border-slate-200 rounded-xl text-sm font-bold text-slate-600 hover:bg-slate-50 transition-all">Cancel</button>
-                 <button type="submit" disabled={loading} className="flex-1 px-6 py-3 bg-primary text-white rounded-xl text-sm font-bold hover:bg-green-600 shadow-lg shadow-green-100 transition-all disabled:opacity-50">
+               <div className="pt-6 flex flex-col sm:flex-row gap-3">
+                 <button type="button" onClick={() => setShowEditModal(false)} className="w-full sm:w-1/2 px-6 py-3 border border-slate-200 rounded-xl text-sm font-bold text-slate-600 hover:bg-slate-50 transition-all text-center">Cancel</button>
+                 <button type="submit" disabled={loading} className="w-full sm:w-1/2 px-6 py-3 bg-primary text-white rounded-xl text-sm font-bold hover:bg-green-600 shadow-lg shadow-green-100 transition-all disabled:opacity-50 text-center">
                     {loading ? 'Updating...' : 'Update Product'}
                  </button>
                </div>
@@ -443,9 +505,9 @@ export default function ProductsClient({ initialProducts }: ProductsClientProps)
                   />
                </div>
 
-               <div className="pt-4 flex gap-4">
-                 <button type="button" onClick={() => setShowAdjustModal(false)} className="flex-1 px-6 py-3 border border-slate-200 rounded-xl text-sm font-bold text-slate-600 hover:bg-slate-50 transition-all">Cancel</button>
-                 <button type="submit" disabled={loading} className={`flex-1 px-6 py-3 text-white rounded-xl text-sm font-bold shadow-lg transition-all disabled:opacity-50 ${adjustmentType === 'add' ? 'bg-primary hover:bg-green-600 shadow-green-100' : 'bg-red-500 hover:bg-red-600 shadow-red-100'}`}>
+               <div className="pt-4 flex flex-col sm:flex-row gap-3">
+                 <button type="button" onClick={() => setShowAdjustModal(false)} className="w-full sm:w-1/2 px-6 py-3 border border-slate-200 rounded-xl text-sm font-bold text-slate-600 hover:bg-slate-50 transition-all text-center">Cancel</button>
+                 <button type="submit" disabled={loading} className={`w-full sm:w-1/2 px-6 py-3 text-white rounded-xl text-sm font-bold shadow-lg transition-all disabled:opacity-50 text-center ${adjustmentType === 'add' ? 'bg-primary hover:bg-green-600 shadow-green-100' : 'bg-red-500 hover:bg-red-600 shadow-red-100'}`}>
                     {loading ? 'Updating...' : 'Confirm'}
                  </button>
                </div>

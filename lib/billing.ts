@@ -14,7 +14,7 @@ export async function generateBillData({ customerId, startDate, endDate }: {
     supabase.from('tp_customers').select('id, name, phone, address').eq('id', customerId).eq('user_id', user.id).single(),
     supabase.from('tp_profile').select('business_name, tagline, address, city, state, phone, gst_number').eq('id', user.id).single(),
     supabase.from('tp_sales')
-      .select('id, invoice_date, total_amount, invoice_number, payment_status, tp_sale_items(product_name, quantity, unit, rate, discount_percent, gst_percent)')
+      .select('id, invoice_date, total_amount, subtotal, gst_amount, invoice_number, payment_status, tp_sale_items(product_name, quantity, unit, rate, discount_percent, gst_percent)')
       .eq('customer_id', customerId)
       .eq('user_id', user.id)
       .gte('invoice_date', startDate)
@@ -54,6 +54,7 @@ export async function generateBillData({ customerId, startDate, endDate }: {
 
   const totalSales = sales.reduce((s: number, r: any) => s + Number(r.total_amount), 0)
   const totalPaid = payments.reduce((s: number, r: any) => s + Number(r.amount), 0)
+  const totalGst = sales.reduce((s: number, r: any) => s + Number(r.gst_amount || 0), 0)
   const netPayable = previousBalance + totalSales - totalPaid
 
   const saleRows = sales.flatMap((sale: any) => {
@@ -99,7 +100,7 @@ export async function generateBillData({ customerId, startDate, endDate }: {
     (a: any, b: any) => new Date(a.date).getTime() - new Date(b.date).getTime()
   )
 
-  return { customer, profile, period: { start: startDate, end: endDate }, ledgerRows, previousBalance, totalSales, totalPaid, netPayable }
+  return { customer, profile, period: { start: startDate, end: endDate }, ledgerRows, previousBalance, totalSales, totalPaid, totalGst, netPayable }
 }
 
 export async function uploadBillPDF({ userId, customerId, pdfBlob, startDate, endDate }: any) {

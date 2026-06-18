@@ -199,7 +199,8 @@ export default function NewInvoiceClient({ initialCustomers, initialProducts }: 
           </div>
         </div>
 
-        <div className="mb-12 overflow-x-auto">
+        {/* Desktop View Table */}
+        <div className="mb-12 hidden md:block overflow-x-auto">
            <table className="w-full text-sm text-left border-collapse">
               <thead className="text-[10px] font-black text-slate-400 uppercase bg-slate-50/50 tracking-widest">
                  <tr>
@@ -285,6 +286,92 @@ export default function NewInvoiceClient({ initialCustomers, initialProducts }: 
            </button>
         </div>
 
+        {/* Mobile View Card List */}
+        <div className="mb-8 block md:hidden space-y-4">
+           {items.map((item, index) => (
+              <div key={item.id} className="p-5 rounded-2xl border border-slate-100 bg-slate-50/50 space-y-4">
+                 <div className="flex justify-between items-center pb-2 border-b border-slate-100">
+                    <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Item #{index + 1}</span>
+                    <button 
+                      onClick={() => setItems(items.filter(i => i.id !== item.id))}
+                      disabled={items.length === 1}
+                      className="p-1 text-slate-400 hover:text-red-500 rounded-lg hover:bg-red-50 disabled:opacity-0 transition-all"
+                    >
+                       <Trash2 className="h-4 w-4" />
+                    </button>
+                 </div>
+                 
+                 <div>
+                    <label className="block text-[9px] font-black text-slate-400 uppercase tracking-widest mb-1.5 ml-1">Product Description</label>
+                    <select 
+                      value={item.product_id}
+                      onChange={(e) => updateItem(item.id, 'product_id', e.target.value)}
+                      className="w-full px-3 py-2.5 border border-slate-200 rounded-xl text-sm focus:ring-2 focus:ring-primary outline-none bg-white font-medium"
+                    >
+                      <option value="">Select Product</option>
+                      {products.map(p => (
+                        <option key={p.id} value={p.id}>{p.name}</option>
+                      ))}
+                    </select>
+                 </div>
+
+                 <div className="grid grid-cols-2 gap-4">
+                    <div>
+                       <label className="block text-[9px] font-black text-slate-400 uppercase tracking-widest mb-1.5 ml-1">Qty {item.unit ? `(${item.unit})` : ''}</label>
+                       <input 
+                         type="number" 
+                         min="0.001" 
+                         step="any"
+                         value={item.qty} 
+                         onChange={(e) => updateItem(item.id, 'qty', parseFloat(e.target.value) || 0)}
+                         className="w-full px-3 py-2 border border-slate-200 rounded-xl text-sm focus:ring-2 focus:ring-primary outline-none font-bold text-center" 
+                       />
+                    </div>
+                    <div>
+                       <label className="block text-[9px] font-black text-slate-400 uppercase tracking-widest mb-1.5 ml-1">Rate (₹)</label>
+                       <input 
+                         type="number" 
+                         min="0" 
+                         step="any"
+                         value={item.rate}
+                         onChange={(e) => updateItem(item.id, 'rate', parseFloat(e.target.value) || 0)}
+                         className="w-full px-3 py-2 border border-slate-200 rounded-xl text-sm focus:ring-2 focus:ring-primary outline-none font-bold text-right" 
+                       />
+                    </div>
+                 </div>
+
+                 <div className="grid grid-cols-2 gap-4 items-end">
+                    <div>
+                       <label className="block text-[9px] font-black text-slate-400 uppercase tracking-widest mb-1.5 ml-1">GST %</label>
+                       <select 
+                         value={item.taxPercent}
+                         onChange={(e) => updateItem(item.id, 'taxPercent', parseFloat(e.target.value) || 0)}
+                         className="w-full px-3 py-2.5 border border-slate-200 rounded-xl text-sm focus:ring-2 focus:ring-primary outline-none bg-white font-bold"
+                       >
+                         <option value="0">0%</option>
+                         <option value="5">5%</option>
+                         <option value="12">12%</option>
+                         <option value="18">18%</option>
+                         <option value="28">28%</option>
+                       </select>
+                    </div>
+                    <div className="text-right">
+                       <p className="text-[9px] font-black text-slate-400 uppercase tracking-widest mb-1.5 mr-1">Total</p>
+                       <p className="font-black text-slate-900 text-base py-2">
+                         ₹{item.total.toLocaleString('en-IN', { minimumFractionDigits: 2 })}
+                       </p>
+                    </div>
+                 </div>
+              </div>
+           ))}
+           <button 
+              onClick={() => setItems([...items, { id: Date.now(), product_id: '', name: '', qty: 1, unit: 'pcs', rate: 0, discPercent: 0, taxPercent: 18, total: 0 }])}
+              className="w-full flex items-center justify-center gap-2 py-3 bg-slate-50 hover:bg-slate-100 border border-dashed border-slate-200 text-[10px] font-black uppercase tracking-widest text-primary hover:text-green-600 print:hidden transition-all rounded-xl"
+            >
+              <Plus className="h-4 w-4" /> Add Line Item
+           </button>
+        </div>
+
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12 border-t border-slate-50 pt-12">
            <div className="space-y-6">
               <div className="print:hidden">
@@ -298,7 +385,7 @@ export default function NewInvoiceClient({ initialCustomers, initialProducts }: 
                     <option value="cash">Cash Payment</option>
                     <option value="upi">UPI / Digital</option>
                     <option value="online">Bank Transfer</option>
-                 </select>
+                  </select>
                  <div className="relative">
                     <span className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 font-bold">₹</span>
                     <input 
@@ -331,6 +418,18 @@ export default function NewInvoiceClient({ initialCustomers, initialProducts }: 
                  <span className="text-slate-400">Tax Total (GST)</span>
                  <span className="text-slate-900">₹{taxAmount.toLocaleString('en-IN', { minimumFractionDigits: 2 })}</span>
               </div>
+              {taxAmount > 0 && (
+                <div className="pl-4 border-l-2 border-slate-200 space-y-2">
+                   <div className="flex justify-between text-[11px] font-bold uppercase tracking-widest text-slate-400">
+                      <span>CGST (Central Tax)</span>
+                      <span>₹{(taxAmount / 2).toLocaleString('en-IN', { minimumFractionDigits: 2 })}</span>
+                   </div>
+                   <div className="flex justify-between text-[11px] font-bold uppercase tracking-widest text-slate-400">
+                      <span>SGST (State Tax)</span>
+                      <span>₹{(taxAmount / 2).toLocaleString('en-IN', { minimumFractionDigits: 2 })}</span>
+                   </div>
+                </div>
+              )}
               <div className="border-t border-slate-200 pt-6 flex justify-between items-center">
                  <span className="font-black text-slate-900 uppercase tracking-[0.2em] text-sm">Grand Total</span>
                  <span className="font-black text-slate-900 text-3xl tracking-tighter">₹{totalAmount.toLocaleString('en-IN', { minimumFractionDigits: 2 })}</span>
@@ -342,24 +441,24 @@ export default function NewInvoiceClient({ initialCustomers, initialProducts }: 
            </div>
         </div>
 
-        <div className="mt-12 flex gap-4 justify-end border-t border-slate-50 pt-8 print:hidden">
+        <div className="mt-12 flex flex-col sm:flex-row gap-3 sm:gap-4 justify-end border-t border-slate-50 pt-8 print:hidden">
            <button 
               onClick={() => router.push('/sales')}
-              className="px-6 py-3 bg-white border border-slate-200 text-slate-600 text-xs font-black uppercase tracking-widest rounded-xl hover:bg-slate-50 transition-all"
+              className="w-full sm:w-auto px-6 py-3.5 sm:py-3 bg-white border border-slate-200 text-slate-600 text-xs font-black uppercase tracking-widest rounded-xl hover:bg-slate-50 transition-all text-center"
             >
              Discard
            </button>
            <button 
               onClick={() => handleSaveInvoice(true)}
               disabled={loading}
-              className="px-6 py-3 bg-slate-900 text-white text-xs font-black uppercase tracking-widest rounded-xl hover:bg-slate-800 shadow-xl shadow-slate-200 transition-all disabled:opacity-50 flex items-center gap-2"
+              className="w-full sm:w-auto px-6 py-3.5 sm:py-3 bg-slate-900 text-white text-xs font-black uppercase tracking-widest rounded-xl hover:bg-slate-800 shadow-xl shadow-slate-200 transition-all disabled:opacity-50 flex items-center justify-center gap-2"
            >
              <Printer className="h-4 w-4" /> Save & Print
            </button>
            <button 
               onClick={() => handleSaveInvoice(false)}
               disabled={loading}
-              className="px-8 py-3 bg-primary text-white text-xs font-black uppercase tracking-widest rounded-xl hover:bg-green-600 shadow-xl shadow-green-100 transition-all disabled:opacity-50 flex items-center gap-2"
+              className="w-full sm:w-auto px-8 py-3.5 sm:py-3 bg-primary text-white text-xs font-black uppercase tracking-widest rounded-xl hover:bg-green-600 shadow-xl shadow-green-100 transition-all disabled:opacity-50 flex items-center justify-center gap-2"
            >
              {loading ? <Loader2 className="h-4 w-4 animate-spin" /> : <Check className="h-4 w-4" />}
              Finalize Invoice

@@ -211,7 +211,8 @@ export default function CustomersClient({ initialCustomers }: CustomersClientPro
       </div>
 
       <div className="tp-card overflow-hidden">
-        <div className="overflow-x-auto">
+        {/* Desktop View Table */}
+        <div className="hidden md:block overflow-x-auto">
           <table className="w-full text-sm text-left">
             <thead className="text-[10px] font-bold text-slate-400 uppercase bg-slate-50/50 tracking-widest">
               <tr>
@@ -266,6 +267,69 @@ export default function CustomersClient({ initialCustomers }: CustomersClientPro
             </tbody>
           </table>
         </div>
+
+        {/* Mobile View Customer Cards */}
+        <div className="block md:hidden divide-y divide-slate-100 bg-white">
+          {finalFilteredCustomers.map((customer) => (
+            <div key={customer.customer_id || customer.id} className="p-4 space-y-3">
+              <div className="flex justify-between items-start">
+                <div className="flex items-center gap-3">
+                  <div className="w-9 h-9 rounded-full bg-slate-100 flex items-center justify-center text-slate-500 font-bold text-xs">
+                     {(customer.customer_name || customer.name || 'C')[0].toUpperCase()}
+                  </div>
+                  <div>
+                    <p className="font-bold text-slate-900 text-sm">{customer.customer_name || customer.name}</p>
+                    <p className="text-[10px] font-medium text-slate-400 uppercase">{customer.company_name || 'Individual'}</p>
+                  </div>
+                </div>
+                <span className={`inline-flex items-center gap-1.5 py-1 px-2.5 rounded-full text-[9px] font-black uppercase tracking-widest border ${
+                  parseFloat(customer.outstanding_dues || 0) > 0 
+                    ? 'bg-rose-50 text-red-600 border-red-100' 
+                    : 'bg-emerald-50 text-emerald-600 border-emerald-100'
+                }`}>
+                  ₹{parseFloat(customer.outstanding_dues || 0).toLocaleString('en-IN')}
+                </span>
+              </div>
+              
+              <div className="grid grid-cols-2 gap-4 bg-slate-50/50 p-2.5 rounded-xl border border-slate-100/50">
+                <div>
+                  <p className="text-[9px] font-black text-slate-400 uppercase">Phone</p>
+                  <p className="font-semibold text-slate-700 text-xs mt-0.5">{customer.phone || 'N/A'}</p>
+                </div>
+                <div>
+                  <p className="text-[9px] font-black text-slate-400 uppercase">Total Billed</p>
+                  <p className="font-black text-slate-900 text-xs mt-0.5">₹{parseFloat(customer.total_billed || 0).toLocaleString('en-IN')}</p>
+                </div>
+              </div>
+              
+              <div className="flex justify-end gap-2">
+                <button 
+                  onClick={() => startEdit(customer)} 
+                  className="px-3 py-1.5 bg-slate-50 text-[9px] font-black uppercase text-slate-650 rounded-xl hover:bg-slate-100 transition-all font-bold"
+                >
+                  Edit
+                </button>
+                <button 
+                  onClick={() => handleWhatsAppReminder(customer)} 
+                  className="px-3 py-1.5 bg-emerald-50 text-[9px] font-black uppercase text-[#0D9488] rounded-xl hover:bg-emerald-100 transition-all font-bold"
+                >
+                  Remind
+                </button>
+                <Link 
+                  href={`/customers/${customer.customer_id || customer.id}`} 
+                  className="px-3 py-1.5 bg-[#0D9488]/10 text-[9px] font-black uppercase text-[#0D9488] rounded-xl hover:bg-[#0D9488]/20 transition-all flex items-center justify-center font-bold"
+                >
+                  View
+                </Link>
+              </div>
+            </div>
+          ))}
+          {finalFilteredCustomers.length === 0 && (
+            <div className="p-16 text-center text-slate-400 text-[10px] font-black uppercase tracking-widest">
+              No customers found
+            </div>
+          )}
+        </div>
       </div>
 
       {/* Add/Edit Customer Modal */}
@@ -307,9 +371,9 @@ export default function CustomersClient({ initialCustomers }: CustomersClientPro
                     <input type="number" value={openingBalance} onChange={(e) => setOpeningBalance(e.target.value)} className="w-full border border-slate-200 rounded-xl px-4 py-3 text-sm focus:ring-2 focus:ring-primary outline-none transition-all" />
                   </div>
                </div>
-               <div className="pt-6 flex gap-4">
-                 <button type="button" onClick={() => { setShowAddModal(false); resetForm(); }} className="flex-1 px-6 py-3 border border-slate-200 rounded-xl text-sm font-bold text-slate-600 hover:bg-slate-50 transition-all">Cancel</button>
-                 <button type="submit" disabled={loading} className="flex-1 px-6 py-3 bg-primary text-white rounded-xl text-sm font-bold hover:bg-green-600 shadow-lg shadow-green-100 transition-all disabled:opacity-50">
+               <div className="pt-6 flex flex-col sm:flex-row gap-3">
+                 <button type="button" onClick={() => { setShowAddModal(false); resetForm(); }} className="w-full sm:w-1/2 px-6 py-3 border border-slate-200 rounded-xl text-sm font-bold text-slate-600 hover:bg-slate-50 transition-all text-center">Cancel</button>
+                 <button type="submit" disabled={loading} className="w-full sm:w-1/2 px-6 py-3 bg-primary text-white rounded-xl text-sm font-bold hover:bg-green-600 shadow-lg shadow-green-100 transition-all disabled:opacity-50 text-center">
                     {loading ? 'Processing...' : editingCustomer ? 'Update Profile' : 'Create Customer'}
                  </button>
                </div>

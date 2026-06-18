@@ -10,6 +10,7 @@ export interface SaleData {
   selling_price: number;
   down_payment: number;
   remaining_balance: number;
+  gst_amount?: number;
   items?: any[];
 }
 
@@ -92,11 +93,26 @@ export const generateBillPDF = (profile: BusinessProfile, sale: SaleData, autoDo
     startY: currentY + 8,
     head: [['Description', 'Qty', 'Rate (Rs.)', 'Amount (Rs.)']],
     body: tableData,
-    foot: [
-      ['', '', 'Total', `Rs. ${Number(sale.selling_price || 0).toLocaleString('en-IN')}`],
-      ['', '', 'Paid', `Rs. ${Number(sale.down_payment || 0).toLocaleString('en-IN')}`],
-      ['', '', 'Due', `Rs. ${Number(sale.remaining_balance || 0).toLocaleString('en-IN')}`],
-    ],
+    foot: (() => {
+      const gstAmt = Number(sale.gst_amount || 0);
+      const cgstAmt = gstAmt / 2;
+      const sgstAmt = gstAmt / 2;
+      const sub = Number(sale.selling_price || 0) - gstAmt;
+
+      const footRows = [
+        ['', '', 'Subtotal', `Rs. ${sub.toLocaleString('en-IN')}`]
+      ];
+
+      if (gstAmt > 0) {
+        footRows.push(['', '', 'CGST', `Rs. ${cgstAmt.toLocaleString('en-IN')}`]);
+        footRows.push(['', '', 'SGST', `Rs. ${sgstAmt.toLocaleString('en-IN')}`]);
+      }
+
+      footRows.push(['', '', 'Grand Total', `Rs. ${Number(sale.selling_price || 0).toLocaleString('en-IN')}`]);
+      footRows.push(['', '', 'Paid', `Rs. ${Number(sale.down_payment || 0).toLocaleString('en-IN')}`]);
+      footRows.push(['', '', 'Due', `Rs. ${Number(sale.remaining_balance || 0).toLocaleString('en-IN')}`]);
+      return footRows;
+    })(),
     theme: 'striped',
     headStyles: { fillColor: [13, 148, 136] },
     footStyles: { fillColor: [248, 250, 252], textColor: [15, 23, 42], fontStyle: 'bold' },
@@ -129,12 +145,34 @@ export const generateBillPDF = (profile: BusinessProfile, sale: SaleData, autoDo
     }
   }
 
+  // Draw signature on the right
+  const sigName = (!profile?.business_name || profile.business_name.startsWith('Generic')) ? 'Afzalkhan' : profile.business_name.split(' ')[0];
+  const sigX = 165;
+  const sigY = finalY;
+
+  doc.setFont('times', 'italic');
+  doc.setFontSize(18);
+  doc.setTextColor(15, 23, 42);
+  doc.text(sigName, sigX, sigY + 8, { align: 'center' });
+
+  doc.setFont('helvetica', 'normal');
+  doc.setFontSize(10);
+  doc.setTextColor(148, 163, 184); // Slate-400 equivalent
+  doc.text('----------------------------------', sigX, sigY + 13, { align: 'center' });
+
+  doc.setFont('helvetica', 'bold');
+  doc.setFontSize(8);
+  doc.setTextColor(100, 116, 139); // Slate-500
+  doc.text('AUTHORIZED SIGNATORY', sigX, sigY + 18, { align: 'center' });
+
+  const maxFooterY = Math.max(currentFooterY, sigY + 25);
+
   doc.setFontSize(9);
   doc.setFont('helvetica', 'italic');
   doc.setTextColor(100, 116, 139);
   doc.text(
     `Thank you for choosing ${biz.business_name ?? 'us'}!`,
-    105, currentFooterY, { align: 'center' }
+    105, maxFooterY, { align: 'center' }
   );
 
   if (autoDownload) {

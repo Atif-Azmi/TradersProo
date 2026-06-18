@@ -86,6 +86,11 @@ export default function SalesClient({ userId, initialSales, shopProfile }: Sales
     const total = parseFloat(sale.total_amount || 0)
     const paid = parseFloat(sale.amount_paid || 0)
     const balance = getBalance(sale)
+    const gstAmount = parseFloat(sale.gst_amount || 0)
+    const subtotal = parseFloat(sale.subtotal || total - gstAmount)
+    const cgstAmount = gstAmount / 2
+    const sgstAmount = gstAmount / 2
+    const sigName = (!shop.business_name || shop.business_name.startsWith('Generic')) ? 'Afzalkhan' : shop.business_name.split(' ')[0]
 
     const html = `<!DOCTYPE html>
 <html>
@@ -159,44 +164,89 @@ export default function SalesClient({ userId, initialSales, shopProfile }: Sales
     <tbody>
       <tr>
         <td>
-          <div class="key-metric">Invoice Total</div>
-          <div class="amount-big">₹${total.toLocaleString('en-IN')}</div>
+          <div class="key-metric">Subtotal</div>
+          <div class="amount-big">₹${subtotal.toLocaleString('en-IN', { minimumFractionDigits: 2 })}</div>
         </td>
         <td style="text-align:center;font-weight:700;color:#1e293b">${sale.tp_customers?.name || 'Walk-in Customer'}</td>
         <td style="text-align:center;font-weight:600;color:#64748b">${date}</td>
         <td>
-          <div class="amount-big">₹${total.toLocaleString('en-IN')}</div>
+          <div class="amount-big">₹${subtotal.toLocaleString('en-IN', { minimumFractionDigits: 2 })}</div>
+        </td>
+      </tr>
+      ${gstAmount > 0 ? `
+      <tr>
+        <td>
+          <div class="key-metric">CGST (Central Tax)</div>
+          <div class="amount-big">₹${cgstAmount.toLocaleString('en-IN', { minimumFractionDigits: 2 })}</div>
+        </td>
+        <td></td>
+        <td></td>
+        <td>
+          <div class="amount-big">₹${cgstAmount.toLocaleString('en-IN', { minimumFractionDigits: 2 })}</div>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <div class="key-metric">SGST (State Tax)</div>
+          <div class="amount-big">₹${sgstAmount.toLocaleString('en-IN', { minimumFractionDigits: 2 })}</div>
+        </td>
+        <td></td>
+        <td></td>
+        <td>
+          <div class="amount-big">₹${sgstAmount.toLocaleString('en-IN', { minimumFractionDigits: 2 })}</div>
+        </td>
+      </tr>
+      ` : ''}
+      <tr>
+        <td>
+          <div class="key-metric">Invoice Grand Total</div>
+          <div class="amount-big">₹${total.toLocaleString('en-IN', { minimumFractionDigits: 2 })}</div>
+        </td>
+        <td></td>
+        <td></td>
+        <td>
+          <div class="amount-big">₹${total.toLocaleString('en-IN', { minimumFractionDigits: 2 })}</div>
         </td>
       </tr>
       <tr>
         <td>
           <div class="key-metric">Amount Collected</div>
-          <div class="amount-big amount-green">₹${paid.toLocaleString('en-IN')}</div>
+          <div class="amount-big amount-green">₹${paid.toLocaleString('en-IN', { minimumFractionDigits: 2 })}</div>
         </td>
         <td></td>
         <td></td>
-        <td><div class="amount-big amount-green">+₹${paid.toLocaleString('en-IN')}</div></td>
+        <td><div class="amount-big amount-green">+₹${paid.toLocaleString('en-IN', { minimumFractionDigits: 2 })}</div></td>
       </tr>
       <tr>
         <td>
           <div class="key-metric">Outstanding Balance</div>
-          <div class="amount-big ${balance > 0 ? 'amount-red' : 'amount-green'}">₹${balance.toLocaleString('en-IN')}</div>
+          <div class="amount-big ${balance > 0 ? 'amount-red' : 'amount-green'}">₹${balance.toLocaleString('en-IN', { minimumFractionDigits: 2 })}</div>
         </td>
         <td></td>
         <td></td>
-        <td><div class="amount-big ${balance > 0 ? 'amount-red' : 'amount-green'}">${balance > 0 ? '-' : ''}₹${balance.toLocaleString('en-IN')}</div></td>
+        <td><div class="amount-big ${balance > 0 ? 'amount-red' : 'amount-green'}">${balance > 0 ? '-' : ''}₹${balance.toLocaleString('en-IN', { minimumFractionDigits: 2 })}</div></td>
       </tr>
     </tbody>
   </table>
 
-  ${(shop.bank_name || shop.account_number || shop.upi_id) ? `
-  <div class="bank-box">
-    <h4>Payment Details</h4>
-    ${shop.bank_name ? `<div class="bank-row"><span>Bank</span><span>${shop.bank_name}</span></div>` : ''}
-    ${shop.account_number ? `<div class="bank-row"><span>Account No.</span><span>${shop.account_number}</span></div>` : ''}
-    ${shop.ifsc_code ? `<div class="bank-row"><span>IFSC Code</span><span>${shop.ifsc_code}</span></div>` : ''}
-    ${shop.upi_id ? `<div class="bank-row"><span>UPI ID</span><span>${shop.upi_id}</span></div>` : ''}
-  </div>` : ''}
+  <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-top: 30px;">
+    <div style="flex: 1; max-width: 450px;">
+      ${(shop.bank_name || shop.account_number || shop.upi_id) ? `
+      <div class="bank-box" style="margin-top: 0;">
+        <h4>Payment Details</h4>
+        ${shop.bank_name ? `<div class="bank-row"><span>Bank</span><span>${shop.bank_name}</span></div>` : ''}
+        ${shop.account_number ? `<div class="bank-row"><span>Account No.</span><span>${shop.account_number}</span></div>` : ''}
+        ${shop.ifsc_code ? `<div class="bank-row"><span>IFSC Code</span><span>${shop.ifsc_code}</span></div>` : ''}
+        ${shop.upi_id ? `<div class="bank-row"><span>UPI ID</span><span>${shop.upi_id}</span></div>` : ''}
+      </div>` : ''}
+    </div>
+    <div style="text-align: center; width: 220px; margin-left: auto;">
+      <div style="border-bottom: 1px dashed #94a3b8; width: 100%; font-style: italic; font-size: 20px; font-family: 'Georgia', serif; color: #0f172a; padding-bottom: 5px;">
+        ${sigName}
+      </div>
+      <p style="font-size: 10px; font-weight: 900; color: #64748b; margin-top: 8px; letter-spacing: 1px; text-transform: uppercase;">Authorized Signatory</p>
+    </div>
+  </div>
 
   <div class="footer">
     <p>Official Statement &bull; ${shop.business_name || 'TradersPro'} Edition</p>
@@ -287,7 +337,8 @@ export default function SalesClient({ userId, initialSales, shopProfile }: Sales
       </div>
 
       <div className="tp-card overflow-hidden">
-        <div className="overflow-x-auto">
+        {/* Desktop View Table */}
+        <div className="hidden md:block overflow-x-auto">
           <table className="w-full text-sm text-left">
             <thead className="text-[10px] font-bold text-slate-400 uppercase bg-slate-50/50 tracking-widest">
               <tr>
@@ -357,6 +408,75 @@ export default function SalesClient({ userId, initialSales, shopProfile }: Sales
               )}
             </tbody>
           </table>
+        </div>
+
+        {/* Mobile Responsive Cards View */}
+        <div className="block md:hidden divide-y divide-slate-100 bg-white">
+          {filteredSales.map(sale => {
+            const balance = getBalance(sale)
+            return (
+              <div key={sale.id} className="p-4 space-y-3">
+                <div className="flex justify-between items-start">
+                  <div>
+                    <Link href={`/sales/${sale.id}`} className="font-black text-[#0D9488] text-sm hover:underline">
+                      #{sale.invoice_number || '—'}
+                    </Link>
+                    <p className="text-[10px] font-bold text-slate-400 mt-1 uppercase tracking-tight">
+                      {new Date(sale.invoice_date).toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: 'numeric' })}
+                    </p>
+                  </div>
+                  <span className={`inline-flex items-center py-1 px-2.5 rounded-full text-[9px] font-black uppercase tracking-widest border ${
+                    sale.payment_status === 'paid' ? 'bg-emerald-50 text-emerald-600 border-emerald-100'
+                    : sale.payment_status === 'partial' ? 'bg-amber-50 text-amber-600 border-amber-100'
+                    : 'bg-rose-50 text-red-600 border-red-100'}`}>
+                    {sale.payment_status}
+                  </span>
+                </div>
+                
+                <div className="flex items-center gap-3">
+                  <div className="w-8 h-8 rounded-full bg-slate-100 flex items-center justify-center text-slate-500 font-bold text-xs">
+                    {(sale.tp_customers?.name || 'W')[0].toUpperCase()}
+                  </div>
+                  <p className="font-bold text-slate-955 text-xs">{sale.tp_customers?.name || 'Walk-in'}</p>
+                </div>
+                
+                <div className="grid grid-cols-3 gap-2 bg-slate-50/50 p-2.5 rounded-xl border border-slate-100/50 text-center">
+                  <div>
+                    <p className="text-[9px] font-black text-slate-400 uppercase">Total</p>
+                    <p className="font-black text-slate-900 text-xs mt-0.5">₹{parseFloat(sale.total_amount || 0).toLocaleString('en-IN')}</p>
+                  </div>
+                  <div>
+                    <p className="text-[9px] font-black text-slate-400 uppercase">Paid</p>
+                    <p className="font-bold text-emerald-600 text-xs mt-0.5">₹{parseFloat(sale.amount_paid || 0).toLocaleString('en-IN')}</p>
+                  </div>
+                  <div>
+                    <p className="text-[9px] font-black text-slate-400 uppercase">Due</p>
+                    <p className="font-bold text-rose-600 text-xs mt-0.5">₹{balance.toLocaleString('en-IN')}</p>
+                  </div>
+                </div>
+                
+                <div className="flex justify-end gap-2 pt-1">
+                  {sale.payment_status !== 'paid' && (
+                    <button onClick={() => openPaymentModal(sale)}
+                      className="px-3 py-1.5 bg-[#0D9488]/10 text-[9px] font-black uppercase text-[#0D9488] rounded-xl hover:bg-[#0D9488]/20 transition-all">
+                      Pay
+                    </button>
+                  )}
+                  <button onClick={() => handlePrintBill(sale)}
+                    className="px-3 py-1.5 bg-slate-50 text-[9px] font-black uppercase text-slate-600 rounded-xl hover:bg-slate-100 transition-all">
+                    Print
+                  </button>
+                  <button onClick={() => handleWhatsApp(sale)}
+                    className="px-3 py-1.5 bg-emerald-50 text-[9px] font-black uppercase text-emerald-600 rounded-xl hover:bg-emerald-100 transition-all">
+                    Share
+                  </button>
+                </div>
+              </div>
+            )
+          })}
+          {filteredSales.length === 0 && (
+            <div className="p-16 text-center text-slate-400 text-[10px] font-black uppercase tracking-widest">No invoices found</div>
+          )}
         </div>
       </div>
 

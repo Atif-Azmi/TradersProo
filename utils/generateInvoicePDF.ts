@@ -144,7 +144,24 @@ export const generateInvoicePDF = (profile: BusinessProfile | null, invoice: any
         `Rs. ${((item.quantity || 0) * (item.rate || 0)).toLocaleString('en-IN')}`,
       ];
     }),
-    foot: [['', '', '', 'Total', `Rs. ${parseFloat(invoice.total_amount || 0).toLocaleString('en-IN')}`]],
+    foot: (() => {
+      const gstAmt = parseFloat(invoice.gst_amount || 0);
+      const cgstAmt = gstAmt / 2;
+      const sgstAmt = gstAmt / 2;
+      const sub = parseFloat(invoice.subtotal || parseFloat(invoice.total_amount || 0) - gstAmt);
+
+      const footRows = [
+        ['', '', '', 'Subtotal', `Rs. ${sub.toLocaleString('en-IN')}`]
+      ];
+
+      if (gstAmt > 0) {
+        footRows.push(['', '', '', 'CGST', `Rs. ${cgstAmt.toLocaleString('en-IN')}`]);
+        footRows.push(['', '', '', 'SGST', `Rs. ${sgstAmt.toLocaleString('en-IN')}`]);
+      }
+
+      footRows.push(['', '', '', 'Grand Total', `Rs. ${parseFloat(invoice.total_amount || 0).toLocaleString('en-IN')}`]);
+      return footRows;
+    })(),
     styles: { fontSize: 10, cellPadding: 3 },
     headStyles: { fillColor: TEAL, textColor: 255, fontStyle: 'bold' },
     footStyles: { fillColor: [240, 255, 253], textColor: DARK, fontStyle: 'bold' },
@@ -206,9 +223,24 @@ export const generateInvoicePDF = (profile: BusinessProfile | null, invoice: any
   }
 
   // Signature
-  doc.setFont('helvetica', 'italic');
+  const sigName = (!profile?.business_name || profile.business_name.startsWith('Generic')) ? 'Afzalkhan' : profile.business_name.split(' ')[0];
+  const sigX = 165;
+  const sigY = termsY + 30;
+
+  doc.setFont('times', 'italic');
+  doc.setFontSize(18);
   doc.setTextColor(...DARK);
-  doc.text('Signature', W - margin, termsY + 30, { align: 'right' });
+  doc.text(sigName, sigX, sigY, { align: 'center' });
+
+  doc.setFont('helvetica', 'normal');
+  doc.setFontSize(10);
+  doc.setTextColor(148, 163, 184); // Slate-400 equivalent
+  doc.text('----------------------------------', sigX, sigY + 5, { align: 'center' });
+
+  doc.setFont('helvetica', 'bold');
+  doc.setFontSize(8);
+  doc.setTextColor(100, 116, 139); // Slate-500
+  doc.text('AUTHORIZED SIGNATORY', sigX, sigY + 10, { align: 'center' });
 
   // ── BOTTOM DECORATIVE BAR ──
   const pageH = doc.internal.pageSize.height;

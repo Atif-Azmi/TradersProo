@@ -83,6 +83,7 @@ export default function BillingClient({ userId, customers }: Props) {
       selling_price: billData.totalSales,
       down_payment: billData.totalPaid,
       remaining_balance: billData.netPayable,
+      gst_amount: billData.totalGst,
       items: billData.ledgerRows,
     }
     
@@ -102,6 +103,7 @@ export default function BillingClient({ userId, customers }: Props) {
         selling_price: billData.totalSales,
         down_payment: billData.totalPaid,
         remaining_balance: billData.netPayable,
+        gst_amount: billData.totalGst,
         items: billData.ledgerRows,
       }
 
@@ -389,7 +391,16 @@ export default function BillingClient({ userId, customers }: Props) {
               <div style={{ minWidth: '300px' }}>
                 <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px', fontSize: '14px', textAlign: 'right', marginBottom: '40px' }}>
                   <div style={{ fontWeight: 800, color: '#475569' }}>Subtotal</div>
-                  <div style={{ fontWeight: 900, color: '#0f172a' }}>₹{fmt(billData.totalSales)}</div>
+                  <div style={{ fontWeight: 900, color: '#0f172a' }}>₹{fmt(billData.totalSales - (billData.totalGst || 0))}</div>
+                  
+                  {billData.totalGst > 0 && (
+                    <>
+                      <div style={{ fontWeight: 800, color: '#475569' }}>CGST</div>
+                      <div style={{ fontWeight: 900, color: '#0f172a' }}>₹{fmt(billData.totalGst / 2)}</div>
+                      <div style={{ fontWeight: 800, color: '#475569' }}>SGST</div>
+                      <div style={{ fontWeight: 900, color: '#0f172a' }}>₹{fmt(billData.totalGst / 2)}</div>
+                    </>
+                  )}
                   
                   <div style={{ borderTop: '2px solid #0D9488', gridColumn: 'span 2', margin: '4px 0' }} />
                   
@@ -405,9 +416,11 @@ export default function BillingClient({ userId, customers }: Props) {
 
                 <div style={{ textAlign: 'center' }}>
                   <div style={{ height: '60px', width: '200px', margin: '0 auto', display: 'flex', alignItems: 'flex-end', justifyContent: 'center' }}>
-                    <div style={{ borderBottom: '1px solid #0f172a', width: '100%', fontStyle: 'italic', fontSize: '18px' }}>{profile?.business_name?.split(' ')[0]}</div>
+                    <div style={{ borderBottom: '1px dashed #94a3b8', width: '100%', fontStyle: 'italic', fontSize: '20px', fontFamily: "'Georgia', serif", color: '#0f172a', paddingBottom: '5px' }}>
+                      {(!profile?.business_name || profile.business_name.startsWith('Generic')) ? 'Afzalkhan' : profile.business_name.split(' ')[0]}
+                    </div>
                   </div>
-                  <p style={{ fontSize: '12px', fontWeight: 900, color: '#0f172a', marginTop: '10px' }}>Authorized Signatory</p>
+                  <p style={{ fontSize: '10px', fontWeight: 900, color: '#64748b', marginTop: '8px', letterSpacing: '1px', textTransform: 'uppercase' }}>Authorized Signatory</p>
                 </div>
               </div>
             </div>

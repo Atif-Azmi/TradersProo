@@ -233,7 +233,8 @@ export default function AdvancesClient({ initialPayments, customers }: AdvancesC
 
       {/* DATA LIST */}
       <div className="tp-card overflow-hidden">
-        <div className="overflow-x-auto">
+        {/* Desktop View Table */}
+        <div className="hidden md:block overflow-x-auto">
           <table className="w-full text-sm text-left">
             <thead className="text-[10px] font-bold text-slate-400 uppercase bg-slate-50/50 tracking-widest">
               <tr>
@@ -289,6 +290,67 @@ export default function AdvancesClient({ initialPayments, customers }: AdvancesC
               )}
             </tbody>
           </table>
+        </div>
+
+        {/* Mobile View Transaction Cards */}
+        <div className="block md:hidden divide-y divide-slate-100 bg-white">
+          {filteredPayments.map((txn) => (
+            <div key={txn.id} className="p-4 space-y-3">
+              <div className="flex justify-between items-start">
+                <div className="flex items-center gap-3">
+                  <div className="w-9 h-9 rounded-full bg-slate-100 flex items-center justify-center text-slate-500 font-bold text-xs">
+                     {(txn.tp_customers?.name || 'W')[0].toUpperCase()}
+                  </div>
+                  <div>
+                    <p className="font-bold text-slate-900 text-sm">{txn.tp_customers?.name || 'Walk-in'}</p>
+                    {txn.reference_number && <p className="text-[10px] font-medium text-slate-400 uppercase">Ref: {txn.reference_number}</p>}
+                  </div>
+                </div>
+                <span className={`inline-flex items-center gap-1.5 py-1 px-2.5 rounded-full text-[9px] font-black uppercase tracking-widest border ${
+                  txn.type === 'advance' 
+                    ? 'bg-amber-50 text-amber-600 border-amber-100' 
+                    : 'bg-emerald-50 text-emerald-600 border-emerald-100'
+                }`}>
+                  {txn.type}
+                </span>
+              </div>
+              
+              <div className="grid grid-cols-3 gap-2 bg-slate-50/50 p-2.5 rounded-xl border border-slate-100/50 text-center">
+                <div>
+                  <p className="text-[9px] font-black text-slate-400 uppercase">Mode</p>
+                  <p className="font-semibold text-slate-700 text-xs mt-0.5 uppercase">{txn.payment_mode}</p>
+                </div>
+                <div>
+                  <p className="text-[9px] font-black text-slate-400 uppercase">Date</p>
+                  <p className="font-semibold text-slate-700 text-xs mt-0.5">{txn.payment_date}</p>
+                </div>
+                <div>
+                  <p className="text-[9px] font-black text-slate-400 uppercase">Amount</p>
+                  <p className="font-black text-slate-900 text-xs mt-0.5">₹{txn.amount.toLocaleString('en-IN', { minimumFractionDigits: 2 })}</p>
+                </div>
+              </div>
+              
+              <div className="flex justify-end gap-2">
+                <button 
+                  onClick={() => openReceipt(txn)} 
+                  className="px-3 py-1.5 bg-[#0D9488]/10 text-[9px] font-black uppercase text-[#0D9488] rounded-xl hover:bg-[#0D9488]/20 transition-all font-bold"
+                >
+                  Receipt
+                </button>
+                <button 
+                  onClick={() => handleDeleteTransaction(txn.id)} 
+                  className="px-3 py-1.5 bg-rose-50 text-[9px] font-black uppercase text-red-600 rounded-xl hover:bg-rose-100 transition-all font-bold"
+                >
+                  Delete
+                </button>
+              </div>
+            </div>
+          ))}
+          {filteredPayments.length === 0 && (
+            <div className="p-16 text-center text-slate-400 text-[10px] font-black uppercase tracking-widest">
+              No transactions found
+            </div>
+          )}
         </div>
       </div>
 
@@ -398,18 +460,18 @@ export default function AdvancesClient({ initialPayments, customers }: AdvancesC
                 ></textarea>
               </div>
 
-              <div className="flex gap-4 pt-4">
+              <div className="flex flex-col sm:flex-row gap-3 pt-4">
                 <button 
                   type="button" 
                   onClick={() => setShowAddModal(false)}
-                  className="flex-1 px-6 py-3 border border-slate-200 rounded-xl text-xs font-black uppercase tracking-widest text-slate-600 hover:bg-slate-50 transition-all cursor-pointer"
+                  className="w-full sm:w-1/2 px-6 py-3.5 sm:py-3 border border-slate-200 rounded-xl text-xs font-black uppercase tracking-widest text-slate-600 hover:bg-slate-50 transition-all cursor-pointer text-center"
                 >
                   Cancel
                 </button>
                 <button 
                   type="submit" 
                   disabled={loading}
-                  className="flex-1 px-6 py-3 bg-primary text-white rounded-xl text-xs font-black uppercase tracking-widest hover:bg-green-600 shadow-lg shadow-green-100 transition-all disabled:opacity-50 flex items-center justify-center gap-2 cursor-pointer"
+                  className="w-full sm:w-1/2 px-6 py-3.5 sm:py-3 bg-primary text-white rounded-xl text-xs font-black uppercase tracking-widest hover:bg-green-600 shadow-lg shadow-green-100 transition-all disabled:opacity-50 flex items-center justify-center gap-2 cursor-pointer text-center font-bold"
                 >
                   {loading ? <Loader2 className="h-4 w-4 animate-spin" /> : <Check className="h-4 w-4" />}
                   Record Flow
@@ -498,16 +560,16 @@ export default function AdvancesClient({ initialPayments, customers }: AdvancesC
               </div>
             </div>
 
-            <div className="p-6 border-t border-slate-50 bg-slate-50/50 flex gap-4 print:hidden">
+            <div className="p-6 border-t border-slate-50 bg-slate-50/50 flex flex-col sm:flex-row gap-3 print:hidden">
               <button 
                 onClick={() => setShowReceiptModal(false)}
-                className="flex-1 px-4 py-2.5 border border-slate-200 rounded-xl text-xs font-black uppercase tracking-widest text-slate-600 hover:bg-slate-100 transition-all cursor-pointer"
+                className="w-full sm:w-1/2 px-4 py-3 sm:py-2.5 border border-slate-200 rounded-xl text-xs font-black uppercase tracking-widest text-slate-600 hover:bg-slate-100 transition-all cursor-pointer text-center font-bold"
               >
                 Close
               </button>
               <button 
                 onClick={() => window.print()}
-                className="flex-1 px-4 py-2.5 bg-primary text-white rounded-xl text-xs font-black uppercase tracking-widest hover:bg-green-600 shadow-lg shadow-green-100 flex items-center justify-center gap-2 transition-all cursor-pointer"
+                className="w-full sm:w-1/2 px-4 py-3 sm:py-2.5 bg-primary text-white rounded-xl text-xs font-black uppercase tracking-widest hover:bg-green-600 shadow-lg shadow-green-100 flex items-center justify-center gap-2 transition-all cursor-pointer text-center font-bold"
               >
                 <Printer className="h-4 w-4" /> Print Receipt
               </button>
