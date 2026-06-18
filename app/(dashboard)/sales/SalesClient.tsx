@@ -90,7 +90,17 @@ export default function SalesClient({ userId, initialSales, shopProfile }: Sales
     const subtotal = parseFloat(sale.subtotal || total - gstAmount)
     const cgstAmount = gstAmount / 2
     const sgstAmount = gstAmount / 2
-    const sigName = (!shop.business_name || shop.business_name.startsWith('Generic')) ? 'Afzalkhan' : shop.business_name.split(' ')[0]
+    let sigName = shop?.authorized_signatory_name || '';
+    if (!sigName) {
+      const bizName = (shop?.business_name || '').trim();
+      if (bizName.toLowerCase() === 'fks traders' || bizName.toLowerCase() === 'f.k.s. traders') {
+        sigName = 'Afzalkhan';
+      } else if (!bizName || bizName.startsWith('Generic')) {
+        sigName = 'Afzalkhan';
+      } else {
+        sigName = bizName.split(' ')[0];
+      }
+    }
 
     const html = `<!DOCTYPE html>
 <html>

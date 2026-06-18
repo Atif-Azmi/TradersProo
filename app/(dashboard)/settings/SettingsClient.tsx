@@ -25,6 +25,7 @@ export default function SettingsClient({ initialProfile }: SettingsClientProps) 
     registeredAddress: '',
     city: '',
     state: '',
+    authorizedSignatoryName: '',
   })
 
   useEffect(() => {
@@ -37,11 +38,12 @@ export default function SettingsClient({ initialProfile }: SettingsClientProps) 
         registeredAddress: bizProfile.registered_address || '',
         city: bizProfile.city || '',
         state: bizProfile.state || '',
+        authorizedSignatoryName: (bizProfile as any).authorized_signatory_name || '',
       })
     }
   }, [bizProfile])
 
-  const handleBizChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const handleBizChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     setBizForm(prev => ({ ...prev, [e.target.name]: e.target.value }))
   }
 
@@ -160,6 +162,10 @@ export default function SettingsClient({ initialProfile }: SettingsClientProps) 
                   <div>
                     <label className="block text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-2 ml-1">GST Identification Number</label>
                     <input type="text" name="gstNumber" value={bizForm.gstNumber} onChange={handleBizChange} className="w-full px-4 py-2.5 text-sm border border-slate-200 rounded-lg focus:ring-2 focus:ring-[#0D9488]/20 focus:border-[#0D9488] outline-none transition-all font-black uppercase" />
+                  </div>
+                  <div>
+                    <label className="block text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-2 ml-1">Authorized Signatory Name</label>
+                    <input type="text" name="authorizedSignatoryName" value={bizForm.authorizedSignatoryName} onChange={handleBizChange} placeholder="E.g. Afzalkhan" className="w-full px-4 py-2.5 text-sm border border-slate-200 rounded-lg focus:ring-2 focus:ring-[#0D9488]/20 focus:border-[#0D9488] outline-none transition-all font-bold" />
                   </div>
                   <div className="sm:col-span-2">
                     <label className="block text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-2 ml-1">Registered Address</label>

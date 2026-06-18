@@ -37,13 +37,6 @@ export const generateInvoicePDF = (profile: BusinessProfile | null, invoice: any
   const doc = new jsPDF({ unit: 'mm', format: 'a4' });
   const W = 210, margin = 14;
 
-  // ── TOP DECORATIVE BAR ──
-  const blockColors: [number, number, number][] = [TEAL, DARK, [0, 188, 170], DARK, TEAL, DARK, TEAL];
-  blockColors.forEach((color, i) => {
-    doc.setFillColor(...color);
-    doc.rect(i * 30, 0, 30, 6, 'F');
-  });
-
   // ── COMPANY HEADER ──
   let y = 14;
   doc.setFont('helvetica', 'bold');
@@ -108,20 +101,20 @@ export const generateInvoicePDF = (profile: BusinessProfile | null, invoice: any
   // ── CUSTOMER SECTION ──
   y += 8;
   doc.setFontSize(10);
+  doc.setFont('helvetica', 'normal');
   doc.text('Name', margin, y);
-  doc.line(margin + 14, y, W - margin, y);
-  doc.text(invoice.customer_name ?? '', margin + 16, y - 1);
+  doc.line(margin + 28, y, W - margin, y);
+  doc.text(invoice.customer_name ?? '', margin + 30, y - 1);
 
   y += 7;
   doc.text('Address', margin, y);
-  doc.line(margin + 18, y, W - margin, y);
-  doc.text(invoice.customer_address ?? '', margin + 20, y - 1);
+  doc.line(margin + 28, y, W - margin, y);
+  doc.text(invoice.customer_address ?? '', margin + 30, y - 1);
 
   y += 7;
-  doc.line(margin, y, 90, y);
-  doc.text('Phone Number', 92, y);
-  doc.line(115, y, W - margin, y);
-  doc.text(invoice.customer_phone ?? '', 117, y - 1);
+  doc.text('Phone Number', margin, y);
+  doc.line(margin + 28, y, W - margin, y);
+  doc.text(invoice.customer_phone ?? '', margin + 30, y - 1);
   
   y += 4;
   doc.line(margin, y, W - margin, y);
@@ -164,13 +157,24 @@ export const generateInvoicePDF = (profile: BusinessProfile | null, invoice: any
     })(),
     styles: { fontSize: 10, cellPadding: 3 },
     headStyles: { fillColor: TEAL, textColor: 255, fontStyle: 'bold' },
-    footStyles: { fillColor: [240, 255, 253], textColor: DARK, fontStyle: 'bold' },
+    footStyles: { 
+      fillColor: [240, 255, 253], 
+      textColor: DARK, 
+      fontStyle: 'bold',
+      cellPadding: { top: 1.5, bottom: 1.5, left: 3, right: 3 }
+    },
     columnStyles: {
       0: { cellWidth: 12, halign: 'center' },
       1: { cellWidth: 74 },
       2: { cellWidth: 26, halign: 'center' },
       3: { cellWidth: 35, halign: 'right' },
       4: { cellWidth: 35, halign: 'right' },
+    },
+    didParseCell: (data) => {
+      const alignments = ['center', 'left', 'center', 'right', 'right'] as const;
+      if (data.column.index < alignments.length) {
+        data.cell.styles.halign = alignments[data.column.index];
+      }
     },
     margin: { left: margin, right: margin },
     theme: 'grid',
@@ -223,7 +227,17 @@ export const generateInvoicePDF = (profile: BusinessProfile | null, invoice: any
   }
 
   // Signature
-  const sigName = (!profile?.business_name || profile.business_name.startsWith('Generic')) ? 'Afzalkhan' : profile.business_name.split(' ')[0];
+  let sigName = (profile as any)?.authorized_signatory_name || '';
+  if (!sigName) {
+    const bizName = (profile?.business_name || '').trim();
+    if (bizName.toLowerCase() === 'fks traders' || bizName.toLowerCase() === 'f.k.s. traders') {
+      sigName = 'Afzalkhan';
+    } else if (!bizName || bizName.startsWith('Generic')) {
+      sigName = 'Afzalkhan';
+    } else {
+      sigName = bizName.split(' ')[0];
+    }
+  }
   const sigX = 165;
   const sigY = termsY + 30;
 
@@ -241,13 +255,6 @@ export const generateInvoicePDF = (profile: BusinessProfile | null, invoice: any
   doc.setFontSize(8);
   doc.setTextColor(100, 116, 139); // Slate-500
   doc.text('AUTHORIZED SIGNATORY', sigX, sigY + 10, { align: 'center' });
-
-  // ── BOTTOM DECORATIVE BAR ──
-  const pageH = doc.internal.pageSize.height;
-  blockColors.forEach((color, i) => {
-    doc.setFillColor(...color);
-    doc.rect(i * 30, pageH - 6, 30, 6, 'F');
-  });
 
   // Return blob URL for WhatsApp sharing
   const blob = doc.output('blob');

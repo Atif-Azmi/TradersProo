@@ -16,6 +16,7 @@ export interface BusinessProfile {
   ifsc_code?: string;
   upi_id?: string;
   bill_prefix?: string;
+  authorized_signatory_name?: string;
 }
 
 export const useBusinessProfile = () => {
@@ -46,6 +47,7 @@ export const useBusinessProfile = () => {
       ]);
 
       if (bpRes.data || tpRes.data) {
+        const localSigName = typeof window !== 'undefined' ? localStorage.getItem('authorized_signatory_name') : '';
         const mergedData: BusinessProfile = {
           ...bpRes.data,
           bank_name: tpRes.data?.bank_name || '',
@@ -53,7 +55,8 @@ export const useBusinessProfile = () => {
           ifsc_code: tpRes.data?.ifsc_code || '',
           upi_id: tpRes.data?.upi_id || '',
           bill_prefix: tpRes.data?.bill_prefix || 'INV',
-          business_name: bpRes.data?.business_name || 'Generic Business Node'
+          business_name: bpRes.data?.business_name || 'Generic Business Node',
+          authorized_signatory_name: bpRes.data?.authorized_signatory_name || localSigName || ''
         };
         setProfile(mergedData);
         localStorage.setItem('bp', JSON.stringify(mergedData));
@@ -78,7 +81,12 @@ export const saveBusinessProfile = async (formData: any) => {
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) throw new Error('Not authenticated');
 
-  const payload = {
+  const sigNameVal = formData.authorizedSignatoryName?.trim() || '';
+  if (typeof window !== 'undefined' && sigNameVal) {
+    localStorage.setItem('authorized_signatory_name', sigNameVal);
+  }
+
+  const payload: any = {
     user_id: user.id,
     business_name: formData.businessName?.trim() || 'Generic Business Node',
     tagline: formData.tagline?.trim() || null,
@@ -87,20 +95,50 @@ export const saveBusinessProfile = async (formData: any) => {
     registered_address: formData.registeredAddress?.trim() || null,
     city: formData.city?.trim() || null,
     state: formData.state?.trim() || null,
+    authorized_signatory_name: sigNameVal || null,
     updated_at: new Date().toISOString(),
   };
 
-  const { data, error } = await supabase
+  let data, error;
+  const res = await supabase
     .from('business_profile')
     .upsert(payload, { onConflict: 'user_id' })
     .select()
     .single();
+  
+  data = res.data;
+  error = res.error;
 
-  if (error) throw error;
+  if (error) {
+    const isColumnMissing = 
+      error.code === '42703' || 
+      error.code === 'PGRST102' || 
+      error.message?.includes('authorized_signatory_name') || 
+      error.message?.includes('column');
+
+    if (isColumnMissing) {
+      const { authorized_signatory_name, ...safePayload } = payload;
+      const res2 = await supabase
+        .from('business_profile')
+        .upsert(safePayload, { onConflict: 'user_id' });
+      if (res2.error) throw res2.error;
+      
+      data = {
+        ...safePayload,
+        authorized_signatory_name: sigNameVal
+      };
+    } else {
+      throw error;
+    }
+  }
 
   // Update localStorage cache immediately
   if (data) {
-    localStorage.setItem('bp', JSON.stringify(data));
+    const cachedData = {
+      ...data,
+      authorized_signatory_name: data.authorized_signatory_name || sigNameVal
+    };
+    localStorage.setItem('bp', JSON.stringify(cachedData));
   }
   return data;
 };

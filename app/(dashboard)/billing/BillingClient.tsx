@@ -417,7 +417,20 @@ export default function BillingClient({ userId, customers }: Props) {
                 <div style={{ textAlign: 'center' }}>
                   <div style={{ height: '60px', width: '200px', margin: '0 auto', display: 'flex', alignItems: 'flex-end', justifyContent: 'center' }}>
                     <div style={{ borderBottom: '1px dashed #94a3b8', width: '100%', fontStyle: 'italic', fontSize: '20px', fontFamily: "'Georgia', serif", color: '#0f172a', paddingBottom: '5px' }}>
-                      {(!profile?.business_name || profile.business_name.startsWith('Generic')) ? 'Afzalkhan' : profile.business_name.split(' ')[0]}
+                      {(() => {
+                        let sigName = (profile as any)?.authorized_signatory_name || '';
+                        if (!sigName) {
+                          const bizName = (profile?.business_name || '').trim();
+                          if (bizName.toLowerCase() === 'fks traders' || bizName.toLowerCase() === 'f.k.s. traders') {
+                            sigName = 'Afzalkhan';
+                          } else if (!bizName || bizName.startsWith('Generic')) {
+                            sigName = 'Afzalkhan';
+                          } else {
+                            sigName = bizName.split(' ')[0];
+                          }
+                        }
+                        return sigName;
+                      })()}
                     </div>
                   </div>
                   <p style={{ fontSize: '10px', fontWeight: 900, color: '#64748b', marginTop: '8px', letterSpacing: '1px', textTransform: 'uppercase' }}>Authorized Signatory</p>
