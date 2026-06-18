@@ -18,7 +18,7 @@ export default async function DashboardLayout({
     .eq('id', user.id)
     .single()
   
-  const isSuperAdmin = !!superAdmin || user.email === 'superadmin@trader.com'
+  const isSuperAdmin = !!superAdmin || user.email === 'superadmin@trader.in'
 
   return (
     <DashboardLayoutClient isSuperAdmin={isSuperAdmin}>

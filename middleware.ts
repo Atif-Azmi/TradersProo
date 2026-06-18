@@ -50,7 +50,7 @@ export async function middleware(request: NextRequest) {
       .eq('id', user.id)
       .single()
     
-    const isHardcoded = user.email === 'superadmin@trader.com'
+    const isHardcoded = user.email === 'superadmin@trader.in'
 
     if (!sa && !isHardcoded) {
       // Not a superadmin — kick to dashboard

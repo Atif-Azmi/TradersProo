@@ -87,7 +87,7 @@ export default function LoginForm() {
         .eq('id', data.user.id)
         .single()
 
-      const isHardcodedSuperAdmin = data.user.email === 'superadmin@trader.com'
+      const isHardcodedSuperAdmin = data.user.email === 'superadmin@trader.in'
 
       if (sa || isHardcodedSuperAdmin) {
         router.push('/superadmin/verify')

@@ -27,7 +27,7 @@ export default function SuperadminVerifyPage() {
         .eq('id', user.id)
         .single()
       
-      const isHardcoded = user.email === 'superadmin@trader.com'
+      const isHardcoded = user.email === 'superadmin@trader.in'
       if (!sa && !isHardcoded) router.push('/dashboard')
     }
     check()
