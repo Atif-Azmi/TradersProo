@@ -171,7 +171,7 @@ _TradersPro — Professional Billing Suite_
         email: user.email || ''
       },
       theme: {
-        color: '#0D9B8A' // Teal theme accent
+        color: '#B4E0CA' // Mint theme accent
       }
     }
 
@@ -205,7 +205,7 @@ _TradersPro — Professional Billing Suite_
             </p>
             <div className="w-full bg-slate-100 rounded-full h-2 mt-4 mb-4 overflow-hidden">
               <div 
-                className={`h-2 rounded-full transition-all duration-500 ${isElite ? 'bg-emerald-500' : 'bg-[#0D9488]'}`} 
+                className={`h-2 rounded-full transition-all duration-500 ${isElite ? 'bg-emerald-500' : 'bg-[#B4E0CA]'}`} 
                 style={{ width: isElite ? '100%' : '15%' }}
               ></div>
             </div>
@@ -218,7 +218,7 @@ _TradersPro — Professional Billing Suite_
               </span>
             ) : (
               <span className="text-slate-400 font-bold flex items-center gap-1.5 w-full">
-                <ShieldAlert className="h-4 w-4 text-[#0D9B8A] shrink-0" />
+                <ShieldAlert className="h-4 w-4 text-[#1E3121] dark:text-[#B4E0CA] shrink-0" />
                 <span>Expires in <span className="text-slate-900">{daysLeft} business days</span></span>
               </span>
             )}
@@ -228,14 +228,14 @@ _TradersPro — Professional Billing Suite_
         {/* Plan Card */}
         <div className="p-6 md:p-8 bg-gradient-to-br from-slate-900 via-slate-950 to-slate-900 rounded-3xl ring-2 ring-slate-800 text-white md:col-span-2 relative overflow-hidden flex flex-col justify-between shadow-2xl border border-slate-800/60">
           {/* Subtle accent light effect */}
-          <div className="absolute -top-40 -right-40 w-80 h-80 bg-teal-500/10 rounded-full blur-3xl pointer-events-none" />
+          <div className="absolute -top-40 -right-40 w-80 h-80 bg-[#B4E0CA]/15 rounded-full blur-3xl pointer-events-none" />
 
-          <div className={`absolute top-6 right-6 text-white text-[9px] font-bold uppercase tracking-widest px-3 py-1.5 rounded-full shadow-lg ${isElite ? 'bg-emerald-500 shadow-emerald-500/20' : 'bg-teal-500 shadow-teal-500/20'}`}>
+          <div className={`absolute top-6 right-6 text-[9px] font-bold uppercase tracking-widest px-3 py-1.5 rounded-full shadow-warm-pill ${isElite ? 'bg-emerald-500 text-white' : 'bg-[#B4E0CA] text-[#1E3121]'}`}>
             {isElite ? 'Elite Member' : 'Best Value'}
           </div>
 
           <div>
-            <span className={`text-[10px] font-black uppercase tracking-widest ${isElite ? 'text-emerald-400' : 'text-teal-400'}`}>
+            <span className={`text-[10px] font-black uppercase tracking-widest ${isElite ? 'text-emerald-400' : 'text-[#B4E0CA]'}`}>
               Elite Annual Pass
             </span>
 
@@ -246,7 +246,7 @@ _TradersPro — Professional Billing Suite_
             {/* HIGHLY VISIBLE & ATTRACTIVE PRICING SECTION */}
             <div className="mt-6 mb-4 flex items-center gap-x-3 bg-slate-950/80 p-5 rounded-2xl border border-slate-800/80 w-fit">
               <div className="flex items-baseline gap-x-2">
-                <span className="text-5xl font-extrabold tracking-tight text-emerald-400 drop-shadow-[0_4px_12px_rgba(52,211,153,0.3)]">
+                <span className="text-5xl font-extrabold tracking-tight text-[#B4E0CA] drop-shadow-[0_4px_12px_rgba(180,224,202,0.3)]">
                   ₹7,959
                 </span>
                 <span className="text-xs font-bold uppercase tracking-widest text-slate-400">
@@ -254,24 +254,24 @@ _TradersPro — Professional Billing Suite_
                 </span>
               </div>
               <div className="h-8 w-px bg-slate-800" />
-              <span className="text-[10px] font-bold uppercase tracking-wider text-emerald-400/90 bg-emerald-500/10 px-2.5 py-1 rounded-md border border-emerald-500/20">
+              <span className="text-[10px] font-bold uppercase tracking-wider text-[#1E3121] bg-[#B4E0CA] px-2.5 py-1 rounded-full border border-[#88A993]/40">
                 Full Access
               </span>
             </div>
 
             <div className="mt-4 inline-flex items-center gap-2 bg-slate-800/50 px-3.5 py-2 rounded-xl border border-slate-700/30 text-[9px] font-bold text-slate-300 uppercase tracking-widest">
-              <RefreshCw className="h-3 w-3 text-teal-400 animate-spin duration-[4000ms]" /> 
+              <RefreshCw className="h-3 w-3 text-[#B4E0CA] animate-spin duration-[4000ms]" /> 
               <span>Renewal Price Lock: Renew at ₹7,959/year (Same Cost Guaranteed)</span>
             </div>
 
             <div className="mt-8 border-t border-slate-800/80 pt-6">
-              <h4 className={`text-[10px] font-bold uppercase tracking-widest mb-4 ${isElite ? 'text-emerald-400' : 'text-teal-400'}`}>
+              <h4 className={`text-[10px] font-bold uppercase tracking-widest mb-4 ${isElite ? 'text-emerald-400' : 'text-[#B4E0CA]'}`}>
                 Enterprise Features Included:
               </h4>
               <ul role="list" className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-3 text-xs font-medium text-slate-300">
                 {features.map((feature) => (
                   <li key={feature} className="flex gap-x-2.5 items-start">
-                    <CheckCircle2 className={`h-4 w-4 flex-none mt-0.5 ${isElite ? 'text-emerald-400' : 'text-teal-400'}`} aria-hidden="true" />
+                    <CheckCircle2 className={`h-4 w-4 flex-none mt-0.5 ${isElite ? 'text-emerald-400' : 'text-[#B4E0CA]'}`} aria-hidden="true" />
                     <span className="text-slate-200">{feature}</span>
                   </li>
                 ))}
@@ -282,7 +282,7 @@ _TradersPro — Professional Billing Suite_
           {isElite ? (
             <button
               disabled
-              className="mt-8 block w-full rounded-xl bg-emerald-500 text-white py-4 text-center text-xs font-bold uppercase tracking-widest cursor-default shadow-lg shadow-emerald-500/20 font-bold border border-emerald-400/20"
+              className="mt-8 block w-full rounded-full bg-emerald-500 text-white py-4 text-center text-xs font-bold uppercase tracking-widest cursor-default shadow-lg shadow-emerald-500/20 font-bold border border-emerald-400/20"
             >
               Elite Premium Active ✓
             </button>
@@ -290,7 +290,7 @@ _TradersPro — Professional Billing Suite_
             <button
               onClick={handleUpgrade}
               disabled={loading}
-              className="mt-8 w-full rounded-xl bg-teal-500 hover:bg-teal-600 text-white py-4 text-center text-xs font-bold uppercase tracking-widest transition-all cursor-pointer shadow-lg shadow-teal-500/20 flex items-center justify-center gap-2 font-bold hover:scale-[1.01]"
+              className="mt-8 w-full rounded-full bg-[#B4E0CA] hover:bg-[#9CCDB4] text-[#1E3121] py-4 text-center text-xs font-bold uppercase tracking-widest transition-all cursor-pointer shadow-warm-pill flex items-center justify-center gap-2 font-bold hover:scale-[1.01] tap-scale"
             >
               {loading ? (
                 <>

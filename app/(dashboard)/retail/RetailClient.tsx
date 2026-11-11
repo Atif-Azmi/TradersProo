@@ -194,17 +194,17 @@ export default function RetailClient({ products, customers, todaySales }: Retail
 
       <div className="grid gap-6 md:grid-cols-3">
         <div className="tp-card p-6 flex items-center gap-4">
-           <div className="bg-emerald-50 p-3 rounded-full text-[#0D9B8A]"><Store className="h-5 w-5" /></div>
+           <div className="bg-[#B4E0CA]/40 p-3 rounded-full text-[#1E3121]"><Store className="h-5 w-5" /></div>
            <div>
               <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Today's Sales</p>
               <p className="text-xl font-black text-slate-900">₹{totalToday.toLocaleString('en-IN', { minimumFractionDigits: 2 })}</p>
            </div>
         </div>
         <div className="tp-card p-6 flex items-center gap-4">
-           <div className="bg-emerald-50 p-3 rounded-full text-emerald-600"><span className="text-[#0D9B8A] font-black">₹</span></div>
+           <div className="bg-[#B4E0CA]/40 p-3 rounded-full text-[#1E3121]"><span className="text-[#1E3121] font-black">₹</span></div>
            <div>
               <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Cash Collection</p>
-              <p className="text-xl font-black text-emerald-600">₹{cashToday.toLocaleString('en-IN', { minimumFractionDigits: 2 })}</p>
+              <p className="text-xl font-black text-slate-900">₹{cashToday.toLocaleString('en-IN', { minimumFractionDigits: 2 })}</p>
            </div>
         </div>
         <div className="tp-card p-6 flex items-center gap-4">
@@ -224,7 +224,7 @@ export default function RetailClient({ products, customers, todaySales }: Retail
             placeholder="Search sales..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            className="w-full pl-9 pr-4 py-2 text-sm border border-slate-200 rounded-lg focus:ring-2 focus:ring-[#0D9488]/20 focus:border-[#0D9488] outline-none transition-all"
+            className="w-full pl-9 pr-4 py-2 text-sm border border-[#CAC8C0] dark:border-[#45433E] rounded-full focus:ring-2 focus:ring-[#B4E0CA]/60 focus:border-[#88A993] outline-none transition-all"
           />
         </div>
       </div>

@@ -79,14 +79,14 @@ export default function RemindersClient({ initialCustomers, businessProfile }: R
                    placeholder="Search customers with dues..."
                    value={search}
                    onChange={(e) => setSearch(e.target.value)}
-                   className="w-full pl-9 pr-4 py-2 text-sm border border-slate-200 rounded-lg focus:ring-2 focus:ring-[#0D9488]/20 focus:border-[#0D9488] outline-none transition-all"
+                   className="w-full pl-9 pr-4 py-2 text-sm border border-[#CAC8C0] dark:border-[#45433E] rounded-full focus:ring-2 focus:ring-[#B4E0CA]/60 focus:border-[#88A993] outline-none transition-all"
                  />
                </div>
             </div>
             
             <div className="p-4 border-b border-slate-100 flex items-center justify-between bg-white">
                <button onClick={toggleSelectAll} className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-widest text-slate-600 hover:text-slate-900">
-                  {selected.length === filteredCustomers.length && filteredCustomers.length > 0 ? <CheckSquare className="h-5 w-5 text-[#0D9B8A]" /> : <Square className="h-5 w-5 text-slate-200" />}
+                  {selected.length === filteredCustomers.length && filteredCustomers.length > 0 ? <CheckSquare className="h-5 w-5 text-[#1E3121] dark:text-[#B4E0CA]" /> : <Square className="h-5 w-5 text-slate-200" />}
                   Select All ({filteredCustomers.length})
                </button>
                <span className="text-[10px] font-bold uppercase tracking-widest bg-red-50 text-red-600 px-3 py-1 rounded-full border border-red-100">Total: ₹{totalDues.toLocaleString('en-IN')}</span>
@@ -94,9 +94,9 @@ export default function RemindersClient({ initialCustomers, businessProfile }: R
 
             <div className="overflow-y-auto flex-1 p-4 space-y-3">
                {filteredCustomers.map(customer => (
-                  <div key={customer.customer_id} onClick={() => toggleSelect(customer.customer_id)} className={`flex items-center justify-between p-4 rounded-xl cursor-pointer border transition-all ${selected.includes(customer.customer_id) ? 'bg-[#0D9B8A]/5 border-[#0D9B8A]' : 'bg-white border-slate-100 hover:border-slate-300 shadow-sm shadow-slate-50'}`}>
+                  <div key={customer.customer_id} onClick={() => toggleSelect(customer.customer_id)} className={`flex items-center justify-between p-4 rounded-xl cursor-pointer border transition-all ${selected.includes(customer.customer_id) ? 'bg-[#B4E0CA]/20 border-[#88A993]' : 'bg-white border-slate-100 hover:border-slate-300 shadow-sm shadow-slate-50'}`}>
                      <div className="flex items-center gap-4">
-                        {selected.includes(customer.customer_id) ? <CheckSquare className="h-5 w-5 text-[#0D9B8A]" /> : <Square className="h-5 w-5 text-slate-100" />}
+                        {selected.includes(customer.customer_id) ? <CheckSquare className="h-5 w-5 text-[#1E3121] dark:text-[#B4E0CA]" /> : <Square className="h-5 w-5 text-slate-100" />}
                         <div>
                            <p className="font-bold text-slate-900">{customer.customer_name}</p>
                            <p className="text-[10px] font-bold text-slate-400 uppercase tracking-tight">{customer.phone}</p>
@@ -118,7 +118,7 @@ export default function RemindersClient({ initialCustomers, businessProfile }: R
                <h3 className="text-base font-bold text-slate-900">
                   {selected.length === 1 ? 'Customer Preview' : 'Recovery Engine'}
                </h3>
-               <span className="text-[9px] font-bold bg-[#0D9B8A] text-white px-2.5 py-1 rounded-full uppercase tracking-widest">Live Template</span>
+               <span className="text-[9px] font-bold bg-[#B4E0CA] text-[#1E3121] px-2.5 py-1 rounded-full uppercase tracking-widest shadow-sm">Live Template</span>
             </div>
 
             <div className="mb-4 p-4 bg-slate-50/50 rounded-xl border border-slate-100">
@@ -134,7 +134,7 @@ export default function RemindersClient({ initialCustomers, businessProfile }: R
             <textarea
                value={message}
                onChange={(e) => setMessage(e.target.value)}
-               className="w-full h-32 p-3 border border-slate-200 rounded-lg text-sm font-medium focus:ring-2 focus:ring-[#0D9488]/20 focus:border-[#0D9488] outline-none transition-all mb-4 bg-white"
+               className="w-full h-32 p-3 border border-[#CAC8C0] dark:border-[#45433E] rounded-2xl text-sm font-medium focus:ring-2 focus:ring-[#B4E0CA]/60 focus:border-[#88A993] outline-none transition-all mb-4 bg-white dark:bg-[#33322E] text-[#3E3B36] dark:text-[#EDE9E3]"
                placeholder="Write your reminder strategy..."
             />
 

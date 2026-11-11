@@ -128,22 +128,22 @@ export default function LoginForm() {
   return (
     <div className="flex flex-col justify-center">
        <div className="flex items-center gap-2 mb-10">
-          <div className="w-8 h-8 bg-[#0D9488] rounded-lg flex items-center justify-center text-white">
+          <div className="w-9 h-9 bg-[#B4E0CA] text-[#1E3121] rounded-full flex items-center justify-center shadow-warm-pill">
              <ShieldCheck className="h-5 w-5" />
           </div>
-          <span className="text-xl font-black tracking-tight text-slate-900">TradersPro</span>
+          <span className="text-xl font-black tracking-tight text-[#3E3B36] dark:text-[#EDE9E3]">Traders<span className="text-[#88A993]">Pro</span></span>
        </div>
        
        <div className="mb-10 text-center">
-          <h2 className="text-2xl font-bold text-slate-900">Welcome back</h2>
-          <p className="text-sm text-slate-400 font-medium mt-1">Sign in to continue to TradersPro.</p>
+          <h2 className="text-2xl font-bold text-[#3E3B36] dark:text-[#EDE9E3]">Welcome back</h2>
+          <p className="text-sm text-[#7A756F] dark:text-[#A8A39B] font-medium mt-1">Sign in to continue to TradersPro.</p>
        </div>
 
        <div className="grid grid-cols-2 gap-4 mb-8">
           <button 
             onClick={() => handleOAuthLogin('google')}
             disabled={loading || !!lockoutTime}
-            className="flex items-center justify-center gap-2 py-2.5 px-4 rounded-xl border border-slate-200 hover:bg-slate-50 transition-all font-bold text-sm text-slate-700 disabled:opacity-50 min-h-[44px] cursor-pointer"
+            className="flex items-center justify-center gap-2 py-2.5 px-4 rounded-full border border-[#CAC8C0] dark:border-[#45433E] hover:bg-[#F2EEE9] dark:hover:bg-[#33322E] transition-all font-bold text-sm text-[#3E3B36] dark:text-[#EDE9E3] disabled:opacity-50 min-h-[44px] cursor-pointer tap-scale"
             aria-label="Sign in with Google"
           >
              <img src="https://www.google.com/favicon.ico" className="w-4 h-4" alt="Google" /> Google
@@ -151,7 +151,7 @@ export default function LoginForm() {
           <button 
             onClick={() => handleOAuthLogin('facebook')}
             disabled={loading || !!lockoutTime}
-            className="flex items-center justify-center gap-2 py-2.5 px-4 rounded-xl border border-slate-200 hover:bg-slate-50 transition-all font-bold text-sm text-slate-700 disabled:opacity-50 min-h-[44px] cursor-pointer"
+            className="flex items-center justify-center gap-2 py-2.5 px-4 rounded-full border border-[#CAC8C0] dark:border-[#45433E] hover:bg-[#F2EEE9] dark:hover:bg-[#33322E] transition-all font-bold text-sm text-[#3E3B36] dark:text-[#EDE9E3] disabled:opacity-50 min-h-[44px] cursor-pointer tap-scale"
             aria-label="Sign in with Facebook"
           >
              <svg className="h-4 w-4 text-[#1877F2] fill-current" viewBox="0 0 24 24">
@@ -162,8 +162,8 @@ export default function LoginForm() {
        </div>
 
        <div className="relative flex items-center justify-center mb-8">
-          <div className="absolute inset-0 flex items-center"><div className="w-full border-t border-slate-100"></div></div>
-          <span className="relative bg-white px-4 text-[10px] font-bold text-slate-400 uppercase tracking-widest">or continue with email</span>
+          <div className="absolute inset-0 flex items-center"><div className="w-full border-t border-[#CAC8C0] dark:border-[#45433E]"></div></div>
+          <span className="relative bg-[#E9E4DE] dark:bg-[#2A2926] px-4 text-[10px] font-bold text-[#7A756F] dark:text-[#A8A39B] uppercase tracking-widest">or continue with email</span>
        </div>
 
        <form className="space-y-6" onSubmit={handleLogin}>
@@ -180,7 +180,7 @@ export default function LoginForm() {
           </div>
 
           <div>
-            <label className="block text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-2 ml-1">Email address</label>
+            <label className="block text-[10px] font-bold text-[#7A756F] dark:text-[#A8A39B] uppercase tracking-widest mb-2 ml-1">Email address</label>
             <input
               type="email"
               required
@@ -194,8 +194,8 @@ export default function LoginForm() {
           
           <div>
             <div className="flex justify-between items-center mb-2">
-               <label className="block text-[10px] font-bold text-slate-400 uppercase tracking-widest ml-1">Password</label>
-               <Link href="/forgot-password" className="text-[10px] font-bold text-[#0D9488] hover:underline transition-colors min-h-[44px] flex items-center">Forgot password?</Link>
+               <label className="block text-[10px] font-bold text-[#7A756F] dark:text-[#A8A39B] uppercase tracking-widest ml-1">Password</label>
+               <Link href="/forgot-password" className="text-[10px] font-bold text-[#1E3121] dark:text-[#B4E0CA] hover:underline transition-colors min-h-[44px] flex items-center">Forgot password?</Link>
             </div>
             <div className="relative">
               <input
@@ -211,7 +211,7 @@ export default function LoginForm() {
               <button 
                 type="button"
                 onClick={() => setShowPassword(!showPassword)}
-                className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 transition-colors p-2 cursor-pointer flex items-center justify-center"
+                className="absolute right-4 top-1/2 -translate-y-1/2 text-[#7A756F] hover:text-[#3E3B36] dark:text-[#A8A39B] dark:hover:text-[#EDE9E3] transition-colors p-2 cursor-pointer flex items-center justify-center"
                 aria-label={showPassword ? 'Hide password' : 'Show password'}
                 disabled={loading || !!lockoutTime}
               >
@@ -221,20 +221,20 @@ export default function LoginForm() {
           </div>
 
           <div className="flex items-center gap-2">
-             <input type="checkbox" id="remember-me" className="w-4 h-4 rounded border-slate-300 text-[#0D9488] focus:ring-[#0D9488] cursor-pointer" />
-             <label htmlFor="remember-me" className="text-xs font-medium text-slate-400 cursor-pointer select-none">Remember me</label>
+             <input type="checkbox" id="remember-me" className="w-4 h-4 rounded border-[#CAC8C0] text-[#88A993] focus:ring-[#B4E0CA] cursor-pointer" />
+             <label htmlFor="remember-me" className="text-xs font-medium text-[#7A756F] dark:text-[#A8A39B] cursor-pointer select-none">Remember me</label>
           </div>
 
-          {error && <div className="text-red-500 text-xs font-bold text-center bg-red-50 p-3 rounded-lg border border-red-100">{error}</div>}
+          {error && <div className="text-[#4A1D14] dark:text-[#D98A7B] text-xs font-bold text-center bg-[#D98A7B]/20 p-3 rounded-full border border-[#D98A7B]/40">{error}</div>}
 
           <button
             type="submit"
             disabled={loading || !!lockoutTime}
-            className="w-full tp-button-primary py-3 shadow-xl shadow-[#0D9488]/20 disabled:opacity-50 min-h-[44px] cursor-pointer flex items-center justify-center gap-2"
+            className="w-full tp-button-primary py-3 disabled:opacity-50 min-h-[48px] cursor-pointer flex items-center justify-center gap-2"
           >
             {loading ? (
               <>
-                <Loader2 className="h-4 w-4 animate-spin" />
+                <Loader2 className="h-4 w-4 animate-spin text-[#1E3121]" />
                 <span>Processing Login...</span>
               </>
             ) : lockoutTime ? (
@@ -246,10 +246,10 @@ export default function LoginForm() {
        </form>
 
        <div className="mt-8 text-center space-y-4">
-          <p className="text-xs text-slate-400 font-medium">
-            Don't have an account? <Link href="/register" className="font-bold text-[#0D9488] hover:underline min-h-[44px]">Sign up</Link>
+          <p className="text-xs text-[#7A756F] dark:text-[#A8A39B] font-medium">
+            Don't have an account? <Link href="/register" className="font-bold text-[#1E3121] dark:text-[#B4E0CA] hover:underline min-h-[44px]">Sign up</Link>
           </p>
-          <Link href="/" className="inline-flex items-center gap-2 text-[10px] font-bold text-slate-400 hover:text-slate-900 transition-all uppercase tracking-widest min-h-[44px]">
+          <Link href="/" className="inline-flex items-center gap-2 text-[10px] font-bold text-[#7A756F] hover:text-[#3E3B36] dark:text-[#A8A39B] dark:hover:text-[#EDE9E3] transition-all uppercase tracking-widest min-h-[44px]">
              <ArrowLeft className="h-3 w-3" /> Back to home
           </Link>
        </div>

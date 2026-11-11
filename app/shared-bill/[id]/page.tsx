@@ -59,9 +59,9 @@ export default function SharedBillPage({ params }: { params: { id: string } }) {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-[#F4F7F9] flex flex-col items-center justify-center p-4">
-        <div className="bg-white p-12 rounded-[2.5rem] shadow-[0_8px_30px_rgb(0,0,0,0.02)] border border-slate-100 flex items-center justify-center max-w-xs w-full">
-          <LoadingSpinner size="md" text="RETRIEVING BILL..." textColor="text-slate-400" />
+      <div className="min-h-screen bg-[#E0DCD6] dark:bg-[#1F1E1B] flex flex-col items-center justify-center p-4">
+        <div className="bg-[#E9E4DE] dark:bg-[#2A2926] p-12 rounded-[28px] shadow-warm-raised border border-[#CAC8C0] dark:border-[#45433E] flex items-center justify-center max-w-xs w-full">
+          <LoadingSpinner size="md" text="RETRIEVING BILL..." textColor="text-[#7A756F]" />
         </div>
       </div>
     )
@@ -69,18 +69,18 @@ export default function SharedBillPage({ params }: { params: { id: string } }) {
 
   if (error || !bill) {
     return (
-      <div className="min-h-screen bg-[#F4F7F9] flex flex-col items-center justify-center p-4">
-        <div className="bg-white p-10 rounded-[2.5rem] shadow-xl border border-slate-100 max-w-md w-full text-center">
-          <div className="w-16 h-16 bg-rose-50 rounded-2xl flex items-center justify-center mx-auto mb-6 text-rose-500">
+      <div className="min-h-screen bg-[#E0DCD6] dark:bg-[#1F1E1B] flex flex-col items-center justify-center p-4">
+        <div className="bg-[#E9E4DE] dark:bg-[#2A2926] p-10 rounded-[28px] shadow-warm-raised border border-[#CAC8C0] dark:border-[#45433E] max-w-md w-full text-center">
+          <div className="w-16 h-16 bg-[#D98A7B]/20 rounded-full flex items-center justify-center mx-auto mb-6 text-[#4A1D14] dark:text-[#D98A7B]">
             <AlertCircle className="h-8 w-8" />
           </div>
-          <h3 className="text-lg font-black text-slate-900 uppercase tracking-widest mb-2">Access Denied</h3>
-          <p className="text-slate-500 text-xs font-semibold leading-relaxed mb-6">
+          <h3 className="text-lg font-black text-[#3E3B36] dark:text-[#EDE9E3] uppercase tracking-widest mb-2">Access Denied</h3>
+          <p className="text-[#7A756F] dark:text-[#A8A39B] text-xs font-semibold leading-relaxed mb-6">
             {error || 'The requested billing statement could not be loaded.'}
           </p>
           <button 
             onClick={() => window.location.href = '/'}
-            className="w-full bg-slate-900 hover:bg-black text-white py-4 rounded-2xl text-xs font-black uppercase tracking-widest transition-all"
+            className="w-full bg-[#B4E0CA] hover:bg-[#9CCDB4] text-[#1E3121] py-3.5 rounded-full text-xs font-black uppercase tracking-widest transition-all shadow-warm-pill tap-scale"
           >
             Go to TradersPro
           </button>
@@ -93,61 +93,63 @@ export default function SharedBillPage({ params }: { params: { id: string } }) {
   const fmtDate = (d: string) => d ? new Date(d).toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: 'numeric' }) : '—'
 
   return (
-    <div className="min-h-screen bg-[#F4F7F9] flex flex-col items-center justify-center p-4 sm:p-8">
+    <div className="min-h-screen bg-[#E0DCD6] dark:bg-[#1F1E1B] flex flex-col items-center justify-center p-4 sm:p-8">
       <div className="w-full max-w-lg animate-in fade-in slide-in-from-bottom-6 duration-500">
         
         {/* TradersPro Logo/Header */}
         <div className="text-center mb-6">
-          <h1 className="text-2xl font-black text-[#0D9488] tracking-widest uppercase italic">TradersPro</h1>
-          <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mt-1">SECURE BILLING PORTAL</p>
+          <h1 className="text-2xl font-black text-[#1E3121] dark:text-[#EDE9E3] tracking-widest uppercase">
+            Traders<span className="text-[#88A993]">Pro</span>
+          </h1>
+          <p className="text-[10px] font-bold text-[#7A756F] dark:text-[#A8A39B] uppercase tracking-widest mt-1">SECURE BILLING PORTAL</p>
         </div>
 
         {/* Premium Floating Card */}
-        <div className="bg-white rounded-[2.5rem] shadow-[0_10px_40px_-15px_rgba(0,0,0,0.05)] border border-slate-100 p-8 sm:p-10 relative overflow-hidden">
+        <div className="bg-[#E9E4DE] dark:bg-[#2A2926] rounded-[28px] shadow-warm-raised border border-[#CAC8C0] dark:border-[#45433E] p-8 sm:p-10 relative overflow-hidden">
           
           {/* Subtle background badge */}
-          <div className="absolute top-0 right-0 w-32 h-32 bg-[#0D9488]/5 rounded-bl-[8rem] flex items-start justify-end p-6 text-[#0D9488]/20 pointer-events-none">
+          <div className="absolute top-0 right-0 w-32 h-32 bg-[#B4E0CA]/10 rounded-bl-[8rem] flex items-start justify-end p-6 text-[#88A993]/30 pointer-events-none">
             <ShieldCheck className="h-10 w-10" />
           </div>
 
           <div className="mb-8">
-            <span className="text-[9px] font-black bg-emerald-50 text-emerald-600 border border-emerald-100 px-3 py-1.5 rounded-full uppercase tracking-widest">
+            <span className="text-[9px] font-black bg-[#B4E0CA] text-[#1E3121] border border-[#88A993]/40 px-3 py-1.5 rounded-full uppercase tracking-widest shadow-sm">
               Statement Ready
             </span>
-            <h2 className="text-xl font-black text-slate-900 mt-4 leading-tight">Billing Statement</h2>
-            <p className="text-xs text-slate-400 font-semibold mt-1">Consolidated report generated for your account.</p>
+            <h2 className="text-xl font-black text-[#3E3B36] dark:text-[#EDE9E3] mt-4 leading-tight">Billing Statement</h2>
+            <p className="text-xs text-[#7A756F] dark:text-[#A8A39B] font-semibold mt-1">Consolidated report generated for your account.</p>
           </div>
 
           {/* Statement highlights inside an elegant block */}
-          <div className="bg-slate-50 border border-slate-100 rounded-3xl p-6 mb-8 flex flex-col items-center justify-center text-center">
-            <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Outstanding Amount</p>
-            <p className="text-3xl font-black text-[#0D9488] mt-2">₹{fmt(bill.total_amount)}</p>
-            <div className="w-full border-t border-slate-200/60 my-4" />
-            <div className="flex items-center justify-between w-full text-xs font-bold text-slate-500">
-              <span className="flex items-center gap-1.5"><Calendar className="h-3.5 w-3.5 text-slate-400" /> Period:</span>
-              <span className="text-slate-800 font-extrabold">{fmtDate(bill.period_start)} to {fmtDate(bill.period_end)}</span>
+          <div className="bg-[#F2EEE9] dark:bg-[#33322E] border border-[#CAC8C0] dark:border-[#45433E] rounded-2xl p-6 mb-8 flex flex-col items-center justify-center text-center">
+            <p className="text-[10px] font-black text-[#7A756F] dark:text-[#A8A39B] uppercase tracking-widest">Outstanding Amount</p>
+            <p className="text-3xl font-black text-[#1E3121] dark:text-[#B4E0CA] mt-2">₹{fmt(bill.total_amount)}</p>
+            <div className="w-full border-t border-[#CAC8C0]/60 dark:border-[#45433E]/60 my-4" />
+            <div className="flex items-center justify-between w-full text-xs font-bold text-[#7A756F] dark:text-[#A8A39B]">
+              <span className="flex items-center gap-1.5"><Calendar className="h-3.5 w-3.5 text-[#7A756F] dark:text-[#A8A39B]" /> Period:</span>
+              <span className="text-[#3E3B36] dark:text-[#EDE9E3] font-extrabold">{fmtDate(bill.period_start)} to {fmtDate(bill.period_end)}</span>
             </div>
           </div>
 
           {/* Customer Details */}
           <div className="space-y-4 mb-8">
-            <h4 className="text-[10px] font-black text-slate-400 uppercase tracking-widest border-b border-slate-100 pb-2">Client Details</h4>
+            <h4 className="text-[10px] font-black text-[#7A756F] dark:text-[#A8A39B] uppercase tracking-widest border-b border-[#CAC8C0]/50 dark:border-[#45433E]/50 pb-2">Client Details</h4>
             
             <div className="flex items-center justify-between text-xs font-bold">
-              <span className="flex items-center gap-2 text-slate-400"><User className="h-4 w-4" /> Client Name</span>
-              <span className="text-slate-800 font-black uppercase tracking-wide">{bill.customer_name || 'Walk-in'}</span>
+              <span className="flex items-center gap-2 text-[#7A756F] dark:text-[#A8A39B]"><User className="h-4 w-4" /> Client Name</span>
+              <span className="text-[#3E3B36] dark:text-[#EDE9E3] font-black uppercase tracking-wide">{bill.customer_name || 'Walk-in'}</span>
             </div>
 
             {bill.customer_phone && (
               <div className="flex items-center justify-between text-xs font-bold">
-                <span className="flex items-center gap-2 text-slate-400"><Phone className="h-4 w-4" /> Mobile</span>
-                <span className="text-slate-800 font-extrabold">{bill.customer_phone}</span>
+                <span className="flex items-center gap-2 text-[#7A756F] dark:text-[#A8A39B]"><Phone className="h-4 w-4" /> Mobile</span>
+                <span className="text-[#3E3B36] dark:text-[#EDE9E3] font-extrabold">{bill.customer_phone}</span>
               </div>
             )}
 
             <div className="flex items-center justify-between text-xs font-bold">
-              <span className="flex items-center gap-2 text-slate-400"><Building2 className="h-4 w-4" /> Shared Date</span>
-              <span className="text-slate-800 font-extrabold">{fmtDate(bill.created_at)}</span>
+              <span className="flex items-center gap-2 text-[#7A756F] dark:text-[#A8A39B]"><Building2 className="h-4 w-4" /> Shared Date</span>
+              <span className="text-[#3E3B36] dark:text-[#EDE9E3] font-extrabold">{fmtDate(bill.created_at)}</span>
             </div>
           </div>
 
@@ -157,28 +159,28 @@ export default function SharedBillPage({ params }: { params: { id: string } }) {
               href={bill.pdf_url}
               target="_blank"
               rel="noreferrer"
-              className="w-full flex items-center justify-center gap-3 bg-[#0D9488] hover:bg-[#0B7A70] text-white py-4 sm:py-5 rounded-2xl text-xs font-black uppercase tracking-widest shadow-xl shadow-[#0D9488]/20 hover:shadow-none transition-all active:scale-[0.98]"
+              className="w-full flex items-center justify-center gap-3 bg-[#B4E0CA] hover:bg-[#9CCDB4] text-[#1E3121] py-4 rounded-full text-xs font-black uppercase tracking-widest shadow-warm-pill transition-all tap-scale"
             >
               <Download className="h-4 w-4" />
               Download Official PDF
             </a>
           ) : (
-            <div className="text-center text-xs text-rose-500 font-extrabold bg-rose-50 border border-rose-100 p-4 rounded-2xl">
+            <div className="text-center text-xs text-[#4A1D14] dark:text-[#D98A7B] font-extrabold bg-[#D98A7B]/20 border border-[#D98A7B]/40 p-4 rounded-2xl">
               PDF file is not available for this statement. Please contact your merchant.
             </div>
           )}
 
           {/* Expiration Note */}
-          <div className="mt-6 flex items-center justify-center gap-1.5 text-[9px] font-black text-slate-400 uppercase tracking-widest">
-            <ShieldCheck className="h-3.5 w-3.5 text-emerald-500" />
+          <div className="mt-6 flex items-center justify-center gap-1.5 text-[9px] font-black text-[#7A756F] dark:text-[#A8A39B] uppercase tracking-widest">
+            <ShieldCheck className="h-3.5 w-3.5 text-[#1E3121] dark:text-[#B4E0CA]" />
             <span>Secure Link • Valid until {fmtDate(bill.expires_at)}</span>
           </div>
 
         </div>
 
         {/* Footer Brand Info */}
-        <div className="text-center mt-6 text-[9px] font-bold text-slate-400 uppercase tracking-[0.2em]">
-          Powered by <span className="font-black text-[#0D9488]">TradersPro</span>
+        <div className="text-center mt-6 text-[9px] font-bold text-[#7A756F] dark:text-[#A8A39B] uppercase tracking-[0.2em]">
+          Powered by <span className="font-black text-[#1E3121] dark:text-[#EDE9E3]">Traders<span className="text-[#88A993]">Pro</span></span>
         </div>
 
       </div>

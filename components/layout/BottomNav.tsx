@@ -28,7 +28,7 @@ export default function BottomNav() {
             animate={{ y: 0, opacity: 1, scale: 1 }}
             exit={{ y: 80, opacity: 0, scale: 0.95 }}
             transition={{ type: 'spring', damping: 26, stiffness: 320 }}
-            className="pointer-events-auto w-full max-w-sm h-[64px] rounded-full p-1.5 bg-white/85 dark:bg-slate-900/85 backdrop-blur-2xl border border-slate-200/70 dark:border-slate-800/80 shadow-[0_12px_36px_-6px_rgba(0,0,0,0.15)] flex items-center justify-between relative"
+            className="pointer-events-auto w-full max-w-sm h-[64px] rounded-full p-1.5 bg-[#E9E4DE]/90 dark:bg-[#2A2926]/90 backdrop-blur-2xl border border-[#CAC8C0]/80 dark:border-[#45433E]/80 shadow-warm-raised flex items-center justify-between relative"
             aria-label="Floating Navigation Bar"
           >
             {navTabs.map((tab) => {
@@ -46,7 +46,7 @@ export default function BottomNav() {
                     <motion.div
                       layoutId="activeFloatingTabPill"
                       transition={{ type: 'spring', damping: 22, stiffness: 300 }}
-                      className="absolute inset-0 bg-slate-100 dark:bg-slate-800 rounded-full z-0 shadow-sm"
+                      className="absolute inset-0 bg-[#B4E0CA] rounded-full z-0 shadow-warm-pill"
                     />
                   )}
 
@@ -55,13 +55,13 @@ export default function BottomNav() {
                     <tab.icon
                       className={`h-5 w-5 transition-transform duration-200 ${
                         isActive
-                          ? 'text-[#0D9488] scale-110 stroke-[2.5]'
-                          : 'text-slate-400 hover:text-slate-600 dark:text-slate-500'
+                          ? 'text-[#1E3121] scale-110 stroke-[2.5]'
+                          : 'text-[#7A756F] hover:text-[#3E3B36] dark:text-[#A8A39B] dark:hover:text-[#EDE9E3]'
                       }`}
                     />
                     <span
                       className={`text-[9px] uppercase tracking-tighter leading-none ${
-                        isActive ? 'font-black text-[#0D9488]' : 'font-bold text-slate-400 dark:text-slate-500'
+                        isActive ? 'font-black text-[#1E3121]' : 'font-bold text-[#7A756F] dark:text-[#A8A39B]'
                       }`}
                     >
                       {tab.name}

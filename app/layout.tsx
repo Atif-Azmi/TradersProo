@@ -11,7 +11,7 @@ const inter = Inter({ subsets: ['latin'], variable: '--font-inter' })
 const outfit = Outfit({ subsets: ['latin'], variable: '--font-outfit' })
 
 export const viewport = {
-  themeColor: '#0D9488',
+  themeColor: '#B4E0CA',
   width: 'device-width',
   initialScale: 1,
   maximumScale: 1,
@@ -58,7 +58,7 @@ export default function RootLayout({
         <ErrorBoundary>
           <NProgressProvider>
             <NextTopLoader 
-              color="#0D9488"
+              color="#B4E0CA"
               initialPosition={0.08}
               crawlSpeed={200}
               height={3}

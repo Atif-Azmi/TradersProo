@@ -160,14 +160,14 @@ export default function CustomersClient({ initialCustomers }: CustomersClientPro
       {/* Row of 3 Stat Cards */}
       <div className="grid gap-6 md:grid-cols-3">
         <div className="tp-card p-6 flex items-center gap-4">
-           <div className="bg-emerald-50 p-3 rounded-full text-[#0D9B8A]"><Plus className="h-5 w-5" /></div>
+           <div className="bg-[#B4E0CA]/40 p-3 rounded-full text-[#1E3121]"><Plus className="h-5 w-5" /></div>
            <div>
               <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Total Customers</p>
               <p className="text-xl font-black text-slate-900">{totalCustomers}</p>
            </div>
         </div>
         <div className="tp-card p-6 flex items-center gap-4">
-           <div className="bg-emerald-50 p-3 rounded-full text-[#0D9B8A]"><Plus className="h-5 w-5" /></div>
+           <div className="bg-[#B4E0CA]/40 p-3 rounded-full text-[#1E3121]"><Plus className="h-5 w-5" /></div>
            <div>
               <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Active Customers</p>
               <p className="text-xl font-black text-slate-900">{activeCustomers}</p>
@@ -188,7 +188,7 @@ export default function CustomersClient({ initialCustomers }: CustomersClientPro
           <input
             type="text"
             placeholder="Search customers by name or phone..."
-            className="w-full pl-9 pr-4 py-2 text-sm border border-slate-200 rounded-lg focus:ring-2 focus:ring-[#0D9488]/20 focus:border-[#0D9488] outline-none transition-all"
+            className="w-full pl-9 pr-4 py-2 text-sm border border-[#CAC8C0] dark:border-[#45433E] rounded-full focus:ring-2 focus:ring-[#B4E0CA]/60 focus:border-[#88A993] outline-none transition-all"
             value={search}
             onChange={(e) => setSearch(e.target.value)}
           />
@@ -251,7 +251,7 @@ export default function CustomersClient({ initialCustomers }: CustomersClientPro
                   <td className="px-6 py-5 text-right">
                      <div className="flex justify-end gap-2">
                        <button onClick={() => startEdit(customer)} className="px-3 py-1.5 text-[10px] font-bold uppercase text-slate-900 hover:bg-slate-100 rounded-lg transition-all">Edit</button>
-                       <button onClick={() => handleWhatsAppReminder(customer)} className="px-3 py-1.5 text-[10px] font-bold uppercase text-[#0D9488] hover:bg-[#0D9488]/5 rounded-lg transition-all">Remind</button>
+                       <button onClick={() => handleWhatsAppReminder(customer)} className="px-3 py-1.5 text-[10px] font-bold uppercase text-[#1E3121] dark:text-[#B4E0CA] hover:bg-[#B4E0CA]/20 rounded-full transition-all">Remind</button>
                        <Link href={`/customers/${customer.customer_id || customer.id}`} className="px-3 py-1.5 text-[10px] font-bold uppercase text-slate-400 hover:text-slate-900 hover:bg-slate-100 rounded-lg transition-all flex items-center justify-center">View</Link>
                      </div>
                   </td>
@@ -311,13 +311,13 @@ export default function CustomersClient({ initialCustomers }: CustomersClientPro
                 </button>
                 <button 
                   onClick={() => handleWhatsAppReminder(customer)} 
-                  className="px-3 py-1.5 bg-emerald-50 text-[9px] font-black uppercase text-[#0D9488] rounded-xl hover:bg-emerald-100 transition-all font-bold"
+                  className="px-3 py-1.5 bg-[#B4E0CA] text-[9px] font-black uppercase text-[#1E3121] rounded-full hover:bg-[#9CCDB4] transition-all font-bold shadow-sm"
                 >
                   Remind
                 </button>
                 <Link 
                   href={`/customers/${customer.customer_id || customer.id}`} 
-                  className="px-3 py-1.5 bg-[#0D9488]/10 text-[9px] font-black uppercase text-[#0D9488] rounded-xl hover:bg-[#0D9488]/20 transition-all flex items-center justify-center font-bold"
+                  className="px-3 py-1.5 bg-[#B4E0CA]/40 text-[9px] font-black uppercase text-[#1E3121] rounded-full hover:bg-[#B4E0CA]/60 transition-all flex items-center justify-center font-bold"
                 >
                   View
                 </Link>

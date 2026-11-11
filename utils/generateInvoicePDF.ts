@@ -1,6 +1,7 @@
 import jsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable';
 import { BusinessProfile } from '@/hooks/useBusinessProfile';
+import { pdfTokens } from '@/lib/design-tokens';
 
 // Convert number to words (Indian format)
 export const numberToWords = (num: number): string => {
@@ -29,10 +30,6 @@ export const numberToWords = (num: number): string => {
   return result + ' Only';
 };
 
-// Teal color palette matching requested design
-const TEAL: [number, number, number] = [0, 150, 136];
-const DARK: [number, number, number] = [0, 77, 90];
-
 export const generateInvoicePDF = (profile: BusinessProfile | null, invoice: any) => {
   const doc = new jsPDF({ unit: 'mm', format: 'a4' });
   const W = 210, margin = 14;
@@ -41,17 +38,17 @@ export const generateInvoicePDF = (profile: BusinessProfile | null, invoice: any
   let y = 14;
   doc.setFont('helvetica', 'bold');
   doc.setFontSize(20);
-  doc.setTextColor(...DARK);
+  doc.setTextColor(...pdfTokens.ink);
   doc.text(profile?.business_name ?? 'COMPANY NAME', W / 2, y, { align: 'center' });
 
   y += 6;
   doc.setFontSize(10);
-  doc.setTextColor(...TEAL);
+  doc.setTextColor(...pdfTokens.primaryStrong);
   doc.setFont('helvetica', 'normal');
   doc.text(profile?.tagline ?? 'YOUR SLOGAN', W / 2, y, { align: 'center' });
 
   y += 5;
-  doc.setTextColor(80, 80, 80);
+  doc.setTextColor(...pdfTokens.inkSecondary);
   doc.setFontSize(9);
   
   if (profile?.registered_address) {
@@ -77,46 +74,57 @@ export const generateInvoicePDF = (profile: BusinessProfile | null, invoice: any
 
   // ── INVOICE META ROW ──
   y += 8;
-  doc.setDrawColor(...TEAL);
+  doc.setDrawColor(...pdfTokens.primaryStrong);
   doc.line(margin, y, W - margin, y);
   y += 6;
   doc.setFontSize(10);
-  doc.setTextColor(80, 80, 80);
+  doc.setTextColor(...pdfTokens.inkSecondary);
   doc.text(`Invoice No. :  ${invoice.invoice_number}`, margin, y);
   
   doc.setFont('helvetica', 'bold');
   doc.setFontSize(14);
-  doc.setTextColor(...DARK);
+  doc.setTextColor(...pdfTokens.ink);
   doc.text('INVOICE', W / 2, y, { align: 'center' });
   
   doc.setFont('helvetica', 'normal');
   doc.setFontSize(10);
-  doc.setTextColor(80, 80, 80);
+  doc.setTextColor(...pdfTokens.inkSecondary);
   const invoiceDate = invoice.invoice_date ? new Date(invoice.invoice_date).toLocaleDateString('en-IN') : new Date().toLocaleDateString('en-IN');
   doc.text(`Invoice Date :  ${invoiceDate}`, W - margin, y, { align: 'right' });
   
   y += 3;
+  doc.setDrawColor(...pdfTokens.border);
   doc.line(margin, y, W - margin, y);
 
   // ── CUSTOMER SECTION ──
   y += 8;
   doc.setFontSize(10);
   doc.setFont('helvetica', 'normal');
+  doc.setTextColor(...pdfTokens.inkSecondary);
   doc.text('Name', margin, y);
+  doc.setDrawColor(...pdfTokens.border);
   doc.line(margin + 28, y, W - margin, y);
+  doc.setTextColor(...pdfTokens.ink);
   doc.text(invoice.customer_name ?? '', margin + 30, y - 1);
 
   y += 7;
+  doc.setTextColor(...pdfTokens.inkSecondary);
   doc.text('Address', margin, y);
+  doc.setDrawColor(...pdfTokens.border);
   doc.line(margin + 28, y, W - margin, y);
+  doc.setTextColor(...pdfTokens.ink);
   doc.text(invoice.customer_address ?? '', margin + 30, y - 1);
 
   y += 7;
+  doc.setTextColor(...pdfTokens.inkSecondary);
   doc.text('Phone Number', margin, y);
+  doc.setDrawColor(...pdfTokens.border);
   doc.line(margin + 28, y, W - margin, y);
+  doc.setTextColor(...pdfTokens.ink);
   doc.text(invoice.customer_phone ?? '', margin + 30, y - 1);
   
   y += 4;
+  doc.setDrawColor(...pdfTokens.border);
   doc.line(margin, y, W - margin, y);
 
   // ── ITEMS TABLE ──
@@ -155,11 +163,11 @@ export const generateInvoicePDF = (profile: BusinessProfile | null, invoice: any
       footRows.push(['', '', '', 'Grand Total', `Rs. ${parseFloat(invoice.total_amount || 0).toLocaleString('en-IN')}`]);
       return footRows;
     })(),
-    styles: { fontSize: 10, cellPadding: 3 },
-    headStyles: { fillColor: TEAL, textColor: 255, fontStyle: 'bold' },
+    styles: { fontSize: 10, cellPadding: 3, textColor: pdfTokens.ink },
+    headStyles: { fillColor: pdfTokens.primary, textColor: pdfTokens.onPrimary, fontStyle: 'bold' },
     footStyles: { 
-      fillColor: [240, 255, 253], 
-      textColor: DARK, 
+      fillColor: pdfTokens.surfaceRaised, 
+      textColor: pdfTokens.onPrimary, 
       fontStyle: 'bold',
       cellPadding: { top: 1.5, bottom: 1.5, left: 3, right: 3 }
     },
@@ -184,21 +192,21 @@ export const generateInvoicePDF = (profile: BusinessProfile | null, invoice: any
   const finalY = (doc as any).lastAutoTable.finalY + 6;
   doc.setFontSize(10);
   doc.setFont('helvetica', 'bold');
-  doc.setTextColor(...DARK);
+  doc.setTextColor(...pdfTokens.ink);
   doc.text('Rupees in words :', margin, finalY);
   
   doc.setFont('helvetica', 'normal');
-  doc.setTextColor(80, 80, 80);
+  doc.setTextColor(...pdfTokens.inkSecondary);
   doc.text(numberToWords(parseFloat(invoice.total_amount || 0)), margin + 38, finalY);
 
   // Terms
   const termsY = finalY + 8;
   doc.setFont('helvetica', 'bold');
-  doc.setTextColor(...DARK);
+  doc.setTextColor(...pdfTokens.ink);
   doc.text('Terms & Conditions :', margin, termsY);
   
   doc.setFont('helvetica', 'normal');
-  doc.setTextColor(80, 80, 80);
+  doc.setTextColor(...pdfTokens.inkSecondary);
   const terms = invoice.terms || [
     'Goods once sold will not be taken back.',
     'Payment due within 30 days.',
@@ -213,11 +221,11 @@ export const generateInvoicePDF = (profile: BusinessProfile | null, invoice: any
   if (profile?.bank_name) {
     const bankX = 115;
     doc.setFont('helvetica', 'bold');
-    doc.setTextColor(...DARK);
+    doc.setTextColor(...pdfTokens.ink);
     doc.text('Payment Bank Details :', bankX, termsY);
     
     doc.setFont('helvetica', 'normal');
-    doc.setTextColor(80, 80, 80);
+    doc.setTextColor(...pdfTokens.inkSecondary);
     doc.text(`Bank Name : ${profile.bank_name}`, bankX, termsY + 6);
     doc.text(`A/C Number: ${profile.account_number}`, bankX, termsY + 11);
     doc.text(`IFSC Code : ${profile.ifsc_code}`, bankX, termsY + 16);
@@ -243,17 +251,17 @@ export const generateInvoicePDF = (profile: BusinessProfile | null, invoice: any
 
   doc.setFont('times', 'italic');
   doc.setFontSize(18);
-  doc.setTextColor(...DARK);
+  doc.setTextColor(...pdfTokens.ink);
   doc.text(sigName, sigX, sigY, { align: 'center' });
 
   doc.setFont('helvetica', 'normal');
   doc.setFontSize(10);
-  doc.setTextColor(148, 163, 184); // Slate-400 equivalent
+  doc.setTextColor(...pdfTokens.border);
   doc.text('----------------------------------', sigX, sigY + 5, { align: 'center' });
 
   doc.setFont('helvetica', 'bold');
   doc.setFontSize(8);
-  doc.setTextColor(100, 116, 139); // Slate-500
+  doc.setTextColor(...pdfTokens.inkSecondary);
   doc.text('AUTHORIZED SIGNATORY', sigX, sigY + 10, { align: 'center' });
 
   // Return blob URL for WhatsApp sharing

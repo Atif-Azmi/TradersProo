@@ -12,8 +12,8 @@ export const LoadingSpinner: React.FC<LoadingSpinnerProps> = ({
   className = '',
   size = 'md',
   text = 'LOADING...',
-  textColor = 'text-slate-500',
-  spinnerColor = 'fill-[#0D9488]'
+  textColor = 'text-[#7A756F] dark:text-[#A8A39B]',
+  spinnerColor = 'fill-[#88A993] dark:fill-[#B4E0CA]'
 }) => {
   const sizeClasses = {
     sm: 'w-8 h-8',

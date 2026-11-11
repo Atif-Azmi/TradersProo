@@ -37,14 +37,14 @@ export default function AnimatedSplash() {
           key="animated-splash"
           initial={{ opacity: 1 }}
           exit={{ opacity: 0, transition: { duration: 0.4, ease: 'easeInOut' } }}
-          className="fixed inset-0 z-[9999] flex flex-col items-center justify-center bg-[#0F172A] select-none pointer-events-none"
+          className="fixed inset-0 z-[9999] flex flex-col items-center justify-center bg-[#E0DCD6] dark:bg-[#1F1E1B] select-none pointer-events-none"
         >
           {/* Subtle Ambient Pulse Glow */}
           {!prefersReducedMotion && (
             <motion.div
               initial={{ opacity: 0.2, scale: 0.85 }}
               animate={{
-                opacity: [0.25, 0.6, 0.25],
+                opacity: [0.25, 0.5, 0.25],
                 scale: [0.9, 1.15, 0.9],
               }}
               transition={{
@@ -52,7 +52,7 @@ export default function AnimatedSplash() {
                 repeat: Infinity,
                 ease: 'easeInOut',
               }}
-              className="absolute w-72 h-72 rounded-full bg-[#14B8A6]/20 blur-3xl pointer-events-none"
+              className="absolute w-72 h-72 rounded-full bg-[#B4E0CA]/30 blur-3xl pointer-events-none"
             />
           )}
 
@@ -67,17 +67,17 @@ export default function AnimatedSplash() {
             }
             className="relative flex items-center justify-center w-32 h-36"
           >
-            {/* Teal Shield Graphic */}
+            {/* Mint Shield Graphic */}
             <svg
-              className="w-full h-full drop-shadow-[0_0_25px_rgba(20,184,166,0.4)]"
+              className="w-full h-full drop-shadow-[0_4px_20px_rgba(180,224,202,0.45)]"
               viewBox="0 0 64 72"
               fill="none"
               xmlns="http://www.w3.org/2000/svg"
             >
               <defs>
                 <linearGradient id="shieldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                  <stop offset="0%" stopColor="#14B8A6" />
-                  <stop offset="100%" stopColor="#0D9488" />
+                  <stop offset="0%" stopColor="#B4E0CA" />
+                  <stop offset="100%" stopColor="#88A993" />
                 </linearGradient>
               </defs>
               <path
@@ -101,7 +101,7 @@ export default function AnimatedSplash() {
               className="absolute flex items-center justify-center"
             >
               <svg
-                className="w-12 h-12 text-[#14B8A6]"
+                className="w-12 h-12 text-[#1E3121] dark:text-[#EDE9E3]"
                 viewBox="0 0 24 24"
                 fill="none"
                 stroke="currentColor"
@@ -121,10 +121,10 @@ export default function AnimatedSplash() {
             transition={{ delay: 0.35, duration: 0.5 }}
             className="mt-6 flex flex-col items-center gap-1.5"
           >
-            <span className="text-2xl font-black tracking-tight text-white font-sans">
-              Traders<span className="text-[#14B8A6]">Pro</span>
+            <span className="text-2xl font-black tracking-tight text-[#1E3121] dark:text-[#EDE9E3] font-sans">
+              Traders<span className="text-[#88A993]">Pro</span>
             </span>
-            <span className="text-[10px] font-bold uppercase tracking-[0.25em] text-slate-400">
+            <span className="text-[10px] font-bold uppercase tracking-[0.25em] text-[#7A756F] dark:text-[#A8A39B]">
               Hardware Business Management
             </span>
           </motion.div>
@@ -133,4 +133,3 @@ export default function AnimatedSplash() {
     </AnimatePresence>
   )
 }
-

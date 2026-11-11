@@ -50,7 +50,7 @@ export default function DashboardClient({
       change: 'Active',
       isPositive: true,
       icon: TrendingUp,
-      color: 'emerald',
+      color: 'primary',
     },
     {
       title: 'Total Collections',
@@ -58,7 +58,7 @@ export default function DashboardClient({
       change: 'Synced',
       isPositive: true,
       icon: IndianRupee,
-      color: 'blue',
+      color: 'info',
     },
     {
       title: 'Pending Dues',
@@ -66,7 +66,7 @@ export default function DashboardClient({
       change: pendingDues > 0 ? 'Due' : 'Clear',
       isPositive: pendingDues === 0,
       icon: AlertTriangle,
-      color: 'rose',
+      color: 'danger',
     },
     {
       title: 'Active Customers',
@@ -74,46 +74,46 @@ export default function DashboardClient({
       change: 'Live',
       isPositive: true,
       icon: Users,
-      color: 'slate',
+      color: 'neutral',
     },
   ]
 
   return (
-    <div className="space-y-8 max-w-[1600px] mx-auto pb-12">
+    <div className="space-y-8 max-w-[1600px] mx-auto pb-12 font-sans">
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <span className="text-[10px] font-black uppercase tracking-[0.25em] text-[#0D9488]">
+          <span className="text-[10px] font-black uppercase tracking-[0.25em] text-[#1E3121] dark:text-[#B4E0CA]">
             Operations Hub
           </span>
-          <h2 className="text-2xl sm:text-3xl font-black text-slate-900 dark:text-white tracking-tight mt-0.5">
+          <h2 className="text-2xl sm:text-3xl font-black text-[#3E3B36] dark:text-[#EDE9E3] tracking-tight mt-0.5">
             Dashboard
           </h2>
         </div>
 
         <Link
           href="/sales/new"
-          className="h-10 px-5 rounded-full bg-[#0B0B0C] dark:bg-white text-white dark:text-slate-900 font-bold text-xs flex items-center justify-center gap-2 shadow-md hover:bg-slate-800 dark:hover:bg-slate-100 tap-scale select-none cursor-pointer w-full sm:w-auto"
+          className="h-10 px-5 rounded-full bg-[#B4E0CA] hover:bg-[#9CCDB4] text-[#1E3121] font-bold text-xs flex items-center justify-center gap-2 shadow-warm-pill tap-scale select-none cursor-pointer w-full sm:w-auto"
         >
           <Plus className="h-4 w-4" />
           <span>New Invoice</span>
         </Link>
       </div>
 
-      {/* Sales Overview Chart & KPIs Grid (Original 2-Column Layout) */}
+      {/* Sales Overview Chart & KPIs Grid */}
       <div className="grid gap-6 lg:grid-cols-3">
         {/* Sales Overview Chart (2 cols) */}
-        <div className="lg:col-span-2 bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-[20px] p-6 shadow-[0_4px_20px_-6px_rgba(0,0,0,0.04)]">
+        <div className="lg:col-span-2 bg-[#E9E4DE] dark:bg-[#2A2926] border border-[#CAC8C0] dark:border-[#45433E] rounded-[24px] p-6 shadow-warm-card">
           <div className="flex items-center justify-between mb-6">
             <div>
-              <p className="text-[10px] font-bold uppercase tracking-widest text-slate-400">
+              <p className="text-[10px] font-bold uppercase tracking-widest text-[#7A756F] dark:text-[#A8A39B]">
                 Trends
               </p>
-              <h3 className="font-bold text-slate-900 dark:text-white text-base">
+              <h3 className="font-bold text-[#3E3B36] dark:text-[#EDE9E3] text-base">
                 Sales Overview
               </h3>
             </div>
-            <select className="text-xs font-bold bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg px-3 py-1.5 outline-none cursor-pointer">
+            <select className="text-xs font-bold bg-[#F2EEE9] dark:bg-[#33322E] text-[#3E3B36] dark:text-[#EDE9E3] border border-[#CAC8C0] dark:border-[#45433E] rounded-full px-4 py-1.5 outline-none cursor-pointer">
               <option>This Month</option>
               <option>Last Month</option>
             </select>
@@ -124,37 +124,37 @@ export default function DashboardClient({
               <AreaChart data={chartData} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
                 <defs>
                   <linearGradient id="colorSales" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="5%" stopColor="#0D9488" stopOpacity={0.18} />
-                    <stop offset="95%" stopColor="#0D9488" stopOpacity={0} />
+                    <stop offset="5%" stopColor="#B4E0CA" stopOpacity={0.4} />
+                    <stop offset="95%" stopColor="#B4E0CA" stopOpacity={0} />
                   </linearGradient>
                 </defs>
-                <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#f1f5f9" />
+                <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#CAC8C0" strokeOpacity={0.6} />
                 <XAxis
                   dataKey="date"
                   axisLine={false}
                   tickLine={false}
-                  tick={{ fill: '#94a3b8', fontSize: 10, fontWeight: 600 }}
+                  tick={{ fill: '#7A756F', fontSize: 10, fontWeight: 600 }}
                   dy={10}
                 />
                 <YAxis
                   axisLine={false}
                   tickLine={false}
-                  tick={{ fill: '#94a3b8', fontSize: 10, fontWeight: 600 }}
+                  tick={{ fill: '#7A756F', fontSize: 10, fontWeight: 600 }}
                 />
                 <Tooltip
                   contentStyle={{
                     borderRadius: '16px',
-                    border: 'none',
-                    boxShadow: '0 10px 25px -3px rgb(0 0 0 / 0.12)',
+                    border: '1px solid #45433E',
+                    boxShadow: '0 8px 24px -4px rgba(62, 59, 54, 0.12)',
                     padding: '12px',
-                    backgroundColor: '#0F172A',
-                    color: '#FFFFFF',
+                    backgroundColor: '#1F1E1B',
+                    color: '#EDE9E3',
                   }}
                 />
                 <Area
                   type="monotone"
                   dataKey="sales"
-                  stroke="#0D9488"
+                  stroke="#88A993"
                   strokeWidth={3}
                   fillOpacity={1}
                   fill="url(#colorSales)"
@@ -164,32 +164,32 @@ export default function DashboardClient({
           </div>
         </div>
 
-        {/* 4 KPIs Column (1 col, Original Structure) */}
+        {/* 4 KPIs Column */}
         <div className="space-y-4 flex flex-col justify-between">
           {kpis.map((kpi, index) => (
             <div
               key={index}
-              className="bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-[20px] p-5 shadow-[0_4px_20px_-6px_rgba(0,0,0,0.04)] flex items-center justify-between tap-scale select-none"
+              className="bg-[#E9E4DE] dark:bg-[#2A2926] border border-[#CAC8C0] dark:border-[#45433E] rounded-[24px] p-5 shadow-warm-card flex items-center justify-between tap-scale select-none"
             >
               <div className="flex items-center gap-4">
                 <div
-                  className={`w-12 h-12 rounded-2xl flex items-center justify-center ${
-                    kpi.color === 'emerald'
-                      ? 'bg-emerald-50 text-emerald-600 dark:bg-emerald-950/40 dark:text-emerald-400'
-                      : kpi.color === 'blue'
-                      ? 'bg-teal-50 text-[#0D9488] dark:bg-teal-950/40 dark:text-[#2DD4BF]'
-                      : kpi.color === 'rose'
-                      ? 'bg-rose-50 text-rose-600 dark:bg-rose-950/40 dark:text-rose-400'
-                      : 'bg-slate-100 text-slate-600 dark:bg-slate-800 dark:text-slate-300'
+                  className={`w-12 h-12 rounded-2xl flex items-center justify-center shadow-sm ${
+                    kpi.color === 'primary'
+                      ? 'bg-[#B4E0CA] text-[#1E3121]'
+                      : kpi.color === 'info'
+                      ? 'bg-[#9DB8C9] text-[#1F3441]'
+                      : kpi.color === 'danger'
+                      ? 'bg-[#D98A7B] text-[#4A1D14]'
+                      : 'bg-[#F2EEE9] dark:bg-[#33322E] text-[#3E3B36] dark:text-[#EDE9E3]'
                   }`}
                 >
                   <kpi.icon className="h-5 w-5" />
                 </div>
                 <div>
-                  <p className="text-[11px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-wider mb-0.5">
+                  <p className="text-[11px] font-bold text-[#7A756F] dark:text-[#A8A39B] uppercase tracking-wider mb-0.5">
                     {kpi.title}
                   </p>
-                  <h4 className="text-xl font-bold font-mono tracking-tight text-slate-900 dark:text-white tabular-nums">
+                  <h4 className="text-xl font-bold font-mono tracking-tight text-[#3E3B36] dark:text-[#EDE9E3] tabular-nums">
                     {kpi.value}
                   </h4>
                 </div>
@@ -197,7 +197,7 @@ export default function DashboardClient({
               <div className="text-right">
                 <div
                   className={`flex items-center gap-0.5 text-[11px] font-bold ${
-                    kpi.isPositive ? 'text-emerald-500' : 'text-rose-500'
+                    kpi.isPositive ? 'text-[#1E3121] dark:text-[#B4E0CA]' : 'text-[#4A1D14] dark:text-[#D98A7B]'
                   }`}
                 >
                   {kpi.isPositive ? (
@@ -207,29 +207,29 @@ export default function DashboardClient({
                   )}
                   {kpi.change}
                 </div>
-                <p className="text-[10px] text-slate-400 font-medium mt-0.5">Live Sync</p>
+                <p className="text-[10px] text-[#7A756F] dark:text-[#A8A39B] font-medium mt-0.5">Live Sync</p>
               </div>
             </div>
           ))}
         </div>
       </div>
 
-      {/* Transactions & Performance Grid (Original 2-Column Bottom Layout) */}
+      {/* Transactions & Performance Grid */}
       <div className="grid gap-6 lg:grid-cols-3">
         {/* Latest Transactions Table (2 cols) */}
-        <div className="lg:col-span-2 bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-[20px] overflow-hidden shadow-[0_4px_20px_-6px_rgba(0,0,0,0.04)]">
-          <div className="p-6 border-b border-slate-100 dark:border-slate-800 flex items-center justify-between">
+        <div className="lg:col-span-2 bg-[#E9E4DE] dark:bg-[#2A2926] border border-[#CAC8C0] dark:border-[#45433E] rounded-[24px] overflow-hidden shadow-warm-card">
+          <div className="p-6 border-b border-[#CAC8C0]/60 dark:border-[#45433E]/60 flex items-center justify-between">
             <div>
-              <p className="text-[10px] font-bold uppercase tracking-widest text-slate-400">
+              <p className="text-[10px] font-bold uppercase tracking-widest text-[#7A756F] dark:text-[#A8A39B]">
                 Audit Trail
               </p>
-              <h3 className="font-bold text-slate-900 dark:text-white text-base">
+              <h3 className="font-bold text-[#3E3B36] dark:text-[#EDE9E3] text-base">
                 Latest transactions
               </h3>
             </div>
             <Link
               href="/sales"
-              className="text-xs font-bold text-[#0D9488] hover:underline tap-scale"
+              className="text-xs font-bold text-[#1E3121] dark:text-[#B4E0CA] hover:underline tap-scale"
             >
               View all sales →
             </Link>
@@ -237,22 +237,22 @@ export default function DashboardClient({
 
           <div className="overflow-x-auto">
             <table className="w-full text-left">
-              <tbody className="divide-y divide-slate-100 dark:divide-slate-800/80">
+              <tbody className="divide-y divide-[#CAC8C0]/50 dark:divide-[#45433E]/50">
                 {recentSales.map((sale) => (
                   <tr
                     key={sale.id}
-                    className="hover:bg-slate-50/50 dark:hover:bg-slate-800/40 transition-colors"
+                    className="hover:bg-[#F2EEE9]/60 dark:hover:bg-[#33322E]/60 transition-colors"
                   >
                     <td className="px-6 py-4">
                       <div className="flex items-center gap-3.5">
-                        <div className="w-10 h-10 rounded-full bg-slate-100 dark:bg-slate-800 flex items-center justify-center text-slate-600 dark:text-slate-300 font-bold uppercase text-xs">
+                        <div className="w-10 h-10 rounded-full bg-[#F2EEE9] dark:bg-[#33322E] flex items-center justify-center text-[#3E3B36] dark:text-[#EDE9E3] font-bold uppercase text-xs border border-[#CAC8C0] dark:border-[#45433E]">
                           {sale.tp_customers?.name?.[0] || 'W'}
                         </div>
                         <div>
-                          <p className="text-sm font-bold text-slate-900 dark:text-white">
+                          <p className="text-sm font-bold text-[#3E3B36] dark:text-[#EDE9E3]">
                             {sale.tp_customers?.name || 'Walk-in Node'}
                           </p>
-                          <p className="text-[11px] text-slate-400 font-mono tracking-tight">
+                          <p className="text-[11px] text-[#7A756F] dark:text-[#A8A39B] font-mono tracking-tight">
                             Invoice #{sale.invoice_number}
                           </p>
                         </div>
@@ -266,12 +266,12 @@ export default function DashboardClient({
                             sale.payment_status === 'paid'
                               ? 'success'
                               : sale.payment_status === 'partial'
-                              ? 'accent'
+                              ? 'warning'
                               : 'danger'
                           }
                         />
 
-                        {/* WhatsApp Due Reminder Button (Original Feature) */}
+                        {/* WhatsApp Due Reminder Button */}
                         {sale.payment_status !== 'paid' && sale.tp_customers?.phone && (
                           <button
                             onClick={() => {
@@ -288,7 +288,7 @@ export default function DashboardClient({
                                 '_blank'
                               )
                             }}
-                            className="p-1.5 rounded-lg bg-emerald-50 dark:bg-emerald-950/40 text-emerald-600 dark:text-emerald-400 hover:bg-emerald-100 transition-colors tap-scale"
+                            className="p-1.5 rounded-full bg-[#B4E0CA] text-[#1E3121] hover:bg-[#9CCDB4] transition-colors tap-scale shadow-sm"
                             title="Remind via WhatsApp"
                             aria-label="Send WhatsApp reminder"
                           >
@@ -300,10 +300,10 @@ export default function DashboardClient({
                       </div>
                     </td>
                     <td className="px-6 py-4 text-right">
-                      <p className="text-sm font-bold text-slate-900 dark:text-white font-mono tabular-nums">
+                      <p className="text-sm font-bold text-[#3E3B36] dark:text-[#EDE9E3] font-mono tabular-nums">
                         ₹{parseFloat(sale.total_amount).toLocaleString('en-IN')}
                       </p>
-                      <p className="text-[11px] text-slate-400 font-medium">
+                      <p className="text-[11px] text-[#7A756F] dark:text-[#A8A39B] font-medium">
                         {new Date(sale.created_at).toLocaleDateString('en-IN', {
                           day: '2-digit',
                           month: 'short',
@@ -317,13 +317,13 @@ export default function DashboardClient({
           </div>
         </div>
 
-        {/* Collection Efficiency Radial Gauge (1 col, Original Feature) */}
-        <div className="bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-[20px] p-6 shadow-[0_4px_20px_-6px_rgba(0,0,0,0.04)] flex flex-col justify-between">
+        {/* Collection Efficiency Radial Gauge */}
+        <div className="bg-[#E9E4DE] dark:bg-[#2A2926] border border-[#CAC8C0] dark:border-[#45433E] rounded-[24px] p-6 shadow-warm-card flex flex-col justify-between">
           <div>
-            <p className="text-[10px] font-bold uppercase tracking-widest text-slate-400">
+            <p className="text-[10px] font-bold uppercase tracking-widest text-[#7A756F] dark:text-[#A8A39B]">
               Recovery
             </p>
-            <h3 className="font-bold text-slate-900 dark:text-white text-base">
+            <h3 className="font-bold text-[#3E3B36] dark:text-[#EDE9E3] text-base">
               Collection Efficiency
             </h3>
             <div className="mt-8 flex flex-col items-center">
@@ -336,7 +336,7 @@ export default function DashboardClient({
                     stroke="currentColor"
                     strokeWidth="12"
                     fill="transparent"
-                    className="text-slate-100 dark:text-slate-800"
+                    className="text-[#CAC8C0] dark:text-[#45433E]"
                   />
                   <circle
                     cx="88"
@@ -349,31 +349,31 @@ export default function DashboardClient({
                     strokeDashoffset={
                       452.4 * (1 - (totalSales > 0 ? totalCollections / totalSales : 0))
                     }
-                    className="text-[#0D9488] transition-all duration-1000"
+                    className="text-[#B4E0CA] transition-all duration-1000"
                   />
                 </svg>
                 <div className="absolute flex flex-col items-center">
-                  <span className="text-3xl font-black text-slate-900 dark:text-white font-mono tabular-nums">
+                  <span className="text-3xl font-black text-[#3E3B36] dark:text-[#EDE9E3] font-mono tabular-nums">
                     {totalSales > 0 ? Math.round((totalCollections / totalSales) * 100) : 0}%
                   </span>
-                  <span className="text-[9px] font-bold text-emerald-600 uppercase tracking-wider">
+                  <span className="text-[9px] font-bold text-[#1E3121] dark:text-[#B4E0CA] uppercase tracking-wider">
                     Collected
                   </span>
                 </div>
               </div>
-              <p className="text-[11px] text-slate-400 font-medium mt-5 text-center">
+              <p className="text-[11px] text-[#7A756F] dark:text-[#A8A39B] font-medium mt-5 text-center">
                 Percentage of total sales collected as cash.
               </p>
             </div>
           </div>
 
-          <div className="mt-6 pt-4 border-t border-slate-100 dark:border-slate-800">
-            <div className="bg-[#0D9488]/5 dark:bg-[#0D9488]/10 p-3.5 rounded-xl border border-[#0D9488]/15 flex items-center justify-between">
+          <div className="mt-6 pt-4 border-t border-[#CAC8C0]/60 dark:border-[#45433E]/60">
+            <div className="bg-[#B4E0CA]/30 dark:bg-[#B4E0CA]/15 p-3.5 rounded-2xl border border-[#88A993]/30 flex items-center justify-between">
               <div>
-                <p className="text-[9px] font-bold text-[#0D9488] uppercase tracking-widest">
+                <p className="text-[9px] font-bold text-[#1E3121] dark:text-[#B4E0CA] uppercase tracking-widest">
                   Status Report
                 </p>
-                <p className="text-sm font-black text-slate-900 dark:text-white mt-0.5">
+                <p className="text-sm font-black text-[#3E3B36] dark:text-[#EDE9E3] mt-0.5">
                   {pendingDues > 0 ? `₹${pendingDues.toLocaleString('en-IN')} Pending` : 'All Clear'}
                 </p>
               </div>

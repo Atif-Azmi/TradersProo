@@ -33,28 +33,28 @@ export default class ErrorBoundary extends Component<Props, State> {
   public render() {
     if (this.state.hasError) {
       return (
-        <div className="min-h-screen flex items-center justify-center bg-[#F4F7F9] p-4 font-sans">
-          <div className="w-full max-w-md bg-white rounded-3xl p-8 md:p-12 shadow-2xl shadow-slate-200 border border-slate-100 text-center space-y-6">
-            <div className="w-16 h-16 bg-rose-50 rounded-2xl flex items-center justify-center text-rose-500 mx-auto animate-bounce-subtle">
+        <div className="min-h-screen flex items-center justify-center bg-[#E0DCD6] dark:bg-[#1F1E1B] p-4 font-sans">
+          <div className="w-full max-w-md bg-[#E9E4DE] dark:bg-[#2A2926] rounded-[24px] p-8 md:p-12 shadow-warm-raised border border-[#CAC8C0] dark:border-[#45433E] text-center space-y-6">
+            <div className="w-16 h-16 bg-[#D98A7B]/20 rounded-full flex items-center justify-center text-[#4A1D14] dark:text-[#D98A7B] mx-auto animate-bounce-subtle">
               <ShieldAlert className="h-8 w-8" />
             </div>
             
             <div className="space-y-2">
-              <h2 className="text-xl font-bold text-slate-900 uppercase tracking-tight italic">System Interrupted</h2>
-              <p className="text-xs text-slate-400 font-bold uppercase tracking-widest leading-relaxed">
+              <h2 className="text-xl font-bold text-[#3E3B36] dark:text-[#EDE9E3] uppercase tracking-tight">System Interrupted</h2>
+              <p className="text-xs text-[#7A756F] dark:text-[#A8A39B] font-bold uppercase tracking-widest leading-relaxed">
                 An unexpected frontend event occurred. Please reload the console workspace.
               </p>
               {this.state.error && (
-                <div className="text-[10px] bg-slate-50 border border-slate-100 p-3 rounded-lg text-slate-500 max-h-24 overflow-y-auto text-left font-mono break-all mt-2">
+                <div className="text-[10px] bg-[#F2EEE9] dark:bg-[#33322E] border border-[#CAC8C0] dark:border-[#45433E] p-3 rounded-xl text-[#7A756F] dark:text-[#A8A39B] max-h-24 overflow-y-auto text-left font-mono break-all mt-2">
                   {this.state.error.toString()}
                 </div>
               )}
             </div>
 
-            <div className="pt-4 border-t border-slate-50">
+            <div className="pt-4 border-t border-[#CAC8C0] dark:border-[#45433E]">
               <button 
                 onClick={this.handleReload}
-                className="w-full tp-button-primary py-3 shadow-xl shadow-[#0D9488]/20 min-h-[44px] flex items-center justify-center gap-2 cursor-pointer bg-slate-900 hover:bg-slate-800 transition-all text-white"
+                className="w-full py-3 px-6 rounded-full font-bold bg-[#B4E0CA] hover:bg-[#9CCDB4] text-[#1E3121] shadow-warm-pill min-h-[48px] flex items-center justify-center gap-2 cursor-pointer transition-all tap-scale"
               >
                 <RefreshCw className="h-4 w-4" />
                 <span>Reload Application</span>

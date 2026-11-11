@@ -4,8 +4,8 @@
   "description": "Business Management for Hardware Traders",
   "start_url": "/dashboard",
   "display": "standalone",
-  "background_color": "#0f172a",
-  "theme_color": "#0D9488",
+  "background_color": "#E0DCD6",
+  "theme_color": "#B4E0CA",
   "icons": [
     { "src": "/icons/icon-192x192.png", "sizes": "192x192", "type": "image/png" },
     { "src": "/icons/icon-512x512.png", "sizes": "512x512", "type": "image/png" },

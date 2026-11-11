@@ -169,11 +169,11 @@ export default function SuperAdminClient() {
       {/* KPI Cards */}
       <div className="grid grid-cols-2 md:grid-cols-5 gap-6">
         {[
-          { label: 'Total Nodes', value: totalUsers, icon: Users, bg: 'bg-emerald-50 text-emerald-600' },
-          { label: 'Active Trial', value: trialUsers, icon: Clock, bg: 'bg-amber-50 text-amber-600' },
-          { label: 'Premium Nodes', value: paidUsers, icon: TrendingUp, bg: 'bg-emerald-50 text-[#0D9B8A]' },
-          { label: 'Expired/Dead', value: expiredUsers, icon: AlertTriangle, bg: 'bg-rose-50 text-red-600' },
-          { label: 'Avg Longevity', value: `${avgDaysLeft}d`, icon: Shield, bg: 'bg-emerald-50 text-[#0D9B8A]' },
+          { label: 'Total Nodes', value: totalUsers, icon: Users, bg: 'bg-[#B4E0CA]/40 text-[#1E3121]' },
+          { label: 'Active Trial', value: trialUsers, icon: Clock, bg: 'bg-[#E3D094]/40 text-[#4A3F12]' },
+          { label: 'Premium Nodes', value: paidUsers, icon: TrendingUp, bg: 'bg-[#B4E0CA]/40 text-[#1E3121]' },
+          { label: 'Expired/Dead', value: expiredUsers, icon: AlertTriangle, bg: 'bg-[#D98A7B]/40 text-[#4A1D14]' },
+          { label: 'Avg Longevity', value: `${avgDaysLeft}d`, icon: Shield, bg: 'bg-[#B4E0CA]/40 text-[#1E3121]' },
         ].map((kpi, i) => (
           <div key={i} className="tp-card p-6 flex items-center gap-4">
             <div className={`p-3 rounded-full ${kpi.bg}`}>
@@ -200,7 +200,7 @@ export default function SuperAdminClient() {
               placeholder="Search registry..."
               value={search}
               onChange={e => setSearch(e.target.value)}
-              className="w-full pl-9 pr-4 py-2 text-sm border border-slate-200 rounded-lg focus:ring-2 focus:ring-[#0D9488]/20 focus:border-[#0D9488] outline-none transition-all"
+              className="w-full pl-9 pr-4 py-2 text-sm border border-[#CAC8C0] dark:border-[#45433E] rounded-full focus:ring-2 focus:ring-[#B4E0CA]/60 focus:border-[#88A993] outline-none transition-all"
             />
           </div>
         </div>
@@ -280,7 +280,7 @@ export default function SuperAdminClient() {
                         </span>
                         <button
                           onClick={() => { setEditingId(user.id); setNewDays(user.days_remaining || 14) }}
-                          className="text-slate-300 hover:text-[#0D9B8A] p-1 rounded transition-all"
+                          className="text-slate-300 hover:text-[#1E3121] dark:hover:text-[#B4E0CA] p-1 rounded transition-all"
                           title="Override Node Plan"
                         >
                           <Edit2 className="h-3.5 w-3.5" />

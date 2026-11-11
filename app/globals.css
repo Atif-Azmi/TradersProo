@@ -4,41 +4,84 @@
 
 @layer base {
   :root {
-    --background: 210 40% 98%;
-    --foreground: 222.2 84% 4.9%;
-    --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
-    --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
-    --primary: 171 77% 31%; /* TradersPro Teal: #0D9488 */
-    --primary-foreground: 210 40% 98%;
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 171 77% 31%;
-    --radius: 0.75rem;
+    --background: #E0DCD6;
+    --surface: #E9E4DE;
+    --surface-raised: #F2EEE9;
+    --border: #CAC8C0;
+    --ink: #3E3B36;
+    --ink-secondary: #7A756F;
+    --disabled: #A09B94;
+    --primary: #B4E0CA;
+    --primary-pressed: #9CCDB4;
+    --primary-strong: #88A993;
+    --on-primary: #1E3121;
+    --warning: #E3D094;
+    --on-warning: #4A3F12;
+    --danger: #D98A7B;
+    --on-danger: #4A1D14;
+    --info: #9DB8C9;
+    --on-info: #1F3441;
+    --radius: 20px;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --background: #1F1E1B;
+      --surface: #2A2926;
+      --surface-raised: #33322E;
+      --border: #45433E;
+      --ink: #EDE9E3;
+      --ink-secondary: #A8A39B;
+      --disabled: #5E5A54;
+      --primary: #B4E0CA;
+      --primary-pressed: #9CCDB4;
+      --primary-strong: #88A993;
+      --on-primary: #1E3121;
+      --warning: #E3D094;
+      --on-warning: #4A3F12;
+      --danger: #D98A7B;
+      --on-danger: #4A1D14;
+      --info: #9DB8C9;
+      --on-info: #1F3441;
+    }
+  }
+
+  [data-theme="dark"] {
+    --background: #1F1E1B;
+    --surface: #2A2926;
+    --surface-raised: #33322E;
+    --border: #45433E;
+    --ink: #EDE9E3;
+    --ink-secondary: #A8A39B;
+    --disabled: #5E5A54;
+    --primary: #B4E0CA;
+    --primary-pressed: #9CCDB4;
+    --primary-strong: #88A993;
+    --on-primary: #1E3121;
+    --warning: #E3D094;
+    --on-warning: #4A3F12;
+    --danger: #D98A7B;
+    --on-danger: #4A1D14;
+    --info: #9DB8C9;
+    --on-info: #1F3441;
   }
 }
 
 @layer base {
   html {
     scroll-behavior: smooth;
+    background-color: var(--background);
+    color: var(--ink);
   }
   
   * {
-    @apply border-border;
+    border-color: var(--border);
     -webkit-overflow-scrolling: touch;
   }
   
   body {
-    @apply bg-[#F4F7F9] text-slate-900;
+    background-color: var(--background);
+    color: var(--ink);
     font-family: var(--font-outfit), var(--font-inter), sans-serif;
     font-feature-settings: "cv11", "ss01";
     -webkit-font-smoothing: antialiased;
@@ -57,24 +100,64 @@
 }
 
 .recharts-cartesian-grid-horizontal line {
-  stroke: #f1f5f9;
+  stroke: var(--border);
 }
 
 .recharts-tooltip-cursor {
-  fill: #f8fafc;
+  fill: var(--surfaceRaised);
 }
 
-/* Custom TradersPro UI Utilities */
+/* Custom TradersPro UI Utilities with Warm Stone & Mint System */
 .tp-card {
-  @apply bg-white border border-slate-100 shadow-[0_4px_20px_-10px_rgba(0,0,0,0.05)] rounded-xl;
+  background-color: var(--surface);
+  border: 1px solid var(--border);
+  box-shadow: 0 8px 24px -4px rgba(62, 59, 54, 0.08);
+  border-radius: 20px;
 }
 
 .tp-button-primary {
-  @apply bg-[#0D9488] text-white font-bold px-6 py-2.5 rounded-lg hover:bg-[#0B7A70] active:scale-[0.98] tap-scale select-none transition-all;
+  background-color: #B4E0CA;
+  color: #1E3121;
+  font-weight: 700;
+  padding: 0.625rem 1.5rem;
+  border-radius: 9999px;
+  box-shadow: 0 4px 16px -2px rgba(62, 59, 54, 0.10);
+  outline: none;
+  transition: all 0.15s ease;
+  user-select: none;
+}
+.tp-button-primary:hover {
+  background-color: #9CCDB4;
+}
+.tp-button-primary:active {
+  transform: scale(0.98);
+}
+.tp-button-primary:focus-visible {
+  box-shadow: 0 0 0 3px rgba(180, 224, 202, 0.6), 0 0 0 4px #88A993;
 }
 
 .tp-input {
-  @apply bg-slate-50 border border-slate-200 rounded-lg px-4 py-2.5 focus:ring-2 focus:ring-[#0D9488]/20 focus:border-[#0D9488] outline-none transition-all;
+  background-color: var(--surface-raised);
+  border: 1px solid var(--border);
+  color: var(--ink);
+  border-radius: 9999px;
+  padding: 0.625rem 1.25rem;
+  outline: none;
+  transition: all 0.15s ease;
+}
+.tp-input:focus {
+  border-color: #88A993;
+  box-shadow: 0 0 0 3px rgba(180, 224, 202, 0.6);
+}
+.tp-input::placeholder {
+  color: var(--ink-secondary);
+  opacity: 0.7;
+}
+
+/* Focus Ring Mint Utility */
+.focus-ring-mint:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(180, 224, 202, 0.6), 0 0 0 4px #88A993;
 }
 
 /* iOS-Grade Zero-Perceived-Delay Tap Scale */

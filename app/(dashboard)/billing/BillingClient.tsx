@@ -195,14 +195,14 @@ export default function BillingClient({ userId, customers }: Props) {
       {/* Row of 3 Stat Cards */}
       <div className="grid gap-6 md:grid-cols-3 print:hidden">
         <div className="tp-card p-6 flex items-center gap-4">
-           <div className="bg-emerald-50 p-3 rounded-full text-[#0D9B8A]"><FileText className="h-5 w-5" /></div>
+           <div className="bg-[#B4E0CA]/40 p-3 rounded-full text-[#1E3121]"><FileText className="h-5 w-5" /></div>
            <div>
               <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Total Bills</p>
               <p className="text-xl font-black text-slate-900">{totalBills}</p>
            </div>
         </div>
         <div className="tp-card p-6 flex items-center gap-4">
-           <div className="bg-emerald-50 p-3 rounded-full text-[#0D9B8A]"><Plus className="h-5 w-5" /></div>
+           <div className="bg-[#B4E0CA]/40 p-3 rounded-full text-[#1E3121]"><Plus className="h-5 w-5" /></div>
            <div>
               <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Total Clients</p>
               <p className="text-xl font-black text-slate-900">{customers.length}</p>
@@ -262,7 +262,7 @@ export default function BillingClient({ userId, customers }: Props) {
         <div className="flex flex-wrap gap-4 animate-in fade-in slide-in-from-bottom-4 print:hidden">
           <button onClick={() => window.print()} className="px-4 py-2 text-[10px] font-bold uppercase text-slate-900 hover:bg-slate-100 rounded-lg transition-all border border-slate-200">Print</button>
           <button onClick={handleDownloadPDF} className="px-4 py-2 text-[10px] font-bold uppercase bg-slate-900 text-white hover:bg-black rounded-lg transition-all">Download PDF</button>
-          <button onClick={handleUpload} disabled={uploading} className="px-4 py-2 text-[10px] font-bold uppercase text-[#0D9488] hover:bg-[#0D9488]/5 rounded-lg transition-all">
+          <button onClick={handleUpload} disabled={uploading} className="px-4 py-2 text-[10px] font-bold uppercase text-[#1E3121] dark:text-[#B4E0CA] hover:bg-[#B4E0CA]/20 rounded-full transition-all">
             {uploading ? 'Uploading...' : 'Upload & Get Link'}
           </button>
           {shareLink && (
@@ -272,7 +272,7 @@ export default function BillingClient({ userId, customers }: Props) {
               </button>
               <button onClick={() => {
                 sendWhatsAppDuePayment(profile, selectedCustomer, billData, shareLink)
-              }} className="px-4 py-2 text-[10px] font-bold uppercase text-emerald-600 hover:bg-emerald-50 rounded-lg transition-all">WhatsApp</button>
+              }} className="px-4 py-2 text-[10px] font-bold uppercase text-[#1E3121] bg-[#B4E0CA] hover:bg-[#9CCDB4] rounded-full transition-all shadow-sm">WhatsApp</button>
             </div>
           )}
         </div>
@@ -289,12 +289,12 @@ export default function BillingClient({ userId, customers }: Props) {
           >
             
             <div style={{ textAlign: 'center', marginBottom: '40px' }}>
-              <h1 style={{ fontSize: '42px', fontWeight: 900, color: '#0D9488', textTransform: 'uppercase', letterSpacing: '4px' }}>INVOICE</h1>
+              <h1 style={{ fontSize: '42px', fontWeight: 900, color: '#1E3121', textTransform: 'uppercase', letterSpacing: '4px' }}>INVOICE</h1>
             </div>
 
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '40px' }}>
               <div style={{ maxWidth: '400px' }}>
-                <h3 style={{ fontSize: '20px', fontWeight: 900, color: '#0D9488', marginBottom: '8px' }}>{profile?.business_name || 'F.K.S. Traders'}</h3>
+                <h3 style={{ fontSize: '20px', fontWeight: 900, color: '#1E3121', marginBottom: '8px' }}>{profile?.business_name || 'F.K.S. Traders'}</h3>
                 <p style={{ fontSize: '13px', color: '#475569', lineHeight: '1.6' }}>
                   {profile?.registered_address}<br/>
                   {profile?.city}, {profile?.state}<br/>
@@ -309,11 +309,11 @@ export default function BillingClient({ userId, customers }: Props) {
               </div>
             </div>
 
-            <div style={{ height: '2px', background: '#0D9488', opacity: 0.2, marginBottom: '40px' }} />
+            <div style={{ height: '2px', background: '#88A993', opacity: 0.3, marginBottom: '40px' }} />
 
             <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '40px' }}>
               <div>
-                <p style={{ fontSize: '14px', fontWeight: 900, color: '#0D9488', marginBottom: '12px' }}>Bill To</p>
+                <p style={{ fontSize: '14px', fontWeight: 900, color: '#1E3121', marginBottom: '12px' }}>Bill To</p>
                 <h4 style={{ fontSize: '18px', fontWeight: 900, color: '#0f172a', marginBottom: '4px' }}>{billData.customer.name}</h4>
                 <p style={{ fontSize: '13px', color: '#64748b', lineHeight: '1.6' }}>
                   {billData.customer.address || 'No address provided'}<br/>
@@ -336,12 +336,12 @@ export default function BillingClient({ userId, customers }: Props) {
 
             <table style={{ width: '100%', borderCollapse: 'collapse', marginBottom: '40px' }}>
               <thead>
-                <tr style={{ background: '#0D9488', color: 'white' }}>
-                  <th style={{ padding: '12px', fontSize: '12px', fontWeight: 900, textAlign: 'center', border: '1px solid #0D9488', width: '50px' }}>Sl.</th>
-                  <th style={{ padding: '12px', fontSize: '12px', fontWeight: 900, textAlign: 'left', border: '1px solid #0D9488' }}>Description</th>
-                  <th style={{ padding: '12px', fontSize: '12px', fontWeight: 900, textAlign: 'center', border: '1px solid #0D9488', width: '100px' }}>Qty</th>
-                  <th style={{ padding: '12px', fontSize: '12px', fontWeight: 900, textAlign: 'right', border: '1px solid #0D9488', width: '140px' }}>Rate</th>
-                  <th style={{ padding: '12px', fontSize: '12px', fontWeight: 900, textAlign: 'right', border: '1px solid #0D9488', width: '140px' }}>Amount</th>
+                <tr style={{ background: '#B4E0CA', color: '#1E3121' }}>
+                  <th style={{ padding: '12px', fontSize: '12px', fontWeight: 900, textAlign: 'center', border: '1px solid #88A993', width: '50px' }}>Sl.</th>
+                  <th style={{ padding: '12px', fontSize: '12px', fontWeight: 900, textAlign: 'left', border: '1px solid #88A993' }}>Description</th>
+                  <th style={{ padding: '12px', fontSize: '12px', fontWeight: 900, textAlign: 'center', border: '1px solid #88A993', width: '100px' }}>Qty</th>
+                  <th style={{ padding: '12px', fontSize: '12px', fontWeight: 900, textAlign: 'right', border: '1px solid #88A993', width: '140px' }}>Rate</th>
+                  <th style={{ padding: '12px', fontSize: '12px', fontWeight: 900, textAlign: 'right', border: '1px solid #88A993', width: '140px' }}>Amount</th>
                 </tr>
               </thead>
               <tbody>
@@ -369,7 +369,7 @@ export default function BillingClient({ userId, customers }: Props) {
 
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end' }}>
               <div style={{ maxWidth: '300px' }}>
-                <p style={{ fontSize: '12px', fontWeight: 900, color: '#0D9488', marginBottom: '8px' }}>Payment Instructions</p>
+                <p style={{ fontSize: '12px', fontWeight: 900, color: '#1E3121', marginBottom: '8px' }}>Payment Instructions</p>
                 {profile?.bank_name ? (
                   <p style={{ fontSize: '11px', color: '#64748b', lineHeight: '1.5' }}>
                     Please pay via NetBanking/UPI to:<br/>
@@ -402,7 +402,7 @@ export default function BillingClient({ userId, customers }: Props) {
                     </>
                   )}
                   
-                  <div style={{ borderTop: '2px solid #0D9488', gridColumn: 'span 2', margin: '4px 0' }} />
+                  <div style={{ borderTop: '2px solid #88A993', gridColumn: 'span 2', margin: '4px 0' }} />
                   
                   <div style={{ fontWeight: 900, color: '#0f172a', fontSize: '16px' }}>Total</div>
                   <div style={{ fontWeight: 900, color: '#0f172a', fontSize: '16px' }}>₹{fmt(billData.totalSales)}</div>

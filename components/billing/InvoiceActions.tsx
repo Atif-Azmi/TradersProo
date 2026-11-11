@@ -96,7 +96,7 @@ const InvoiceActions: React.FC<InvoiceActionsProps> = ({ invoice }) => {
     <div className="flex flex-wrap gap-3">
       <button 
         onClick={handleDownloadPDF}
-        className="flex items-center gap-2 bg-teal-600 hover:bg-teal-700 text-white px-4 py-2 rounded-xl text-sm font-bold shadow-md shadow-teal-100 transition-all"
+        className="flex items-center gap-2 bg-[#B4E0CA] hover:bg-[#9CCDB4] text-[#1E3121] px-5 py-2.5 rounded-full text-sm font-bold shadow-warm-pill transition-all tap-scale"
       >
         <FileText className="h-4 w-4" />
         Download PDF
@@ -105,11 +105,11 @@ const InvoiceActions: React.FC<InvoiceActionsProps> = ({ invoice }) => {
       <button 
         onClick={handleShareWhatsApp}
         disabled={sharing}
-        className="flex items-center gap-2 bg-green-500 hover:bg-green-600 disabled:opacity-50 text-white px-4 py-2 rounded-xl text-sm font-bold shadow-md shadow-green-100 transition-all min-w-[160px] justify-center"
+        className="flex items-center gap-2 bg-[#B4E0CA] hover:bg-[#9CCDB4] disabled:opacity-50 text-[#1E3121] px-5 py-2.5 rounded-full text-sm font-bold shadow-warm-pill transition-all min-w-[160px] justify-center tap-scale"
       >
         {sharing ? (
           <span className="flex items-center gap-2 justify-center">
-            <LoadingSpinner size="sm" text="" spinnerColor="fill-white" />
+            <LoadingSpinner size="sm" text="" spinnerColor="fill-[#1E3121]" />
             Uploading...
           </span>
         ) : (
@@ -122,7 +122,7 @@ const InvoiceActions: React.FC<InvoiceActionsProps> = ({ invoice }) => {
       
       <button 
         onClick={handlePrint}
-        className="flex items-center gap-2 border-2 border-teal-600 hover:bg-teal-50 text-teal-700 px-4 py-2 rounded-xl text-sm font-bold transition-all"
+        className="flex items-center gap-2 border-2 border-[#88A993] hover:bg-[#B4E0CA]/20 text-[#1E3121] dark:text-[#B4E0CA] px-5 py-2.5 rounded-full text-sm font-bold transition-all tap-scale"
       >
         <Printer className="h-4 w-4" />
         Print

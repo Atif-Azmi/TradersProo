@@ -307,7 +307,7 @@ export default function SalesClient({ userId, initialSales, shopProfile }: Sales
       {/* Row of 3 Stat Cards */}
       <div className="grid gap-6 md:grid-cols-3">
         <div className="tp-card p-6 flex items-center gap-4">
-           <div className="bg-emerald-50 p-3 rounded-full text-[#0D9B8A]"><Plus className="h-5 w-5" /></div>
+           <div className="bg-[#B4E0CA]/40 p-3 rounded-full text-[#1E3121]"><Plus className="h-5 w-5" /></div>
            <div>
               <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Today's Sales</p>
               <p className="text-xl font-black text-slate-900">₹{todaysSales.toLocaleString('en-IN')}</p>
@@ -321,7 +321,7 @@ export default function SalesClient({ userId, initialSales, shopProfile }: Sales
            </div>
         </div>
         <div className="tp-card p-6 flex items-center gap-4">
-           <div className="bg-emerald-50 p-3 rounded-full text-[#0D9B8A]"><Plus className="h-5 w-5" /></div>
+           <div className="bg-[#B4E0CA]/40 p-3 rounded-full text-[#1E3121]"><Plus className="h-5 w-5" /></div>
            <div>
               <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Total Invoiced</p>
               <p className="text-xl font-black text-slate-900">₹{totalInvoiced.toLocaleString('en-IN')}</p>
@@ -342,7 +342,7 @@ export default function SalesClient({ userId, initialSales, shopProfile }: Sales
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400" />
           <input type="text" placeholder="Search invoice or customer..." value={search}
             onChange={e => setSearch(e.target.value)}
-            className="w-full pl-9 pr-4 py-2 text-sm border border-slate-200 rounded-lg focus:ring-2 focus:ring-[#0D9488]/20 focus:border-[#0D9488] outline-none transition-all" />
+            className="w-full pl-9 pr-4 py-2 text-sm border border-[#CAC8C0] dark:border-[#45433E] rounded-full focus:ring-2 focus:ring-[#B4E0CA]/60 focus:border-[#88A993] outline-none transition-all" />
         </div>
       </div>
 
@@ -368,7 +368,7 @@ export default function SalesClient({ userId, initialSales, shopProfile }: Sales
                 return (
                   <tr key={sale.id} className="hover:bg-slate-50/50 transition-all group">
                     <td className="px-6 py-5">
-                      <Link href={`/sales/${sale.id}`} className="font-bold text-[#0D9488] hover:underline">#{sale.invoice_number || '—'}</Link>
+                      <Link href={`/sales/${sale.id}`} className="font-bold text-[#1E3121] dark:text-[#B4E0CA] hover:underline">#{sale.invoice_number || '—'}</Link>
                     </td>
                     <td className="px-6 py-5 text-slate-500 font-medium">{new Date(sale.invoice_date).toLocaleDateString('en-IN')}</td>
                     <td className="px-6 py-5">
@@ -396,7 +396,7 @@ export default function SalesClient({ userId, initialSales, shopProfile }: Sales
                       <div className="flex justify-end gap-2">
                         {sale.payment_status !== 'paid' && (
                           <button onClick={() => openPaymentModal(sale)}
-                            className="px-3 py-1.5 text-[10px] font-bold uppercase text-[#0D9488] hover:bg-[#0D9488]/5 rounded-lg transition-all">
+                            className="px-3 py-1.5 text-[10px] font-bold uppercase text-[#1E3121] dark:text-[#B4E0CA] hover:bg-[#B4E0CA]/20 rounded-full transition-all">
                             Pay
                           </button>
                         )}
@@ -428,7 +428,7 @@ export default function SalesClient({ userId, initialSales, shopProfile }: Sales
               <div key={sale.id} className="p-4 space-y-3">
                 <div className="flex justify-between items-start">
                   <div>
-                    <Link href={`/sales/${sale.id}`} className="font-black text-[#0D9488] text-sm hover:underline">
+                    <Link href={`/sales/${sale.id}`} className="font-black text-[#1E3121] dark:text-[#B4E0CA] text-sm hover:underline">
                       #{sale.invoice_number || '—'}
                     </Link>
                     <p className="text-[10px] font-bold text-slate-400 mt-1 uppercase tracking-tight">
@@ -468,7 +468,7 @@ export default function SalesClient({ userId, initialSales, shopProfile }: Sales
                 <div className="flex justify-end gap-2 pt-1">
                   {sale.payment_status !== 'paid' && (
                     <button onClick={() => openPaymentModal(sale)}
-                      className="px-3 py-1.5 bg-[#0D9488]/10 text-[9px] font-black uppercase text-[#0D9488] rounded-xl hover:bg-[#0D9488]/20 transition-all">
+                      className="px-3 py-1.5 bg-[#B4E0CA] text-[9px] font-black uppercase text-[#1E3121] rounded-full hover:bg-[#9CCDB4] transition-all font-bold shadow-sm">
                       Pay
                     </button>
                   )}
@@ -493,14 +493,14 @@ export default function SalesClient({ userId, initialSales, shopProfile }: Sales
       {/* PAYMENT MODAL */}
       {paymentModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/60 backdrop-blur-sm">
-          <div className="bg-white rounded-3xl shadow-2xl w-full max-w-md mx-4 overflow-hidden">
-            <div className="bg-gradient-to-br from-emerald-500 to-teal-600 p-6 text-white">
+          <div className="bg-white dark:bg-[#2A2926] rounded-[28px] shadow-warm-raised w-full max-w-md mx-4 overflow-hidden border border-[#CAC8C0] dark:border-[#45433E]">
+            <div className="bg-gradient-to-br from-[#B4E0CA] to-[#88A993] p-6 text-[#1E3121]">
               <div className="flex items-center justify-between mb-4">
                 <div>
-                  <p className="text-emerald-100 text-[10px] font-black uppercase tracking-widest">Record Payment</p>
-                  <h3 className="text-xl font-black mt-1">{paymentModal.tp_customers?.name || 'Walk-in'}</h3>
+                  <p className="text-[#1E3121]/80 text-[10px] font-black uppercase tracking-widest">Record Payment</p>
+                  <h3 className="text-xl font-black mt-1 text-[#1E3121]">{paymentModal.tp_customers?.name || 'Walk-in'}</h3>
                 </div>
-                <button onClick={() => setPaymentModal(null)} className="p-2 rounded-full bg-white/20 hover:bg-white/30 transition-all">
+                <button onClick={() => setPaymentModal(null)} className="p-2 rounded-full bg-[#1E3121]/10 hover:bg-[#1E3121]/20 transition-all text-[#1E3121]">
                   <X className="h-4 w-4" />
                 </button>
               </div>
@@ -510,8 +510,8 @@ export default function SalesClient({ userId, initialSales, shopProfile }: Sales
                   { label: 'Paid', val: parseFloat(paymentModal.amount_paid || 0) },
                   { label: 'Due', val: getBalance(paymentModal), highlight: true },
                 ].map(({ label, val, highlight }) => (
-                  <div key={label} className={`rounded-xl p-3 ${highlight ? 'bg-white/20 border border-white/30' : 'bg-white/10'}`}>
-                    <p className="text-[10px] text-emerald-100 font-bold uppercase">{label}</p>
+                  <div key={label} className={`rounded-xl p-3 ${highlight ? 'bg-[#1E3121]/15 border border-[#1E3121]/25 text-[#1E3121]' : 'bg-[#1E3121]/10 text-[#1E3121]'}`}>
+                    <p className="text-[10px] text-[#1E3121]/80 font-bold uppercase">{label}</p>
                     <p className="font-black text-sm mt-1">₹{val.toLocaleString('en-IN')}</p>
                   </div>
                 ))}

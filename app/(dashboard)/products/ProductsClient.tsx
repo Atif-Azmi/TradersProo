@@ -231,7 +231,7 @@ export default function ProductsClient({ initialProducts }: ProductsClientProps)
           <input
             type="text"
             placeholder="Search products by name or category..."
-            className="w-full pl-9 pr-4 py-2 text-sm border border-slate-200 rounded-lg focus:ring-2 focus:ring-[#0D9488]/20 focus:border-[#0D9488] outline-none transition-all"
+            className="w-full pl-9 pr-4 py-2 text-sm border border-[#CAC8C0] dark:border-[#45433E] rounded-full focus:ring-2 focus:ring-[#B4E0CA]/60 focus:border-[#88A993] outline-none transition-all"
             value={search}
             onChange={(e) => setSearch(e.target.value)}
           />
@@ -282,7 +282,7 @@ export default function ProductsClient({ initialProducts }: ProductsClientProps)
                   </td>
                   <td className="px-6 py-5 text-right">
                      <div className="flex justify-end gap-2">
-                       <button onClick={() => openEdit(product)} className="px-3 py-1.5 text-[10px] font-bold uppercase text-[#0D9488] hover:bg-[#0D9488]/5 rounded-lg transition-all">Edit</button>
+                       <button onClick={() => openEdit(product)} className="px-3 py-1.5 text-[10px] font-bold uppercase text-[#1E3121] dark:text-[#B4E0CA] hover:bg-[#B4E0CA]/20 rounded-full transition-all">Edit</button>
                        <button onClick={() => openAdjust(product)} className="px-3 py-1.5 text-[10px] font-bold uppercase text-slate-400 hover:text-slate-900 hover:bg-slate-100 rounded-lg transition-all">Adjust</button>
                      </div>
                   </td>
@@ -333,7 +333,7 @@ export default function ProductsClient({ initialProducts }: ProductsClientProps)
               <div className="flex justify-end gap-2">
                 <button 
                   onClick={() => openEdit(product)} 
-                  className="px-3 py-1.5 bg-[#0D9488]/10 text-[9px] font-black uppercase text-[#0D9488] rounded-xl hover:bg-[#0D9488]/20 transition-all"
+                  className="px-3 py-1.5 bg-[#B4E0CA] text-[9px] font-black uppercase text-[#1E3121] rounded-full hover:bg-[#9CCDB4] transition-all font-bold shadow-sm"
                 >
                   Edit
                 </button>

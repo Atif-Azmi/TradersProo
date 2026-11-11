@@ -9,10 +9,11 @@ import { useBusinessProfile } from '@/hooks/useBusinessProfile'
 import jsPDF from 'jspdf'
 import autoTable from 'jspdf-autotable'
 import { createClient } from '@/lib/supabase/client'
+import { pdfTokens } from '@/lib/design-tokens'
 
-// Teal palette matches F.K.S. Traders professional design
-const TEAL: [number, number, number] = [13, 148, 136] // #0D9488
-const DARK: [number, number, number] = [15, 23, 42]   // #0F172A
+// Unified brand design tokens
+const MINT_ACCENT: [number, number, number] = pdfTokens.primary // Mint
+const DARK: [number, number, number] = pdfTokens.ink
 
 interface ReportsClientProps {
   sales: any[]
@@ -195,7 +196,7 @@ export default function ReportsClient({
       head: [['S.No.', 'Invoice #', 'Customer Name', 'Date', 'Mode', 'Bill Amt (₹)', 'Amt Paid (₹)']],
       body: tableData,
       theme: 'striped',
-      headStyles: { fillColor: TEAL, fontSize: 9, fontStyle: 'bold' },
+      headStyles: { fillColor: MINT_ACCENT, textColor: pdfTokens.onPrimary, fontSize: 9, fontStyle: 'bold' },
       styles: { fontSize: 8.5, cellPadding: 3 },
       columnStyles: {
         0: { cellWidth: 12, halign: 'center' },
@@ -334,7 +335,7 @@ _Generated via TradersPro Accounting Systems_
       head: [['S.No.', 'Date', 'Transaction Description', 'Debit (Charges) (₹)', 'Credit (Paid) (₹)', 'Outstanding Bal (₹)']],
       body: tableRows,
       theme: 'grid',
-      headStyles: { fillColor: TEAL, fontSize: 9, fontStyle: 'bold' },
+      headStyles: { fillColor: MINT_ACCENT, textColor: pdfTokens.onPrimary, fontSize: 9, fontStyle: 'bold' },
       styles: { fontSize: 8.5, cellPadding: 3 },
       columnStyles: {
         0: { cellWidth: 12, halign: 'center' },
@@ -446,7 +447,7 @@ _Generated via TradersPro Accounting Systems_
       head: [['S.No.', 'Product Name', 'Category', 'Selling Rate', 'Purchase Rate', 'Current Stock', 'Stock Status']],
       body: tableData,
       theme: 'striped',
-      headStyles: { fillColor: TEAL, fontSize: 9, fontStyle: 'bold' },
+      headStyles: { fillColor: MINT_ACCENT, textColor: pdfTokens.onPrimary, fontSize: 9, fontStyle: 'bold' },
       styles: { fontSize: 8.5, cellPadding: 3 },
       columnStyles: {
         0: { cellWidth: 12, halign: 'center' },
@@ -540,7 +541,7 @@ _Generated via TradersPro Accounting Systems_
       head: [['S.No.', 'Customer Name', 'Company Name', 'Phone', 'Total Billed (₹)', 'Outstanding Due (₹)', 'Payment Status']],
       body: tableData,
       theme: 'striped',
-      headStyles: { fillColor: TEAL, fontSize: 9, fontStyle: 'bold' },
+      headStyles: { fillColor: MINT_ACCENT, textColor: pdfTokens.onPrimary, fontSize: 9, fontStyle: 'bold' },
       styles: { fontSize: 8.5, cellPadding: 3 },
       columnStyles: {
         0: { cellWidth: 12, halign: 'center' },
@@ -620,33 +621,33 @@ _Generated via TradersPro Accounting Systems_
         <div>
           <h2 className="text-xl font-bold text-slate-900">Reports</h2>
         </div>
-        <div className="flex items-center gap-2 bg-white px-4 py-2 rounded-lg border border-slate-200">
-          <Calendar className="h-4 w-4 text-[#0D9488]" />
-          <span className="text-xs font-bold text-slate-900">May 2026</span>
+        <div className="flex items-center gap-2 bg-white dark:bg-[#2A2926] px-4 py-2 rounded-full border border-slate-200 dark:border-[#45433E]">
+          <Calendar className="h-4 w-4 text-[#1E3121] dark:text-[#B4E0CA]" />
+          <span className="text-xs font-bold text-slate-900 dark:text-white">May 2026</span>
         </div>
       </div>
 
       {/* SUMMARY STATS BAR */}
       <div className="grid gap-6 md:grid-cols-3">
         <div className="tp-card p-6 flex items-center gap-4">
-           <div className="bg-emerald-50 p-3 rounded-full text-[#0D9B8A]"><TrendingUp className="h-5 w-5" /></div>
+           <div className="bg-[#B4E0CA]/40 p-3 rounded-full text-[#1E3121]"><TrendingUp className="h-5 w-5" /></div>
            <div>
               <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Monthly Growth</p>
-              <p className="text-xl font-black text-slate-900">+{computedGrowth.toFixed(1)}%</p>
+              <p className="text-xl font-black text-slate-900 dark:text-white">+{computedGrowth.toFixed(1)}%</p>
            </div>
         </div>
         <div className="tp-card p-6 flex items-center gap-4">
-           <div className="bg-emerald-50 p-3 rounded-full text-[#0D9B8A]"><ShieldCheck className="h-5 w-5" /></div>
+           <div className="bg-[#B4E0CA]/40 p-3 rounded-full text-[#1E3121]"><ShieldCheck className="h-5 w-5" /></div>
            <div>
               <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Collection Rate</p>
-              <p className="text-xl font-black text-slate-900">{collectionRate.toFixed(1)}%</p>
+              <p className="text-xl font-black text-slate-900 dark:text-white">{collectionRate.toFixed(1)}%</p>
            </div>
         </div>
         <div className="tp-card p-6 flex items-center gap-4">
-           <div className="bg-emerald-50 p-3 rounded-full text-[#0D9B8A]"><PieChart className="h-5 w-5" /></div>
+           <div className="bg-[#B4E0CA]/40 p-3 rounded-full text-[#1E3121]"><PieChart className="h-5 w-5" /></div>
            <div>
               <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Profit Margin</p>
-              <p className="text-xl font-black text-slate-900">{avgMargin.toFixed(1)}%</p>
+              <p className="text-xl font-black text-slate-900 dark:text-white">{avgMargin.toFixed(1)}%</p>
            </div>
         </div>
       </div>
@@ -658,7 +659,7 @@ _Generated via TradersPro Accounting Systems_
         <div className="tp-card p-6 flex flex-col justify-between group">
           <div>
             <div className="flex items-start justify-between">
-              <div className="w-12 h-12 rounded-lg bg-emerald-50 flex items-center justify-center text-[#0D9B8A]">
+              <div className="w-12 h-12 rounded-2xl bg-[#B4E0CA]/40 flex items-center justify-center text-[#1E3121] shadow-sm">
                 <TrendingUp className="h-6 w-6" />
               </div>
               <div className="flex gap-2">
@@ -691,7 +692,7 @@ _Generated via TradersPro Accounting Systems_
               <button 
                 onClick={handleExportDailySales}
                 disabled={loadingReport !== null}
-                className="text-[10px] font-bold uppercase text-[#0D9488] hover:underline flex items-center gap-1.5 cursor-pointer disabled:opacity-50"
+                className="text-[10px] font-bold uppercase text-[#1E3121] dark:text-[#B4E0CA] hover:underline flex items-center gap-1.5 cursor-pointer disabled:opacity-50"
               >
                 {loadingReport === 'daily_export' ? 'Exporting...' : 'Export PDF'}
               </button>
@@ -710,7 +711,7 @@ _Generated via TradersPro Accounting Systems_
         <div className="tp-card p-6 flex flex-col justify-between group">
           <div>
             <div className="flex items-start justify-between">
-              <div className="w-12 h-12 rounded-lg bg-emerald-50 flex items-center justify-center text-[#0D9B8A]">
+              <div className="w-12 h-12 rounded-2xl bg-[#B4E0CA]/40 flex items-center justify-center text-[#1E3121] shadow-sm">
                 <FileText className="h-6 w-6" />
               </div>
               <div className="flex gap-2">
@@ -740,7 +741,7 @@ _Generated via TradersPro Accounting Systems_
             <div className="flex gap-4">
               <button 
                 onClick={() => { setLedgerActionType('export'); setShowLedgerModal(true); }}
-                className="text-[10px] font-bold uppercase text-[#0D9488] hover:underline flex items-center gap-1.5 cursor-pointer"
+                className="text-[10px] font-bold uppercase text-[#1E3121] dark:text-[#B4E0CA] hover:underline flex items-center gap-1.5 cursor-pointer"
               >
                 Select & Export
               </button>
@@ -758,7 +759,7 @@ _Generated via TradersPro Accounting Systems_
         <div className="tp-card p-6 flex flex-col justify-between group">
           <div>
             <div className="flex items-start justify-between">
-              <div className="w-12 h-12 rounded-lg bg-emerald-50 flex items-center justify-center text-[#0D9B8A]">
+              <div className="w-12 h-12 rounded-2xl bg-[#B4E0CA]/40 flex items-center justify-center text-[#1E3121] shadow-sm">
                 <Zap className="h-6 w-6" />
               </div>
               <div className="flex gap-2">
@@ -791,7 +792,7 @@ _Generated via TradersPro Accounting Systems_
               <button 
                 onClick={handleExportStockMovement}
                 disabled={loadingReport !== null}
-                className="text-[10px] font-bold uppercase text-[#0D9488] hover:underline flex items-center gap-1.5 cursor-pointer disabled:opacity-50"
+                className="text-[10px] font-bold uppercase text-[#1E3121] dark:text-[#B4E0CA] hover:underline flex items-center gap-1.5 cursor-pointer disabled:opacity-50"
               >
                 {loadingReport === 'stock_export' ? 'Exporting...' : 'Export PDF'}
               </button>
@@ -810,7 +811,7 @@ _Generated via TradersPro Accounting Systems_
         <div className="tp-card p-6 flex flex-col justify-between group">
           <div>
             <div className="flex items-start justify-between">
-              <div className="w-12 h-12 rounded-lg bg-emerald-50 flex items-center justify-center text-[#0D9B8A]">
+              <div className="w-12 h-12 rounded-2xl bg-[#B4E0CA]/40 flex items-center justify-center text-[#1E3121] shadow-sm">
                 <Target className="h-6 w-6" />
               </div>
               <div className="flex gap-2">
@@ -843,7 +844,7 @@ _Generated via TradersPro Accounting Systems_
               <button 
                 onClick={handleExportPaymentCollections}
                 disabled={loadingReport !== null}
-                className="text-[10px] font-bold uppercase text-[#0D9488] hover:underline flex items-center gap-1.5 cursor-pointer disabled:opacity-50"
+                className="text-[10px] font-bold uppercase text-[#1E3121] dark:text-[#B4E0CA] hover:underline flex items-center gap-1.5 cursor-pointer disabled:opacity-50"
               >
                 {loadingReport === 'collections_export' ? 'Exporting...' : 'Export PDF'}
               </button>
@@ -909,7 +910,7 @@ _Generated via TradersPro Accounting Systems_
                 <button 
                   onClick={() => handleExportCustomerLedgerType(selectedLedgerCustomerId)}
                   disabled={!selectedLedgerCustomerId || loadingReport !== null}
-                  className="flex-1 px-6 py-3 bg-[#0D9488] text-white rounded-xl text-xs font-black uppercase tracking-widest hover:bg-green-600 shadow-lg shadow-green-100 transition-all disabled:opacity-50 flex items-center justify-center gap-2 cursor-pointer"
+                  className="flex-1 px-6 py-3.5 bg-[#B4E0CA] hover:bg-[#9CCDB4] text-[#1E3121] rounded-full text-xs font-black uppercase tracking-widest shadow-warm-pill transition-all disabled:opacity-50 flex items-center justify-center gap-2 cursor-pointer tap-scale"
                 >
                   {loadingReport === 'ledger_export' || loadingReport === 'ledger_share' ? (
                     <Loader2 className="h-4 w-4 animate-spin" />

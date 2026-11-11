@@ -200,7 +200,7 @@ export default function AdvancesClient({ initialPayments, customers }: AdvancesC
             placeholder="Search transactions..." 
             value={search}
             onChange={e => setSearch(e.target.value)}
-            className="w-full pl-9 pr-4 py-2 text-sm border border-slate-200 rounded-lg focus:ring-2 focus:ring-[#0D9488]/20 focus:border-[#0D9488] outline-none transition-all"
+            className="w-full pl-9 pr-4 py-2 text-sm border border-slate-200 dark:border-[#45433E] rounded-full focus:ring-2 focus:ring-[#B4E0CA]/60 focus:border-[#88A993] outline-none transition-all"
           />
         </div>
         <div className="flex gap-4 flex-wrap text-[10px] font-black uppercase tracking-widest items-center">
@@ -281,7 +281,7 @@ export default function AdvancesClient({ initialPayments, customers }: AdvancesC
                     <td className="px-6 py-5 text-right font-black text-slate-900">₹{txn.amount.toLocaleString('en-IN', { minimumFractionDigits: 2 })}</td>
                     <td className="px-6 py-5 text-right">
                        <div className="flex justify-end gap-2">
-                         <button onClick={() => openReceipt(txn)} className="px-3 py-1.5 text-[10px] font-bold uppercase text-[#0D9488] hover:bg-[#0D9488]/5 rounded-lg transition-all">Receipt</button>
+                         <button onClick={() => openReceipt(txn)} className="px-3 py-1.5 text-[10px] font-bold uppercase text-[#1E3121] dark:text-[#B4E0CA] hover:bg-[#B4E0CA]/20 rounded-full transition-all">Receipt</button>
                          <button onClick={() => handleDeleteTransaction(txn.id)} className="px-3 py-1.5 text-[10px] font-bold uppercase text-red-600 hover:bg-rose-50 rounded-lg transition-all">Delete</button>
                        </div>
                     </td>
@@ -333,7 +333,7 @@ export default function AdvancesClient({ initialPayments, customers }: AdvancesC
               <div className="flex justify-end gap-2">
                 <button 
                   onClick={() => openReceipt(txn)} 
-                  className="px-3 py-1.5 bg-[#0D9488]/10 text-[9px] font-black uppercase text-[#0D9488] rounded-xl hover:bg-[#0D9488]/20 transition-all font-bold"
+                  className="px-3 py-1.5 bg-[#B4E0CA] text-[9px] font-black uppercase text-[#1E3121] rounded-full hover:bg-[#9CCDB4] transition-all font-bold shadow-sm"
                 >
                   Receipt
                 </button>

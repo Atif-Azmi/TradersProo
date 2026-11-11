@@ -3,7 +3,6 @@
 import { useState, useEffect } from 'react'
 import { Bell, Search, Menu, User, Loader2 } from 'lucide-react'
 import { createClient } from '@/lib/supabase/client'
-import dynamic from 'next/dynamic'
 import LoadingSpinner from '@/components/common/LoadingSpinner'
 
 // Create a small internal component for the greeting that only runs on the client
@@ -11,7 +10,7 @@ const DynamicGreeting = ({ email }: { email?: string }) => {
   const [mounted, setMounted] = useState(false)
   useEffect(() => setMounted(true), [])
 
-  if (!mounted) return <div className="h-4 w-32 bg-slate-50 animate-pulse rounded-md hidden md:block" />
+  if (!mounted) return <div className="h-4 w-32 bg-[#CAC8C0]/30 animate-pulse rounded-full hidden md:block" />
 
   const hour = new Date().getHours()
   let greeting = 'Working Late?'
@@ -20,7 +19,7 @@ const DynamicGreeting = ({ email }: { email?: string }) => {
   else if (hour >= 17 && hour < 23) greeting = 'Good Evening'
 
   return (
-    <h2 className="text-sm font-black text-slate-900 hidden md:block animate-in fade-in slide-in-from-top-1 duration-500">
+    <h2 className="text-sm font-black text-[#3E3B36] dark:text-[#EDE9E3] hidden md:block animate-in fade-in slide-in-from-top-1 duration-500">
       {greeting}, {email?.split('@')[0] || 'User'}
     </h2>
   )
@@ -131,10 +130,10 @@ export default function TopBar({ setSidebarOpen }: { setSidebarOpen: (open: bool
   }, [user, showNotifications])
 
   return (
-    <div className="sticky top-0 z-40 flex h-16 shrink-0 items-center border-b border-slate-200 bg-white px-4 sm:px-6 lg:px-8">
+    <div className="sticky top-0 z-40 flex h-16 shrink-0 items-center border-b border-[#CAC8C0] dark:border-[#45433E] bg-[#E0DCD6]/90 dark:bg-[#1F1E1B]/90 backdrop-blur-md px-4 sm:px-6 lg:px-8">
       <button
         type="button"
-        className="-m-2.5 p-2.5 text-slate-700 lg:hidden"
+        className="-m-2.5 p-2.5 text-[#3E3B36] dark:text-[#EDE9E3] lg:hidden"
         onClick={() => setSidebarOpen(true)}
       >
         <span className="sr-only">Open sidebar</span>
@@ -144,12 +143,12 @@ export default function TopBar({ setSidebarOpen }: { setSidebarOpen: (open: bool
       <div className="flex flex-1 gap-x-4 self-stretch lg:gap-x-6 items-center">
         <div className="relative flex-1 max-w-xs">
           <Search
-            className="pointer-events-none absolute inset-y-0 left-3 h-full w-4 text-slate-400"
+            className="pointer-events-none absolute inset-y-0 left-3 h-full w-4 text-[#7A756F] dark:text-[#A8A39B]"
             aria-hidden="true"
           />
           <input
             id="search-field"
-            className="block h-full w-full border-0 py-0 pl-10 pr-4 text-slate-900 placeholder:text-slate-400 focus:ring-0 text-sm bg-slate-50/50 rounded-lg"
+            className="block h-10 w-full border border-[#CAC8C0] dark:border-[#45433E] py-0 pl-10 pr-4 text-[#3E3B36] dark:text-[#EDE9E3] placeholder:text-[#7A756F]/70 text-sm bg-[#F2EEE9] dark:bg-[#33322E] rounded-full focus:outline-none focus:ring-2 focus:ring-[#B4E0CA]/60"
             placeholder="Search..."
             type="search"
             name="search"
@@ -166,11 +165,11 @@ export default function TopBar({ setSidebarOpen }: { setSidebarOpen: (open: bool
              <button 
                type="button" 
                onClick={() => setShowNotifications(!showNotifications)}
-               className="p-2 text-slate-400 hover:text-[#0D9488] transition-colors relative cursor-pointer"
+               className="p-2 text-[#7A756F] hover:text-[#1E3121] dark:text-[#A8A39B] dark:hover:text-[#EDE9E3] transition-colors relative cursor-pointer"
              >
                <Bell className="h-5 w-5" aria-hidden="true" />
                {activities.length > 0 && (
-                 <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-rose-500 rounded-full border-2 border-white" />
+                 <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-[#D98A7B] rounded-full border-2 border-[#E0DCD6] dark:border-[#1F1E1B]" />
                )}
              </button>
 
@@ -181,39 +180,39 @@ export default function TopBar({ setSidebarOpen }: { setSidebarOpen: (open: bool
 
              {/* Notifications Popover Dropdown */}
              {showNotifications && (
-               <div className="fixed md:absolute right-4 left-4 md:right-0 md:left-auto mt-2 top-16 md:top-10 w-[calc(100vw-32px)] md:w-80 rounded-2xl bg-white border border-slate-100 p-4 shadow-2xl z-50 animate-in fade-in slide-in-from-top-3 duration-200">
-                 <div className="flex items-center justify-between pb-3 border-b border-slate-50">
-                   <h4 className="text-xs font-black text-slate-900 uppercase tracking-widest">Recent Activity</h4>
-                   <span className="text-[9px] font-bold bg-[#0D9488]/10 text-[#0D9488] px-2.5 py-0.5 rounded-full">
+               <div className="fixed md:absolute right-4 left-4 md:right-0 md:left-auto mt-2 top-16 md:top-10 w-[calc(100vw-32px)] md:w-80 rounded-[20px] bg-[#E9E4DE] dark:bg-[#2A2926] border border-[#CAC8C0] dark:border-[#45433E] p-4 shadow-warm-raised z-50 animate-in fade-in slide-in-from-top-3 duration-200">
+                 <div className="flex items-center justify-between pb-3 border-b border-[#CAC8C0]/50 dark:border-[#45433E]/50">
+                   <h4 className="text-xs font-black text-[#3E3B36] dark:text-[#EDE9E3] uppercase tracking-widest">Recent Activity</h4>
+                   <span className="text-[9px] font-bold bg-[#B4E0CA] text-[#1E3121] px-2.5 py-0.5 rounded-full shadow-sm">
                      {loadingActivities ? '...' : `${activities.length} Events`}
                    </span>
                  </div>
                  
                  <div className="mt-3 space-y-3.5 max-h-64 overflow-y-auto">
                    {loadingActivities ? (
-                     <div className="flex flex-col items-center justify-center py-8 text-slate-400 gap-2">
-                       <LoadingSpinner size="sm" text="SYNCING OPERATIONS..." textColor="text-slate-400" />
+                     <div className="flex flex-col items-center justify-center py-8 text-[#7A756F] gap-2">
+                       <LoadingSpinner size="sm" text="SYNCING OPERATIONS..." textColor="text-[#7A756F]" />
                      </div>
                    ) : activities.length === 0 ? (
-                     <div className="text-center py-8 px-4 text-slate-400">
+                     <div className="text-center py-8 px-4 text-[#7A756F] dark:text-[#A8A39B]">
                        <p className="text-[11px] font-bold uppercase tracking-wider">No Recent Operations</p>
-                       <p className="text-[9px] text-slate-400 mt-1">Start adding products, sales, and payments to see live operations logged here!</p>
+                       <p className="text-[9px] mt-1">Start adding products, sales, and payments to see live operations logged here!</p>
                      </div>
                    ) : (
                      activities.map((n) => (
                        <div key={n.id} className="flex items-start gap-3 text-xs leading-normal">
-                         <span className={`w-2 h-2 rounded-full mt-1.5 shrink-0 ${
-                           n.type === 'sale' ? 'bg-emerald-500' :
-                           n.type === 'payment' ? 'bg-[#0D9488]' :
-                           n.type === 'advance' ? 'bg-indigo-500' :
-                           n.type === 'stock' ? 'bg-amber-500' : 'bg-slate-400'
+                         <span className={`w-2.5 h-2.5 rounded-full mt-1 shrink-0 ${
+                           n.type === 'sale' ? 'bg-[#B4E0CA]' :
+                           n.type === 'payment' ? 'bg-[#88A993]' :
+                           n.type === 'advance' ? 'bg-[#9DB8C9]' :
+                           n.type === 'stock' ? 'bg-[#E3D094]' : 'bg-[#CAC8C0]'
                          }`} />
                          <div className="flex-1">
                            <div className="flex items-center justify-between">
-                             <p className="font-bold text-slate-800">{n.title}</p>
-                             <span className="text-[9px] font-medium text-slate-400 shrink-0">{n.time}</span>
+                             <p className="font-bold text-[#3E3B36] dark:text-[#EDE9E3]">{n.title}</p>
+                             <span className="text-[9px] font-medium text-[#7A756F] dark:text-[#A8A39B] shrink-0">{n.time}</span>
                            </div>
-                           <p className="text-[10px] text-slate-500 mt-0.5">{n.desc}</p>
+                           <p className="text-[10px] text-[#7A756F] dark:text-[#A8A39B] mt-0.5">{n.desc}</p>
                          </div>
                        </div>
                      ))
@@ -222,20 +221,20 @@ export default function TopBar({ setSidebarOpen }: { setSidebarOpen: (open: bool
                </div>
              )}
 
-             <button type="button" className="p-2 text-slate-400 hover:text-slate-900 transition-colors">
+             <button type="button" className="p-2 text-[#7A756F] hover:text-[#3E3B36] dark:text-[#A8A39B] dark:hover:text-[#EDE9E3] transition-colors">
                <User className="h-5 w-5" aria-hidden="true" />
              </button>
           </div>
 
-          <div className="hidden lg:block lg:h-6 lg:w-px lg:bg-slate-200" aria-hidden="true" />
+          <div className="hidden lg:block lg:h-6 lg:w-px lg:bg-[#CAC8C0] dark:lg:bg-[#45433E]" aria-hidden="true" />
 
           <div className="flex items-center gap-3 pl-2">
              <div className="text-right hidden sm:block">
-                <p className="text-xs font-bold text-slate-900">{user?.email?.split('@')[0] || 'User'}</p>
-                <p className="text-[10px] text-slate-400 font-medium truncate max-w-[100px]">Administrator</p>
+                <p className="text-xs font-bold text-[#3E3B36] dark:text-[#EDE9E3]">{user?.email?.split('@')[0] || 'User'}</p>
+                <p className="text-[10px] text-[#7A756F] dark:text-[#A8A39B] font-medium truncate max-w-[100px]">Administrator</p>
              </div>
-             <div className="w-8 h-8 rounded-full bg-[#0D9488]/10 flex items-center justify-center border border-[#0D9488]/20">
-                <User className="h-4 w-4 text-[#0D9488]" />
+             <div className="w-8 h-8 rounded-full bg-[#B4E0CA] flex items-center justify-center border border-[#88A993]/40 text-[#1E3121] shadow-warm-pill">
+                <User className="h-4 w-4" />
              </div>
           </div>
         </div>
