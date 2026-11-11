@@ -4,6 +4,7 @@ import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { createClient } from '@/lib/supabase/client'
+import AnimatedBars, { defaultRegisterBars } from '@/components/common/AnimatedBars'
 
 import { ArrowLeft, ShieldCheck, Plus } from 'lucide-react'
 
@@ -194,16 +195,11 @@ export default function RegisterPage() {
 
         {/* Visual Side */}
         <div className="hidden lg:flex bg-[#EBF4F3] items-center justify-center p-20 relative overflow-hidden">
-           <div className="absolute top-[-10%] right-[-10%] w-[50%] h-[50%] bg-[#E5B5A8]/20 rounded-full blur-3xl" />
-           <div className="absolute bottom-[-10%] left-[-10%] w-[50%] h-[50%] bg-[#0D9488]/10 rounded-full blur-3xl" />
+           <div className="absolute top-[-10%] right-[-10%] w-[50%] h-[50%] bg-[#E5B5A8]/20 rounded-full blur-3xl animated-panel-bg" />
+           <div className="absolute bottom-[-10%] left-[-10%] w-[50%] h-[50%] bg-[#0D9488]/10 rounded-full blur-3xl animated-panel-bg" style={{ animationDelay: '-10s' }} />
            
            <div className="relative z-10 flex flex-col items-center">
-              <div className="flex items-end gap-3 h-64">
-                 <div className="w-12 bg-slate-900 rounded-t-full h-full" />
-                 <div className="w-20 bg-[#0D9488] rounded-full h-[70%] mb-8" />
-                 <div className="w-10 bg-[#E5B5A8] rounded-full h-[90%] mb-2" />
-                 <div className="w-16 bg-slate-800 rounded-sm h-[50%] mb-10" />
-              </div>
+              <AnimatedBars bars={defaultRegisterBars} className="!h-64" />
               <div className="mt-10 text-center max-w-sm">
                  <h3 className="text-xl font-black text-slate-900 tracking-tight">Scale Your Operations</h3>
                  <p className="text-slate-500 font-medium mt-2 text-sm">Join thousands of businesses managing their enterprise flow with TradersPro Intelligence.</p>

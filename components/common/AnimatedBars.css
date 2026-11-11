@@ -1,0 +1,111 @@
+/* components/common/AnimatedBars.css */
+/* GPU-accelerated motion styling for TradersPro Login decorative bars */
+
+.animated-bars-container {
+  display: flex;
+  align-items: flex-end;
+  gap: 1rem; /* 16px, matches gap-4 */
+  height: 20rem; /* 320px, matches h-80 */
+  position: relative;
+}
+
+.animated-bar-wrapper {
+  display: flex;
+  align-items: flex-end;
+  height: 100%;
+}
+
+.animated-bar {
+  transform-origin: bottom center;
+  will-change: transform, filter, opacity;
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), filter 0.35s ease;
+  
+  /* Staggered entry animation (0.7s) followed by continuous organic breathing oscillation */
+  animation:
+    bar-entry 0.7s cubic-bezier(0.22, 1, 0.36, 1) var(--enter-delay, 0s) both,
+    bar-breathe var(--dur, 3.6s) ease-in-out calc(0.7s + var(--enter-delay, 0s) + var(--delay, 0s)) infinite alternate;
+}
+
+/* Individual bar hover boost */
+.animated-bars-container:hover .animated-bar {
+  /* Speeds up organic tempo by ~30% when user interacts */
+  animation-duration: 0.7s, calc(var(--dur, 3.6s) * 0.7);
+}
+
+.animated-bar:hover {
+  transform: scaleY(1.08) scaleX(1.04) translateY(-4px) !important;
+  filter: brightness(1.06) drop-shadow(0 18px 24px var(--shadow-col, rgba(0, 0, 0, 0.2))) !important;
+}
+
+/* 1. Staggered GPU Entry Keyframes */
+@keyframes bar-entry {
+  0% {
+    transform: scaleY(0) translateY(36px);
+    opacity: 0;
+  }
+  60% {
+    opacity: 1;
+  }
+  100% {
+    transform: scaleY(1) translateY(0);
+    opacity: 1;
+  }
+}
+
+/* 2. Continuous Organic Equalizer Oscillation */
+@keyframes bar-breathe {
+  0% {
+    transform: scaleY(0.86) translateY(0);
+    filter: drop-shadow(0 6px 10px var(--shadow-col, rgba(0, 0, 0, 0.12)));
+  }
+  50% {
+    transform: scaleY(1.09) translateY(calc(var(--float, 0px) * -1));
+    filter: drop-shadow(0 14px 18px var(--shadow-col, rgba(0, 0, 0, 0.2)));
+  }
+  100% {
+    transform: scaleY(0.92) translateY(0);
+    filter: drop-shadow(0 8px 12px var(--shadow-col, rgba(0, 0, 0, 0.14)));
+  }
+}
+
+/* Ambient 20s Background Living Shift for Right Panel */
+.animated-panel-bg {
+  animation: panel-gradient-shift 20s ease-in-out infinite alternate;
+  will-change: transform, opacity;
+}
+
+@keyframes panel-gradient-shift {
+  0% {
+    transform: scale(1) translate(0, 0);
+    opacity: 0.3;
+  }
+  50% {
+    transform: scale(1.12) translate(-2%, 3%);
+    opacity: 0.45;
+  }
+  100% {
+    transform: scale(1.05) translate(3%, -2%);
+    opacity: 0.35;
+  }
+}
+
+/* Accessibility: Disable motion when user requests reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .animated-bar {
+    animation: none !important;
+    transform: none !important;
+    opacity: 1 !important;
+    transition: none !important;
+  }
+
+  .animated-panel-bg {
+    animation: none !important;
+  }
+}
+
+/* Mobile battery saver: static render on screens <= 768px */
+@media (max-width: 768px) {
+  .animated-bar {
+    animation: bar-entry 0.6s cubic-bezier(0.22, 1, 0.36, 1) both !important;
+  }
+}
