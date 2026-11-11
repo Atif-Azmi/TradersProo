@@ -17,7 +17,8 @@ export default async function DashboardPage() {
       .from('tp_sales')
       .select('total_amount, amount_paid, balance_due, invoice_date, payment_status, invoice_number, id, created_at, tp_customers(name)')
       .eq('user_id', user.id)
-      .order('created_at', { ascending: false }),
+      .order('created_at', { ascending: false })
+      .limit(200),
     
     supabase
       .from('tp_customers')

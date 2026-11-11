@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import { Inter, Outfit } from 'next/font/google'
 import NextTopLoader from 'nextjs-toploader'
 import ErrorBoundary from '@/components/common/ErrorBoundary'
+import AnimatedSplash from '@/components/common/AnimatedSplash'
 import NProgressProvider from '@/components/NProgressProvider'
 import PWAInstallPrompt from '@/components/PWAInstallPrompt'
 import './globals.css'
@@ -53,6 +54,7 @@ export default function RootLayout({
         <link rel="preconnect" href="https://fonts.googleapis.com" />
       </head>
       <body className="font-sans antialiased">
+        <AnimatedSplash />
         <ErrorBoundary>
           <NProgressProvider>
             <NextTopLoader 

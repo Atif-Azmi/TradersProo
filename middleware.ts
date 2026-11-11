@@ -3,7 +3,12 @@ import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
 
 export async function middleware(request: NextRequest) {
-  let response = NextResponse.next({ request })
+  const requestHeaders = new Headers(request.headers)
+  let response = NextResponse.next({
+    request: {
+      headers: requestHeaders,
+    },
+  })
   
   const supabase = createServerClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -23,56 +28,67 @@ export async function middleware(request: NextRequest) {
 
   const { data: { user } } = await supabase.auth.getUser()
 
-  const isAuthPage = request.nextUrl.pathname.startsWith('/login') || 
-                     request.nextUrl.pathname.startsWith('/register')
-  const isPublicPage = request.nextUrl.pathname === '/'
-  
-  const isDashboard = request.nextUrl.pathname.startsWith('/dashboard') ||
-                      request.nextUrl.pathname.startsWith('/customers') ||
-                      request.nextUrl.pathname.startsWith('/products') ||
-                      request.nextUrl.pathname.startsWith('/sales') ||
-                      request.nextUrl.pathname.startsWith('/retail') ||
-                      request.nextUrl.pathname.startsWith('/advances') ||
-                      request.nextUrl.pathname.startsWith('/reports') ||
-                      request.nextUrl.pathname.startsWith('/reminders') ||
-                      request.nextUrl.pathname.startsWith('/settings') ||
-                      request.nextUrl.pathname.startsWith('/subscription') ||
-                      request.nextUrl.pathname.startsWith('/superadmin')
+  if (user) {
+    requestHeaders.set('x-user-id', user.id)
+    if (user.email) requestHeaders.set('x-user-email', user.email)
+  }
 
-  if (request.nextUrl.pathname.startsWith('/superadmin')) {
+  const pathname = request.nextUrl.pathname
+  const isAuthPage = pathname.startsWith('/login') || pathname.startsWith('/register')
+  const isSuperAdminRoute = pathname.startsWith('/superadmin')
+  
+  const isDashboard = pathname.startsWith('/dashboard') ||
+                      pathname.startsWith('/customers') ||
+                      pathname.startsWith('/products') ||
+                      pathname.startsWith('/sales') ||
+                      pathname.startsWith('/billing') ||
+                      pathname.startsWith('/retail') ||
+                      pathname.startsWith('/advances') ||
+                      pathname.startsWith('/reports') ||
+                      pathname.startsWith('/reminders') ||
+                      pathname.startsWith('/settings') ||
+                      pathname.startsWith('/subscription') ||
+                      isSuperAdminRoute
+
+  const isHardcodedAdmin = user?.email === 'atifazmi0710@gmail.com' || user?.email === 'superadmin@trader.in'
+
+  // Protect superadmin routes
+  if (isSuperAdminRoute) {
     if (!user) {
       return NextResponse.redirect(new URL('/login', request.url))
     }
-    // Check superadmin table server-side
-    const { data: sa } = await supabase
-      .from('tp_super_admin')
-      .select('id')
-      .eq('id', user.id)
-      .single()
     
-    const isHardcoded = user.email === 'atifazmi0710@gmail.com' || user.email === 'superadmin@trader.in'
+    if (!isHardcodedAdmin) {
+      const { data: sa } = await supabase
+        .from('tp_super_admin')
+        .select('id')
+        .eq('id', user.id)
+        .maybeSingle()
 
-    if (!sa && !isHardcoded) {
-      // Not a superadmin — kick to dashboard
-      return NextResponse.redirect(new URL('/dashboard', request.url))
+      if (!sa) {
+        return NextResponse.redirect(new URL('/dashboard', request.url))
+      }
     }
   }
 
+  // Protect dashboard routes
   if (!user && isDashboard) {
     return NextResponse.redirect(new URL('/login', request.url))
   }
 
+  // Redirect authenticated users away from login/register
   if (user && isAuthPage) {
-    // Check if superadmin for proper redirection
+    if (isHardcodedAdmin) {
+      return NextResponse.redirect(new URL('/superadmin/verify', request.url))
+    }
+
     const { data: sa } = await supabase
       .from('tp_super_admin')
       .select('id')
       .eq('id', user.id)
-      .single()
-    
-    const isHardcoded = user.email === 'atifazmi0710@gmail.com' || user.email === 'superadmin@trader.in'
+      .maybeSingle()
 
-    if (sa || isHardcoded) {
+    if (sa) {
       return NextResponse.redirect(new URL('/superadmin/verify', request.url))
     }
     return NextResponse.redirect(new URL('/dashboard', request.url))
@@ -82,5 +98,5 @@ export async function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ['/((?!_next/static|_next/image|favicon.ico|api).*)']
+  matcher: ['/((?!_next/static|_next/image|favicon.ico|manifest.json|icons|sw.js|api).*)']
 }
