@@ -8,7 +8,7 @@ export const metadata: Metadata = {
 
 export default function SuperAdminPage() {
   return (
-    <div className="p-8 bg-slate-50 min-h-screen">
+    <div className="p-8 bg-[#E0DCD6] dark:bg-[#1F1E1B] min-h-screen">
       <SuperAdminClient />
     </div>
   )

@@ -180,7 +180,7 @@ export default function RetailClient({ products, customers, todaySales }: Retail
     <div className="space-y-6 max-w-[1600px] mx-auto pb-10">
       <div className="flex sm:items-center justify-between flex-col sm:flex-row gap-4">
         <div>
-          <h2 className="text-xl font-bold text-slate-900">Retail Sales</h2>
+          <h2 className="text-xl font-bold text-[#3E3B36] dark:text-[#EDE9E3]">Retail Sales</h2>
         </div>
         <div>
           <button 
@@ -196,35 +196,35 @@ export default function RetailClient({ products, customers, todaySales }: Retail
         <div className="tp-card p-6 flex items-center gap-4">
            <div className="bg-[#B4E0CA]/40 p-3 rounded-full text-[#1E3121]"><Store className="h-5 w-5" /></div>
            <div>
-              <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Today's Sales</p>
-              <p className="text-xl font-black text-slate-900">₹{totalToday.toLocaleString('en-IN', { minimumFractionDigits: 2 })}</p>
+              <p className="text-[10px] font-bold text-[#7A756F] dark:text-[#A8A39B] uppercase tracking-widest">Today's Sales</p>
+              <p className="text-xl font-black text-[#3E3B36] dark:text-[#EDE9E3]">₹{totalToday.toLocaleString('en-IN', { minimumFractionDigits: 2 })}</p>
            </div>
         </div>
         <div className="tp-card p-6 flex items-center gap-4">
            <div className="bg-[#B4E0CA]/40 p-3 rounded-full text-[#1E3121]"><span className="text-[#1E3121] font-black">₹</span></div>
            <div>
-              <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Cash Collection</p>
-              <p className="text-xl font-black text-slate-900">₹{cashToday.toLocaleString('en-IN', { minimumFractionDigits: 2 })}</p>
+              <p className="text-[10px] font-bold text-[#7A756F] dark:text-[#A8A39B] uppercase tracking-widest">Cash Collection</p>
+              <p className="text-xl font-black text-[#3E3B36] dark:text-[#EDE9E3]">₹{cashToday.toLocaleString('en-IN', { minimumFractionDigits: 2 })}</p>
            </div>
         </div>
         <div className="tp-card p-6 flex items-center gap-4">
-           <div className="bg-blue-50 p-3 rounded-full text-blue-600"><span className="text-blue-600 font-black text-[10px] tracking-widest px-1">UPI</span></div>
+           <div className="bg-[#9DB8C9]/30 p-3 rounded-full text-[#1F3441] dark:text-[#9DB8C9]"><span className="text-[#1F3441] dark:text-[#9DB8C9] font-black text-[10px] tracking-widest px-1">UPI</span></div>
            <div>
-              <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">UPI / Online</p>
-              <p className="text-xl font-black text-blue-600">₹{upiToday.toLocaleString('en-IN', { minimumFractionDigits: 2 })}</p>
+              <p className="text-[10px] font-bold text-[#7A756F] dark:text-[#A8A39B] uppercase tracking-widest">UPI / Online</p>
+              <p className="text-xl font-black text-[#1F3441] dark:text-[#9DB8C9]">₹{upiToday.toLocaleString('en-IN', { minimumFractionDigits: 2 })}</p>
            </div>
         </div>
       </div>
 
-      <div className="flex flex-col sm:flex-row gap-4 justify-between bg-white p-4 rounded-xl border border-slate-100 shadow-sm">
+      <div className="flex flex-col sm:flex-row gap-4 justify-between bg-[#E9E4DE] dark:bg-[#2A2926] p-4 rounded-[20px] border border-[#CAC8C0] dark:border-[#45433E] shadow-warm-card">
         <div className="relative flex-1 max-w-md">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400" />
+          <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-[#7A756F] dark:text-[#A8A39B] pointer-events-none" />
           <input
             type="text"
             placeholder="Search sales..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            className="w-full pl-9 pr-4 py-2 text-sm border border-[#CAC8C0] dark:border-[#45433E] rounded-full focus:ring-2 focus:ring-[#B4E0CA]/60 focus:border-[#88A993] outline-none transition-all"
+            className="w-full pl-10 pr-4 py-2 text-sm bg-[#F2EEE9] dark:bg-[#33322E] text-[#3E3B36] dark:text-[#EDE9E3] placeholder:text-[#7A756F] dark:placeholder:text-[#A8A39B] placeholder:opacity-100 border border-[#CAC8C0] dark:border-[#45433E] rounded-full focus:ring-2 focus:ring-[#B4E0CA]/60 focus:border-[#88A993] caret-[#88A993] outline-none transition-all"
           />
         </div>
       </div>
@@ -233,7 +233,7 @@ export default function RetailClient({ products, customers, todaySales }: Retail
         {/* Desktop View Table */}
         <div className="hidden md:block overflow-x-auto">
           <table className="w-full text-sm text-left">
-            <thead className="text-[10px] font-bold text-slate-400 uppercase bg-slate-50/50 tracking-widest">
+            <thead className="text-[10px] font-bold text-[#3E3B36] dark:text-[#EDE9E3] uppercase bg-[#F2EEE9] dark:bg-[#33322E] tracking-widest border-b border-[#CAC8C0] dark:border-[#45433E]">
               <tr>
                 <th className="px-6 py-4">Time</th>
                 <th className="px-6 py-4">Invoice #</th>
@@ -243,10 +243,10 @@ export default function RetailClient({ products, customers, todaySales }: Retail
                 <th className="px-6 py-4">Mode</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-slate-50">
+            <tbody className="divide-y divide-[#CAC8C0]/50 dark:divide-[#45433E]/50">
                {filteredSales.length === 0 ? (
                  <tr>
-                   <td colSpan={6} className="px-6 py-20 text-center text-slate-400 text-[10px] font-bold uppercase tracking-widest">
+                   <td colSpan={6} className="px-6 py-20 text-center text-[#7A756F] dark:text-[#A8A39B] text-[10px] font-bold uppercase tracking-widest">
                       No transactions recorded today
                    </td>
                  </tr>
@@ -262,12 +262,12 @@ export default function RetailClient({ products, customers, todaySales }: Retail
                      .join(', ') || 'N/A'
 
                    return (
-                     <tr key={sale.id} className="hover:bg-slate-50/50 transition-all group">
+                     <tr key={sale.id} className="hover:bg-[#F2EEE9]/50 dark:hover:bg-[#33322E]/50 transition-all group">
                        <td className="px-6 py-5 font-medium text-slate-600">{time}</td>
-                       <td className="px-6 py-5 font-bold text-slate-900">{sale.invoice_number}</td>
+                       <td className="px-6 py-5 font-bold text-[#3E3B36] dark:text-[#EDE9E3]">{sale.invoice_number}</td>
                        <td className="px-6 py-5 font-medium text-slate-600">{sale.tp_customers?.name || 'Walk-in'}</td>
-                       <td className="px-6 py-5 text-slate-500 max-w-xs truncate">{productsList}</td>
-                       <td className="px-6 py-5 text-right font-black text-slate-900">₹{sale.total_amount.toLocaleString('en-IN', { minimumFractionDigits: 2 })}</td>
+                       <td className="px-6 py-5 text-[#7A756F] dark:text-[#A8A39B] max-w-xs truncate">{productsList}</td>
+                       <td className="px-6 py-5 text-right font-black text-[#3E3B36] dark:text-[#EDE9E3]">₹{sale.total_amount.toLocaleString('en-IN', { minimumFractionDigits: 2 })}</td>
                        <td className="px-6 py-5">
                          <span className={`inline-flex items-center gap-1.5 py-1 px-3 rounded-full text-[10px] font-bold uppercase tracking-widest border ${
                            sale.payment_mode === 'cash' 
@@ -288,9 +288,9 @@ export default function RetailClient({ products, customers, todaySales }: Retail
         </div>
 
         {/* Mobile View Card List */}
-        <div className="block md:hidden divide-y divide-slate-100 bg-white">
+        <div className="block md:hidden divide-y divide-[#CAC8C0]/50 dark:divide-[#45433E]/50 bg-[#E9E4DE] dark:bg-[#2A2926]">
           {filteredSales.length === 0 ? (
-            <div className="p-16 text-center text-slate-400 text-[10px] font-bold uppercase tracking-widest">
+            <div className="p-16 text-center text-[#7A756F] dark:text-[#A8A39B] text-[10px] font-bold uppercase tracking-widest">
                No transactions recorded today
             </div>
           ) : (
@@ -308,8 +308,8 @@ export default function RetailClient({ products, customers, todaySales }: Retail
                 <div key={sale.id} className="p-4 space-y-2.5">
                   <div className="flex justify-between items-start">
                     <div>
-                      <p className="font-black text-slate-900 text-sm">{sale.invoice_number}</p>
-                      <p className="text-[10px] font-medium text-slate-400 mt-0.5">{time}</p>
+                      <p className="font-black text-[#3E3B36] dark:text-[#EDE9E3] text-sm">{sale.invoice_number}</p>
+                      <p className="text-[10px] font-medium text-[#7A756F] dark:text-[#A8A39B] mt-0.5">{time}</p>
                     </div>
                     <span className={`inline-flex items-center gap-1.5 py-1 px-2.5 rounded-full text-[9px] font-bold uppercase tracking-widest border ${
                       sale.payment_mode === 'cash' 
@@ -323,18 +323,18 @@ export default function RetailClient({ products, customers, todaySales }: Retail
                   </div>
                   
                   <div className="space-y-1">
-                    <p className="text-[9px] font-black text-slate-400 uppercase">Customer</p>
-                    <p className="font-semibold text-slate-700 text-xs">{sale.tp_customers?.name || 'Walk-in'}</p>
+                    <p className="text-[9px] font-black text-[#7A756F] dark:text-[#A8A39B] uppercase">Customer</p>
+                    <p className="font-semibold text-[#3E3B36] dark:text-[#EDE9E3] text-xs">{sale.tp_customers?.name || 'Walk-in'}</p>
                   </div>
 
                   <div className="space-y-1">
-                    <p className="text-[9px] font-black text-slate-400 uppercase">Products</p>
-                    <p className="text-slate-500 text-xs line-clamp-2">{productsList}</p>
+                    <p className="text-[9px] font-black text-[#7A756F] dark:text-[#A8A39B] uppercase">Products</p>
+                    <p className="text-[#7A756F] dark:text-[#A8A39B] text-xs line-clamp-2">{productsList}</p>
                   </div>
                   
-                  <div className="flex justify-between items-center pt-2 border-t border-slate-50">
-                    <p className="text-[10px] font-black text-slate-400 uppercase">Total Amount</p>
-                    <p className="font-black text-slate-900 text-sm">₹{sale.total_amount.toLocaleString('en-IN', { minimumFractionDigits: 2 })}</p>
+                  <div className="flex justify-between items-center pt-2 border-t border-[#CAC8C0]/50 dark:border-[#45433E]/50">
+                    <p className="text-[10px] font-black text-[#7A756F] dark:text-[#A8A39B] uppercase">Total Amount</p>
+                    <p className="font-black text-[#3E3B36] dark:text-[#EDE9E3] text-sm">₹{sale.total_amount.toLocaleString('en-IN', { minimumFractionDigits: 2 })}</p>
                   </div>
                 </div>
               )
@@ -345,16 +345,16 @@ export default function RetailClient({ products, customers, todaySales }: Retail
 
       {/* Add Retail Sale Modal */}
       {showModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/60 backdrop-blur-md px-4">
-          <div className="bg-white rounded-[2rem] shadow-2xl w-full max-w-3xl overflow-hidden border border-slate-100 flex flex-col max-h-[90vh]">
-            <div className="p-6 border-b border-slate-100 flex justify-between items-center bg-slate-50/50">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-[#1F1E1B]/70 backdrop-blur-md px-4">
+          <div className="bg-[#E9E4DE] dark:bg-[#2A2926] rounded-[28px] shadow-warm-raised w-full max-w-3xl overflow-hidden border border-[#CAC8C0] dark:border-[#45433E] flex flex-col max-h-[90vh]">
+            <div className="p-6 border-b border-[#CAC8C0] dark:border-[#45433E] flex justify-between items-center bg-[#F2EEE9]/50 dark:bg-[#33322E]/50">
               <div>
-                <h3 className="text-lg font-black text-slate-900 uppercase tracking-widest">New Retail Sale</h3>
-                <p className="text-xs text-slate-400 font-medium">Quick walk-in billing dashboard</p>
+                <h3 className="text-lg font-black text-[#3E3B36] dark:text-[#EDE9E3] uppercase tracking-widest">New Retail Sale</h3>
+                <p className="text-xs text-[#7A756F] dark:text-[#A8A39B] font-medium">Quick walk-in billing dashboard</p>
               </div>
               <button 
                 onClick={() => setShowModal(false)} 
-                className="p-1.5 rounded-xl hover:bg-slate-100 text-slate-400 hover:text-slate-600 transition-all"
+                className="p-1.5 rounded-xl hover:bg-slate-100 text-[#7A756F] dark:text-[#A8A39B] hover:text-[#3E3B36] dark:hover:text-[#EDE9E3] transition-all"
               >
                 <X className="h-5 w-5" />
               </button>
@@ -363,12 +363,12 @@ export default function RetailClient({ products, customers, todaySales }: Retail
             <form onSubmit={handleSaveSale} className="flex-1 overflow-y-auto p-6 space-y-6">
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                 <div>
-                  <label className="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1.5 ml-1">Customer Selection *</label>
+                  <label className="block text-[10px] font-black text-[#7A756F] dark:text-[#A8A39B] uppercase tracking-widest mb-1.5 ml-1">Customer Selection *</label>
                   <select 
                     value={selectedCustomerId}
                     onChange={(e) => setSelectedCustomerId(e.target.value)}
                     required
-                    className="w-full px-4 py-2.5 border border-slate-200 rounded-xl text-sm focus:ring-2 focus:ring-primary outline-none bg-white transition-all font-medium"
+                    className="w-full px-4 py-2.5 border border-[#CAC8C0] dark:border-[#45433E] rounded-full text-sm focus:ring-2 focus:ring-primary outline-none bg-[#F2EEE9] dark:bg-[#33322E] text-[#3E3B36] dark:text-[#EDE9E3] transition-all font-medium"
                   >
                     <option value="">Select Customer</option>
                     {customers.map(c => (
@@ -377,11 +377,11 @@ export default function RetailClient({ products, customers, todaySales }: Retail
                   </select>
                 </div>
                 <div>
-                  <label className="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1.5 ml-1">Payment Method</label>
+                  <label className="block text-[10px] font-black text-[#7A756F] dark:text-[#A8A39B] uppercase tracking-widest mb-1.5 ml-1">Payment Method</label>
                   <select 
                     value={paymentMode}
                     onChange={(e) => setPaymentMode(e.target.value)}
-                    className="w-full px-4 py-2.5 border border-slate-200 rounded-xl text-sm bg-white font-medium focus:ring-2 focus:ring-primary outline-none transition-all"
+                    className="w-full px-4 py-2.5 border border-[#CAC8C0] dark:border-[#45433E] rounded-full text-sm bg-[#F2EEE9] dark:bg-[#33322E] text-[#3E3B36] dark:text-[#EDE9E3] font-medium focus:ring-2 focus:ring-[#B4E0CA]/60 outline-none transition-all"
                   >
                     <option value="cash">Cash Payment</option>
                     <option value="upi">UPI / Digital</option>
@@ -390,7 +390,7 @@ export default function RetailClient({ products, customers, todaySales }: Retail
                   </select>
                 </div>
                 <div>
-                  <label className="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1.5 ml-1">GST Rate (%)</label>
+                  <label className="block text-[10px] font-black text-[#7A756F] dark:text-[#A8A39B] uppercase tracking-widest mb-1.5 ml-1">GST Rate (%)</label>
                   <div className="flex gap-2 items-center">
                     <input 
                       type="number" 
@@ -400,7 +400,7 @@ export default function RetailClient({ products, customers, todaySales }: Retail
                       placeholder="Custom"
                       value={gstPercent}
                       onChange={(e) => setGstPercent(parseFloat(e.target.value) || 0)}
-                      className="w-16 px-2 py-2 border border-slate-200 rounded-xl text-sm font-bold text-center focus:ring-2 focus:ring-primary outline-none transition-all"
+                      className="w-16 px-2 py-2 border border-[#CAC8C0] dark:border-[#45433E] rounded-full text-sm font-bold text-center focus:ring-2 focus:ring-primary outline-none transition-all"
                     />
                     <div className="flex gap-1 flex-wrap">
                       {[0, 5, 8, 12, 18, 28].map((rate) => (
@@ -410,8 +410,8 @@ export default function RetailClient({ products, customers, todaySales }: Retail
                           onClick={() => setGstPercent(rate)}
                           className={`px-2 py-1.5 rounded-lg text-[10px] font-black tracking-tighter uppercase transition-all cursor-pointer ${
                             gstPercent === rate 
-                              ? 'bg-primary text-white shadow-md shadow-green-100' 
-                              : 'bg-slate-50 text-slate-500 hover:bg-slate-100 hover:text-slate-700'
+                              ? 'bg-[#B4E0CA] text-[#1E3121] shadow-warm-pill font-bold' 
+                              : 'bg-[#F2EEE9] dark:bg-[#33322E] text-[#7A756F] dark:text-[#A8A39B] border border-[#CAC8C0] dark:border-[#45433E] hover:text-[#3E3B36] dark:hover:text-[#EDE9E3]'
                           }`}
                         >
                           {rate}%
@@ -425,7 +425,7 @@ export default function RetailClient({ products, customers, todaySales }: Retail
               {/* Items Section */}
               <div className="space-y-4">
                 <div className="flex justify-between items-center">
-                  <h4 className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Sale Items</h4>
+                  <h4 className="text-[10px] font-black text-[#7A756F] dark:text-[#A8A39B] uppercase tracking-widest">Sale Items</h4>
                   <button 
                     type="button"
                     onClick={() => setItems([...items, { id: Date.now(), product_id: '', name: '', qty: 1, rate: 0, unit: 'pcs', total: 0 }])}
@@ -436,9 +436,9 @@ export default function RetailClient({ products, customers, todaySales }: Retail
                 </div>
 
                 {/* Desktop View Table */}
-                <div className="border border-slate-100 rounded-2xl overflow-hidden shadow-sm hidden md:block">
+                <div className="border border-[#CAC8C0] dark:border-[#45433E] rounded-[20px] overflow-hidden shadow-sm hidden md:block">
                   <table className="w-full text-sm text-left">
-                    <thead className="bg-slate-50 text-[10px] font-black text-slate-400 uppercase tracking-widest">
+                    <thead className="bg-[#F2EEE9] dark:bg-[#33322E] text-[10px] font-black text-[#3E3B36] dark:text-[#EDE9E3] dark:text-[#A8A39B] uppercase tracking-widest">
                       <tr>
                         <th className="px-4 py-3">Product Description</th>
                         <th className="px-4 py-3 w-20 text-center">Qty</th>
@@ -447,7 +447,7 @@ export default function RetailClient({ products, customers, todaySales }: Retail
                         <th className="px-2 py-3 w-10"></th>
                       </tr>
                     </thead>
-                    <tbody className="divide-y divide-slate-100">
+                    <tbody className="divide-y divide-[#CAC8C0]/50 dark:divide-[#45433E]/50">
                       {items.map((item, index) => (
                         <tr key={item.id}>
                           <td className="p-2">
@@ -455,7 +455,7 @@ export default function RetailClient({ products, customers, todaySales }: Retail
                               value={item.product_id}
                               onChange={(e) => updateItem(item.id, 'product_id', e.target.value)}
                               required
-                              className="w-full px-3 py-1.5 border border-slate-100 rounded-lg focus:ring-2 focus:ring-primary outline-none bg-white font-medium text-xs"
+                              className="w-full px-3 py-1.5 border border-[#CAC8C0] dark:border-[#45433E] rounded-full focus:ring-2 focus:ring-primary outline-none bg-[#F2EEE9] dark:bg-[#33322E] text-[#3E3B36] dark:text-[#EDE9E3] font-medium text-xs"
                             >
                               <option value="">Select Product</option>
                               {products.map(p => (
@@ -470,7 +470,7 @@ export default function RetailClient({ products, customers, todaySales }: Retail
                               step="any"
                               value={item.qty}
                               onChange={(e) => updateItem(item.id, 'qty', parseFloat(e.target.value) || 0)}
-                              className="w-full px-3 py-1.5 border border-slate-100 rounded-lg focus:ring-2 focus:ring-primary outline-none font-bold text-center text-xs"
+                              className="w-full px-3 py-1.5 border border-[#CAC8C0] dark:border-[#45433E] rounded-full focus:ring-2 focus:ring-primary outline-none font-bold text-center text-xs"
                             />
                           </td>
                           <td className="p-2">
@@ -480,10 +480,10 @@ export default function RetailClient({ products, customers, todaySales }: Retail
                               step="any"
                               value={item.rate}
                               onChange={(e) => updateItem(item.id, 'rate', parseFloat(e.target.value) || 0)}
-                              className="w-full px-3 py-1.5 border border-slate-100 rounded-lg focus:ring-2 focus:ring-primary outline-none font-bold text-right text-xs"
+                              className="w-full px-3 py-1.5 border border-[#CAC8C0] dark:border-[#45433E] rounded-full focus:ring-2 focus:ring-primary outline-none font-bold text-right text-xs"
                             />
                           </td>
-                          <td className="px-4 py-2 text-right font-black text-slate-900 text-xs">
+                          <td className="px-4 py-2 text-right font-black text-[#3E3B36] dark:text-[#EDE9E3] text-xs">
                             ₹{item.total.toLocaleString('en-IN', { minimumFractionDigits: 2 })}
                           </td>
                           <td className="p-2 text-center">
@@ -491,7 +491,7 @@ export default function RetailClient({ products, customers, todaySales }: Retail
                               type="button"
                               onClick={() => setItems(items.filter(i => i.id !== item.id))}
                               disabled={items.length === 1}
-                              className="p-1.5 text-slate-300 hover:text-red-500 rounded-lg hover:bg-red-50 disabled:opacity-0 transition-all"
+                              className="p-1.5 text-[#7A756F] dark:text-[#A8A39B] hover:text-[#4A1D14] dark:hover:text-[#D98A7B] rounded-full hover:bg-[#D98A7B]/20 disabled:opacity-0 transition-all"
                             >
                               <Trash2 className="h-4 w-4" />
                             </button>
@@ -505,26 +505,26 @@ export default function RetailClient({ products, customers, todaySales }: Retail
                 {/* Mobile View Card List */}
                 <div className="block md:hidden space-y-4">
                   {items.map((item, index) => (
-                    <div key={item.id} className="p-4 rounded-xl border border-slate-100 bg-slate-50/50 space-y-3">
+                    <div key={item.id} className="p-4 rounded-xl border border-[#CAC8C0] dark:border-[#45433E] bg-[#F2EEE9] dark:bg-[#33322E] space-y-3">
                       <div className="flex justify-between items-center pb-1.5 border-b border-slate-100">
-                        <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Item #{index + 1}</span>
+                        <span className="text-[10px] font-black text-[#7A756F] dark:text-[#A8A39B] uppercase tracking-widest">Item #{index + 1}</span>
                         <button 
                           type="button"
                           onClick={() => setItems(items.filter(i => i.id !== item.id))}
                           disabled={items.length === 1}
-                          className="p-1 text-slate-300 hover:text-red-500 rounded-lg hover:bg-red-50 disabled:opacity-0 transition-all"
+                          className="p-1 text-[#7A756F] dark:text-[#A8A39B] hover:text-[#4A1D14] dark:hover:text-[#D98A7B] rounded-full hover:bg-[#D98A7B]/20 disabled:opacity-0 transition-all"
                         >
                           <Trash2 className="h-4 w-4" />
                         </button>
                       </div>
 
                       <div>
-                        <label className="block text-[9px] font-black text-slate-400 uppercase tracking-widest mb-1 ml-1">Product Description</label>
+                        <label className="block text-[9px] font-black text-[#7A756F] dark:text-[#A8A39B] uppercase tracking-widest mb-1 ml-1">Product Description</label>
                         <select 
                           value={item.product_id}
                           onChange={(e) => updateItem(item.id, 'product_id', e.target.value)}
                           required
-                          className="w-full px-3 py-2 border border-slate-100 rounded-lg focus:ring-2 focus:ring-primary outline-none bg-white font-medium text-xs"
+                          className="w-full px-3 py-2 border border-[#CAC8C0] dark:border-[#45433E] rounded-full focus:ring-2 focus:ring-primary outline-none bg-[#F2EEE9] dark:bg-[#33322E] text-[#3E3B36] dark:text-[#EDE9E3] font-medium text-xs"
                         >
                           <option value="">Select Product</option>
                           {products.map(p => (
@@ -535,32 +535,32 @@ export default function RetailClient({ products, customers, todaySales }: Retail
 
                       <div className="grid grid-cols-2 gap-3">
                         <div>
-                          <label className="block text-[9px] font-black text-slate-400 uppercase tracking-widest mb-1 ml-1">Qty {item.unit ? `(${item.unit})` : ''}</label>
+                          <label className="block text-[9px] font-black text-[#7A756F] dark:text-[#A8A39B] uppercase tracking-widest mb-1 ml-1">Qty {item.unit ? `(${item.unit})` : ''}</label>
                           <input 
                             type="number" 
                             min="0.001"
                             step="any"
                             value={item.qty}
                             onChange={(e) => updateItem(item.id, 'qty', parseFloat(e.target.value) || 0)}
-                            className="w-full px-3 py-1.5 border border-slate-100 rounded-lg focus:ring-2 focus:ring-primary outline-none font-bold text-center text-xs"
+                            className="w-full px-3 py-1.5 border border-[#CAC8C0] dark:border-[#45433E] rounded-full focus:ring-2 focus:ring-primary outline-none font-bold text-center text-xs"
                           />
                         </div>
                         <div>
-                          <label className="block text-[9px] font-black text-slate-400 uppercase tracking-widest mb-1 ml-1">Rate (₹)</label>
+                          <label className="block text-[9px] font-black text-[#7A756F] dark:text-[#A8A39B] uppercase tracking-widest mb-1 ml-1">Rate (₹)</label>
                           <input 
                             type="number" 
                             min="0" 
                             step="any"
                             value={item.rate}
                             onChange={(e) => updateItem(item.id, 'rate', parseFloat(e.target.value) || 0)}
-                            className="w-full px-3 py-1.5 border border-slate-100 rounded-lg focus:ring-2 focus:ring-primary outline-none font-bold text-right text-xs"
+                            className="w-full px-3 py-1.5 border border-[#CAC8C0] dark:border-[#45433E] rounded-full focus:ring-2 focus:ring-primary outline-none font-bold text-right text-xs"
                           />
                         </div>
                       </div>
 
                       <div className="flex justify-between items-center pt-2 border-t border-slate-100">
-                        <span className="text-[9px] font-black text-slate-400 uppercase ml-1">Total</span>
-                        <span className="font-black text-slate-900 text-xs">₹{item.total.toLocaleString('en-IN', { minimumFractionDigits: 2 })}</span>
+                        <span className="text-[9px] font-black text-[#7A756F] dark:text-[#A8A39B] uppercase ml-1">Total</span>
+                        <span className="font-black text-[#3E3B36] dark:text-[#EDE9E3] text-xs">₹{item.total.toLocaleString('en-IN', { minimumFractionDigits: 2 })}</span>
                       </div>
                     </div>
                   ))}
@@ -568,40 +568,40 @@ export default function RetailClient({ products, customers, todaySales }: Retail
               </div>
 
               <div>
-                <label className="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1.5 ml-1">Remarks / Notes</label>
+                <label className="block text-[10px] font-black text-[#7A756F] dark:text-[#A8A39B] uppercase tracking-widest mb-1.5 ml-1">Remarks / Notes</label>
                 <textarea 
                   rows={2} 
                   value={notes}
                   onChange={(e) => setNotes(e.target.value)}
-                  className="w-full px-4 py-2 border border-slate-200 rounded-xl text-sm focus:ring-2 focus:ring-primary outline-none transition-all font-medium"
+                  className="w-full px-4 py-2 border border-[#CAC8C0] dark:border-[#45433E] rounded-full text-sm focus:ring-2 focus:ring-primary outline-none transition-all font-medium"
                 ></textarea>
               </div>
 
               {/* Total Calculation */}
-              <div className="bg-slate-50 p-6 rounded-2xl space-y-3">
-                <div className="flex justify-between text-xs font-bold uppercase tracking-widest text-slate-500">
+              <div className="bg-[#F2EEE9] dark:bg-[#33322E] border border-[#CAC8C0]/50 dark:border-[#45433E]/50 p-6 rounded-[20px] space-y-3">
+                <div className="flex justify-between text-xs font-bold uppercase tracking-widest text-[#7A756F] dark:text-[#A8A39B]">
                   <span>Subtotal</span>
-                  <span className="text-slate-900">₹{subtotal.toLocaleString('en-IN', { minimumFractionDigits: 2 })}</span>
+                  <span className="text-[#3E3B36] dark:text-[#EDE9E3]">₹{subtotal.toLocaleString('en-IN', { minimumFractionDigits: 2 })}</span>
                 </div>
-                <div className="flex justify-between text-xs font-bold uppercase tracking-widest text-slate-500">
+                <div className="flex justify-between text-xs font-bold uppercase tracking-widest text-[#7A756F] dark:text-[#A8A39B]">
                   <span>GST ({gstPercent}% STANDARD / CUSTOM)</span>
-                  <span className="text-slate-900">₹{gstAmount.toLocaleString('en-IN', { minimumFractionDigits: 2 })}</span>
+                  <span className="text-[#3E3B36] dark:text-[#EDE9E3]">₹{gstAmount.toLocaleString('en-IN', { minimumFractionDigits: 2 })}</span>
                 </div>
                 {gstAmount > 0 && (
-                  <div className="pl-4 border-l-2 border-slate-200 space-y-2">
-                    <div className="flex justify-between text-[11px] font-bold uppercase tracking-widest text-slate-400">
+                  <div className="pl-4 border-l-2 border-[#CAC8C0] dark:border-[#45433E] space-y-2">
+                    <div className="flex justify-between text-[11px] font-bold uppercase tracking-widest text-[#7A756F] dark:text-[#A8A39B]">
                        <span>CGST ({gstPercent / 2}%)</span>
                        <span>₹{(gstAmount / 2).toLocaleString('en-IN', { minimumFractionDigits: 2 })}</span>
                     </div>
-                    <div className="flex justify-between text-[11px] font-bold uppercase tracking-widest text-slate-400">
+                    <div className="flex justify-between text-[11px] font-bold uppercase tracking-widest text-[#7A756F] dark:text-[#A8A39B]">
                        <span>SGST ({gstPercent / 2}%)</span>
                        <span>₹{(gstAmount / 2).toLocaleString('en-IN', { minimumFractionDigits: 2 })}</span>
                     </div>
                   </div>
                 )}
-                <div className="border-t border-slate-200 pt-3 flex justify-between items-center">
-                  <span className="font-black text-slate-900 uppercase tracking-widest text-xs">Grand Total</span>
-                  <span className="font-black text-slate-900 text-xl tracking-tighter">₹{grandTotal.toLocaleString('en-IN', { minimumFractionDigits: 2 })}</span>
+                <div className="border-t border-[#CAC8C0] dark:border-[#45433E] pt-3 flex justify-between items-center">
+                  <span className="font-black text-[#3E3B36] dark:text-[#EDE9E3] uppercase tracking-widest text-xs">Grand Total</span>
+                  <span className="font-black text-[#3E3B36] dark:text-[#EDE9E3] text-xl tracking-tighter">₹{grandTotal.toLocaleString('en-IN', { minimumFractionDigits: 2 })}</span>
                 </div>
               </div>
 
@@ -609,14 +609,14 @@ export default function RetailClient({ products, customers, todaySales }: Retail
                 <button 
                   type="button" 
                   onClick={() => setShowModal(false)}
-                  className="w-full sm:w-1/2 px-6 py-3.5 sm:py-3 border border-slate-200 rounded-xl text-xs font-black uppercase tracking-widest text-slate-600 hover:bg-slate-50 transition-all cursor-pointer text-center"
+                  className="w-full sm:w-1/2 px-6 py-3.5 sm:py-3 border border-[#CAC8C0] dark:border-[#45433E] rounded-full text-xs font-black uppercase tracking-widest text-[#7A756F] dark:text-[#A8A39B] hover:text-[#3E3B36] dark:hover:text-[#EDE9E3] hover:bg-[#F2EEE9] dark:hover:bg-[#33322E] transition-all cursor-pointer text-center"
                 >
                   Cancel
                 </button>
                 <button 
                   type="submit" 
                   disabled={loading}
-                  className="w-full sm:w-1/2 px-6 py-3.5 sm:py-3 bg-primary text-white rounded-xl text-xs font-black uppercase tracking-widest hover:bg-green-600 shadow-lg shadow-green-100 transition-all disabled:opacity-50 flex items-center justify-center gap-2 cursor-pointer"
+                  className="w-full sm:w-1/2 px-6 py-3.5 sm:py-3 tp-button-primary disabled:opacity-50 flex items-center justify-center gap-2 cursor-pointer font-bold"
                 >
                   {loading ? <Loader2 className="h-4 w-4 animate-spin" /> : <Check className="h-4 w-4" />}
                   Finalize counter Sale

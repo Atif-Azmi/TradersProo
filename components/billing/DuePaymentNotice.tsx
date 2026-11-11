@@ -51,29 +51,29 @@ ${profile?.business_name ?? 'Management Team'}
   };
 
   return (
-    <div className="bg-white border border-slate-100 rounded-[2rem] p-8 shadow-xl shadow-slate-200/40">
+    <div className="bg-[#E9E4DE] dark:bg-[#2A2926] border border-[#CAC8C0] dark:border-[#45433E] rounded-[28px] p-8 shadow-warm-raised">
       <div className="flex items-center justify-between mb-6">
-        <h3 className="font-black text-sm text-slate-900 uppercase tracking-[0.3em]">Payment Notice</h3>
+        <h3 className="font-black text-sm text-[#3E3B36] dark:text-[#EDE9E3] uppercase tracking-[0.3em]">Payment Notice</h3>
         <div className="flex gap-2">
           <button 
             onClick={handleCopy}
-            className="p-2 rounded-xl bg-slate-50 text-slate-400 hover:text-slate-900 transition-all"
+            className="p-2.5 rounded-full bg-[#F2EEE9] dark:bg-[#33322E] border border-[#CAC8C0] dark:border-[#45433E] text-[#7A756F] dark:text-[#A8A39B] hover:text-[#3E3B36] dark:hover:text-[#EDE9E3] transition-all"
             title="Copy to clipboard"
           >
-            {copied ? <CheckCircle className="h-4 w-4 text-emerald-500" /> : <Copy className="h-4 w-4" />}
+            {copied ? <CheckCircle className="h-4 w-4 text-[#1E3121] dark:text-[#B4E0CA]" /> : <Copy className="h-4 w-4" />}
           </button>
         </div>
       </div>
       
-      <div className="bg-slate-50 rounded-2xl p-6 mb-8">
-        <pre className="text-xs font-medium text-slate-600 whitespace-pre-wrap font-['Inter',sans-serif] leading-relaxed">
+      <div className="bg-[#F2EEE9] dark:bg-[#33322E] border border-[#CAC8C0]/50 dark:border-[#45433E]/50 rounded-[20px] p-6 mb-8">
+        <pre className="text-xs font-medium text-[#3E3B36] dark:text-[#EDE9E3] whitespace-pre-wrap font-sans leading-relaxed">
           {noticeText}
         </pre>
       </div>
 
       <button 
         onClick={sendWhatsApp}
-        className="w-full flex items-center justify-center gap-3 bg-green-500 hover:bg-green-600 text-white rounded-2xl py-4 font-black text-xs uppercase tracking-widest shadow-xl shadow-green-100 transition-all"
+        className="w-full flex items-center justify-center gap-3 bg-[#B4E0CA] hover:bg-[#9CCDB4] text-[#1E3121] rounded-full py-4 font-black text-xs uppercase tracking-widest shadow-warm-pill transition-all tap-scale"
       >
         <MessageCircle className="h-4 w-4" />
         Send via WhatsApp

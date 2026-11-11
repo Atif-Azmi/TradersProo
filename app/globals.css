@@ -22,6 +22,7 @@
     --info: #9DB8C9;
     --on-info: #1F3441;
     --radius: 20px;
+    color-scheme: light;
   }
 
   @media (prefers-color-scheme: dark) {
@@ -38,15 +39,16 @@
       --primary-strong: #88A993;
       --on-primary: #1E3121;
       --warning: #E3D094;
-      --on-warning: #4A3F12;
+      --on-warning: #E3D094;
       --danger: #D98A7B;
-      --on-danger: #4A1D14;
+      --on-danger: #D98A7B;
       --info: #9DB8C9;
-      --on-info: #1F3441;
+      --on-info: #9DB8C9;
+      color-scheme: dark;
     }
   }
 
-  [data-theme="dark"] {
+  .dark, [data-theme="dark"] {
     --background: #1F1E1B;
     --surface: #2A2926;
     --surface-raised: #33322E;
@@ -59,11 +61,12 @@
     --primary-strong: #88A993;
     --on-primary: #1E3121;
     --warning: #E3D094;
-    --on-warning: #4A3F12;
+    --on-warning: #E3D094;
     --danger: #D98A7B;
-    --on-danger: #4A1D14;
+    --on-danger: #D98A7B;
     --info: #9DB8C9;
-    --on-info: #1F3441;
+    --on-info: #9DB8C9;
+    color-scheme: dark;
   }
 }
 
@@ -72,11 +75,32 @@
     scroll-behavior: smooth;
     background-color: var(--background);
     color: var(--ink);
+    color-scheme: light dark;
   }
   
   * {
     border-color: var(--border);
     -webkit-overflow-scrolling: touch;
+    scrollbar-width: thin;
+    scrollbar-color: var(--border) var(--surface);
+  }
+
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: var(--surface);
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: var(--border);
+    border-radius: 9999px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--ink-secondary);
   }
   
   body {
@@ -87,6 +111,40 @@
     -webkit-font-smoothing: antialiased;
     padding-bottom: env(safe-area-inset-bottom);
     padding-top: env(safe-area-inset-top);
+  }
+
+  /* Universal Form Input Base Defaults */
+  input, textarea, select {
+    background-color: var(--surface-raised);
+    color: var(--ink);
+    border-color: var(--border);
+    caret-color: var(--primary-strong);
+  }
+
+  input::placeholder, textarea::placeholder {
+    color: var(--ink-secondary) !important;
+    opacity: 1 !important;
+  }
+
+  ::selection {
+    background-color: var(--primary);
+    color: var(--on-primary);
+  }
+
+  input:-webkit-autofill,
+  input:-webkit-autofill:hover, 
+  input:-webkit-autofill:focus, 
+  textarea:-webkit-autofill,
+  textarea:-webkit-autofill:hover,
+  textarea:-webkit-autofill:focus,
+  select:-webkit-autofill,
+  select:-webkit-autofill:hover,
+  select:-webkit-autofill:focus {
+    -webkit-text-fill-color: var(--ink) !important;
+    -webkit-box-shadow: 0 0 0px 1000px var(--surface-raised) inset !important;
+    box-shadow: 0 0 0px 1000px var(--surface-raised) inset !important;
+    transition: background-color 5000s ease-in-out 0s;
+    caret-color: var(--primary-strong) !important;
   }
 
   @media (prefers-reduced-motion: reduce) {
@@ -151,7 +209,7 @@
 }
 .tp-input::placeholder {
   color: var(--ink-secondary);
-  opacity: 0.7;
+  opacity: 1;
 }
 
 /* Focus Ring Mint Utility */

@@ -148,7 +148,7 @@ export default function TopBar({ setSidebarOpen }: { setSidebarOpen: (open: bool
           />
           <input
             id="search-field"
-            className="block h-10 w-full border border-[#CAC8C0] dark:border-[#45433E] py-0 pl-10 pr-4 text-[#3E3B36] dark:text-[#EDE9E3] placeholder:text-[#7A756F]/70 text-sm bg-[#F2EEE9] dark:bg-[#33322E] rounded-full focus:outline-none focus:ring-2 focus:ring-[#B4E0CA]/60"
+            className="block h-10 w-full border border-[#CAC8C0] dark:border-[#45433E] py-0 pl-10 pr-4 text-[#3E3B36] dark:text-[#EDE9E3] placeholder:text-[#7A756F] dark:placeholder:text-[#A8A39B] placeholder:opacity-100 text-sm bg-[#F2EEE9] dark:bg-[#33322E] rounded-full focus:outline-none focus:ring-2 focus:ring-[#B4E0CA]/60 focus:border-[#88A993] caret-[#88A993]"
             placeholder="Search..."
             type="search"
             name="search"

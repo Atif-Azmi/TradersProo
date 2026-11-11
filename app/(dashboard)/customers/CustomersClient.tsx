@@ -145,7 +145,7 @@ export default function CustomersClient({ initialCustomers }: CustomersClientPro
     <div className="space-y-6 max-w-[1600px] mx-auto pb-10">
       <div className="flex sm:items-center justify-between flex-col sm:flex-row gap-4">
         <div>
-          <h2 className="text-xl font-bold text-slate-900">Customers</h2>
+          <h2 className="text-xl font-bold text-[#3E3B36] dark:text-[#EDE9E3]">Customers</h2>
         </div>
         <div>
           <button 
@@ -162,33 +162,33 @@ export default function CustomersClient({ initialCustomers }: CustomersClientPro
         <div className="tp-card p-6 flex items-center gap-4">
            <div className="bg-[#B4E0CA]/40 p-3 rounded-full text-[#1E3121]"><Plus className="h-5 w-5" /></div>
            <div>
-              <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Total Customers</p>
-              <p className="text-xl font-black text-slate-900">{totalCustomers}</p>
+              <p className="text-[10px] font-bold text-[#7A756F] dark:text-[#A8A39B] uppercase tracking-widest">Total Customers</p>
+              <p className="text-xl font-black text-[#3E3B36] dark:text-[#EDE9E3]">{totalCustomers}</p>
            </div>
         </div>
         <div className="tp-card p-6 flex items-center gap-4">
            <div className="bg-[#B4E0CA]/40 p-3 rounded-full text-[#1E3121]"><Plus className="h-5 w-5" /></div>
            <div>
-              <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Active Customers</p>
-              <p className="text-xl font-black text-slate-900">{activeCustomers}</p>
+              <p className="text-[10px] font-bold text-[#7A756F] dark:text-[#A8A39B] uppercase tracking-widest">Active Customers</p>
+              <p className="text-xl font-black text-[#3E3B36] dark:text-[#EDE9E3]">{activeCustomers}</p>
            </div>
         </div>
         <div className="tp-card p-6 flex items-center gap-4">
-           <div className="bg-rose-50 p-3 rounded-full text-red-600"><AlertCircle className="h-5 w-5" /></div>
+           <div className="bg-[#D98A7B]/20 p-3 rounded-full text-[#4A1D14] dark:text-[#D98A7B]"><AlertCircle className="h-5 w-5" /></div>
            <div>
-              <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Overdue</p>
-              <p className="text-xl font-black text-red-600">{overdueCustomers}</p>
+              <p className="text-[10px] font-bold text-[#7A756F] dark:text-[#A8A39B] uppercase tracking-widest">Overdue</p>
+              <p className="text-xl font-black text-[#4A1D14] dark:text-[#D98A7B]">{overdueCustomers}</p>
            </div>
         </div>
       </div>
 
-      <div className="flex flex-col sm:flex-row gap-4 justify-between bg-white p-4 rounded-xl border border-slate-100 shadow-sm">
+      <div className="flex flex-col sm:flex-row gap-4 justify-between bg-[#E9E4DE] dark:bg-[#2A2926] p-4 rounded-[20px] border border-[#CAC8C0] dark:border-[#45433E] shadow-warm-card">
         <div className="relative flex-1 max-w-md">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400" />
+          <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-[#7A756F] dark:text-[#A8A39B] pointer-events-none" />
           <input
             type="text"
             placeholder="Search customers by name or phone..."
-            className="w-full pl-9 pr-4 py-2 text-sm border border-[#CAC8C0] dark:border-[#45433E] rounded-full focus:ring-2 focus:ring-[#B4E0CA]/60 focus:border-[#88A993] outline-none transition-all"
+            className="w-full pl-10 pr-4 py-2 text-sm bg-[#F2EEE9] dark:bg-[#33322E] text-[#3E3B36] dark:text-[#EDE9E3] placeholder:text-[#7A756F] dark:placeholder:text-[#A8A39B] placeholder:opacity-100 border border-[#CAC8C0] dark:border-[#45433E] rounded-full focus:ring-2 focus:ring-[#B4E0CA]/60 focus:border-[#88A993] caret-[#88A993] outline-none transition-all"
             value={search}
             onChange={(e) => setSearch(e.target.value)}
           />
@@ -198,10 +198,10 @@ export default function CustomersClient({ initialCustomers }: CustomersClientPro
             <button
               key={f}
               onClick={() => setFilter(f)}
-              className={`px-4 py-2 rounded-xl transition-all ${
+              className={`px-4 py-2 rounded-full transition-all ${
                 filter === f 
-                  ? 'bg-slate-900 text-white' 
-                  : 'bg-slate-50 text-slate-500 hover:bg-slate-100'
+                  ? 'bg-[#B4E0CA] text-[#1E3121] shadow-warm-pill font-black' 
+                  : 'bg-[#F2EEE9] dark:bg-[#33322E] text-[#7A756F] dark:text-[#A8A39B] border border-[#CAC8C0] dark:border-[#45433E] hover:text-[#3E3B36] dark:hover:text-[#EDE9E3]'
               }`}
             >
               {f}
@@ -214,7 +214,7 @@ export default function CustomersClient({ initialCustomers }: CustomersClientPro
         {/* Desktop View Table */}
         <div className="hidden md:block overflow-x-auto">
           <table className="w-full text-sm text-left">
-            <thead className="text-[10px] font-bold text-slate-400 uppercase bg-slate-50/50 tracking-widest">
+            <thead className="text-[10px] font-bold text-[#3E3B36] dark:text-[#EDE9E3] uppercase bg-[#F2EEE9] dark:bg-[#33322E] tracking-widest border-b border-[#CAC8C0] dark:border-[#45433E]">
               <tr>
                 <th className="px-6 py-4">Name / Company</th>
                 <th className="px-6 py-4">Phone</th>
@@ -223,43 +223,43 @@ export default function CustomersClient({ initialCustomers }: CustomersClientPro
                 <th className="px-6 py-4 text-right">Actions</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-slate-50">
+            <tbody className="divide-y divide-[#CAC8C0]/50 dark:divide-[#45433E]/50">
               {finalFilteredCustomers.map((customer) => (
-                <tr key={customer.customer_id || customer.id} className="hover:bg-slate-50/50 transition-all group">
+                <tr key={customer.customer_id || customer.id} className="hover:bg-[#F2EEE9]/50 dark:hover:bg-[#33322E]/50 transition-all group">
                   <td className="px-6 py-5">
                     <div className="flex items-center gap-3">
-                       <div className="w-9 h-9 rounded-full bg-slate-100 flex items-center justify-center text-slate-500 font-bold text-xs">
+                       <div className="w-9 h-9 rounded-full bg-[#F2EEE9] dark:bg-[#33322E] border border-[#CAC8C0] dark:border-[#45433E] flex items-center justify-center text-[#7A756F] dark:text-[#A8A39B] font-bold text-xs">
                           {(customer.customer_name || customer.name || 'C')[0].toUpperCase()}
                        </div>
                        <div>
-                          <p className="font-bold text-slate-900">{customer.customer_name || customer.name}</p>
-                          <p className="text-[10px] font-medium text-slate-400 uppercase">{customer.company_name || 'Individual'}</p>
+                          <p className="font-bold text-[#3E3B36] dark:text-[#EDE9E3]">{customer.customer_name || customer.name}</p>
+                          <p className="text-[10px] font-medium text-[#7A756F] dark:text-[#A8A39B] uppercase">{customer.company_name || 'Individual'}</p>
                        </div>
                     </div>
                   </td>
-                  <td className="px-6 py-5 text-slate-600 font-medium">{customer.phone || 'N/A'}</td>
-                  <td className="px-6 py-5 text-right font-black text-slate-900">₹{parseFloat(customer.total_billed || 0).toLocaleString('en-IN')}</td>
+                  <td className="px-6 py-5 text-[#7A756F] dark:text-[#A8A39B] font-medium">{customer.phone || 'N/A'}</td>
+                  <td className="px-6 py-5 text-right font-black text-[#3E3B36] dark:text-[#EDE9E3]">₹{parseFloat(customer.total_billed || 0).toLocaleString('en-IN')}</td>
                   <td className="px-6 py-5 text-right">
                     <span className={`inline-flex items-center gap-1.5 py-1 px-3 rounded-full text-[10px] font-bold uppercase tracking-widest border ${
                       parseFloat(customer.outstanding_dues || 0) > 0 
-                        ? 'bg-rose-50 text-red-600 border-red-100' 
-                        : 'bg-emerald-50 text-emerald-600 border-emerald-100'
+                        ? 'bg-[#D98A7B]/20 text-[#4A1D14] dark:text-[#D98A7B] border-[#D98A7B]/40' 
+                        : 'bg-[#B4E0CA]/30 text-[#1E3121] dark:text-[#B4E0CA] border-[#88A993]/40'
                     }`}>
                       ₹{parseFloat(customer.outstanding_dues || 0).toLocaleString('en-IN')}
                     </span>
                   </td>
                   <td className="px-6 py-5 text-right">
                      <div className="flex justify-end gap-2">
-                       <button onClick={() => startEdit(customer)} className="px-3 py-1.5 text-[10px] font-bold uppercase text-slate-900 hover:bg-slate-100 rounded-lg transition-all">Edit</button>
+                       <button onClick={() => startEdit(customer)} className="px-3 py-1.5 text-[10px] font-bold uppercase text-[#3E3B36] dark:text-[#EDE9E3] hover:bg-[#F2EEE9] dark:hover:bg-[#33322E] rounded-full transition-all">Edit</button>
                        <button onClick={() => handleWhatsAppReminder(customer)} className="px-3 py-1.5 text-[10px] font-bold uppercase text-[#1E3121] dark:text-[#B4E0CA] hover:bg-[#B4E0CA]/20 rounded-full transition-all">Remind</button>
-                       <Link href={`/customers/${customer.customer_id || customer.id}`} className="px-3 py-1.5 text-[10px] font-bold uppercase text-slate-400 hover:text-slate-900 hover:bg-slate-100 rounded-lg transition-all flex items-center justify-center">View</Link>
+                       <Link href={`/customers/${customer.customer_id || customer.id}`} className="px-3 py-1.5 text-[10px] font-bold uppercase text-[#7A756F] dark:text-[#A8A39B] hover:text-[#3E3B36] dark:hover:text-[#EDE9E3] hover:bg-[#F2EEE9] dark:hover:bg-[#33322E] rounded-full transition-all flex items-center justify-center">View</Link>
                      </div>
                   </td>
                 </tr>
               ))}
               {finalFilteredCustomers.length === 0 && (
                 <tr>
-                  <td colSpan={5} className="px-6 py-16 text-center text-slate-400 text-xs font-bold uppercase tracking-widest">
+                  <td colSpan={5} className="px-6 py-16 text-center text-[#7A756F] dark:text-[#A8A39B] text-xs font-bold uppercase tracking-widest">
                     No customers found
                   </td>
                 </tr>
@@ -269,43 +269,43 @@ export default function CustomersClient({ initialCustomers }: CustomersClientPro
         </div>
 
         {/* Mobile View Customer Cards */}
-        <div className="block md:hidden divide-y divide-slate-100 bg-white">
+        <div className="block md:hidden divide-y divide-[#CAC8C0]/50 dark:divide-[#45433E]/50 bg-[#E9E4DE] dark:bg-[#2A2926]">
           {finalFilteredCustomers.map((customer) => (
             <div key={customer.customer_id || customer.id} className="p-4 space-y-3">
               <div className="flex justify-between items-start">
                 <div className="flex items-center gap-3">
-                  <div className="w-9 h-9 rounded-full bg-slate-100 flex items-center justify-center text-slate-500 font-bold text-xs">
+                  <div className="w-9 h-9 rounded-full bg-[#F2EEE9] dark:bg-[#33322E] border border-[#CAC8C0] dark:border-[#45433E] flex items-center justify-center text-[#7A756F] dark:text-[#A8A39B] font-bold text-xs">
                      {(customer.customer_name || customer.name || 'C')[0].toUpperCase()}
                   </div>
                   <div>
-                    <p className="font-bold text-slate-900 text-sm">{customer.customer_name || customer.name}</p>
-                    <p className="text-[10px] font-medium text-slate-400 uppercase">{customer.company_name || 'Individual'}</p>
+                    <p className="font-bold text-[#3E3B36] dark:text-[#EDE9E3] text-sm">{customer.customer_name || customer.name}</p>
+                    <p className="text-[10px] font-medium text-[#7A756F] dark:text-[#A8A39B] uppercase">{customer.company_name || 'Individual'}</p>
                   </div>
                 </div>
                 <span className={`inline-flex items-center gap-1.5 py-1 px-2.5 rounded-full text-[9px] font-black uppercase tracking-widest border ${
                   parseFloat(customer.outstanding_dues || 0) > 0 
-                    ? 'bg-rose-50 text-red-600 border-red-100' 
-                    : 'bg-emerald-50 text-emerald-600 border-emerald-100'
+                    ? 'bg-[#D98A7B]/20 text-[#4A1D14] dark:text-[#D98A7B] border-[#D98A7B]/40' 
+                    : 'bg-[#B4E0CA]/30 text-[#1E3121] dark:text-[#B4E0CA] border-[#88A993]/40'
                 }`}>
                   ₹{parseFloat(customer.outstanding_dues || 0).toLocaleString('en-IN')}
                 </span>
               </div>
               
-              <div className="grid grid-cols-2 gap-4 bg-slate-50/50 p-2.5 rounded-xl border border-slate-100/50">
+              <div className="grid grid-cols-2 gap-4 bg-[#F2EEE9] dark:bg-[#33322E] p-2.5 rounded-[16px] border border-[#CAC8C0]/50 dark:border-[#45433E]/50">
                 <div>
-                  <p className="text-[9px] font-black text-slate-400 uppercase">Phone</p>
-                  <p className="font-semibold text-slate-700 text-xs mt-0.5">{customer.phone || 'N/A'}</p>
+                  <p className="text-[9px] font-black text-[#7A756F] dark:text-[#A8A39B] uppercase">Phone</p>
+                  <p className="font-semibold text-[#3E3B36] dark:text-[#EDE9E3] text-xs mt-0.5">{customer.phone || 'N/A'}</p>
                 </div>
                 <div>
-                  <p className="text-[9px] font-black text-slate-400 uppercase">Total Billed</p>
-                  <p className="font-black text-slate-900 text-xs mt-0.5">₹{parseFloat(customer.total_billed || 0).toLocaleString('en-IN')}</p>
+                  <p className="text-[9px] font-black text-[#7A756F] dark:text-[#A8A39B] uppercase">Total Billed</p>
+                  <p className="font-black text-[#3E3B36] dark:text-[#EDE9E3] text-xs mt-0.5">₹{parseFloat(customer.total_billed || 0).toLocaleString('en-IN')}</p>
                 </div>
               </div>
               
               <div className="flex justify-end gap-2">
                 <button 
                   onClick={() => startEdit(customer)} 
-                  className="px-3 py-1.5 bg-slate-50 text-[9px] font-black uppercase text-slate-650 rounded-xl hover:bg-slate-100 transition-all font-bold"
+                  className="px-3 py-1.5 bg-[#F2EEE9] dark:bg-[#33322E] text-[9px] font-black uppercase text-[#3E3B36] dark:text-[#EDE9E3] rounded-full hover:bg-[#CAC8C0]/30 transition-all font-bold border border-[#CAC8C0] dark:border-[#45433E]"
                 >
                   Edit
                 </button>
@@ -325,7 +325,7 @@ export default function CustomersClient({ initialCustomers }: CustomersClientPro
             </div>
           ))}
           {finalFilteredCustomers.length === 0 && (
-            <div className="p-16 text-center text-slate-400 text-[10px] font-black uppercase tracking-widest">
+            <div className="p-16 text-center text-[#7A756F] dark:text-[#A8A39B] text-[10px] font-black uppercase tracking-widest">
               No customers found
             </div>
           )}
@@ -334,46 +334,46 @@ export default function CustomersClient({ initialCustomers }: CustomersClientPro
 
       {/* Add/Edit Customer Modal */}
       {showAddModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/60 backdrop-blur-md px-4">
-          <div className="bg-white rounded-[2rem] shadow-2xl w-full max-w-lg overflow-hidden border border-slate-100">
-            <div className="p-8 border-b border-slate-50 flex justify-between items-center">
-              <h3 className="text-xl font-black text-slate-900">{editingCustomer ? 'Edit Customer' : 'Add New Customer'}</h3>
-              <button onClick={() => { setShowAddModal(false); resetForm(); }} className="text-slate-400 hover:text-slate-600 text-2xl font-light">&times;</button>
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-[#1F1E1B]/70 backdrop-blur-md px-4">
+          <div className="bg-[#E9E4DE] dark:bg-[#2A2926] rounded-[28px] shadow-warm-raised w-full max-w-lg overflow-hidden border border-[#CAC8C0] dark:border-[#45433E]">
+            <div className="p-6 md:p-8 border-b border-[#CAC8C0] dark:border-[#45433E] flex justify-between items-center">
+              <h3 className="text-xl font-black text-[#3E3B36] dark:text-[#EDE9E3]">{editingCustomer ? 'Edit Customer' : 'Add New Customer'}</h3>
+              <button onClick={() => { setShowAddModal(false); resetForm(); }} className="text-[#7A756F] dark:text-[#A8A39B] hover:text-[#3E3B36] dark:hover:text-[#EDE9E3] text-2xl font-light">&times;</button>
             </div>
-            <form onSubmit={handleSaveCustomer} className="p-8 space-y-5 max-h-[70vh] overflow-y-auto">
+            <form onSubmit={handleSaveCustomer} className="p-6 md:p-8 space-y-5 max-h-[70vh] overflow-y-auto">
                <div className="grid grid-cols-2 gap-5">
                   <div className="col-span-2">
-                    <label className="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1.5 ml-1">Customer Name *</label>
-                    <input type="text" required value={name} onChange={(e) => setName(e.target.value)} className="w-full border border-slate-200 rounded-xl px-4 py-3 text-sm focus:ring-2 focus:ring-primary outline-none transition-all" />
+                    <label className="block text-[10px] font-black text-[#7A756F] dark:text-[#A8A39B] uppercase tracking-widest mb-1.5 ml-1">Customer Name *</label>
+                    <input type="text" required value={name} onChange={(e) => setName(e.target.value)} className="w-full bg-[#F2EEE9] dark:bg-[#33322E] text-[#3E3B36] dark:text-[#EDE9E3] placeholder:text-[#7A756F] dark:placeholder:text-[#A8A39B] border border-[#CAC8C0] dark:border-[#45433E] rounded-full px-4 py-2.5 text-sm focus:ring-2 focus:ring-[#B4E0CA]/60 focus:border-[#88A993] caret-[#88A993] outline-none transition-all" />
                   </div>
                   <div className="col-span-2">
-                    <label className="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1.5 ml-1">Company Name</label>
-                    <input type="text" value={company} onChange={(e) => setCompany(e.target.value)} className="w-full border border-slate-200 rounded-xl px-4 py-3 text-sm focus:ring-2 focus:ring-primary outline-none transition-all" />
+                    <label className="block text-[10px] font-black text-[#7A756F] dark:text-[#A8A39B] uppercase tracking-widest mb-1.5 ml-1">Company Name</label>
+                    <input type="text" value={company} onChange={(e) => setCompany(e.target.value)} className="w-full bg-[#F2EEE9] dark:bg-[#33322E] text-[#3E3B36] dark:text-[#EDE9E3] placeholder:text-[#7A756F] dark:placeholder:text-[#A8A39B] border border-[#CAC8C0] dark:border-[#45433E] rounded-full px-4 py-2.5 text-sm focus:ring-2 focus:ring-[#B4E0CA]/60 focus:border-[#88A993] caret-[#88A993] outline-none transition-all" />
                   </div>
                   <div>
-                    <label className="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1.5 ml-1">Phone</label>
-                    <input type="text" value={phone} onChange={(e) => setPhone(e.target.value)} className="w-full border border-slate-200 rounded-xl px-4 py-3 text-sm focus:ring-2 focus:ring-primary outline-none transition-all" />
+                    <label className="block text-[10px] font-black text-[#7A756F] dark:text-[#A8A39B] uppercase tracking-widest mb-1.5 ml-1">Phone</label>
+                    <input type="text" value={phone} onChange={(e) => setPhone(e.target.value)} className="w-full bg-[#F2EEE9] dark:bg-[#33322E] text-[#3E3B36] dark:text-[#EDE9E3] placeholder:text-[#7A756F] dark:placeholder:text-[#A8A39B] border border-[#CAC8C0] dark:border-[#45433E] rounded-full px-4 py-2.5 text-sm focus:ring-2 focus:ring-[#B4E0CA]/60 focus:border-[#88A993] caret-[#88A993] outline-none transition-all" />
                   </div>
                   <div>
-                    <label className="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1.5 ml-1">Email</label>
-                    <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} className="w-full border border-slate-200 rounded-xl px-4 py-3 text-sm focus:ring-2 focus:ring-primary outline-none transition-all" />
+                    <label className="block text-[10px] font-black text-[#7A756F] dark:text-[#A8A39B] uppercase tracking-widest mb-1.5 ml-1">Email</label>
+                    <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} className="w-full bg-[#F2EEE9] dark:bg-[#33322E] text-[#3E3B36] dark:text-[#EDE9E3] placeholder:text-[#7A756F] dark:placeholder:text-[#A8A39B] border border-[#CAC8C0] dark:border-[#45433E] rounded-full px-4 py-2.5 text-sm focus:ring-2 focus:ring-[#B4E0CA]/60 focus:border-[#88A993] caret-[#88A993] outline-none transition-all" />
                   </div>
                   <div className="col-span-2">
-                    <label className="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1.5 ml-1">Address</label>
-                    <textarea value={address} onChange={(e) => setAddress(e.target.value)} className="w-full border border-slate-200 rounded-xl px-4 py-3 text-sm focus:ring-2 focus:ring-primary outline-none transition-all" rows={2}></textarea>
+                    <label className="block text-[10px] font-black text-[#7A756F] dark:text-[#A8A39B] uppercase tracking-widest mb-1.5 ml-1">Address</label>
+                    <textarea value={address} onChange={(e) => setAddress(e.target.value)} className="w-full bg-[#F2EEE9] dark:bg-[#33322E] text-[#3E3B36] dark:text-[#EDE9E3] placeholder:text-[#7A756F] dark:placeholder:text-[#A8A39B] border border-[#CAC8C0] dark:border-[#45433E] rounded-[20px] px-4 py-2.5 text-sm focus:ring-2 focus:ring-[#B4E0CA]/60 focus:border-[#88A993] caret-[#88A993] outline-none transition-all" rows={2}></textarea>
                   </div>
                   <div>
-                    <label className="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1.5 ml-1">GST Number</label>
-                    <input type="text" value={gst} onChange={(e) => setGst(e.target.value)} className="w-full border border-slate-200 rounded-xl px-4 py-3 text-sm focus:ring-2 focus:ring-primary outline-none transition-all" />
+                    <label className="block text-[10px] font-black text-[#7A756F] dark:text-[#A8A39B] uppercase tracking-widest mb-1.5 ml-1">GST Number</label>
+                    <input type="text" value={gst} onChange={(e) => setGst(e.target.value)} className="w-full bg-[#F2EEE9] dark:bg-[#33322E] text-[#3E3B36] dark:text-[#EDE9E3] placeholder:text-[#7A756F] dark:placeholder:text-[#A8A39B] border border-[#CAC8C0] dark:border-[#45433E] rounded-full px-4 py-2.5 text-sm focus:ring-2 focus:ring-[#B4E0CA]/60 focus:border-[#88A993] caret-[#88A993] outline-none transition-all" />
                   </div>
                   <div>
-                    <label className="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1.5 ml-1">Opening Balance (₹)</label>
-                    <input type="number" value={openingBalance} onChange={(e) => setOpeningBalance(e.target.value)} className="w-full border border-slate-200 rounded-xl px-4 py-3 text-sm focus:ring-2 focus:ring-primary outline-none transition-all" />
+                    <label className="block text-[10px] font-black text-[#7A756F] dark:text-[#A8A39B] uppercase tracking-widest mb-1.5 ml-1">Opening Balance (₹)</label>
+                    <input type="number" value={openingBalance} onChange={(e) => setOpeningBalance(e.target.value)} className="w-full bg-[#F2EEE9] dark:bg-[#33322E] text-[#3E3B36] dark:text-[#EDE9E3] placeholder:text-[#7A756F] dark:placeholder:text-[#A8A39B] border border-[#CAC8C0] dark:border-[#45433E] rounded-full px-4 py-2.5 text-sm focus:ring-2 focus:ring-[#B4E0CA]/60 focus:border-[#88A993] caret-[#88A993] outline-none transition-all" />
                   </div>
                </div>
                <div className="pt-6 flex flex-col sm:flex-row gap-3">
-                 <button type="button" onClick={() => { setShowAddModal(false); resetForm(); }} className="w-full sm:w-1/2 px-6 py-3 border border-slate-200 rounded-xl text-sm font-bold text-slate-600 hover:bg-slate-50 transition-all text-center">Cancel</button>
-                 <button type="submit" disabled={loading} className="w-full sm:w-1/2 px-6 py-3 bg-primary text-white rounded-xl text-sm font-bold hover:bg-green-600 shadow-lg shadow-green-100 transition-all disabled:opacity-50 text-center">
+                 <button type="button" onClick={() => { setShowAddModal(false); resetForm(); }} className="w-full sm:w-1/2 px-6 py-3 border border-[#CAC8C0] dark:border-[#45433E] rounded-full text-sm font-bold text-[#7A756F] dark:text-[#A8A39B] hover:text-[#3E3B36] dark:hover:text-[#EDE9E3] hover:bg-[#F2EEE9] dark:hover:bg-[#33322E] transition-all text-center">Cancel</button>
+                 <button type="submit" disabled={loading} className="w-full sm:w-1/2 tp-button-primary disabled:opacity-50 text-center">
                     {loading ? 'Processing...' : editingCustomer ? 'Update Profile' : 'Create Customer'}
                  </button>
                </div>

@@ -619,11 +619,11 @@ _Generated via TradersPro Accounting Systems_
     <div className="space-y-6 max-w-[1600px] mx-auto pb-10">
       <div className="flex sm:items-center justify-between flex-col sm:flex-row gap-4">
         <div>
-          <h2 className="text-xl font-bold text-slate-900">Reports</h2>
+          <h2 className="text-xl font-bold text-[#3E3B36] dark:text-[#EDE9E3]">Reports</h2>
         </div>
-        <div className="flex items-center gap-2 bg-white dark:bg-[#2A2926] px-4 py-2 rounded-full border border-slate-200 dark:border-[#45433E]">
+        <div className="flex items-center gap-2 bg-[#F2EEE9] dark:bg-[#33322E] px-4 py-2 rounded-full border border-[#CAC8C0] dark:border-[#45433E]">
           <Calendar className="h-4 w-4 text-[#1E3121] dark:text-[#B4E0CA]" />
-          <span className="text-xs font-bold text-slate-900 dark:text-white">May 2026</span>
+          <span className="text-xs font-bold text-[#3E3B36] dark:text-[#EDE9E3]">May 2026</span>
         </div>
       </div>
 
@@ -632,22 +632,22 @@ _Generated via TradersPro Accounting Systems_
         <div className="tp-card p-6 flex items-center gap-4">
            <div className="bg-[#B4E0CA]/40 p-3 rounded-full text-[#1E3121]"><TrendingUp className="h-5 w-5" /></div>
            <div>
-              <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Monthly Growth</p>
-              <p className="text-xl font-black text-slate-900 dark:text-white">+{computedGrowth.toFixed(1)}%</p>
+              <p className="text-[10px] font-bold text-[#7A756F] dark:text-[#A8A39B] uppercase tracking-widest">Monthly Growth</p>
+              <p className="text-xl font-black text-[#3E3B36] dark:text-[#EDE9E3]">+{computedGrowth.toFixed(1)}%</p>
            </div>
         </div>
         <div className="tp-card p-6 flex items-center gap-4">
            <div className="bg-[#B4E0CA]/40 p-3 rounded-full text-[#1E3121]"><ShieldCheck className="h-5 w-5" /></div>
            <div>
-              <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Collection Rate</p>
-              <p className="text-xl font-black text-slate-900 dark:text-white">{collectionRate.toFixed(1)}%</p>
+              <p className="text-[10px] font-bold text-[#7A756F] dark:text-[#A8A39B] uppercase tracking-widest">Collection Rate</p>
+              <p className="text-xl font-black text-[#3E3B36] dark:text-[#EDE9E3]">{collectionRate.toFixed(1)}%</p>
            </div>
         </div>
         <div className="tp-card p-6 flex items-center gap-4">
            <div className="bg-[#B4E0CA]/40 p-3 rounded-full text-[#1E3121]"><PieChart className="h-5 w-5" /></div>
            <div>
-              <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Profit Margin</p>
-              <p className="text-xl font-black text-slate-900 dark:text-white">{avgMargin.toFixed(1)}%</p>
+              <p className="text-[10px] font-bold text-[#7A756F] dark:text-[#A8A39B] uppercase tracking-widest">Profit Margin</p>
+              <p className="text-xl font-black text-[#3E3B36] dark:text-[#EDE9E3]">{avgMargin.toFixed(1)}%</p>
            </div>
         </div>
       </div>
@@ -669,7 +669,7 @@ _Generated via TradersPro Accounting Systems_
                   title="Download PDF"
                   className="p-2 hover:bg-slate-100 rounded-lg transition-all cursor-pointer disabled:opacity-50"
                 >
-                  {loadingReport === 'daily_export' ? <Loader2 className="h-4 w-4 animate-spin" /> : <Download className="h-4 w-4 text-slate-500" />}
+                  {loadingReport === 'daily_export' ? <Loader2 className="h-4 w-4 animate-spin" /> : <Download className="h-4 w-4 text-[#7A756F] dark:text-[#A8A39B]" />}
                 </button>
                 <button 
                   onClick={handleShareDailySales}
@@ -682,12 +682,12 @@ _Generated via TradersPro Accounting Systems_
               </div>
             </div>
             <div className="mt-4">
-              <h3 className="text-base font-bold text-slate-900">Daily Sales Report</h3>
-              <p className="text-xs text-slate-500 mt-1 leading-relaxed">Summary of all sales made today across all categories.</p>
+              <h3 className="text-base font-bold text-[#3E3B36] dark:text-[#EDE9E3]">Daily Sales Report</h3>
+              <p className="text-xs text-[#7A756F] dark:text-[#A8A39B] mt-1 leading-relaxed">Summary of all sales made today across all categories.</p>
             </div>
           </div>
           <div className="mt-6 pt-4 border-t border-slate-50 flex items-center justify-between">
-            <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Type: Sales Ledger</span>
+            <span className="text-[10px] font-bold text-[#7A756F] dark:text-[#A8A39B] uppercase tracking-widest">Type: Sales Ledger</span>
             <div className="flex gap-4">
               <button 
                 onClick={handleExportDailySales}
@@ -720,7 +720,7 @@ _Generated via TradersPro Accounting Systems_
                   title="Select & Download"
                   className="p-2 hover:bg-slate-100 rounded-lg transition-all cursor-pointer"
                 >
-                  <Download className="h-4 w-4 text-slate-500" />
+                  <Download className="h-4 w-4 text-[#7A756F] dark:text-[#A8A39B]" />
                 </button>
                 <button 
                   onClick={() => { setLedgerActionType('share'); setShowLedgerModal(true); }}
@@ -732,12 +732,12 @@ _Generated via TradersPro Accounting Systems_
               </div>
             </div>
             <div className="mt-4">
-              <h3 className="text-base font-bold text-slate-900">Customer Ledger</h3>
-              <p className="text-xs text-slate-500 mt-1 leading-relaxed">Detailed chronological debit/credit statement history for any customer.</p>
+              <h3 className="text-base font-bold text-[#3E3B36] dark:text-[#EDE9E3]">Customer Ledger</h3>
+              <p className="text-xs text-[#7A756F] dark:text-[#A8A39B] mt-1 leading-relaxed">Detailed chronological debit/credit statement history for any customer.</p>
             </div>
           </div>
           <div className="mt-6 pt-4 border-t border-slate-50 flex items-center justify-between">
-            <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Type: Ledger Statement</span>
+            <span className="text-[10px] font-bold text-[#7A756F] dark:text-[#A8A39B] uppercase tracking-widest">Type: Ledger Statement</span>
             <div className="flex gap-4">
               <button 
                 onClick={() => { setLedgerActionType('export'); setShowLedgerModal(true); }}
@@ -769,7 +769,7 @@ _Generated via TradersPro Accounting Systems_
                   title="Download PDF"
                   className="p-2 hover:bg-slate-100 rounded-lg transition-all cursor-pointer disabled:opacity-50"
                 >
-                  {loadingReport === 'stock_export' ? <Loader2 className="h-4 w-4 animate-spin" /> : <Download className="h-4 w-4 text-slate-500" />}
+                  {loadingReport === 'stock_export' ? <Loader2 className="h-4 w-4 animate-spin" /> : <Download className="h-4 w-4 text-[#7A756F] dark:text-[#A8A39B]" />}
                 </button>
                 <button 
                   onClick={handleShareStockMovement}
@@ -782,12 +782,12 @@ _Generated via TradersPro Accounting Systems_
               </div>
             </div>
             <div className="mt-4">
-              <h3 className="text-base font-bold text-slate-900">Stock Status</h3>
-              <p className="text-xs text-slate-500 mt-1 leading-relaxed">Track inventory stock levels, categories, rates and alerts.</p>
+              <h3 className="text-base font-bold text-[#3E3B36] dark:text-[#EDE9E3]">Stock Status</h3>
+              <p className="text-xs text-[#7A756F] dark:text-[#A8A39B] mt-1 leading-relaxed">Track inventory stock levels, categories, rates and alerts.</p>
             </div>
           </div>
           <div className="mt-6 pt-4 border-t border-slate-50 flex items-center justify-between">
-            <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Type: Inventory Status</span>
+            <span className="text-[10px] font-bold text-[#7A756F] dark:text-[#A8A39B] uppercase tracking-widest">Type: Inventory Status</span>
             <div className="flex gap-4">
               <button 
                 onClick={handleExportStockMovement}
@@ -821,7 +821,7 @@ _Generated via TradersPro Accounting Systems_
                   title="Download PDF"
                   className="p-2 hover:bg-slate-100 rounded-lg transition-all cursor-pointer disabled:opacity-50"
                 >
-                  {loadingReport === 'collections_export' ? <Loader2 className="h-4 w-4 animate-spin" /> : <Download className="h-4 w-4 text-slate-500" />}
+                  {loadingReport === 'collections_export' ? <Loader2 className="h-4 w-4 animate-spin" /> : <Download className="h-4 w-4 text-[#7A756F] dark:text-[#A8A39B]" />}
                 </button>
                 <button 
                   onClick={handleSharePaymentCollections}
@@ -834,12 +834,12 @@ _Generated via TradersPro Accounting Systems_
               </div>
             </div>
             <div className="mt-4">
-              <h3 className="text-base font-bold text-slate-900">Payment Collections</h3>
-              <p className="text-xs text-slate-500 mt-1 leading-relaxed">Analysis of pending vs received payments and overall collection rates.</p>
+              <h3 className="text-base font-bold text-[#3E3B36] dark:text-[#EDE9E3]">Payment Collections</h3>
+              <p className="text-xs text-[#7A756F] dark:text-[#A8A39B] mt-1 leading-relaxed">Analysis of pending vs received payments and overall collection rates.</p>
             </div>
           </div>
           <div className="mt-6 pt-4 border-t border-slate-50 flex items-center justify-between">
-            <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Type: Cash Collection</span>
+            <span className="text-[10px] font-bold text-[#7A756F] dark:text-[#A8A39B] uppercase tracking-widest">Type: Cash Collection</span>
             <div className="flex gap-4">
               <button 
                 onClick={handleExportPaymentCollections}
@@ -863,14 +863,14 @@ _Generated via TradersPro Accounting Systems_
 
       {/* Select Customer Ledger Modal */}
       {showLedgerModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/60 backdrop-blur-md px-4">
-          <div className="bg-white rounded-[2rem] shadow-2xl w-full max-w-md overflow-hidden border border-slate-100">
-            <div className="p-8 border-b border-slate-50 flex justify-between items-center bg-slate-50/50">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-[#1F1E1B]/70 backdrop-blur-md px-4">
+          <div className="bg-[#E9E4DE] dark:bg-[#2A2926] rounded-[28px] shadow-warm-raised w-full max-w-md overflow-hidden border border-[#CAC8C0] dark:border-[#45433E]">
+            <div className="p-6 border-b border-[#CAC8C0] dark:border-[#45433E] flex justify-between items-center bg-[#F2EEE9]/50 dark:bg-[#33322E]/50">
               <div>
-                <h3 className="text-lg font-black text-slate-900 uppercase tracking-widest">
+                <h3 className="text-lg font-black text-[#3E3B36] dark:text-[#EDE9E3] uppercase tracking-widest">
                   {ledgerActionType === 'export' ? 'Export Customer Ledger' : 'Share Customer Ledger'}
                 </h3>
-                <p className="text-xs text-slate-400 font-medium">
+                <p className="text-xs text-[#7A756F] dark:text-[#A8A39B] font-medium">
                   {ledgerActionType === 'export' 
                     ? 'Select a customer to generate a detailed timeline statement' 
                     : 'Select a customer to upload ledger and generate a share link'}
@@ -878,7 +878,7 @@ _Generated via TradersPro Accounting Systems_
               </div>
               <button 
                 onClick={() => setShowLedgerModal(false)}
-                className="p-1.5 rounded-xl hover:bg-slate-100 text-slate-400 hover:text-slate-600 transition-all cursor-pointer"
+                className="p-1.5 rounded-xl hover:bg-[#F2EEE9] dark:hover:bg-[#33322E] text-[#7A756F] dark:text-[#A8A39B] hover:text-[#3E3B36] dark:hover:text-[#EDE9E3] transition-all cursor-pointer"
               >
                 <X className="h-5 w-5" />
               </button>
@@ -886,11 +886,11 @@ _Generated via TradersPro Accounting Systems_
             
             <div className="p-8 space-y-6">
               <div>
-                <label className="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1.5 ml-1">Choose Customer *</label>
+                <label className="block text-[10px] font-black text-[#7A756F] dark:text-[#A8A39B] uppercase tracking-widest mb-1.5 ml-1">Choose Customer *</label>
                 <select 
                   value={selectedLedgerCustomerId}
                   onChange={(e) => setSelectedLedgerCustomerId(e.target.value)}
-                  className="w-full px-4 py-3 border border-slate-200 rounded-xl text-sm focus:ring-2 focus:ring-primary outline-none bg-white transition-all font-medium"
+                  className="w-full px-4 py-3 border border-[#CAC8C0] dark:border-[#45433E] rounded-full text-sm focus:ring-2 focus:ring-[#B4E0CA]/60 outline-none bg-[#F2EEE9] dark:bg-[#33322E] text-[#3E3B36] dark:text-[#EDE9E3] transition-all font-medium"
                 >
                   <option value="">Select Customer</option>
                   {customers.map(c => (
@@ -903,7 +903,7 @@ _Generated via TradersPro Accounting Systems_
                 <button 
                   type="button" 
                   onClick={() => setShowLedgerModal(false)}
-                  className="flex-1 px-6 py-3 border border-slate-200 rounded-xl text-xs font-black uppercase tracking-widest text-slate-600 hover:bg-slate-50 transition-all cursor-pointer"
+                  className="flex-1 px-6 py-3 border border-[#CAC8C0] dark:border-[#45433E] rounded-full text-xs font-black uppercase tracking-widest text-[#7A756F] dark:text-[#A8A39B] hover:text-[#3E3B36] dark:hover:text-[#EDE9E3] hover:bg-[#F2EEE9] dark:hover:bg-[#33322E] transition-all cursor-pointer"
                 >
                   Cancel
                 </button>

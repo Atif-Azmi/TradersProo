@@ -1,6 +1,7 @@
 import type { Config } from "tailwindcss";
 
 const config: Config = {
+  darkMode: ['class', '[data-theme="dark"]'],
   content: [
     "./pages/**/*.{js,ts,jsx,tsx,mdx}",
     "./components/**/*.{js,ts,jsx,tsx,mdx}",
@@ -13,9 +14,12 @@ const config: Config = {
         input: "var(--border, #CAC8C0)",
         ring: "#88A993",
         background: "var(--background, #E0DCD6)",
+        onBackground: "var(--ink, #3E3B36)",
         foreground: "var(--ink, #3E3B36)",
         surface: "var(--surface, #E9E4DE)",
+        onSurface: "var(--ink, #3E3B36)",
         surfaceRaised: "var(--surface-raised, #F2EEE9)",
+        onSurfaceRaised: "var(--ink, #3E3B36)",
         ink: {
           DEFAULT: "var(--ink, #3E3B36)",
           secondary: "var(--ink-secondary, #7A756F)",
@@ -38,14 +42,17 @@ const config: Config = {
           DEFAULT: "#E3D094",
           text: "#4A3F12",
         },
+        onWarning: "#4A3F12",
         danger: {
           DEFAULT: "#D98A7B",
           text: "#4A1D14",
         },
+        onDanger: "#4A1D14",
         info: {
           DEFAULT: "#9DB8C9",
           text: "#1F3441",
         },
+        onInfo: "#1F3441",
         secondary: {
           DEFAULT: "var(--surface, #E9E4DE)",
           foreground: "var(--ink, #3E3B36)",

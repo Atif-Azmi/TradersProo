@@ -192,15 +192,15 @@ _TradersPro — Professional Billing Suite_
   return (
     <div className="space-y-6 max-w-[1600px] mx-auto pb-10">
       <div>
-        <h2 className="text-xl font-bold text-slate-900">Subscription</h2>
+        <h2 className="text-xl font-bold text-[#3E3B36] dark:text-[#EDE9E3]">Subscription</h2>
       </div>
 
       {/* Subscription Status Snapshot */}
       <div className="grid gap-6 md:grid-cols-3">
         <div className="tp-card p-6 flex flex-col justify-between md:col-span-1">
           <div>
-            <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1">Account Status</p>
-            <p className="text-xl font-black text-slate-900 uppercase tracking-tight italic">
+            <p className="text-[10px] font-bold text-[#7A756F] dark:text-[#A8A39B] uppercase tracking-widest mb-1">Account Status</p>
+            <p className="text-xl font-black text-[#3E3B36] dark:text-[#EDE9E3] uppercase tracking-tight italic">
               {isElite ? 'Elite Active Pass' : 'Trial Period'}
             </p>
             <div className="w-full bg-slate-100 rounded-full h-2 mt-4 mb-4 overflow-hidden">
@@ -210,16 +210,16 @@ _TradersPro — Professional Billing Suite_
               ></div>
             </div>
           </div>
-          <div className="flex items-center gap-2 text-[10px] font-bold text-slate-400 uppercase tracking-widest pt-2 border-t border-slate-50">
+          <div className="flex items-center gap-2 text-[10px] font-bold text-[#7A756F] dark:text-[#A8A39B] uppercase tracking-widest pt-2 border-t border-[#CAC8C0]/50 dark:border-[#45433E]/50">
             {isElite ? (
               <span className="text-emerald-600 font-bold flex items-center gap-1.5 w-full">
                 <CheckCircle2 className="h-4 w-4 text-emerald-500 shrink-0" />
-                <span>Active until <span className="text-slate-900">{expiryDateString}</span> ({daysLeft} days left)</span>
+                <span>Active until <span className="text-[#3E3B36] dark:text-[#EDE9E3]">{expiryDateString}</span> ({daysLeft} days left)</span>
               </span>
             ) : (
-              <span className="text-slate-400 font-bold flex items-center gap-1.5 w-full">
+              <span className="text-[#7A756F] dark:text-[#A8A39B] font-bold flex items-center gap-1.5 w-full">
                 <ShieldAlert className="h-4 w-4 text-[#1E3121] dark:text-[#B4E0CA] shrink-0" />
-                <span>Expires in <span className="text-slate-900">{daysLeft} business days</span></span>
+                <span>Expires in <span className="text-[#3E3B36] dark:text-[#EDE9E3]">{daysLeft} business days</span></span>
               </span>
             )}
           </div>
@@ -249,7 +249,7 @@ _TradersPro — Professional Billing Suite_
                 <span className="text-5xl font-extrabold tracking-tight text-[#B4E0CA] drop-shadow-[0_4px_12px_rgba(180,224,202,0.3)]">
                   ₹7,959
                 </span>
-                <span className="text-xs font-bold uppercase tracking-widest text-slate-400">
+                <span className="text-xs font-bold uppercase tracking-widest text-[#7A756F] dark:text-[#A8A39B]">
                   / Year
                 </span>
               </div>

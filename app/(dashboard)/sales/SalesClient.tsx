@@ -297,7 +297,7 @@ export default function SalesClient({ userId, initialSales, shopProfile }: Sales
     <div className="space-y-6 max-w-[1600px] mx-auto pb-10">
       <div className="flex sm:items-center justify-between flex-col sm:flex-row gap-4">
         <div>
-          <h2 className="text-xl font-bold text-slate-900">Sales & Billing</h2>
+          <h2 className="text-xl font-bold text-[#3E3B36] dark:text-[#EDE9E3]">Sales & Billing</h2>
         </div>
         <Link href="/sales/new" className="tp-button-primary flex items-center gap-2">
           <Plus className="h-4 w-4" /> New Sale
@@ -309,40 +309,44 @@ export default function SalesClient({ userId, initialSales, shopProfile }: Sales
         <div className="tp-card p-6 flex items-center gap-4">
            <div className="bg-[#B4E0CA]/40 p-3 rounded-full text-[#1E3121]"><Plus className="h-5 w-5" /></div>
            <div>
-              <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Today's Sales</p>
-              <p className="text-xl font-black text-slate-900">₹{todaysSales.toLocaleString('en-IN')}</p>
+              <p className="text-[10px] font-bold text-[#7A756F] dark:text-[#A8A39B] uppercase tracking-widest">Today's Sales</p>
+              <p className="text-xl font-black text-[#3E3B36] dark:text-[#EDE9E3]">₹{todaysSales.toLocaleString('en-IN')}</p>
            </div>
         </div>
         <div className="tp-card p-6 flex items-center gap-4">
-           <div className="bg-amber-50 p-3 rounded-full text-amber-600"><TrendingDown className="h-5 w-5" /></div>
+           <div className="bg-[#E3D094]/30 p-3 rounded-full text-[#4A3F12] dark:text-[#E3D094]"><TrendingDown className="h-5 w-5" /></div>
            <div>
-              <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Pending</p>
-              <p className="text-xl font-black text-amber-600">₹{totalPending.toLocaleString('en-IN')}</p>
+              <p className="text-[10px] font-bold text-[#7A756F] dark:text-[#A8A39B] uppercase tracking-widest">Pending</p>
+              <p className="text-xl font-black text-[#4A3F12] dark:text-[#E3D094]">₹{totalPending.toLocaleString('en-IN')}</p>
            </div>
         </div>
         <div className="tp-card p-6 flex items-center gap-4">
            <div className="bg-[#B4E0CA]/40 p-3 rounded-full text-[#1E3121]"><Plus className="h-5 w-5" /></div>
            <div>
-              <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Total Invoiced</p>
-              <p className="text-xl font-black text-slate-900">₹{totalInvoiced.toLocaleString('en-IN')}</p>
+              <p className="text-[10px] font-bold text-[#7A756F] dark:text-[#A8A39B] uppercase tracking-widest">Total Invoiced</p>
+              <p className="text-xl font-black text-[#3E3B36] dark:text-[#EDE9E3]">₹{totalInvoiced.toLocaleString('en-IN')}</p>
            </div>
         </div>
       </div>
 
-      <div className="flex flex-col sm:flex-row gap-4 justify-between bg-white p-4 rounded-xl border border-slate-100 shadow-sm">
+      <div className="flex flex-col sm:flex-row gap-4 justify-between bg-[#E9E4DE] dark:bg-[#2A2926] p-4 rounded-[20px] border border-[#CAC8C0] dark:border-[#45433E] shadow-warm-card">
         <div className="flex gap-2 text-[10px] font-black uppercase tracking-widest overflow-x-auto">
           {['All', 'Paid', 'Partial', 'Pending'].map(f => (
             <button key={f} onClick={() => setFilter(f)}
-              className={`px-4 py-2 rounded-xl transition-all whitespace-nowrap ${filter === f ? 'bg-slate-900 text-white' : 'bg-slate-50 text-slate-500 hover:bg-slate-100'}`}>
+              className={`px-4 py-2 rounded-full transition-all whitespace-nowrap ${
+                filter === f 
+                  ? 'bg-[#B4E0CA] text-[#1E3121] shadow-warm-pill font-black' 
+                  : 'bg-[#F2EEE9] dark:bg-[#33322E] text-[#7A756F] dark:text-[#A8A39B] border border-[#CAC8C0] dark:border-[#45433E] hover:text-[#3E3B36] dark:hover:text-[#EDE9E3]'
+              }`}>
               {f}
             </button>
           ))}
         </div>
         <div className="relative w-full sm:max-w-xs">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400" />
+          <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-[#7A756F] dark:text-[#A8A39B] pointer-events-none" />
           <input type="text" placeholder="Search invoice or customer..." value={search}
             onChange={e => setSearch(e.target.value)}
-            className="w-full pl-9 pr-4 py-2 text-sm border border-[#CAC8C0] dark:border-[#45433E] rounded-full focus:ring-2 focus:ring-[#B4E0CA]/60 focus:border-[#88A993] outline-none transition-all" />
+            className="w-full pl-10 pr-4 py-2 text-sm bg-[#F2EEE9] dark:bg-[#33322E] text-[#3E3B36] dark:text-[#EDE9E3] placeholder:text-[#7A756F] dark:placeholder:text-[#A8A39B] placeholder:opacity-100 border border-[#CAC8C0] dark:border-[#45433E] rounded-full focus:ring-2 focus:ring-[#B4E0CA]/60 focus:border-[#88A993] caret-[#88A993] outline-none transition-all" />
         </div>
       </div>
 
@@ -350,7 +354,7 @@ export default function SalesClient({ userId, initialSales, shopProfile }: Sales
         {/* Desktop View Table */}
         <div className="hidden md:block overflow-x-auto">
           <table className="w-full text-sm text-left">
-            <thead className="text-[10px] font-bold text-slate-400 uppercase bg-slate-50/50 tracking-widest">
+            <thead className="text-[10px] font-bold text-[#3E3B36] dark:text-[#EDE9E3] uppercase bg-[#F2EEE9] dark:bg-[#33322E] tracking-widest border-b border-[#CAC8C0] dark:border-[#45433E]">
               <tr>
                 <th className="px-6 py-4">Invoice #</th>
                 <th className="px-6 py-4">Date</th>
@@ -362,33 +366,33 @@ export default function SalesClient({ userId, initialSales, shopProfile }: Sales
                 <th className="px-6 py-4 text-right">Actions</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-slate-50">
+            <tbody className="divide-y divide-[#CAC8C0]/50 dark:divide-[#45433E]/50">
               {filteredSales.map(sale => {
                 const balance = getBalance(sale)
                 return (
-                  <tr key={sale.id} className="hover:bg-slate-50/50 transition-all group">
+                  <tr key={sale.id} className="hover:bg-[#F2EEE9]/50 dark:hover:bg-[#33322E]/50 transition-all group">
                     <td className="px-6 py-5">
                       <Link href={`/sales/${sale.id}`} className="font-bold text-[#1E3121] dark:text-[#B4E0CA] hover:underline">#{sale.invoice_number || '—'}</Link>
                     </td>
-                    <td className="px-6 py-5 text-slate-500 font-medium">{new Date(sale.invoice_date).toLocaleDateString('en-IN')}</td>
+                    <td className="px-6 py-5 text-[#7A756F] dark:text-[#A8A39B] font-medium">{new Date(sale.invoice_date).toLocaleDateString('en-IN')}</td>
                     <td className="px-6 py-5">
                       <div className="flex items-center gap-3">
-                         <div className="w-9 h-9 rounded-full bg-slate-100 flex items-center justify-center text-slate-500 font-bold text-xs">
+                         <div className="w-9 h-9 rounded-full bg-[#F2EEE9] dark:bg-[#33322E] border border-[#CAC8C0] dark:border-[#45433E] flex items-center justify-center text-[#7A756F] dark:text-[#A8A39B] font-bold text-xs">
                             {(sale.tp_customers?.name || 'W')[0].toUpperCase()}
                          </div>
                          <div>
-                            <p className="font-bold text-slate-900">{sale.tp_customers?.name || 'Walk-in'}</p>
+                            <p className="font-bold text-[#3E3B36] dark:text-[#EDE9E3]">{sale.tp_customers?.name || 'Walk-in'}</p>
                          </div>
                       </div>
                     </td>
-                    <td className="px-6 py-5 text-right font-black text-slate-900">₹{parseFloat(sale.total_amount || 0).toLocaleString('en-IN')}</td>
-                    <td className="px-6 py-5 text-right font-bold text-emerald-600">₹{parseFloat(sale.amount_paid || 0).toLocaleString('en-IN')}</td>
-                    <td className="px-6 py-5 text-right font-bold text-rose-600">₹{balance.toLocaleString('en-IN')}</td>
+                    <td className="px-6 py-5 text-right font-black text-[#3E3B36] dark:text-[#EDE9E3]">₹{parseFloat(sale.total_amount || 0).toLocaleString('en-IN')}</td>
+                    <td className="px-6 py-5 text-right font-bold text-[#1E3121] dark:text-[#B4E0CA]">₹{parseFloat(sale.amount_paid || 0).toLocaleString('en-IN')}</td>
+                    <td className="px-6 py-5 text-right font-bold text-[#4A1D14] dark:text-[#D98A7B]">₹{balance.toLocaleString('en-IN')}</td>
                     <td className="px-6 py-5 text-center">
                       <span className={`inline-flex items-center gap-1.5 py-1 px-3 rounded-full text-[10px] font-bold uppercase tracking-widest border ${
-                        sale.payment_status === 'paid' ? 'bg-emerald-50 text-emerald-600 border-emerald-100'
-                        : sale.payment_status === 'partial' ? 'bg-amber-50 text-amber-600 border-amber-100'
-                        : 'bg-rose-50 text-red-600 border-red-100'}`}>
+                        sale.payment_status === 'paid' ? 'bg-[#B4E0CA]/30 text-[#1E3121] dark:text-[#B4E0CA] border-[#88A993]/40'
+                        : sale.payment_status === 'partial' ? 'bg-[#E3D094]/30 text-[#4A3F12] dark:text-[#E3D094] border-[#E3D094]/60'
+                        : 'bg-[#D98A7B]/20 text-[#4A1D14] dark:text-[#D98A7B] border-[#D98A7B]/40'}`}>
                         {sale.payment_status}
                       </span>
                     </td>
@@ -401,11 +405,11 @@ export default function SalesClient({ userId, initialSales, shopProfile }: Sales
                           </button>
                         )}
                         <button onClick={() => handlePrintBill(sale)}
-                          className="px-3 py-1.5 text-[10px] font-bold uppercase text-slate-900 hover:bg-slate-100 rounded-lg transition-all">
+                          className="px-3 py-1.5 text-[10px] font-bold uppercase text-[#3E3B36] dark:text-[#EDE9E3] hover:bg-[#F2EEE9] dark:hover:bg-[#33322E] rounded-full transition-all">
                           Print
                         </button>
                         <button onClick={() => handleWhatsApp(sale)}
-                          className="px-3 py-1.5 text-[10px] font-bold uppercase text-emerald-600 hover:bg-emerald-50 rounded-lg transition-all">
+                          className="px-3 py-1.5 text-[10px] font-bold uppercase text-[#1E3121] dark:text-[#B4E0CA] hover:bg-[#B4E0CA]/20 rounded-full transition-all">
                           Share
                         </button>
                       </div>
@@ -414,14 +418,14 @@ export default function SalesClient({ userId, initialSales, shopProfile }: Sales
                 )
               })}
               {filteredSales.length === 0 && (
-                <tr><td colSpan={8} className="px-6 py-16 text-center text-slate-400 text-xs font-bold uppercase tracking-widest">No invoices found</td></tr>
+                <tr><td colSpan={8} className="px-6 py-16 text-center text-[#7A756F] dark:text-[#A8A39B] text-xs font-bold uppercase tracking-widest">No invoices found</td></tr>
               )}
             </tbody>
           </table>
         </div>
 
         {/* Mobile Responsive Cards View */}
-        <div className="block md:hidden divide-y divide-slate-100 bg-white">
+        <div className="block md:hidden divide-y divide-[#CAC8C0]/50 dark:divide-[#45433E]/50 bg-[#E9E4DE] dark:bg-[#2A2926]">
           {filteredSales.map(sale => {
             const balance = getBalance(sale)
             return (
@@ -431,37 +435,37 @@ export default function SalesClient({ userId, initialSales, shopProfile }: Sales
                     <Link href={`/sales/${sale.id}`} className="font-black text-[#1E3121] dark:text-[#B4E0CA] text-sm hover:underline">
                       #{sale.invoice_number || '—'}
                     </Link>
-                    <p className="text-[10px] font-bold text-slate-400 mt-1 uppercase tracking-tight">
+                    <p className="text-[10px] font-bold text-[#7A756F] dark:text-[#A8A39B] mt-1 uppercase tracking-tight">
                       {new Date(sale.invoice_date).toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: 'numeric' })}
                     </p>
                   </div>
                   <span className={`inline-flex items-center py-1 px-2.5 rounded-full text-[9px] font-black uppercase tracking-widest border ${
-                    sale.payment_status === 'paid' ? 'bg-emerald-50 text-emerald-600 border-emerald-100'
-                    : sale.payment_status === 'partial' ? 'bg-amber-50 text-amber-600 border-amber-100'
-                    : 'bg-rose-50 text-red-600 border-red-100'}`}>
+                    sale.payment_status === 'paid' ? 'bg-[#B4E0CA]/30 text-[#1E3121] dark:text-[#B4E0CA] border-[#88A993]/40'
+                    : sale.payment_status === 'partial' ? 'bg-[#E3D094]/30 text-[#4A3F12] dark:text-[#E3D094] border-[#E3D094]/60'
+                    : 'bg-[#D98A7B]/20 text-[#4A1D14] dark:text-[#D98A7B] border-[#D98A7B]/40'}`}>
                     {sale.payment_status}
                   </span>
                 </div>
                 
                 <div className="flex items-center gap-3">
-                  <div className="w-8 h-8 rounded-full bg-slate-100 flex items-center justify-center text-slate-500 font-bold text-xs">
+                  <div className="w-8 h-8 rounded-full bg-[#F2EEE9] dark:bg-[#33322E] border border-[#CAC8C0] dark:border-[#45433E] flex items-center justify-center text-[#7A756F] dark:text-[#A8A39B] font-bold text-xs">
                     {(sale.tp_customers?.name || 'W')[0].toUpperCase()}
                   </div>
-                  <p className="font-bold text-slate-955 text-xs">{sale.tp_customers?.name || 'Walk-in'}</p>
+                  <p className="font-bold text-[#3E3B36] dark:text-[#EDE9E3] text-xs">{sale.tp_customers?.name || 'Walk-in'}</p>
                 </div>
                 
-                <div className="grid grid-cols-3 gap-2 bg-slate-50/50 p-2.5 rounded-xl border border-slate-100/50 text-center">
+                <div className="grid grid-cols-3 gap-2 bg-[#F2EEE9] dark:bg-[#33322E] p-2.5 rounded-[16px] border border-[#CAC8C0]/50 dark:border-[#45433E]/50 text-center">
                   <div>
-                    <p className="text-[9px] font-black text-slate-400 uppercase">Total</p>
-                    <p className="font-black text-slate-900 text-xs mt-0.5">₹{parseFloat(sale.total_amount || 0).toLocaleString('en-IN')}</p>
+                    <p className="text-[9px] font-black text-[#7A756F] dark:text-[#A8A39B] uppercase">Total</p>
+                    <p className="font-black text-[#3E3B36] dark:text-[#EDE9E3] text-xs mt-0.5">₹{parseFloat(sale.total_amount || 0).toLocaleString('en-IN')}</p>
                   </div>
                   <div>
-                    <p className="text-[9px] font-black text-slate-400 uppercase">Paid</p>
-                    <p className="font-bold text-emerald-600 text-xs mt-0.5">₹{parseFloat(sale.amount_paid || 0).toLocaleString('en-IN')}</p>
+                    <p className="text-[9px] font-black text-[#7A756F] dark:text-[#A8A39B] uppercase">Paid</p>
+                    <p className="font-bold text-[#1E3121] dark:text-[#B4E0CA] text-xs mt-0.5">₹{parseFloat(sale.amount_paid || 0).toLocaleString('en-IN')}</p>
                   </div>
                   <div>
-                    <p className="text-[9px] font-black text-slate-400 uppercase">Due</p>
-                    <p className="font-bold text-rose-600 text-xs mt-0.5">₹{balance.toLocaleString('en-IN')}</p>
+                    <p className="text-[9px] font-black text-[#7A756F] dark:text-[#A8A39B] uppercase">Due</p>
+                    <p className="font-bold text-[#4A1D14] dark:text-[#D98A7B] text-xs mt-0.5">₹{balance.toLocaleString('en-IN')}</p>
                   </div>
                 </div>
                 
@@ -473,11 +477,11 @@ export default function SalesClient({ userId, initialSales, shopProfile }: Sales
                     </button>
                   )}
                   <button onClick={() => handlePrintBill(sale)}
-                    className="px-3 py-1.5 bg-slate-50 text-[9px] font-black uppercase text-slate-600 rounded-xl hover:bg-slate-100 transition-all">
+                    className="px-3 py-1.5 bg-[#F2EEE9] dark:bg-[#33322E] text-[9px] font-black uppercase text-[#3E3B36] dark:text-[#EDE9E3] rounded-full hover:bg-[#CAC8C0]/30 transition-all font-bold border border-[#CAC8C0] dark:border-[#45433E]">
                     Print
                   </button>
                   <button onClick={() => handleWhatsApp(sale)}
-                    className="px-3 py-1.5 bg-emerald-50 text-[9px] font-black uppercase text-emerald-600 rounded-xl hover:bg-emerald-100 transition-all">
+                    className="px-3 py-1.5 bg-[#B4E0CA]/40 text-[9px] font-black uppercase text-[#1E3121] rounded-full hover:bg-[#B4E0CA]/60 transition-all font-bold">
                     Share
                   </button>
                 </div>
@@ -485,15 +489,15 @@ export default function SalesClient({ userId, initialSales, shopProfile }: Sales
             )
           })}
           {filteredSales.length === 0 && (
-            <div className="p-16 text-center text-slate-400 text-[10px] font-black uppercase tracking-widest">No invoices found</div>
+            <div className="p-16 text-center text-[#7A756F] dark:text-[#A8A39B] text-[10px] font-black uppercase tracking-widest">No invoices found</div>
           )}
         </div>
       </div>
 
       {/* PAYMENT MODAL */}
       {paymentModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/60 backdrop-blur-sm">
-          <div className="bg-white dark:bg-[#2A2926] rounded-[28px] shadow-warm-raised w-full max-w-md mx-4 overflow-hidden border border-[#CAC8C0] dark:border-[#45433E]">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-[#1F1E1B]/70 backdrop-blur-sm">
+          <div className="bg-[#E9E4DE] dark:bg-[#2A2926] rounded-[28px] shadow-warm-raised w-full max-w-md mx-4 overflow-hidden border border-[#CAC8C0] dark:border-[#45433E]">
             <div className="bg-gradient-to-br from-[#B4E0CA] to-[#88A993] p-6 text-[#1E3121]">
               <div className="flex items-center justify-between mb-4">
                 <div>
@@ -520,19 +524,19 @@ export default function SalesClient({ userId, initialSales, shopProfile }: Sales
             <div className="p-6">
               {paymentSuccess ? (
                 <div className="flex flex-col items-center py-6 gap-3">
-                  <CheckCircle className="h-14 w-14 text-emerald-500" />
-                  <p className="font-black text-slate-900 text-lg">Payment Recorded!</p>
-                  <p className="text-slate-400 text-sm">Invoice updated successfully.</p>
+                  <CheckCircle className="h-14 w-14 text-[#1E3121] dark:text-[#B4E0CA]" />
+                  <p className="font-black text-[#3E3B36] dark:text-[#EDE9E3] text-lg">Payment Recorded!</p>
+                  <p className="text-[#7A756F] dark:text-[#A8A39B] text-sm">Invoice updated successfully.</p>
                 </div>
               ) : (
                 <>
-                  <label className="block text-xs font-black text-slate-500 uppercase tracking-widest mb-2">Amount Receiving Now (₹)</label>
+                  <label className="block text-xs font-black text-[#7A756F] dark:text-[#A8A39B] uppercase tracking-widest mb-2">Amount Receiving Now (₹)</label>
                   <div className="relative">
-                    <span className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 font-black text-lg">₹</span>
+                    <span className="absolute left-4 top-1/2 -translate-y-1/2 text-[#7A756F] dark:text-[#A8A39B] font-black text-lg">₹</span>
                     <input type="number" min={1} value={paymentAmount}
                       onChange={e => setPaymentAmount(e.target.value)}
                       placeholder={`Max ₹${getBalance(paymentModal).toLocaleString('en-IN')}`}
-                      className="w-full pl-10 pr-4 py-4 border-2 border-slate-200 rounded-xl text-lg font-black focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 outline-none transition-all"
+                      className="w-full pl-10 pr-4 py-3 bg-[#F2EEE9] dark:bg-[#33322E] text-[#3E3B36] dark:text-[#EDE9E3] placeholder:text-[#7A756F] dark:placeholder:text-[#A8A39B] border border-[#CAC8C0] dark:border-[#45433E] rounded-full text-lg font-black focus:ring-2 focus:ring-[#B4E0CA]/60 focus:border-[#88A993] caret-[#88A993] outline-none transition-all"
                       autoFocus />
                   </div>
                   <div className="flex gap-2 mt-3">
@@ -540,18 +544,18 @@ export default function SalesClient({ userId, initialSales, shopProfile }: Sales
                       const amt = Math.round(getBalance(paymentModal) * pct / 100)
                       return (
                         <button key={pct} onClick={() => setPaymentAmount(amt.toString())}
-                          className="flex-1 py-2 rounded-lg bg-slate-50 hover:bg-emerald-50 text-slate-500 hover:text-emerald-600 text-[10px] font-black uppercase tracking-widest border border-slate-200 hover:border-emerald-200 transition-all">
+                          className="flex-1 py-2 rounded-full bg-[#F2EEE9] dark:bg-[#33322E] text-[#7A756F] dark:text-[#A8A39B] hover:text-[#3E3B36] dark:hover:text-[#EDE9E3] border border-[#CAC8C0] dark:border-[#45433E] text-[10px] font-black uppercase tracking-widest transition-all">
                           {pct}% (₹{amt.toLocaleString('en-IN')})
                         </button>
                       )
                     })}
                     <button onClick={() => setPaymentAmount(getBalance(paymentModal).toString())}
-                      className="flex-1 py-2 rounded-lg bg-emerald-50 hover:bg-emerald-100 text-emerald-600 text-[10px] font-black uppercase tracking-widest border border-emerald-200 transition-all">
+                      className="flex-1 py-2 rounded-full bg-[#B4E0CA]/30 text-[#1E3121] dark:text-[#B4E0CA] border border-[#88A993]/40 text-[10px] font-black uppercase tracking-widest transition-all font-bold">
                       Full
                     </button>
                   </div>
                   <button onClick={handleRecordPayment} disabled={paymentLoading || !paymentAmount}
-                    className="w-full mt-5 py-4 rounded-xl bg-emerald-500 hover:bg-emerald-600 disabled:opacity-50 text-white font-black text-sm uppercase tracking-widest transition-all flex items-center justify-center gap-2 shadow-lg shadow-emerald-100">
+                    className="w-full mt-5 tp-button-primary disabled:opacity-50 flex items-center justify-center gap-2">
                     {paymentLoading ? <Loader2 className="h-4 w-4 animate-spin" /> : <IndianRupee className="h-4 w-4" />}
                     {paymentLoading ? 'Saving...' : 'Confirm Payment'}
                   </button>

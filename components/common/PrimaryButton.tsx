@@ -24,9 +24,9 @@ export function PrimaryButton({
     'h-[52px] rounded-full font-semibold text-[15px] tracking-tight transition-all duration-200 select-none flex items-center justify-center gap-2 px-6 tap-scale active:scale-[0.97] disabled:opacity-50 disabled:pointer-events-none cursor-pointer'
 
   const variantStyles = {
-    primary: 'bg-[#0B0B0C] dark:bg-white text-white dark:text-slate-900 hover:bg-slate-800 dark:hover:bg-slate-100 shadow-[0_4px_16px_rgba(0,0,0,0.12)]',
-    secondary: 'bg-slate-100 dark:bg-slate-800 text-slate-900 dark:text-white hover:bg-slate-200 dark:hover:bg-slate-700 border border-slate-200 dark:border-slate-700',
-    ghost: 'bg-transparent text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800',
+    primary: 'bg-[#B4E0CA] hover:bg-[#9CCDB4] text-[#1E3121] shadow-warm-pill font-bold',
+    secondary: 'bg-[#F2EEE9] dark:bg-[#33322E] text-[#3E3B36] dark:text-[#EDE9E3] hover:bg-[#CAC8C0]/30 border border-[#CAC8C0] dark:border-[#45433E]',
+    ghost: 'bg-transparent text-[#7A756F] dark:text-[#A8A39B] hover:text-[#3E3B36] dark:hover:text-[#EDE9E3] hover:bg-[#F2EEE9] dark:hover:bg-[#33322E]',
   }
 
   return (

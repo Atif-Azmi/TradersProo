@@ -151,35 +151,35 @@ export default function NewInvoiceClient({ initialCustomers, initialProducts }: 
   return (
     <div className="space-y-6 max-w-6xl mx-auto pb-20 print:p-0">
       <div className="flex items-center gap-4 print:hidden">
-        <Link href="/sales" className="p-2 -ml-2 text-slate-400 hover:text-slate-900 rounded-full hover:bg-slate-100 transition-all">
+        <Link href="/sales" className="p-2 -ml-2 text-[#7A756F] dark:text-[#A8A39B] hover:text-[#3E3B36] dark:hover:text-[#EDE9E3] rounded-full hover:bg-[#F2EEE9] dark:hover:bg-[#33322E] transition-all">
           <ArrowLeft className="h-5 w-5" />
         </Link>
-        <h2 className="text-2xl font-black tracking-tight text-slate-900">New Invoice</h2>
+        <h2 className="text-2xl font-black tracking-tight text-[#3E3B36] dark:text-[#EDE9E3]">New Invoice</h2>
       </div>
 
-      <div className="bg-white rounded-[2rem] border border-slate-100 shadow-xl shadow-slate-100 p-8 sm:p-12 print:shadow-none print:border-0 print:p-0">
+      <div className="bg-[#E9E4DE] dark:bg-[#2A2926] rounded-[28px] border border-[#CAC8C0] dark:border-[#45433E] shadow-warm-raised p-8 sm:p-12 print:shadow-none print:border-0 print:p-0">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12 mb-12">
           <div>
-            <label className="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2.5 ml-1">Customer Selection *</label>
+            <label className="block text-[10px] font-black text-[#7A756F] dark:text-[#A8A39B] uppercase tracking-widest mb-2.5 ml-1">Customer Selection *</label>
             <div className="flex gap-2">
               <select 
                 value={selectedCustomerId}
                 onChange={(e) => setSelectedCustomerId(e.target.value)}
-                className="w-full px-4 py-3 border border-slate-200 rounded-xl text-sm focus:ring-2 focus:ring-primary outline-none bg-white transition-all font-medium"
+                className="w-full px-4 py-3 border border-[#CAC8C0] dark:border-[#45433E] rounded-full text-sm focus:ring-2 focus:ring-[#B4E0CA]/60 outline-none bg-[#F2EEE9] dark:bg-[#33322E] text-[#3E3B36] dark:text-[#EDE9E3] transition-all font-medium"
               >
                 <option value="">Select Customer</option>
                 {customers.map(c => (
                   <option key={c.id} value={c.id}>{c.name} {c.company_name ? `(${c.company_name})` : ''}</option>
                 ))}
               </select>
-              <Link href="/customers" className="px-4 py-3 bg-slate-50 text-slate-600 text-xs font-black uppercase tracking-widest rounded-xl hover:bg-slate-100 whitespace-nowrap print:hidden flex items-center">
+              <Link href="/customers" className="px-4 py-3 bg-[#F2EEE9] dark:bg-[#33322E] text-[#3E3B36] dark:text-[#EDE9E3] border border-[#CAC8C0] dark:border-[#45433E] text-xs font-black uppercase tracking-widest rounded-full hover:bg-[#CAC8C0]/30 whitespace-nowrap print:hidden flex items-center">
                 + New
               </Link>
             </div>
           </div>
           <div className="grid grid-cols-2 gap-6">
             <div>
-              <label className="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2.5 ml-1">Invoice Date</label>
+              <label className="block text-[10px] font-black text-[#7A756F] dark:text-[#A8A39B] uppercase tracking-widest mb-2.5 ml-1">Invoice Date</label>
               <input 
                 type="date" 
                 className="w-full px-4 py-3 border border-slate-200 rounded-xl text-sm focus:ring-2 focus:ring-primary outline-none transition-all font-medium" 
@@ -188,7 +188,7 @@ export default function NewInvoiceClient({ initialCustomers, initialProducts }: 
               />
             </div>
             <div>
-              <label className="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2.5 ml-1">Due Date</label>
+              <label className="block text-[10px] font-black text-[#7A756F] dark:text-[#A8A39B] uppercase tracking-widest mb-2.5 ml-1">Due Date</label>
               <input 
                 type="date" 
                 className="w-full px-4 py-3 border border-slate-200 rounded-xl text-sm focus:ring-2 focus:ring-primary outline-none transition-all font-medium" 
@@ -202,7 +202,7 @@ export default function NewInvoiceClient({ initialCustomers, initialProducts }: 
         {/* Desktop View Table */}
         <div className="mb-12 hidden md:block overflow-x-auto">
            <table className="w-full text-sm text-left border-collapse">
-              <thead className="text-[10px] font-black text-slate-400 uppercase bg-slate-50/50 tracking-widest">
+              <thead className="text-[10px] font-black text-[#7A756F] dark:text-[#A8A39B] uppercase bg-[#F2EEE9] dark:bg-[#33322E] tracking-widest border-b border-[#CAC8C0] dark:border-[#45433E] text-[#3E3B36] dark:text-[#EDE9E3]">
                  <tr>
                     <th className="px-4 py-4 w-2/5">Product Description</th>
                     <th className="px-4 py-4 w-24">Qty</th>
@@ -220,7 +220,7 @@ export default function NewInvoiceClient({ initialCustomers, initialProducts }: 
                           <select 
                             value={item.product_id}
                             onChange={(e) => updateItem(item.id, 'product_id', e.target.value)}
-                            className="w-full px-3 py-2 border border-slate-100 rounded-lg focus:ring-2 focus:ring-primary outline-none bg-white font-medium"
+                            className="w-full px-3 py-2 border border-[#CAC8C0] dark:border-[#45433E] rounded-full focus:ring-2 focus:ring-[#B4E0CA]/60 outline-none bg-[#F2EEE9] dark:bg-[#33322E] text-[#3E3B36] dark:text-[#EDE9E3] font-medium"
                           >
                             <option value="">Select Product</option>
                             {products.map(p => (
@@ -238,7 +238,7 @@ export default function NewInvoiceClient({ initialCustomers, initialProducts }: 
                             className="w-full px-3 py-2 border border-slate-100 rounded-lg focus:ring-2 focus:ring-primary outline-none font-bold text-center" 
                           />
                        </td>
-                       <td className="px-2 py-4 text-slate-400 font-bold uppercase text-[10px] tracking-widest">{item.unit}</td>
+                       <td className="px-2 py-4 text-[#7A756F] dark:text-[#A8A39B] font-bold uppercase text-[10px] tracking-widest">{item.unit}</td>
                        <td className="px-2 py-4">
                           <input 
                             type="number" 
@@ -253,7 +253,7 @@ export default function NewInvoiceClient({ initialCustomers, initialProducts }: 
                           <select 
                             value={item.taxPercent}
                             onChange={(e) => updateItem(item.id, 'taxPercent', parseFloat(e.target.value) || 0)}
-                            className="w-full px-3 py-2 border border-slate-100 rounded-lg focus:ring-2 focus:ring-primary outline-none bg-white font-bold"
+                            className="w-full px-3 py-2 border border-[#CAC8C0] dark:border-[#45433E] rounded-full focus:ring-2 focus:ring-[#B4E0CA]/60 outline-none bg-[#F2EEE9] dark:bg-[#33322E] text-[#3E3B36] dark:text-[#EDE9E3] font-bold"
                           >
                             <option value="0">0%</option>
                             <option value="5">5%</option>
@@ -262,7 +262,7 @@ export default function NewInvoiceClient({ initialCustomers, initialProducts }: 
                             <option value="28">28%</option>
                           </select>
                        </td>
-                       <td className="px-4 py-4 text-right font-black text-slate-900">
+                       <td className="px-4 py-4 text-right font-black text-[#3E3B36] dark:text-[#EDE9E3]">
                           {item.total.toLocaleString('en-IN', { minimumFractionDigits: 2 })}
                        </td>
                        <td className="px-2 py-4 text-center print:hidden">
@@ -289,24 +289,24 @@ export default function NewInvoiceClient({ initialCustomers, initialProducts }: 
         {/* Mobile View Card List */}
         <div className="mb-8 block md:hidden space-y-4">
            {items.map((item, index) => (
-              <div key={item.id} className="p-5 rounded-2xl border border-slate-100 bg-slate-50/50 space-y-4">
+              <div key={item.id} className="p-5 rounded-[20px] border border-[#CAC8C0] dark:border-[#45433E] bg-[#F2EEE9] dark:bg-[#33322E] space-y-4">
                  <div className="flex justify-between items-center pb-2 border-b border-slate-100">
-                    <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Item #{index + 1}</span>
+                    <span className="text-[10px] font-black text-[#7A756F] dark:text-[#A8A39B] uppercase tracking-widest">Item #{index + 1}</span>
                     <button 
                       onClick={() => setItems(items.filter(i => i.id !== item.id))}
                       disabled={items.length === 1}
-                      className="p-1 text-slate-400 hover:text-red-500 rounded-lg hover:bg-red-50 disabled:opacity-0 transition-all"
+                      className="p-1 text-[#7A756F] dark:text-[#A8A39B] hover:text-[#4A1D14] dark:hover:text-[#D98A7B] rounded-full hover:bg-[#D98A7B]/20 disabled:opacity-0 transition-all"
                     >
                        <Trash2 className="h-4 w-4" />
                     </button>
                  </div>
                  
                  <div>
-                    <label className="block text-[9px] font-black text-slate-400 uppercase tracking-widest mb-1.5 ml-1">Product Description</label>
+                    <label className="block text-[9px] font-black text-[#7A756F] dark:text-[#A8A39B] uppercase tracking-widest mb-1.5 ml-1">Product Description</label>
                     <select 
                       value={item.product_id}
                       onChange={(e) => updateItem(item.id, 'product_id', e.target.value)}
-                      className="w-full px-3 py-2.5 border border-slate-200 rounded-xl text-sm focus:ring-2 focus:ring-primary outline-none bg-white font-medium"
+                      className="w-full px-3 py-2.5 border border-[#CAC8C0] dark:border-[#45433E] rounded-full text-sm focus:ring-2 focus:ring-[#B4E0CA]/60 outline-none bg-[#E9E4DE] dark:bg-[#2A2926] text-[#3E3B36] dark:text-[#EDE9E3] font-medium"
                     >
                       <option value="">Select Product</option>
                       {products.map(p => (
@@ -317,7 +317,7 @@ export default function NewInvoiceClient({ initialCustomers, initialProducts }: 
 
                  <div className="grid grid-cols-2 gap-4">
                     <div>
-                       <label className="block text-[9px] font-black text-slate-400 uppercase tracking-widest mb-1.5 ml-1">Qty {item.unit ? `(${item.unit})` : ''}</label>
+                       <label className="block text-[9px] font-black text-[#7A756F] dark:text-[#A8A39B] uppercase tracking-widest mb-1.5 ml-1">Qty {item.unit ? `(${item.unit})` : ''}</label>
                        <input 
                          type="number" 
                          min="0.001" 
@@ -328,7 +328,7 @@ export default function NewInvoiceClient({ initialCustomers, initialProducts }: 
                        />
                     </div>
                     <div>
-                       <label className="block text-[9px] font-black text-slate-400 uppercase tracking-widest mb-1.5 ml-1">Rate (₹)</label>
+                       <label className="block text-[9px] font-black text-[#7A756F] dark:text-[#A8A39B] uppercase tracking-widest mb-1.5 ml-1">Rate (₹)</label>
                        <input 
                          type="number" 
                          min="0" 
@@ -342,11 +342,11 @@ export default function NewInvoiceClient({ initialCustomers, initialProducts }: 
 
                  <div className="grid grid-cols-2 gap-4 items-end">
                     <div>
-                       <label className="block text-[9px] font-black text-slate-400 uppercase tracking-widest mb-1.5 ml-1">GST %</label>
+                       <label className="block text-[9px] font-black text-[#7A756F] dark:text-[#A8A39B] uppercase tracking-widest mb-1.5 ml-1">GST %</label>
                        <select 
                          value={item.taxPercent}
                          onChange={(e) => updateItem(item.id, 'taxPercent', parseFloat(e.target.value) || 0)}
-                         className="w-full px-3 py-2.5 border border-slate-200 rounded-xl text-sm focus:ring-2 focus:ring-primary outline-none bg-white font-bold"
+                         className="w-full px-3 py-2.5 border border-[#CAC8C0] dark:border-[#45433E] rounded-full text-sm focus:ring-2 focus:ring-[#B4E0CA]/60 outline-none bg-[#E9E4DE] dark:bg-[#2A2926] text-[#3E3B36] dark:text-[#EDE9E3] font-bold"
                        >
                          <option value="0">0%</option>
                          <option value="5">5%</option>
@@ -356,8 +356,8 @@ export default function NewInvoiceClient({ initialCustomers, initialProducts }: 
                        </select>
                     </div>
                     <div className="text-right">
-                       <p className="text-[9px] font-black text-slate-400 uppercase tracking-widest mb-1.5 mr-1">Total</p>
-                       <p className="font-black text-slate-900 text-base py-2">
+                       <p className="text-[9px] font-black text-[#7A756F] dark:text-[#A8A39B] uppercase tracking-widest mb-1.5 mr-1">Total</p>
+                       <p className="font-black text-[#3E3B36] dark:text-[#EDE9E3] text-base py-2">
                          ₹{item.total.toLocaleString('en-IN', { minimumFractionDigits: 2 })}
                        </p>
                     </div>
@@ -366,7 +366,7 @@ export default function NewInvoiceClient({ initialCustomers, initialProducts }: 
            ))}
            <button 
               onClick={() => setItems([...items, { id: Date.now(), product_id: '', name: '', qty: 1, unit: 'pcs', rate: 0, discPercent: 0, taxPercent: 18, total: 0 }])}
-              className="w-full flex items-center justify-center gap-2 py-3 bg-slate-50 hover:bg-slate-100 border border-dashed border-slate-200 text-[10px] font-black uppercase tracking-widest text-primary hover:text-green-600 print:hidden transition-all rounded-xl"
+              className="w-full flex items-center justify-center gap-2 py-3 bg-[#F2EEE9] dark:bg-[#33322E] hover:bg-[#CAC8C0]/30 border border-dashed border-[#CAC8C0] dark:border-[#45433E] text-[10px] font-black uppercase tracking-widest text-[#1E3121] dark:text-[#B4E0CA] print:hidden transition-all rounded-full"
             >
               <Plus className="h-4 w-4" /> Add Line Item
            </button>
@@ -375,11 +375,11 @@ export default function NewInvoiceClient({ initialCustomers, initialProducts }: 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12 border-t border-slate-50 pt-12">
            <div className="space-y-6">
               <div className="print:hidden">
-                 <label className="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2.5 ml-1">Payment Method</label>
+                 <label className="block text-[10px] font-black text-[#7A756F] dark:text-[#A8A39B] uppercase tracking-widest mb-2.5 ml-1">Payment Method</label>
                  <select 
                     value={paymentMode}
                     onChange={(e) => setPaymentMode(e.target.value)}
-                    className="w-full px-4 py-3 border border-slate-200 rounded-xl text-sm mb-4 bg-white font-medium focus:ring-2 focus:ring-primary outline-none transition-all"
+                    className="w-full px-4 py-3 border border-[#CAC8C0] dark:border-[#45433E] rounded-full text-sm mb-4 bg-[#F2EEE9] dark:bg-[#33322E] text-[#3E3B36] dark:text-[#EDE9E3] font-medium focus:ring-2 focus:ring-[#B4E0CA]/60 outline-none transition-all"
                   >
                     <option value="credit">Credit Sale (Pending)</option>
                     <option value="cash">Cash Payment</option>
@@ -387,7 +387,7 @@ export default function NewInvoiceClient({ initialCustomers, initialProducts }: 
                     <option value="online">Bank Transfer</option>
                   </select>
                  <div className="relative">
-                    <span className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 font-bold">₹</span>
+                    <span className="absolute left-4 top-1/2 -translate-y-1/2 text-[#7A756F] dark:text-[#A8A39B] font-bold">₹</span>
                     <input 
                       type="number" 
                       placeholder="Amount Received Today" 
@@ -398,7 +398,7 @@ export default function NewInvoiceClient({ initialCustomers, initialProducts }: 
                  </div>
               </div>
               <div>
-                 <label className="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2.5 ml-1">Remarks / Notes</label>
+                 <label className="block text-[10px] font-black text-[#7A756F] dark:text-[#A8A39B] uppercase tracking-widest mb-2.5 ml-1">Remarks / Notes</label>
                  <textarea 
                     rows={3} 
                     value={notes}
@@ -409,30 +409,30 @@ export default function NewInvoiceClient({ initialCustomers, initialProducts }: 
               </div>
            </div>
 
-           <div className="bg-slate-50/50 p-8 rounded-[2rem] space-y-4 print:bg-white print:border-t-2 print:border-slate-900 print:rounded-none">
+           <div className="bg-[#F2EEE9] dark:bg-[#33322E] border border-[#CAC8C0]/50 dark:border-[#45433E]/50 p-8 rounded-[28px] space-y-4 print:bg-white print:border-t-2 print:border-black print:rounded-none">
               <div className="flex justify-between text-xs font-bold uppercase tracking-widest">
-                 <span className="text-slate-400">Subtotal</span>
-                 <span className="text-slate-900">₹{subtotal.toLocaleString('en-IN', { minimumFractionDigits: 2 })}</span>
+                 <span className="text-[#7A756F] dark:text-[#A8A39B]">Subtotal</span>
+                 <span className="text-[#3E3B36] dark:text-[#EDE9E3]">₹{subtotal.toLocaleString('en-IN', { minimumFractionDigits: 2 })}</span>
               </div>
               <div className="flex justify-between text-xs font-bold uppercase tracking-widest">
-                 <span className="text-slate-400">Tax Total (GST)</span>
-                 <span className="text-slate-900">₹{taxAmount.toLocaleString('en-IN', { minimumFractionDigits: 2 })}</span>
+                 <span className="text-[#7A756F] dark:text-[#A8A39B]">Tax Total (GST)</span>
+                 <span className="text-[#3E3B36] dark:text-[#EDE9E3]">₹{taxAmount.toLocaleString('en-IN', { minimumFractionDigits: 2 })}</span>
               </div>
               {taxAmount > 0 && (
                 <div className="pl-4 border-l-2 border-slate-200 space-y-2">
-                   <div className="flex justify-between text-[11px] font-bold uppercase tracking-widest text-slate-400">
+                   <div className="flex justify-between text-[11px] font-bold uppercase tracking-widest text-[#7A756F] dark:text-[#A8A39B]">
                       <span>CGST (Central Tax)</span>
                       <span>₹{(taxAmount / 2).toLocaleString('en-IN', { minimumFractionDigits: 2 })}</span>
                    </div>
-                   <div className="flex justify-between text-[11px] font-bold uppercase tracking-widest text-slate-400">
+                   <div className="flex justify-between text-[11px] font-bold uppercase tracking-widest text-[#7A756F] dark:text-[#A8A39B]">
                       <span>SGST (State Tax)</span>
                       <span>₹{(taxAmount / 2).toLocaleString('en-IN', { minimumFractionDigits: 2 })}</span>
                    </div>
                 </div>
               )}
               <div className="border-t border-slate-200 pt-6 flex justify-between items-center">
-                 <span className="font-black text-slate-900 uppercase tracking-[0.2em] text-sm">Grand Total</span>
-                 <span className="font-black text-slate-900 text-3xl tracking-tighter">₹{totalAmount.toLocaleString('en-IN', { minimumFractionDigits: 2 })}</span>
+                 <span className="font-black text-[#3E3B36] dark:text-[#EDE9E3] uppercase tracking-[0.2em] text-sm">Grand Total</span>
+                 <span className="font-black text-[#3E3B36] dark:text-[#EDE9E3] text-3xl tracking-tighter">₹{totalAmount.toLocaleString('en-IN', { minimumFractionDigits: 2 })}</span>
               </div>
               <div className="flex justify-between text-[10px] font-black uppercase tracking-widest text-red-500 pt-2 print:hidden">
                  <span>Remaining Balance</span>
@@ -444,14 +444,14 @@ export default function NewInvoiceClient({ initialCustomers, initialProducts }: 
         <div className="mt-12 flex flex-col sm:flex-row gap-3 sm:gap-4 justify-end border-t border-slate-50 pt-8 print:hidden">
            <button 
               onClick={() => router.push('/sales')}
-              className="w-full sm:w-auto px-6 py-3.5 sm:py-3 bg-white border border-slate-200 text-slate-600 text-xs font-black uppercase tracking-widest rounded-xl hover:bg-slate-50 transition-all text-center"
+              className="w-full sm:w-auto px-6 py-3.5 sm:py-3 bg-[#F2EEE9] dark:bg-[#33322E] border border-[#CAC8C0] dark:border-[#45433E] text-[#7A756F] dark:text-[#A8A39B] hover:text-[#3E3B36] dark:hover:text-[#EDE9E3] text-xs font-black uppercase tracking-widest rounded-full transition-all text-center"
             >
              Discard
            </button>
            <button 
               onClick={() => handleSaveInvoice(true)}
               disabled={loading}
-              className="w-full sm:w-auto px-6 py-3.5 sm:py-3 bg-slate-900 text-white text-xs font-black uppercase tracking-widest rounded-xl hover:bg-slate-800 shadow-xl shadow-slate-200 transition-all disabled:opacity-50 flex items-center justify-center gap-2"
+              className="w-full sm:w-auto px-6 py-3.5 sm:py-3 tp-button-primary disabled:opacity-50 flex items-center justify-center gap-2 font-bold"
            >
              <Printer className="h-4 w-4" /> Save & Print
            </button>

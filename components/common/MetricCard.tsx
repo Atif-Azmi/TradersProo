@@ -27,13 +27,13 @@ export function MetricCard({
       onClick={onClick}
       role={onClick ? 'button' : undefined}
       tabIndex={onClick ? 0 : undefined}
-      className={`bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-[20px] p-5 shadow-[0_4px_20px_-6px_rgba(0,0,0,0.04)] select-none transition-all duration-200 ${
-        onClick ? 'tap-scale active:scale-[0.98] cursor-pointer hover:border-slate-200 dark:hover:border-slate-700' : ''
+      className={`bg-[#E9E4DE] dark:bg-[#2A2926] border border-[#CAC8C0] dark:border-[#45433E] rounded-[20px] p-5 shadow-warm-card select-none transition-all duration-200 ${
+        onClick ? 'tap-scale active:scale-[0.98] cursor-pointer hover:border-[#88A993]' : ''
       } ${className}`}
     >
       <div className="flex items-center justify-between mb-4">
         {icon && (
-          <div className="w-10 h-10 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-100 dark:border-slate-700 flex items-center justify-center text-slate-700 dark:text-slate-200">
+          <div className="w-10 h-10 rounded-xl bg-[#F2EEE9] dark:bg-[#33322E] border border-[#CAC8C0] dark:border-[#45433E] flex items-center justify-center text-[#1E3121] dark:text-[#B4E0CA]">
             {icon}
           </div>
         )}
@@ -41,12 +41,12 @@ export function MetricCard({
       </div>
 
       <div className="mb-1">
-        <h3 className="text-[28px] sm:text-[32px] font-bold font-mono tracking-tight text-slate-900 dark:text-white tabular-nums">
+        <h3 className="text-[28px] sm:text-[32px] font-bold font-mono tracking-tight text-[#3E3B36] dark:text-[#EDE9E3] tabular-nums">
           {typeof value === 'number' ? `₹${value.toLocaleString('en-IN')}` : value}
         </h3>
       </div>
 
-      <p className="text-[11px] font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500">
+      <p className="text-[11px] font-bold uppercase tracking-wider text-[#7A756F] dark:text-[#A8A39B]">
         {title}
       </p>
     </div>

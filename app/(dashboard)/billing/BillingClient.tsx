@@ -182,7 +182,7 @@ export default function BillingClient({ userId, customers }: Props) {
 
       <div className="flex sm:items-center justify-between flex-col sm:flex-row gap-4 print:hidden">
         <div>
-          <h2 className="text-xl font-bold text-slate-900">Billing</h2>
+          <h2 className="text-xl font-bold text-[#3E3B36] dark:text-[#EDE9E3]">Billing</h2>
         </div>
         <button 
           onClick={handleGenerate}
@@ -197,42 +197,42 @@ export default function BillingClient({ userId, customers }: Props) {
         <div className="tp-card p-6 flex items-center gap-4">
            <div className="bg-[#B4E0CA]/40 p-3 rounded-full text-[#1E3121]"><FileText className="h-5 w-5" /></div>
            <div>
-              <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Total Bills</p>
-              <p className="text-xl font-black text-slate-900">{totalBills}</p>
+              <p className="text-[10px] font-bold text-[#7A756F] dark:text-[#A8A39B] uppercase tracking-widest">Total Bills</p>
+              <p className="text-xl font-black text-[#3E3B36] dark:text-[#EDE9E3]">{totalBills}</p>
            </div>
         </div>
         <div className="tp-card p-6 flex items-center gap-4">
            <div className="bg-[#B4E0CA]/40 p-3 rounded-full text-[#1E3121]"><Plus className="h-5 w-5" /></div>
            <div>
-              <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Total Clients</p>
-              <p className="text-xl font-black text-slate-900">{customers.length}</p>
+              <p className="text-[10px] font-bold text-[#7A756F] dark:text-[#A8A39B] uppercase tracking-widest">Total Clients</p>
+              <p className="text-xl font-black text-[#3E3B36] dark:text-[#EDE9E3]">{customers.length}</p>
            </div>
         </div>
         <div className="tp-card p-6 flex items-center gap-4">
-           <div className="bg-rose-50 p-3 rounded-full text-red-600"><AlertCircle className="h-5 w-5" /></div>
+           <div className="bg-[#D98A7B]/20 p-3 rounded-full text-[#4A1D14] dark:text-[#D98A7B]"><AlertCircle className="h-5 w-5" /></div>
            <div>
-              <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Outstanding Bills</p>
-              <p className="text-xl font-black text-red-600">₹{totalOutstanding.toLocaleString('en-IN')}</p>
+              <p className="text-[10px] font-bold text-[#7A756F] dark:text-[#A8A39B] uppercase tracking-widest">Outstanding Bills</p>
+              <p className="text-xl font-black text-[#4A1D14] dark:text-[#D98A7B]">₹{totalOutstanding.toLocaleString('en-IN')}</p>
            </div>
         </div>
       </div>
 
       {/* SELECT CRITERIA */}
-      <div className="bg-white border border-slate-100 rounded-xl p-6 shadow-sm relative z-40 print:hidden">
+      <div className="bg-[#E9E4DE] dark:bg-[#2A2926] border border-[#CAC8C0] dark:border-[#45433E] rounded-[20px] p-6 shadow-warm-card relative z-40 print:hidden">
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-6 items-end">
           <div className="space-y-2 relative" ref={dropdownRef}>
-            <label className="text-[10px] font-bold text-slate-400 uppercase tracking-widest ml-1">Bill To</label>
-            <div onClick={() => setShowCustDropdown(!showCustDropdown)} className="w-full bg-slate-50 border border-slate-200 hover:border-slate-300 rounded-lg px-4 py-2.5 text-sm font-black text-slate-900 cursor-pointer flex items-center justify-between transition-all">
-              <span className={selectedCust ? 'text-slate-900' : 'text-slate-400'}>{selectedCustomer ? selectedCustomer.name : 'Select customer...'}</span>
-              <ChevronDown className="h-4 w-4 text-slate-400" />
+            <label className="text-[10px] font-bold text-[#7A756F] dark:text-[#A8A39B] uppercase tracking-widest ml-1">Bill To</label>
+            <div onClick={() => setShowCustDropdown(!showCustDropdown)} className="w-full bg-[#F2EEE9] dark:bg-[#33322E] border border-[#CAC8C0] dark:border-[#45433E] rounded-full px-4 py-2.5 text-sm font-bold text-[#3E3B36] dark:text-[#EDE9E3] cursor-pointer flex items-center justify-between transition-all">
+              <span className={selectedCust ? 'text-[#3E3B36] dark:text-[#EDE9E3]' : 'text-[#7A756F] dark:text-[#A8A39B]'}>{selectedCustomer ? selectedCustomer.name : 'Select customer...'}</span>
+              <ChevronDown className="h-4 w-4 text-[#7A756F] dark:text-[#A8A39B]" />
             </div>
             {showCustDropdown && (
-              <div className="absolute top-full left-0 right-0 mt-2 bg-white border border-slate-100 rounded-xl shadow-xl overflow-hidden z-50">
-                <div className="p-3 border-b border-slate-50"><input autoFocus type="text" placeholder="Search..." value={custSearch} onChange={e=>setCustSearch(e.target.value)} onClick={e=>e.stopPropagation()} className="w-full bg-slate-50 border-none rounded-lg px-4 py-2 text-sm font-bold focus:ring-2 focus:ring-primary outline-none" /></div>
+              <div className="absolute top-full left-0 right-0 mt-2 bg-[#E9E4DE] dark:bg-[#2A2926] border border-[#CAC8C0] dark:border-[#45433E] rounded-[20px] shadow-warm-raised overflow-hidden z-50">
+                <div className="p-3 border-b border-[#CAC8C0]/50 dark:border-[#45433E]/50"><input autoFocus type="text" placeholder="Search..." value={custSearch} onChange={e=>setCustSearch(e.target.value)} onClick={e=>e.stopPropagation()} className="w-full bg-[#F2EEE9] dark:bg-[#33322E] text-[#3E3B36] dark:text-[#EDE9E3] placeholder:text-[#7A756F] dark:placeholder:text-[#A8A39B] border border-[#CAC8C0] dark:border-[#45433E] rounded-full px-4 py-2 text-sm font-bold focus:ring-2 focus:ring-[#B4E0CA]/60 outline-none" /></div>
                 <div className="max-h-60 overflow-y-auto">
                   {filteredCustomers.map(c => (
-                    <div key={c.id} onClick={() => { setSelectedCust(c.id); setShowCustDropdown(false) }} className="px-4 py-3 hover:bg-slate-50 cursor-pointer flex items-center justify-between group">
-                      <div><p className="font-bold text-slate-900 text-sm group-hover:text-primary transition-colors">{c.name}</p><p className="text-[10px] font-bold text-slate-400">{c.phone}</p></div>
+                    <div key={c.id} onClick={() => { setSelectedCust(c.id); setShowCustDropdown(false) }} className="px-4 py-3 hover:bg-[#F2EEE9] dark:hover:bg-[#33322E] cursor-pointer flex items-center justify-between group">
+                      <div><p className="font-bold text-[#3E3B36] dark:text-[#EDE9E3] text-sm group-hover:text-[#1E3121] dark:group-hover:text-[#B4E0CA] transition-colors">{c.name}</p><p className="text-[10px] font-bold text-[#7A756F] dark:text-[#A8A39B]">{c.phone}</p></div>
                     </div>
                   ))}
                 </div>
@@ -241,13 +241,13 @@ export default function BillingClient({ userId, customers }: Props) {
           </div>
 
           <div className="space-y-2">
-            <label className="text-[10px] font-bold text-slate-400 uppercase tracking-widest ml-1">Start Date</label>
-            <input type="date" value={startDate} onClick={(e) => { try { e.currentTarget.showPicker() } catch(err) {} }} onChange={e=>setStartDate(e.target.value)} className="w-full bg-slate-50 border border-slate-200 rounded-lg px-4 py-2 text-sm font-bold text-slate-900 focus:bg-white outline-none transition-all cursor-pointer" />
+            <label className="text-[10px] font-bold text-[#7A756F] dark:text-[#A8A39B] uppercase tracking-widest ml-1">Start Date</label>
+            <input type="date" value={startDate} onClick={(e) => { try { e.currentTarget.showPicker() } catch(err) {} }} onChange={e=>setStartDate(e.target.value)} className="w-full bg-[#F2EEE9] dark:bg-[#33322E] border border-[#CAC8C0] dark:border-[#45433E] rounded-full px-4 py-2 text-sm font-bold text-[#3E3B36] dark:text-[#EDE9E3] outline-none transition-all cursor-pointer" />
           </div>
 
           <div className="space-y-2">
-            <label className="text-[10px] font-bold text-slate-400 uppercase tracking-widest ml-1">End Date</label>
-            <input type="date" value={endDate} onClick={(e) => { try { e.currentTarget.showPicker() } catch(err) {} }} onChange={e=>setEndDate(e.target.value)} className="w-full bg-slate-50 border border-slate-200 rounded-lg px-4 py-2 text-sm font-bold text-slate-900 focus:bg-white outline-none transition-all cursor-pointer" />
+            <label className="text-[10px] font-bold text-[#7A756F] dark:text-[#A8A39B] uppercase tracking-widest ml-1">End Date</label>
+            <input type="date" value={endDate} onClick={(e) => { try { e.currentTarget.showPicker() } catch(err) {} }} onChange={e=>setEndDate(e.target.value)} className="w-full bg-[#F2EEE9] dark:bg-[#33322E] border border-[#CAC8C0] dark:border-[#45433E] rounded-full px-4 py-2 text-sm font-bold text-[#3E3B36] dark:text-[#EDE9E3] outline-none transition-all cursor-pointer" />
           </div>
 
           <button onClick={handleGenerate} disabled={loading} className="w-full tp-button-primary py-3 flex items-center justify-center gap-2 transition-all disabled:opacity-50">
@@ -260,19 +260,19 @@ export default function BillingClient({ userId, customers }: Props) {
       {/* ACTIONS */}
       {billData && (
         <div className="flex flex-wrap gap-4 animate-in fade-in slide-in-from-bottom-4 print:hidden">
-          <button onClick={() => window.print()} className="px-4 py-2 text-[10px] font-bold uppercase text-slate-900 hover:bg-slate-100 rounded-lg transition-all border border-slate-200">Print</button>
-          <button onClick={handleDownloadPDF} className="px-4 py-2 text-[10px] font-bold uppercase bg-slate-900 text-white hover:bg-black rounded-lg transition-all">Download PDF</button>
-          <button onClick={handleUpload} disabled={uploading} className="px-4 py-2 text-[10px] font-bold uppercase text-[#1E3121] dark:text-[#B4E0CA] hover:bg-[#B4E0CA]/20 rounded-full transition-all">
+          <button onClick={() => window.print()} className="px-4 py-2 text-[10px] font-bold uppercase text-[#3E3B36] dark:text-[#EDE9E3] hover:bg-[#F2EEE9] dark:hover:bg-[#33322E] rounded-full transition-all border border-[#CAC8C0] dark:border-[#45433E]">Print</button>
+          <button onClick={handleDownloadPDF} className="px-4 py-2 text-[10px] font-bold uppercase bg-[#B4E0CA] text-[#1E3121] hover:bg-[#9CCDB4] rounded-full transition-all shadow-warm-pill">Download PDF</button>
+          <button onClick={handleUpload} disabled={uploading} className="px-4 py-2 text-[10px] font-bold uppercase text-[#1E3121] dark:text-[#B4E0CA] hover:bg-[#B4E0CA]/20 rounded-full transition-all border border-[#CAC8C0] dark:border-[#45433E]">
             {uploading ? 'Uploading...' : 'Upload & Get Link'}
           </button>
           {shareLink && (
             <div className="flex gap-4">
-              <button onClick={() => { navigator.clipboard.writeText(shareLink); setCopied(true); setTimeout(()=>setCopied(false), 2000) }} className="px-4 py-2 text-[10px] font-bold uppercase text-slate-900 hover:bg-slate-100 rounded-lg transition-all">
+              <button onClick={() => { navigator.clipboard.writeText(shareLink); setCopied(true); setTimeout(()=>setCopied(false), 2000) }} className="px-4 py-2 text-[10px] font-bold uppercase text-[#3E3B36] dark:text-[#EDE9E3] hover:bg-[#F2EEE9] dark:hover:bg-[#33322E] rounded-full transition-all border border-[#CAC8C0] dark:border-[#45433E]">
                 {copied ? 'Copied' : 'Copy Link'}
               </button>
               <button onClick={() => {
                 sendWhatsAppDuePayment(profile, selectedCustomer, billData, shareLink)
-              }} className="px-4 py-2 text-[10px] font-bold uppercase text-[#1E3121] bg-[#B4E0CA] hover:bg-[#9CCDB4] rounded-full transition-all shadow-sm">WhatsApp</button>
+              }} className="px-4 py-2 text-[10px] font-bold uppercase text-[#1E3121] bg-[#B4E0CA] hover:bg-[#9CCDB4] rounded-full transition-all shadow-warm-pill">WhatsApp</button>
             </div>
           )}
         </div>
@@ -280,7 +280,7 @@ export default function BillingClient({ userId, customers }: Props) {
 
       {/* BILL PREVIEW - MATCHING THE BLUE & WHITE INVOICE */}
       {billData && (
-        <div className="p-4 sm:p-10 bg-slate-100 rounded-3xl sm:rounded-[3rem] overflow-x-auto flex justify-start sm:justify-center print:p-0 print:bg-transparent print:rounded-none">
+        <div className="p-4 sm:p-10 bg-[#F2EEE9] dark:bg-[#1F1E1B] rounded-[28px] overflow-x-auto flex justify-start sm:justify-center print:p-0 print:bg-transparent print:rounded-none">
           <div
             id="print-invoice"
             ref={billRef}

@@ -122,7 +122,7 @@ export default function SuperAdminClient() {
       case 'TRIAL': return 'bg-amber-100 text-amber-700 border border-amber-200'
       case 'PAID': return 'bg-emerald-100 text-emerald-700 border border-emerald-200'
       case 'EXPIRED': return 'bg-red-100 text-red-700 border border-red-200'
-      case 'LOCKED': return 'bg-slate-900 text-white border border-slate-800'
+      case 'LOCKED': return 'bg-[#D98A7B] text-[#4A1D14] border border-[#D98A7B]/40'
       default: return 'bg-slate-100 text-slate-600'
     }
   }
@@ -132,7 +132,7 @@ export default function SuperAdminClient() {
     if (days <= 0) return 'text-red-600 font-black'
     if (days <= 3) return 'text-red-500 font-bold'
     if (days <= 7) return 'text-amber-500 font-semibold'
-    return 'text-slate-900 font-bold'
+    return 'text-[#3E3B36] dark:text-[#EDE9E3] font-bold'
   }
 
   return (
@@ -150,16 +150,16 @@ export default function SuperAdminClient() {
       {/* Header */}
       <div className="flex sm:items-center justify-between flex-col sm:flex-row gap-4">
         <div>
-          <h2 className="text-xl font-bold text-slate-900">Superadmin Hub</h2>
+          <h2 className="text-xl font-bold text-[#3E3B36] dark:text-[#EDE9E3]">Superadmin Hub</h2>
         </div>
         <div className="flex items-center gap-3">
           <button 
             onClick={fetchUsers} 
-            className="text-[10px] font-bold text-slate-500 hover:text-slate-900 flex items-center gap-2 border border-slate-200 px-4 py-2 rounded-lg bg-white hover:bg-slate-50 transition-all uppercase tracking-widest cursor-pointer"
+            className="text-[10px] font-bold text-[#7A756F] dark:text-[#A8A39B] hover:text-[#3E3B36] dark:hover:text-[#EDE9E3] flex items-center gap-2 border border-[#CAC8C0] dark:border-[#45433E] px-4 py-2 rounded-full bg-[#F2EEE9] dark:bg-[#33322E] hover:bg-[#CAC8C0]/30 transition-all uppercase tracking-widest cursor-pointer"
           >
             ↻ Sync Identity Registry
           </button>
-          <div className="flex items-center gap-2 px-4 py-2 bg-slate-900 text-white rounded-lg text-[10px] font-bold uppercase tracking-widest shadow-sm">
+          <div className="flex items-center gap-2 px-4 py-2 bg-[#B4E0CA] text-[#1E3121] rounded-full text-[10px] font-bold uppercase tracking-widest shadow-warm-pill">
              <ShieldCheck className="h-4 w-4 text-emerald-400" />
              SuperAdmin Active
           </div>
@@ -180,8 +180,8 @@ export default function SuperAdminClient() {
               <kpi.icon className="h-5 w-5" />
             </div>
             <div>
-              <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">{kpi.label}</p>
-              <p className="text-xl font-black text-slate-900 mt-0.5">{kpi.value}</p>
+              <p className="text-[10px] font-bold text-[#7A756F] dark:text-[#A8A39B] uppercase tracking-widest">{kpi.label}</p>
+              <p className="text-xl font-black text-[#3E3B36] dark:text-[#EDE9E3] mt-0.5">{kpi.value}</p>
             </div>
           </div>
         ))}
@@ -191,10 +191,10 @@ export default function SuperAdminClient() {
       <div className="tp-card overflow-hidden">
         <div className="p-6 border-b border-slate-50 flex flex-col md:flex-row items-center justify-between gap-6">
           <div>
-            <h3 className="font-bold text-slate-900 text-sm uppercase tracking-wider">Registry Records</h3>
+            <h3 className="font-bold text-[#3E3B36] dark:text-[#EDE9E3] text-sm uppercase tracking-wider">Registry Records</h3>
           </div>
           <div className="relative w-full md:w-80">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400" />
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-[#7A756F] dark:text-[#A8A39B]" />
             <input
               type="text"
               placeholder="Search registry..."
@@ -207,7 +207,7 @@ export default function SuperAdminClient() {
 
         <div className="overflow-x-auto">
           <table className="w-full text-sm text-left">
-            <thead className="bg-slate-50/50 text-[10px] font-bold text-slate-400 uppercase tracking-widest">
+            <thead className="bg-[#F2EEE9] dark:bg-[#33322E] text-[10px] font-bold text-[#3E3B36] dark:text-[#A8A39B] uppercase tracking-widest">
               <tr>
                 <th className="px-6 py-4">System Identity</th>
                 <th className="px-6 py-4">Operator Info</th>
@@ -218,28 +218,28 @@ export default function SuperAdminClient() {
             </thead>
             <tbody className="divide-y divide-slate-50">
               {loading ? (
-                <tr><td colSpan={5} className="text-center py-16 text-slate-400 text-xs font-bold uppercase tracking-widest animate-pulse">Scanning Registry...</td></tr>
+                <tr><td colSpan={5} className="text-center py-16 text-[#7A756F] dark:text-[#A8A39B] text-xs font-bold uppercase tracking-widest animate-pulse">Scanning Registry...</td></tr>
               ) : filtered.length === 0 ? (
-                <tr><td colSpan={5} className="text-center py-16 text-slate-400 text-xs font-bold uppercase tracking-widest">No Identities Found</td></tr>
+                <tr><td colSpan={5} className="text-center py-16 text-[#7A756F] dark:text-[#A8A39B] text-xs font-bold uppercase tracking-widest">No Identities Found</td></tr>
               ) : filtered.map(user => (
-                <tr key={user.id} className={`hover:bg-slate-50/50 transition-all group ${user.is_locked ? 'bg-slate-50/80 grayscale' : ''}`}>
+                <tr key={user.id} className={`hover:bg-[#F2EEE9]/50 dark:hover:bg-[#33322E]/50 transition-all group ${user.is_locked ? 'bg-[#F2EEE9]/80 dark:bg-[#33322E]/80 grayscale' : ''}`}>
                   <td className="px-6 py-5">
                     <div className="flex items-center gap-3">
-                      <div className="w-9 h-9 rounded-full bg-slate-100 flex items-center justify-center text-slate-500 font-bold text-xs">
+                      <div className="w-9 h-9 rounded-full bg-[#F2EEE9] dark:bg-[#33322E] border border-[#CAC8C0] dark:border-[#45433E] flex items-center justify-center text-[#7A756F] dark:text-[#A8A39B] font-bold text-xs">
                         {user.name?.charAt(0)?.toUpperCase() || '?'}
                       </div>
                       <div>
-                        <p className="font-bold text-slate-900">{user.email || 'System Node'}</p>
+                        <p className="font-bold text-[#3E3B36] dark:text-[#EDE9E3]">{user.email || 'System Node'}</p>
                         <div className="flex items-center gap-1.5 mt-0.5">
-                           <span className="text-[8px] font-bold bg-slate-955 text-slate-400 uppercase tracking-widest">ID</span>
-                           <code className="text-[9px] text-slate-400 font-mono tracking-tight">{user.id.slice(0, 12)}...</code>
+                           <span className="text-[8px] font-bold bg-slate-955 text-[#7A756F] dark:text-[#A8A39B] uppercase tracking-widest">ID</span>
+                           <code className="text-[9px] text-[#7A756F] dark:text-[#A8A39B] font-mono tracking-tight">{user.id.slice(0, 12)}...</code>
                         </div>
                       </div>
                     </div>
                   </td>
                   <td className="px-6 py-5">
                     <p className="font-bold text-slate-700">{user.business_name || 'Generic Node'}</p>
-                    <p className="text-[10px] text-slate-400 mt-0.5">{user.phone || 'No Phone Sync'}</p>
+                    <p className="text-[10px] text-[#7A756F] dark:text-[#A8A39B] mt-0.5">{user.phone || 'No Phone Sync'}</p>
                   </td>
                   <td className="px-6 py-5">
                     <span className={`px-2.5 py-0.5 rounded-full text-[9px] font-bold uppercase tracking-widest ${getStatusColor(user.display_status)}`}>
@@ -256,7 +256,7 @@ export default function SuperAdminClient() {
                           value={newDays}
                           onChange={e => setNewDays(Number(e.target.value))}
                           placeholder="+ Days"
-                          className="w-20 bg-slate-900 text-emerald-400 border-none rounded-lg px-2.5 py-1.5 text-[10px] font-bold outline-none focus:ring-2 focus:ring-emerald-500"
+                          className="w-20 bg-[#F2EEE9] dark:bg-[#33322E] text-[#1E3121] dark:text-[#B4E0CA] border border-[#CAC8C0] dark:border-[#45433E] rounded-full px-2.5 py-1.5 text-[10px] font-bold outline-none focus:ring-2 focus:ring-[#B4E0CA]/60"
                           autoFocus
                         />
                         <button
@@ -268,7 +268,7 @@ export default function SuperAdminClient() {
                         </button>
                         <button
                           onClick={() => setEditingId(null)}
-                          className="bg-slate-200 text-slate-500 rounded-lg p-1.5 hover:bg-slate-300 transition-all"
+                          className="bg-[#F2EEE9] dark:bg-[#33322E] text-[#7A756F] dark:text-[#A8A39B] rounded-full p-1.5 hover:bg-[#CAC8C0]/30 transition-all"
                         >
                           <X className="h-3.5 w-3.5" />
                         </button>

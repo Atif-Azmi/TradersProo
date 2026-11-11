@@ -62,7 +62,7 @@ export default function SuperadminVerifyPage() {
   }
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-slate-900 px-4">
+    <div className="flex min-h-screen items-center justify-center bg-[#1F1E1B] px-4">
       <div className="w-full max-w-md">
         {/* Security badge */}
         <div className="text-center mb-8">
@@ -70,7 +70,7 @@ export default function SuperadminVerifyPage() {
             <Lock className="text-red-400 h-10 w-10" />
           </div>
           <h1 className="text-2xl font-black text-white tracking-tight uppercase">Vault Access</h1>
-          <p className="text-slate-500 text-[10px] font-black uppercase tracking-[0.3em] mt-2">Superadmin Control Plane • Level 2 Auth</p>
+          <p className="text-[#7A756F] dark:text-[#A8A39B] text-[10px] font-black uppercase tracking-[0.3em] mt-2">Superadmin Control Plane • Level 2 Auth</p>
         </div>
 
         <div className="bg-slate-800 border border-slate-700 rounded-[2rem] p-10 shadow-2xl shadow-black/50">
@@ -83,7 +83,7 @@ export default function SuperadminVerifyPage() {
 
           <form onSubmit={handleVerify} className="space-y-6">
             <div>
-              <label className="block text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] mb-3 ml-1">
+              <label className="block text-[10px] font-black text-[#7A756F] dark:text-[#A8A39B] uppercase tracking-[0.2em] mb-3 ml-1">
                 Vault Credentials
               </label>
               <div className="relative">
@@ -93,13 +93,13 @@ export default function SuperadminVerifyPage() {
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   disabled={attempts >= 3}
-                  className="w-full bg-slate-900 border border-slate-600 rounded-xl px-4 py-4 text-white font-mono text-sm focus:outline-none focus:border-red-500 focus:ring-2 focus:ring-red-500/20 disabled:opacity-50 transition-all"
+                  className="w-full bg-[#2A2926] border border-[#45433E] rounded-full px-4 py-3 text-[#EDE9E3] font-mono text-sm focus:outline-none focus:border-red-500 focus:ring-2 focus:ring-red-500/20 disabled:opacity-50 transition-all"
                   placeholder="••••••••••••"
                 />
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-4 top-4 text-slate-500 hover:text-slate-300 transition-colors"
+                  className="absolute right-4 top-4 text-[#7A756F] dark:text-[#A8A39B] hover:text-slate-300 transition-colors"
                 >
                   {showPassword ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
                 </button>
@@ -113,7 +113,7 @@ export default function SuperadminVerifyPage() {
             )}
 
             {attempts > 0 && attempts < 3 && (
-              <p className="text-slate-500 text-[9px] font-black uppercase tracking-[0.3em] text-center">
+              <p className="text-[#7A756F] dark:text-[#A8A39B] text-[9px] font-black uppercase tracking-[0.3em] text-center">
                 {3 - attempts} verification attempt(s) remaining
               </p>
             )}
