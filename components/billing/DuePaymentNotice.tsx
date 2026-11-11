@@ -51,7 +51,7 @@ ${profile?.business_name ?? 'Management Team'}
   };
 
   return (
-    <div className="bg-[#E9E4DE] dark:bg-[#2A2926] border border-[#CAC8C0] dark:border-[#45433E] rounded-[28px] p-8 shadow-warm-raised">
+    <div className="bg-[#F2EEE9] dark:bg-[#2A2926] border border-[#CAC8C0] dark:border-[#45433E] rounded-[28px] p-8 shadow-warm-raised">
       <div className="flex items-center justify-between mb-6">
         <h3 className="font-black text-sm text-[#3E3B36] dark:text-[#EDE9E3] uppercase tracking-[0.3em]">Payment Notice</h3>
         <div className="flex gap-2">

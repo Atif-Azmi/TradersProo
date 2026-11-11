@@ -4,7 +4,7 @@ import AnimatedBars from '@/components/common/AnimatedBars'
 export default function LoginPage() {
   return (
     <div className="min-h-screen flex items-center justify-center bg-[#E0DCD6] dark:bg-[#1F1E1B] p-4 font-sans animate-in fade-in duration-500">
-      <div className="w-full max-w-6xl grid lg:grid-cols-2 bg-[#E9E4DE] dark:bg-[#2A2926] rounded-[24px] overflow-hidden shadow-warm-raised border border-[#CAC8C0] dark:border-[#45433E] min-h-[700px]">
+      <div className="w-full max-w-6xl grid lg:grid-cols-2 bg-[#F2EEE9] dark:bg-[#2A2926] rounded-[24px] overflow-hidden shadow-warm-raised border border-[#CAC8C0] dark:border-[#45433E] min-h-[700px]">
         {/* Interaction Side */}
         <div className="p-8 md:p-16 flex flex-col justify-center">
           <LoginForm />

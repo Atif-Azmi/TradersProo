@@ -30,7 +30,7 @@ export default function DashboardSkeleton() {
         {[1, 2, 3, 4].map((i) => (
           <div
             key={i}
-            className="bg-[#E9E4DE] dark:bg-[#2A2926] p-6 rounded-[20px] border border-[#CAC8C0] dark:border-[#45433E] shadow-warm-card space-y-3"
+            className="bg-[#F2EEE9] dark:bg-[#2A2926] p-6 rounded-[20px] border border-[#CAC8C0] dark:border-[#45433E] shadow-warm-card space-y-3"
           >
             <div className="flex justify-between items-center">
               <Skeleton className="h-4 w-24" />
@@ -44,7 +44,7 @@ export default function DashboardSkeleton() {
 
       {/* Chart & Alerts Section */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        <div className="lg:col-span-2 bg-[#E9E4DE] dark:bg-[#2A2926] p-6 rounded-[20px] border border-[#CAC8C0] dark:border-[#45433E] shadow-warm-card space-y-4">
+        <div className="lg:col-span-2 bg-[#F2EEE9] dark:bg-[#2A2926] p-6 rounded-[20px] border border-[#CAC8C0] dark:border-[#45433E] shadow-warm-card space-y-4">
           <div className="flex justify-between items-center">
             <Skeleton className="h-6 w-40" />
             <Skeleton className="h-4 w-24" />
@@ -52,7 +52,7 @@ export default function DashboardSkeleton() {
           <Skeleton className="h-64 w-full rounded-xl" />
         </div>
 
-        <div className="bg-[#E9E4DE] dark:bg-[#2A2926] p-6 rounded-[20px] border border-[#CAC8C0] dark:border-[#45433E] shadow-warm-card space-y-4">
+        <div className="bg-[#F2EEE9] dark:bg-[#2A2926] p-6 rounded-[20px] border border-[#CAC8C0] dark:border-[#45433E] shadow-warm-card space-y-4">
           <Skeleton className="h-6 w-32" />
           <div className="space-y-3">
             {[1, 2, 3, 4].map((j) => (
@@ -69,7 +69,7 @@ export default function DashboardSkeleton() {
       </div>
 
       {/* Recent Transactions Table Skeleton */}
-      <div className="bg-[#E9E4DE] dark:bg-[#2A2926] p-6 rounded-[20px] border border-[#CAC8C0] dark:border-[#45433E] shadow-warm-card space-y-4">
+      <div className="bg-[#F2EEE9] dark:bg-[#2A2926] p-6 rounded-[20px] border border-[#CAC8C0] dark:border-[#45433E] shadow-warm-card space-y-4">
         <Skeleton className="h-6 w-48" />
         <div className="space-y-3">
           {[1, 2, 3, 4, 5].map((k) => (

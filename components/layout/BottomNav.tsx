@@ -28,7 +28,7 @@ export default function BottomNav() {
             animate={{ y: 0, opacity: 1, scale: 1 }}
             exit={{ y: 80, opacity: 0, scale: 0.95 }}
             transition={{ type: 'spring', damping: 26, stiffness: 320 }}
-            className="pointer-events-auto w-full max-w-sm h-[64px] rounded-full p-1.5 bg-[#E9E4DE]/90 dark:bg-[#2A2926]/90 backdrop-blur-2xl border border-[#CAC8C0]/80 dark:border-[#45433E]/80 shadow-warm-raised flex items-center justify-between relative"
+            className="pointer-events-auto w-full max-w-sm h-[64px] rounded-full p-1.5 bg-[#F2EEE9]/90 dark:bg-[#2A2926]/90 backdrop-blur-2xl border border-[#CAC8C0]/80 dark:border-[#45433E]/80 shadow-warm-raised flex items-center justify-between relative"
             aria-label="Floating Navigation Bar"
           >
             {navTabs.map((tab) => {

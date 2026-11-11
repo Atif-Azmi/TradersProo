@@ -121,7 +121,7 @@ export default function SettingsClient({ initialProfile }: SettingsClientProps) 
         <h2 className="text-xl font-bold text-[#3E3B36] dark:text-[#EDE9E3]">Settings</h2>
       </div>
 
-      <div className="flex border-b border-slate-100 overflow-x-auto font-bold text-[10px] uppercase tracking-widest bg-[#E9E4DE] dark:bg-[#2A2926] rounded-t-[20px] border border-[#CAC8C0] dark:border-[#45433E]">
+      <div className="flex border-b border-[#CAC8C0] dark:border-[#45433E] overflow-x-auto font-bold text-[10px] uppercase tracking-widest bg-[#F2EEE9] dark:bg-[#2A2926] rounded-t-[20px] border border-[#CAC8C0] dark:border-[#45433E]">
         {tabs.map((tab) => (
           <button
             key={tab.id}
@@ -149,35 +149,35 @@ export default function SettingsClient({ initialProfile }: SettingsClientProps) 
                 <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
                   <div className="sm:col-span-2">
                     <label className="block text-[10px] font-bold text-[#7A756F] dark:text-[#A8A39B] uppercase tracking-widest mb-2 ml-1">Business Name *</label>
-                    <input type="text" name="businessName" value={bizForm.businessName} onChange={handleBizChange} required className="w-full px-4 py-2.5 text-sm border border-slate-200 rounded-lg focus:ring-2 focus:ring-[#B4E0CA]/60 focus:border-[#88A993] outline-none transition-all font-bold" />
+                    <input type="text" name="businessName" value={bizForm.businessName} onChange={handleBizChange} required className="w-full px-4 py-2.5 text-sm border border-[#CAC8C0] dark:border-[#45433E] rounded-full bg-[#F2EEE9] dark:bg-[#33322E] text-[#3E3B36] dark:text-[#EDE9E3] focus:ring-2 focus:ring-[#B4E0CA]/60 focus:border-[#88A993] outline-none transition-all font-bold" />
                   </div>
                   <div className="sm:col-span-2">
                     <label className="block text-[10px] font-bold text-[#7A756F] dark:text-[#A8A39B] uppercase tracking-widest mb-2 ml-1">Tagline / Specialization</label>
-                    <input type="text" name="tagline" value={bizForm.tagline} onChange={handleBizChange} className="w-full px-4 py-2.5 text-sm border border-slate-200 rounded-lg focus:ring-2 focus:ring-[#B4E0CA]/60 focus:border-[#88A993] outline-none transition-all font-medium" />
+                    <input type="text" name="tagline" value={bizForm.tagline} onChange={handleBizChange} className="w-full px-4 py-2.5 text-sm border border-[#CAC8C0] dark:border-[#45433E] rounded-full bg-[#F2EEE9] dark:bg-[#33322E] text-[#3E3B36] dark:text-[#EDE9E3] focus:ring-2 focus:ring-[#B4E0CA]/60 focus:border-[#88A993] outline-none transition-all font-medium" />
                   </div>
                   <div>
                     <label className="block text-[10px] font-bold text-[#7A756F] dark:text-[#A8A39B] uppercase tracking-widest mb-2 ml-1">Primary Support Phone</label>
-                    <input type="text" name="supportPhone" value={bizForm.supportPhone} onChange={handleBizChange} className="w-full px-4 py-2.5 text-sm border border-slate-200 rounded-lg focus:ring-2 focus:ring-[#B4E0CA]/60 focus:border-[#88A993] outline-none transition-all font-bold" />
+                    <input type="text" name="supportPhone" value={bizForm.supportPhone} onChange={handleBizChange} className="w-full px-4 py-2.5 text-sm border border-[#CAC8C0] dark:border-[#45433E] rounded-full bg-[#F2EEE9] dark:bg-[#33322E] text-[#3E3B36] dark:text-[#EDE9E3] focus:ring-2 focus:ring-[#B4E0CA]/60 focus:border-[#88A993] outline-none transition-all font-bold" />
                   </div>
                   <div>
                     <label className="block text-[10px] font-bold text-[#7A756F] dark:text-[#A8A39B] uppercase tracking-widest mb-2 ml-1">GST Identification Number</label>
-                    <input type="text" name="gstNumber" value={bizForm.gstNumber} onChange={handleBizChange} className="w-full px-4 py-2.5 text-sm border border-slate-200 rounded-lg focus:ring-2 focus:ring-[#B4E0CA]/60 focus:border-[#88A993] outline-none transition-all font-black uppercase" />
+                    <input type="text" name="gstNumber" value={bizForm.gstNumber} onChange={handleBizChange} className="w-full px-4 py-2.5 text-sm border border-[#CAC8C0] dark:border-[#45433E] rounded-full bg-[#F2EEE9] dark:bg-[#33322E] text-[#3E3B36] dark:text-[#EDE9E3] focus:ring-2 focus:ring-[#B4E0CA]/60 focus:border-[#88A993] outline-none transition-all font-black uppercase" />
                   </div>
                   <div>
                     <label className="block text-[10px] font-bold text-[#7A756F] dark:text-[#A8A39B] uppercase tracking-widest mb-2 ml-1">Authorized Signatory Name</label>
-                    <input type="text" name="authorizedSignatoryName" value={bizForm.authorizedSignatoryName} onChange={handleBizChange} placeholder="E.g. Afzalkhan" className="w-full px-4 py-2.5 text-sm border border-slate-200 rounded-lg focus:ring-2 focus:ring-[#B4E0CA]/60 focus:border-[#88A993] outline-none transition-all font-bold" />
+                    <input type="text" name="authorizedSignatoryName" value={bizForm.authorizedSignatoryName} onChange={handleBizChange} placeholder="E.g. Afzalkhan" className="w-full px-4 py-2.5 text-sm border border-[#CAC8C0] dark:border-[#45433E] rounded-full bg-[#F2EEE9] dark:bg-[#33322E] text-[#3E3B36] dark:text-[#EDE9E3] focus:ring-2 focus:ring-[#B4E0CA]/60 focus:border-[#88A993] outline-none transition-all font-bold" />
                   </div>
                   <div className="sm:col-span-2">
                     <label className="block text-[10px] font-bold text-[#7A756F] dark:text-[#A8A39B] uppercase tracking-widest mb-2 ml-1">Registered Address</label>
-                    <textarea rows={2} name="registeredAddress" value={bizForm.registeredAddress} onChange={handleBizChange} className="w-full px-4 py-2.5 text-sm border border-slate-200 rounded-lg focus:ring-2 focus:ring-[#B4E0CA]/60 focus:border-[#88A993] outline-none transition-all font-medium" />
+                    <textarea rows={2} name="registeredAddress" value={bizForm.registeredAddress} onChange={handleBizChange} className="w-full px-4 py-2.5 text-sm border border-[#CAC8C0] dark:border-[#45433E] rounded-full bg-[#F2EEE9] dark:bg-[#33322E] text-[#3E3B36] dark:text-[#EDE9E3] focus:ring-2 focus:ring-[#B4E0CA]/60 focus:border-[#88A993] outline-none transition-all font-medium" />
                   </div>
                   <div>
                     <label className="block text-[10px] font-bold text-[#7A756F] dark:text-[#A8A39B] uppercase tracking-widest mb-2 ml-1">City</label>
-                    <input type="text" name="city" value={bizForm.city} onChange={handleBizChange} className="w-full px-4 py-2.5 text-sm border border-slate-200 rounded-lg focus:ring-2 focus:ring-[#B4E0CA]/60 focus:border-[#88A993] outline-none transition-all font-medium" />
+                    <input type="text" name="city" value={bizForm.city} onChange={handleBizChange} className="w-full px-4 py-2.5 text-sm border border-[#CAC8C0] dark:border-[#45433E] rounded-full bg-[#F2EEE9] dark:bg-[#33322E] text-[#3E3B36] dark:text-[#EDE9E3] focus:ring-2 focus:ring-[#B4E0CA]/60 focus:border-[#88A993] outline-none transition-all font-medium" />
                   </div>
                   <div>
                     <label className="block text-[10px] font-bold text-[#7A756F] dark:text-[#A8A39B] uppercase tracking-widest mb-2 ml-1">State</label>
-                    <input type="text" name="state" value={bizForm.state} onChange={handleBizChange} className="w-full px-4 py-2.5 text-sm border border-slate-200 rounded-lg focus:ring-2 focus:ring-[#B4E0CA]/60 focus:border-[#88A993] outline-none transition-all font-medium" />
+                    <input type="text" name="state" value={bizForm.state} onChange={handleBizChange} className="w-full px-4 py-2.5 text-sm border border-[#CAC8C0] dark:border-[#45433E] rounded-full bg-[#F2EEE9] dark:bg-[#33322E] text-[#3E3B36] dark:text-[#EDE9E3] focus:ring-2 focus:ring-[#B4E0CA]/60 focus:border-[#88A993] outline-none transition-all font-medium" />
                   </div>
                 </div>
               )}
@@ -197,19 +197,19 @@ export default function SettingsClient({ initialProfile }: SettingsClientProps) 
             <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
               <div>
                 <label className="block text-[10px] font-bold text-[#7A756F] dark:text-[#A8A39B] uppercase tracking-widest mb-2 ml-1">Bank Name</label>
-                <input type="text" value={profile.bank_name || ''} onChange={(e) => updateField('bank_name', e.target.value)} className="w-full px-4 py-2.5 text-sm border border-slate-200 rounded-lg focus:ring-2 focus:ring-[#B4E0CA]/60 focus:border-[#88A993] outline-none transition-all font-bold" />
+                <input type="text" value={profile.bank_name || ''} onChange={(e) => updateField('bank_name', e.target.value)} className="w-full px-4 py-2.5 text-sm border border-[#CAC8C0] dark:border-[#45433E] rounded-full bg-[#F2EEE9] dark:bg-[#33322E] text-[#3E3B36] dark:text-[#EDE9E3] focus:ring-2 focus:ring-[#B4E0CA]/60 focus:border-[#88A993] outline-none transition-all font-bold" />
               </div>
               <div>
                 <label className="block text-[10px] font-bold text-[#7A756F] dark:text-[#A8A39B] uppercase tracking-widest mb-2 ml-1">Account Number</label>
-                <input type="text" value={profile.account_number || ''} onChange={(e) => updateField('account_number', e.target.value)} className="w-full px-4 py-2.5 text-sm border border-slate-200 rounded-lg focus:ring-2 focus:ring-[#B4E0CA]/60 focus:border-[#88A993] outline-none transition-all font-black" />
+                <input type="text" value={profile.account_number || ''} onChange={(e) => updateField('account_number', e.target.value)} className="w-full px-4 py-2.5 text-sm border border-[#CAC8C0] dark:border-[#45433E] rounded-full bg-[#F2EEE9] dark:bg-[#33322E] text-[#3E3B36] dark:text-[#EDE9E3] focus:ring-2 focus:ring-[#B4E0CA]/60 focus:border-[#88A993] outline-none transition-all font-black" />
               </div>
               <div>
                 <label className="block text-[10px] font-bold text-[#7A756F] dark:text-[#A8A39B] uppercase tracking-widest mb-2 ml-1">IFSC Code</label>
-                <input type="text" value={profile.ifsc_code || ''} onChange={(e) => updateField('ifsc_code', e.target.value)} className="w-full px-4 py-2.5 text-sm border border-slate-200 rounded-lg focus:ring-2 focus:ring-[#B4E0CA]/60 focus:border-[#88A993] outline-none transition-all font-black" />
+                <input type="text" value={profile.ifsc_code || ''} onChange={(e) => updateField('ifsc_code', e.target.value)} className="w-full px-4 py-2.5 text-sm border border-[#CAC8C0] dark:border-[#45433E] rounded-full bg-[#F2EEE9] dark:bg-[#33322E] text-[#3E3B36] dark:text-[#EDE9E3] focus:ring-2 focus:ring-[#B4E0CA]/60 focus:border-[#88A993] outline-none transition-all font-black" />
               </div>
               <div>
                 <label className="block text-[10px] font-bold text-[#7A756F] dark:text-[#A8A39B] uppercase tracking-widest mb-2 ml-1">UPI ID (For QR Code)</label>
-                <input type="text" value={profile.upi_id || ''} onChange={(e) => updateField('upi_id', e.target.value)} className="w-full px-4 py-2.5 text-sm border border-slate-200 rounded-lg focus:ring-2 focus:ring-[#B4E0CA]/60 focus:border-[#88A993] outline-none transition-all font-black" />
+                <input type="text" value={profile.upi_id || ''} onChange={(e) => updateField('upi_id', e.target.value)} className="w-full px-4 py-2.5 text-sm border border-[#CAC8C0] dark:border-[#45433E] rounded-full bg-[#F2EEE9] dark:bg-[#33322E] text-[#3E3B36] dark:text-[#EDE9E3] focus:ring-2 focus:ring-[#B4E0CA]/60 focus:border-[#88A993] outline-none transition-all font-black" />
               </div>
             </div>
             <div className="flex justify-end pt-6 border-t border-slate-50">
@@ -226,7 +226,7 @@ export default function SettingsClient({ initialProfile }: SettingsClientProps) 
             <h3 className="text-[10px] font-bold text-[#7A756F] dark:text-[#A8A39B] uppercase tracking-widest mb-6">Billing Configurations</h3>
             <div className="max-w-xs">
               <label className="block text-[10px] font-bold text-[#7A756F] dark:text-[#A8A39B] uppercase tracking-widest mb-2 ml-1">Invoice Number Prefix</label>
-              <input type="text" value={profile.bill_prefix || 'INV'} onChange={(e) => updateField('bill_prefix', e.target.value)} className="w-full px-4 py-2.5 text-sm border border-slate-200 rounded-lg focus:ring-2 focus:ring-[#B4E0CA]/60 focus:border-[#88A993] outline-none transition-all font-black" />
+              <input type="text" value={profile.bill_prefix || 'INV'} onChange={(e) => updateField('bill_prefix', e.target.value)} className="w-full px-4 py-2.5 text-sm border border-[#CAC8C0] dark:border-[#45433E] rounded-full bg-[#F2EEE9] dark:bg-[#33322E] text-[#3E3B36] dark:text-[#EDE9E3] focus:ring-2 focus:ring-[#B4E0CA]/60 focus:border-[#88A993] outline-none transition-all font-black" />
               <p className="mt-3 text-[10px] font-bold text-[#7A756F] dark:text-[#A8A39B] uppercase tracking-widest">Preview: {profile.bill_prefix || 'INV'}-0001</p>
             </div>
             <div className="flex justify-end pt-6 border-t border-slate-50">

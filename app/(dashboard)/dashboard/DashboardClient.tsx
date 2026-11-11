@@ -103,7 +103,7 @@ export default function DashboardClient({
       {/* Sales Overview Chart & KPIs Grid */}
       <div className="grid gap-6 lg:grid-cols-3">
         {/* Sales Overview Chart (2 cols) */}
-        <div className="lg:col-span-2 bg-[#E9E4DE] dark:bg-[#2A2926] border border-[#CAC8C0] dark:border-[#45433E] rounded-[24px] p-6 shadow-warm-card">
+        <div className="lg:col-span-2 bg-[#F2EEE9] dark:bg-[#2A2926] border border-[#CAC8C0] dark:border-[#45433E] rounded-[24px] p-6 shadow-warm-card">
           <div className="flex items-center justify-between mb-6">
             <div>
               <p className="text-[10px] font-bold uppercase tracking-widest text-[#7A756F] dark:text-[#A8A39B]">
@@ -169,7 +169,7 @@ export default function DashboardClient({
           {kpis.map((kpi, index) => (
             <div
               key={index}
-              className="bg-[#E9E4DE] dark:bg-[#2A2926] border border-[#CAC8C0] dark:border-[#45433E] rounded-[24px] p-5 shadow-warm-card flex items-center justify-between tap-scale select-none"
+              className="bg-[#F2EEE9] dark:bg-[#2A2926] border border-[#CAC8C0] dark:border-[#45433E] rounded-[24px] p-5 shadow-warm-card flex items-center justify-between tap-scale select-none"
             >
               <div className="flex items-center gap-4">
                 <div
@@ -179,7 +179,7 @@ export default function DashboardClient({
                       : kpi.color === 'info'
                       ? 'bg-[#9DB8C9] text-[#1F3441]'
                       : kpi.color === 'danger'
-                      ? 'bg-[#D98A7B] text-[#4A1D14]'
+                      ? 'bg-[#F0C9C1] text-[#8A2E22]'
                       : 'bg-[#F2EEE9] dark:bg-[#33322E] text-[#3E3B36] dark:text-[#EDE9E3]'
                   }`}
                 >
@@ -217,8 +217,8 @@ export default function DashboardClient({
       {/* Transactions & Performance Grid */}
       <div className="grid gap-6 lg:grid-cols-3">
         {/* Latest Transactions Table (2 cols) */}
-        <div className="lg:col-span-2 bg-[#E9E4DE] dark:bg-[#2A2926] border border-[#CAC8C0] dark:border-[#45433E] rounded-[24px] overflow-hidden shadow-warm-card">
-          <div className="p-6 border-b border-[#CAC8C0]/60 dark:border-[#45433E]/60 flex items-center justify-between">
+        <div className="lg:col-span-2 bg-[#F2EEE9] dark:bg-[#2A2926] border border-[#CAC8C0] dark:border-[#45433E] rounded-[24px] overflow-hidden shadow-warm-card">
+          <div className="p-6 border-b border-[#CAC8C0] dark:border-[#45433E] flex items-center justify-between">
             <div>
               <p className="text-[10px] font-bold uppercase tracking-widest text-[#7A756F] dark:text-[#A8A39B]">
                 Audit Trail
@@ -237,11 +237,11 @@ export default function DashboardClient({
 
           <div className="overflow-x-auto">
             <table className="w-full text-left">
-              <tbody className="divide-y divide-[#CAC8C0]/50 dark:divide-[#45433E]/50">
+              <tbody className="divide-y divide-[#CAC8C0] dark:divide-[#45433E]">
                 {recentSales.map((sale) => (
                   <tr
                     key={sale.id}
-                    className="hover:bg-[#F2EEE9]/60 dark:hover:bg-[#33322E]/60 transition-colors"
+                    className="hover:bg-[#EDE8E2] dark:hover:bg-[#33322E] transition-colors"
                   >
                     <td className="px-6 py-4">
                       <div className="flex items-center gap-3.5">
@@ -318,7 +318,7 @@ export default function DashboardClient({
         </div>
 
         {/* Collection Efficiency Radial Gauge */}
-        <div className="bg-[#E9E4DE] dark:bg-[#2A2926] border border-[#CAC8C0] dark:border-[#45433E] rounded-[24px] p-6 shadow-warm-card flex flex-col justify-between">
+        <div className="bg-[#F2EEE9] dark:bg-[#2A2926] border border-[#CAC8C0] dark:border-[#45433E] rounded-[24px] p-6 shadow-warm-card flex flex-col justify-between">
           <div>
             <p className="text-[10px] font-bold uppercase tracking-widest text-[#7A756F] dark:text-[#A8A39B]">
               Recovery
@@ -367,7 +367,7 @@ export default function DashboardClient({
             </div>
           </div>
 
-          <div className="mt-6 pt-4 border-t border-[#CAC8C0]/60 dark:border-[#45433E]/60">
+          <div className="mt-6 pt-4 border-t border-[#CAC8C0] dark:border-[#45433E]">
             <div className="bg-[#B4E0CA]/30 dark:bg-[#B4E0CA]/15 p-3.5 rounded-2xl border border-[#88A993]/30 flex items-center justify-between">
               <div>
                 <p className="text-[9px] font-bold text-[#1E3121] dark:text-[#B4E0CA] uppercase tracking-widest">

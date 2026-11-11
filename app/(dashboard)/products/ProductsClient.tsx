@@ -203,29 +203,29 @@ export default function ProductsClient({ initialProducts }: ProductsClientProps)
 
       <div className="grid gap-6 md:grid-cols-3">
         <div className="tp-card p-6 flex items-center gap-4">
-           <div className="bg-[#B4E0CA]/40 p-3 rounded-full text-[#1E3121]"><Plus className="h-5 w-5" /></div>
+           <div className="bg-[#B4E0CA] p-3 rounded-full text-[#1E3121] shadow-sm"><Plus className="h-5 w-5" /></div>
            <div>
               <p className="text-[10px] font-bold text-[#7A756F] dark:text-[#A8A39B] uppercase tracking-widest">Total Items</p>
               <p className="text-xl font-black text-[#3E3B36] dark:text-[#EDE9E3]">{products.length}</p>
            </div>
         </div>
         <div className="tp-card p-6 flex items-center gap-4">
-           <div className="bg-[#E3D094]/30 p-3 rounded-full text-[#4A3F12] dark:text-[#E3D094]"><TrendingDown className="h-5 w-5" /></div>
+           <div className="bg-[#E3D094] p-3 rounded-full text-[#4A3F12] shadow-sm"><TrendingDown className="h-5 w-5" /></div>
            <div>
               <p className="text-[10px] font-bold text-[#7A756F] dark:text-[#A8A39B] uppercase tracking-widest">Low Stock</p>
-              <p className="text-xl font-black text-[#4A3F12] dark:text-[#E3D094]">{lowStockCount}</p>
+              <p className="text-xl font-black text-[#7A5F0F] dark:text-[#E3D094]">{lowStockCount}</p>
            </div>
         </div>
         <div className="tp-card p-6 flex items-center gap-4">
-           <div className="bg-[#D98A7B]/20 p-3 rounded-full text-[#4A1D14] dark:text-[#D98A7B]"><AlertCircle className="h-5 w-5" /></div>
+           <div className="bg-[#F0C9C1] p-3 rounded-full text-[#8A2E22] shadow-sm"><AlertCircle className="h-5 w-5" /></div>
            <div>
               <p className="text-[10px] font-bold text-[#7A756F] dark:text-[#A8A39B] uppercase tracking-widest">Critical</p>
-              <p className="text-xl font-black text-[#4A1D14] dark:text-[#D98A7B]">{criticalStockCount}</p>
+              <p className="text-xl font-black text-[#A33A2B] dark:text-[#D98A7B]">{criticalStockCount}</p>
            </div>
         </div>
       </div>
 
-      <div className="flex flex-col sm:flex-row gap-4 justify-between bg-[#E9E4DE] dark:bg-[#2A2926] p-4 rounded-[20px] border border-[#CAC8C0] dark:border-[#45433E] shadow-warm-card">
+      <div className="flex flex-col sm:flex-row gap-4 justify-between bg-[#F2EEE9] dark:bg-[#2A2926] p-4 rounded-[20px] border border-[#CAC8C0] dark:border-[#45433E] shadow-warm-card">
         <div className="relative flex-1 max-w-md">
           <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-[#7A756F] dark:text-[#A8A39B] pointer-events-none" />
           <input
@@ -251,12 +251,12 @@ export default function ProductsClient({ initialProducts }: ProductsClientProps)
                 <th className="px-6 py-4 text-right">Actions</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-[#CAC8C0]/50 dark:divide-[#45433E]/50">
+            <tbody className="divide-y divide-[#CAC8C0] dark:divide-[#45433E]">
               {filteredProducts.map((product) => (
-                <tr key={product.id} className="hover:bg-[#F2EEE9]/50 dark:hover:bg-[#33322E]/50 transition-all group">
+                <tr key={product.id} className="bg-[#F2EEE9] hover:bg-[#EDE8E2] dark:bg-[#2A2926] dark:hover:bg-[#33322E] transition-all group">
                   <td className="px-6 py-5">
                     <div className="flex items-center gap-3">
-                       <div className="w-9 h-9 rounded-full bg-[#F2EEE9] dark:bg-[#33322E] border border-[#CAC8C0] dark:border-[#45433E] flex items-center justify-center text-[#7A756F] dark:text-[#A8A39B] font-bold text-xs">
+                       <div className="w-9 h-9 rounded-full bg-[#E9E4DE] dark:bg-[#33322E] border border-[#CAC8C0] dark:border-[#45433E] flex items-center justify-center text-[#7A756F] dark:text-[#A8A39B] font-bold text-xs">
                           {(product.name || 'P')[0].toUpperCase()}
                        </div>
                        <div>
@@ -266,24 +266,24 @@ export default function ProductsClient({ initialProducts }: ProductsClientProps)
                     </div>
                   </td>
                   <td className="px-6 py-5">
-                     <span className="text-[#3E3B36] dark:text-[#EDE9E3] font-medium px-3 py-1 bg-[#F2EEE9] dark:bg-[#33322E] border border-[#CAC8C0]/50 dark:border-[#45433E]/50 rounded-full text-[10px] font-bold uppercase tracking-tight">{product.category || 'General'}</span>
+                     <span className="text-[#3E3B36] dark:text-[#EDE9E3] font-medium px-3 py-1 bg-[#E9E4DE] dark:bg-[#33322E] border border-[#CAC8C0]/50 dark:border-[#45433E]/50 rounded-full text-[10px] font-bold uppercase tracking-tight">{product.category || 'General'}</span>
                   </td>
                   <td className="px-6 py-5 text-right font-black text-[#3E3B36] dark:text-[#EDE9E3]">₹{product.selling_rate.toLocaleString('en-IN')}</td>
                   <td className="px-6 py-5 text-right">
                     <span className={`inline-flex items-center gap-1.5 py-1 px-3 rounded-full text-[10px] font-bold uppercase tracking-widest border ${
                       product.current_stock <= 0 
-                        ? 'bg-[#D98A7B]/20 text-[#4A1D14] dark:text-[#D98A7B] border-[#D98A7B]/40' 
+                        ? 'bg-[#F0C9C1] text-[#8A2E22] border-[#F0C9C1]/80 shadow-sm' 
                         : product.current_stock <= product.min_stock_alert
-                        ? 'bg-[#E3D094]/30 text-[#4A3F12] dark:text-[#E3D094] border-[#E3D094]/60'
-                        : 'bg-[#B4E0CA]/30 text-[#1E3121] dark:text-[#B4E0CA] border-[#88A993]/40'
+                        ? 'bg-[#E3D094] text-[#4A3F12] border-[#E3D094]/60 shadow-sm'
+                        : 'bg-[#B4E0CA] text-[#1E3121] border-[#88A993]/40 shadow-sm'
                     }`}>
                       {product.current_stock} {product.unit}
                     </span>
                   </td>
                   <td className="px-6 py-5 text-right">
                      <div className="flex justify-end gap-2">
-                       <button onClick={() => openEdit(product)} className="px-3 py-1.5 text-[10px] font-bold uppercase text-[#1E3121] dark:text-[#B4E0CA] hover:bg-[#B4E0CA]/20 rounded-full transition-all">Edit</button>
-                       <button onClick={() => openAdjust(product)} className="px-3 py-1.5 text-[10px] font-bold uppercase text-[#7A756F] dark:text-[#A8A39B] hover:text-[#3E3B36] dark:hover:text-[#EDE9E3] hover:bg-[#F2EEE9] dark:hover:bg-[#33322E] rounded-full transition-all">Adjust</button>
+                       <button onClick={() => openEdit(product)} className="px-3 py-1.5 text-[10px] font-bold uppercase text-[#3F6B52] dark:text-[#B4E0CA] hover:bg-[#B4E0CA]/20 rounded-full transition-all">Edit</button>
+                       <button onClick={() => openAdjust(product)} className="px-3 py-1.5 text-[10px] font-bold uppercase text-[#7A756F] dark:text-[#A8A39B] hover:text-[#3E3B36] dark:hover:text-[#EDE9E3] hover:bg-[#EDE8E2] dark:hover:bg-[#33322E] rounded-full transition-all">Adjust</button>
                      </div>
                   </td>
                 </tr>
@@ -293,12 +293,12 @@ export default function ProductsClient({ initialProducts }: ProductsClientProps)
         </div>
 
         {/* Mobile View Product Cards */}
-        <div className="block md:hidden divide-y divide-[#CAC8C0]/50 dark:divide-[#45433E]/50 bg-[#E9E4DE] dark:bg-[#2A2926]">
+        <div className="block md:hidden divide-y divide-[#CAC8C0] dark:divide-[#45433E] bg-[#F2EEE9] dark:bg-[#2A2926]">
           {filteredProducts.map((product) => (
             <div key={product.id} className="p-4 space-y-3">
               <div className="flex justify-between items-start">
                 <div className="flex items-center gap-3">
-                  <div className="w-9 h-9 rounded-full bg-[#F2EEE9] dark:bg-[#33322E] border border-[#CAC8C0] dark:border-[#45433E] flex items-center justify-center text-[#7A756F] dark:text-[#A8A39B] font-bold text-xs">
+                  <div className="w-9 h-9 rounded-full bg-[#E9E4DE] dark:bg-[#33322E] border border-[#CAC8C0] dark:border-[#45433E] flex items-center justify-center text-[#7A756F] dark:text-[#A8A39B] font-bold text-xs">
                      {(product.name || 'P')[0].toUpperCase()}
                   </div>
                   <div>
@@ -306,12 +306,12 @@ export default function ProductsClient({ initialProducts }: ProductsClientProps)
                     <p className="text-[10px] font-medium text-[#7A756F] dark:text-[#A8A39B] uppercase">Unit: {product.unit}</p>
                   </div>
                 </div>
-                <span className="text-[#3E3B36] dark:text-[#EDE9E3] font-medium px-2.5 py-1 bg-[#F2EEE9] dark:bg-[#33322E] border border-[#CAC8C0]/50 dark:border-[#45433E]/50 rounded-full text-[9px] font-bold uppercase tracking-tight">
+                <span className="text-[#3E3B36] dark:text-[#EDE9E3] font-medium px-2.5 py-1 bg-[#E9E4DE] dark:bg-[#33322E] border border-[#CAC8C0]/50 dark:border-[#45433E]/50 rounded-full text-[9px] font-bold uppercase tracking-tight">
                   {product.category || 'General'}
                 </span>
               </div>
               
-              <div className="flex justify-between items-center bg-[#F2EEE9] dark:bg-[#33322E] p-2.5 rounded-[16px] border border-[#CAC8C0]/50 dark:border-[#45433E]/50">
+              <div className="flex justify-between items-center bg-[#E9E4DE] dark:bg-[#33322E] p-2.5 rounded-[16px] border border-[#CAC8C0]/50 dark:border-[#45433E]/50">
                 <div>
                   <p className="text-[9px] font-black text-[#7A756F] dark:text-[#A8A39B] uppercase">Selling Rate</p>
                   <p className="font-black text-[#3E3B36] dark:text-[#EDE9E3] text-xs mt-0.5">₹{product.selling_rate.toLocaleString('en-IN')}</p>
@@ -320,10 +320,10 @@ export default function ProductsClient({ initialProducts }: ProductsClientProps)
                   <p className="text-[9px] font-black text-[#7A756F] dark:text-[#A8A39B] uppercase mb-0.5">Current Stock</p>
                   <span className={`inline-flex items-center gap-1.5 py-0.5 px-2 rounded-full text-[9px] font-bold uppercase tracking-widest border ${
                     product.current_stock <= 0 
-                      ? 'bg-[#D98A7B]/20 text-[#4A1D14] dark:text-[#D98A7B] border-[#D98A7B]/40' 
+                      ? 'bg-[#F0C9C1] text-[#8A2E22] border-[#F0C9C1]/80 shadow-sm' 
                       : product.current_stock <= product.min_stock_alert
-                      ? 'bg-[#E3D094]/30 text-[#4A3F12] dark:text-[#E3D094] border-[#E3D094]/60'
-                      : 'bg-[#B4E0CA]/30 text-[#1E3121] dark:text-[#B4E0CA] border-[#88A993]/40'
+                      ? 'bg-[#E3D094] text-[#4A3F12] border-[#E3D094]/60 shadow-sm'
+                      : 'bg-[#B4E0CA] text-[#1E3121] border-[#88A993]/40 shadow-sm'
                   }`}>
                     {product.current_stock} {product.unit}
                   </span>
@@ -357,7 +357,7 @@ export default function ProductsClient({ initialProducts }: ProductsClientProps)
       {/* Add Product Modal */}
       {showAddModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-[#1F1E1B]/70 backdrop-blur-md px-4">
-          <div className="bg-[#E9E4DE] dark:bg-[#2A2926] rounded-[28px] shadow-warm-raised w-full max-w-lg overflow-hidden border border-[#CAC8C0] dark:border-[#45433E]">
+          <div className="bg-[#F2EEE9] dark:bg-[#2A2926] rounded-[28px] shadow-warm-raised w-full max-w-lg overflow-hidden border border-[#CAC8C0] dark:border-[#45433E]">
             <div className="p-6 md:p-8 border-b border-[#CAC8C0] dark:border-[#45433E] flex justify-between items-center">
               <h3 className="text-xl font-black text-[#3E3B36] dark:text-[#EDE9E3]">Add New Product</h3>
               <button onClick={() => setShowAddModal(false)} className="text-[#7A756F] dark:text-[#A8A39B] hover:text-[#3E3B36] dark:hover:text-[#EDE9E3] text-2xl font-light">&times;</button>
@@ -413,7 +413,7 @@ export default function ProductsClient({ initialProducts }: ProductsClientProps)
       {/* Edit Product Modal */}
       {showEditModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-[#1F1E1B]/70 backdrop-blur-md px-4">
-          <div className="bg-[#E9E4DE] dark:bg-[#2A2926] rounded-[28px] shadow-warm-raised w-full max-w-lg overflow-hidden border border-[#CAC8C0] dark:border-[#45433E]">
+          <div className="bg-[#F2EEE9] dark:bg-[#2A2926] rounded-[28px] shadow-warm-raised w-full max-w-lg overflow-hidden border border-[#CAC8C0] dark:border-[#45433E]">
             <div className="p-6 md:p-8 border-b border-[#CAC8C0] dark:border-[#45433E] flex justify-between items-center">
               <h3 className="text-xl font-black text-[#3E3B36] dark:text-[#EDE9E3]">Edit Product</h3>
               <button onClick={() => setShowEditModal(false)} className="text-[#7A756F] dark:text-[#A8A39B] hover:text-[#3E3B36] dark:hover:text-[#EDE9E3] text-2xl font-light">&times;</button>
@@ -465,7 +465,7 @@ export default function ProductsClient({ initialProducts }: ProductsClientProps)
       {/* Adjust Stock Modal */}
       {showAdjustModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-[#1F1E1B]/70 backdrop-blur-md px-4">
-          <div className="bg-[#E9E4DE] dark:bg-[#2A2926] rounded-[28px] shadow-warm-raised w-full max-w-sm overflow-hidden border border-[#CAC8C0] dark:border-[#45433E]">
+          <div className="bg-[#F2EEE9] dark:bg-[#2A2926] rounded-[28px] shadow-warm-raised w-full max-w-sm overflow-hidden border border-[#CAC8C0] dark:border-[#45433E]">
             <div className="p-6 md:p-8 border-b border-[#CAC8C0] dark:border-[#45433E] flex justify-between items-center">
               <h3 className="text-xl font-black text-[#3E3B36] dark:text-[#EDE9E3]">Adjust Stock</h3>
               <button onClick={() => setShowAdjustModal(false)} className="text-[#7A756F] dark:text-[#A8A39B] hover:text-[#3E3B36] dark:hover:text-[#EDE9E3] text-2xl font-light">&times;</button>
@@ -487,7 +487,7 @@ export default function ProductsClient({ initialProducts }: ProductsClientProps)
                   <button 
                     type="button"
                     onClick={() => setAdjustmentType('remove')}
-                    className={`flex-1 py-2 text-[10px] font-black uppercase tracking-widest rounded-full transition-all ${adjustmentType === 'remove' ? 'bg-[#D98A7B] text-[#4A1D14] shadow-warm-pill font-bold' : 'text-[#7A756F] dark:text-[#A8A39B]'}`}
+                    className={`flex-1 py-2 text-[10px] font-black uppercase tracking-widest rounded-full transition-all ${adjustmentType === 'remove' ? 'bg-[#F0C9C1] text-[#8A2E22] shadow-warm-pill font-bold' : 'text-[#7A756F] dark:text-[#A8A39B]'}`}
                   >
                     Remove (-)
                   </button>

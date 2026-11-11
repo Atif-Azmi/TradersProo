@@ -21,6 +21,7 @@ import {
 } from 'lucide-react'
 import { createClient } from '@/lib/supabase/client'
 import { useRouter } from 'next/navigation'
+import Logo from '@/components/common/Logo'
 
 const navigation = [
   { name: 'Dashboard', href: '/dashboard', icon: LayoutDashboard },
@@ -91,14 +92,9 @@ export default function Sidebar({ isSuperAdmin, onClose }: { isSuperAdmin: boole
   return (
     <div className="flex grow flex-col gap-y-5 overflow-y-auto bg-[#E0DCD6] dark:bg-[#1F1E1B] border-r border-[#CAC8C0] dark:border-[#45433E] px-6 pb-4 h-screen max-h-screen sticky top-0">
       <div className="flex h-16 shrink-0 items-center justify-between gap-2">
-        <div className="flex items-center gap-2">
-          <div className="w-9 h-9 bg-[#B4E0CA] text-[#1E3121] rounded-full flex items-center justify-center shadow-warm-pill">
-             <ShieldCheck className="h-5 w-5" />
-          </div>
-          <span className="text-xl font-black tracking-tight text-[#3E3B36] dark:text-[#EDE9E3]">
-            Traders<span className="text-[#88A993]">Pro</span>
-          </span>
-        </div>
+        <Link href="/dashboard" className="flex items-center gap-2">
+          <Logo size="md" />
+        </Link>
         {onClose && (
           <button onClick={onClose} className="lg:hidden p-2 text-[#7A756F] hover:text-[#3E3B36] dark:text-[#A8A39B]">
             <X className="h-5 w-5" />
@@ -146,7 +142,7 @@ export default function Sidebar({ isSuperAdmin, onClose }: { isSuperAdmin: boole
           
           {!isSuperAdmin && (
             <li className="mt-auto">
-               <div className="rounded-[20px] bg-[#E9E4DE] dark:bg-[#2A2926] p-4 mb-4 border border-[#CAC8C0] dark:border-[#45433E] shadow-sm">
+               <div className="rounded-[20px] bg-[#F2EEE9] dark:bg-[#2A2926] p-4 mb-4 border border-[#CAC8C0] dark:border-[#45433E] shadow-sm">
                   <div className="text-[10px] font-black text-[#7A756F] dark:text-[#A8A39B] uppercase tracking-widest mb-1">ACCOUNT PLAN</div>
                   <div className="flex items-center justify-between">
                      <span className="text-xs font-bold text-[#3E3B36] dark:text-[#EDE9E3]">{profile?.plan_type || 'Trial'} Plan</span>

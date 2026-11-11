@@ -4,6 +4,7 @@ import { useState } from 'react'
 import Link from 'next/link'
 import { Menu, X } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
+import Logo from '@/components/common/Logo'
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false)
@@ -11,9 +12,7 @@ export default function Navbar() {
   return (
     <header className="px-6 lg:px-20 h-24 flex items-center justify-between sticky top-0 bg-[#E0DCD6]/90 dark:bg-[#1F1E1B]/90 backdrop-blur-md z-50 border-b border-[#CAC8C0] dark:border-[#45433E]">
       <Link href="/" className="flex items-center gap-2 min-h-[44px]" aria-label="TradersPro Home">
-        <span className="text-2xl font-black tracking-tight text-[#1E3121] dark:text-[#EDE9E3]">
-          Traders<span className="text-[#88A993]">Pro</span>
-        </span>
+        <Logo size="lg" />
       </Link>
       
       {/* Desktop Navigation */}
@@ -59,12 +58,10 @@ export default function Navbar() {
               animate={{ x: 0 }}
               exit={{ x: '100%' }}
               transition={{ type: 'spring', damping: 25, stiffness: 200 }}
-              className="fixed top-0 right-0 bottom-0 w-80 max-w-[80vw] bg-[#E9E4DE] dark:bg-[#2A2926] p-8 shadow-warm-raised border-l border-[#CAC8C0] dark:border-[#45433E] flex flex-col gap-8 z-50 md:hidden"
+              className="fixed top-0 right-0 bottom-0 w-80 max-w-[80vw] bg-[#F2EEE9] dark:bg-[#2A2926] p-8 shadow-warm-raised border-l border-[#CAC8C0] dark:border-[#45433E] flex flex-col gap-8 z-50 md:hidden"
             >
               <div className="flex items-center justify-between">
-                <span className="text-xl font-black text-[#1E3121] dark:text-[#EDE9E3]">
-                  Traders<span className="text-[#88A993]">Pro</span>
-                </span>
+                <Logo size="md" />
                 <button 
                   onClick={() => setIsOpen(false)} 
                   className="p-3 text-[#7A756F] hover:text-[#3E3B36] dark:text-[#A8A39B] dark:hover:text-[#EDE9E3] min-h-[44px] min-w-[44px] flex items-center justify-center cursor-pointer"

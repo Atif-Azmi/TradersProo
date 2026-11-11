@@ -119,11 +119,11 @@ export default function SuperAdminClient() {
 
   const getStatusColor = (status: string) => {
     switch(status) {
-      case 'TRIAL': return 'bg-amber-100 text-amber-700 border border-amber-200'
-      case 'PAID': return 'bg-emerald-100 text-emerald-700 border border-emerald-200'
-      case 'EXPIRED': return 'bg-red-100 text-red-700 border border-red-200'
-      case 'LOCKED': return 'bg-[#D98A7B] text-[#4A1D14] border border-[#D98A7B]/40'
-      default: return 'bg-slate-100 text-slate-600'
+      case 'TRIAL': return 'bg-[#E3D094] text-[#4A3F12] border border-[#E3D094]/60 shadow-sm'
+      case 'PAID': return 'bg-[#B4E0CA] text-[#1E3121] border border-[#88A993]/40 shadow-sm'
+      case 'EXPIRED': return 'bg-[#F0C9C1] text-[#8A2E22] border border-[#F0C9C1]/80 shadow-sm'
+      case 'LOCKED': return 'bg-[#F0C9C1] text-[#8A2E22] border border-[#F0C9C1]/80 shadow-sm'
+      default: return 'bg-[#E9E4DE] text-[#3E3B36]'
     }
   }
 
@@ -169,11 +169,11 @@ export default function SuperAdminClient() {
       {/* KPI Cards */}
       <div className="grid grid-cols-2 md:grid-cols-5 gap-6">
         {[
-          { label: 'Total Nodes', value: totalUsers, icon: Users, bg: 'bg-[#B4E0CA]/40 text-[#1E3121]' },
-          { label: 'Active Trial', value: trialUsers, icon: Clock, bg: 'bg-[#E3D094]/40 text-[#4A3F12]' },
-          { label: 'Premium Nodes', value: paidUsers, icon: TrendingUp, bg: 'bg-[#B4E0CA]/40 text-[#1E3121]' },
-          { label: 'Expired/Dead', value: expiredUsers, icon: AlertTriangle, bg: 'bg-[#D98A7B]/40 text-[#4A1D14]' },
-          { label: 'Avg Longevity', value: `${avgDaysLeft}d`, icon: Shield, bg: 'bg-[#B4E0CA]/40 text-[#1E3121]' },
+          { label: 'Total Nodes', value: totalUsers, icon: Users, bg: 'bg-[#B4E0CA] text-[#1E3121] shadow-sm' },
+          { label: 'Active Trial', value: trialUsers, icon: Clock, bg: 'bg-[#E3D094] text-[#4A3F12] shadow-sm' },
+          { label: 'Premium Nodes', value: paidUsers, icon: TrendingUp, bg: 'bg-[#B4E0CA] text-[#1E3121] shadow-sm' },
+          { label: 'Expired/Dead', value: expiredUsers, icon: AlertTriangle, bg: 'bg-[#F0C9C1] text-[#8A2E22] shadow-sm' },
+          { label: 'Avg Longevity', value: `${avgDaysLeft}d`, icon: Shield, bg: 'bg-[#B4E0CA] text-[#1E3121] shadow-sm' },
         ].map((kpi, i) => (
           <div key={i} className="tp-card p-6 flex items-center gap-4">
             <div className={`p-3 rounded-full ${kpi.bg}`}>
@@ -222,7 +222,7 @@ export default function SuperAdminClient() {
               ) : filtered.length === 0 ? (
                 <tr><td colSpan={5} className="text-center py-16 text-[#7A756F] dark:text-[#A8A39B] text-xs font-bold uppercase tracking-widest">No Identities Found</td></tr>
               ) : filtered.map(user => (
-                <tr key={user.id} className={`hover:bg-[#F2EEE9]/50 dark:hover:bg-[#33322E]/50 transition-all group ${user.is_locked ? 'bg-[#F2EEE9]/80 dark:bg-[#33322E]/80 grayscale' : ''}`}>
+                <tr key={user.id} className={`hover:bg-[#EDE8E2] dark:hover:bg-[#33322E] transition-all group ${user.is_locked ? 'bg-[#F2EEE9]/80 dark:bg-[#33322E]/80 grayscale' : ''}`}>
                   <td className="px-6 py-5">
                     <div className="flex items-center gap-3">
                       <div className="w-9 h-9 rounded-full bg-[#F2EEE9] dark:bg-[#33322E] border border-[#CAC8C0] dark:border-[#45433E] flex items-center justify-center text-[#7A756F] dark:text-[#A8A39B] font-bold text-xs">
@@ -293,8 +293,8 @@ export default function SuperAdminClient() {
                       onClick={() => handleToggleLock(user.id, user.is_locked)}
                       className={`px-3 py-1.5 rounded-lg text-[10px] font-bold uppercase tracking-widest transition-all cursor-pointer
                         ${user.is_locked 
-                          ? 'bg-emerald-50 text-emerald-600 hover:bg-emerald-100 border border-emerald-100' 
-                          : 'bg-red-50 text-red-600 hover:bg-red-100 border border-red-100'}`}
+                          ? 'bg-[#B4E0CA] text-[#1E3121] hover:bg-[#9CCDB4] border border-[#88A993]/40 shadow-sm' 
+                          : 'bg-[#F0C9C1] text-[#8A2E22] hover:bg-[#F0C9C1]/80 border border-[#F0C9C1]/80 shadow-sm'}`}
                     >
                       {user.is_locked ? 'Authorize' : 'Suspend'}
                     </button>

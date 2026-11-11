@@ -180,7 +180,7 @@ export default function TopBar({ setSidebarOpen }: { setSidebarOpen: (open: bool
 
              {/* Notifications Popover Dropdown */}
              {showNotifications && (
-               <div className="fixed md:absolute right-4 left-4 md:right-0 md:left-auto mt-2 top-16 md:top-10 w-[calc(100vw-32px)] md:w-80 rounded-[20px] bg-[#E9E4DE] dark:bg-[#2A2926] border border-[#CAC8C0] dark:border-[#45433E] p-4 shadow-warm-raised z-50 animate-in fade-in slide-in-from-top-3 duration-200">
+               <div className="fixed md:absolute right-4 left-4 md:right-0 md:left-auto mt-2 top-16 md:top-10 w-[calc(100vw-32px)] md:w-80 rounded-[20px] bg-[#F2EEE9] dark:bg-[#2A2926] border border-[#CAC8C0] dark:border-[#45433E] p-4 shadow-warm-raised z-50 animate-in fade-in slide-in-from-top-3 duration-200">
                  <div className="flex items-center justify-between pb-3 border-b border-[#CAC8C0]/50 dark:border-[#45433E]/50">
                    <h4 className="text-xs font-black text-[#3E3B36] dark:text-[#EDE9E3] uppercase tracking-widest">Recent Activity</h4>
                    <span className="text-[9px] font-bold bg-[#B4E0CA] text-[#1E3121] px-2.5 py-0.5 rounded-full shadow-sm">

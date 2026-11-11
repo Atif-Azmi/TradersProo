@@ -630,21 +630,21 @@ _Generated via TradersPro Accounting Systems_
       {/* SUMMARY STATS BAR */}
       <div className="grid gap-6 md:grid-cols-3">
         <div className="tp-card p-6 flex items-center gap-4">
-           <div className="bg-[#B4E0CA]/40 p-3 rounded-full text-[#1E3121]"><TrendingUp className="h-5 w-5" /></div>
+           <div className="bg-[#B4E0CA] p-3 rounded-full text-[#1E3121] shadow-sm"><TrendingUp className="h-5 w-5" /></div>
            <div>
               <p className="text-[10px] font-bold text-[#7A756F] dark:text-[#A8A39B] uppercase tracking-widest">Monthly Growth</p>
               <p className="text-xl font-black text-[#3E3B36] dark:text-[#EDE9E3]">+{computedGrowth.toFixed(1)}%</p>
            </div>
         </div>
         <div className="tp-card p-6 flex items-center gap-4">
-           <div className="bg-[#B4E0CA]/40 p-3 rounded-full text-[#1E3121]"><ShieldCheck className="h-5 w-5" /></div>
+           <div className="bg-[#B4E0CA] p-3 rounded-full text-[#1E3121] shadow-sm"><ShieldCheck className="h-5 w-5" /></div>
            <div>
               <p className="text-[10px] font-bold text-[#7A756F] dark:text-[#A8A39B] uppercase tracking-widest">Collection Rate</p>
               <p className="text-xl font-black text-[#3E3B36] dark:text-[#EDE9E3]">{collectionRate.toFixed(1)}%</p>
            </div>
         </div>
         <div className="tp-card p-6 flex items-center gap-4">
-           <div className="bg-[#B4E0CA]/40 p-3 rounded-full text-[#1E3121]"><PieChart className="h-5 w-5" /></div>
+           <div className="bg-[#B4E0CA] p-3 rounded-full text-[#1E3121] shadow-sm"><PieChart className="h-5 w-5" /></div>
            <div>
               <p className="text-[10px] font-bold text-[#7A756F] dark:text-[#A8A39B] uppercase tracking-widest">Profit Margin</p>
               <p className="text-xl font-black text-[#3E3B36] dark:text-[#EDE9E3]">{avgMargin.toFixed(1)}%</p>
@@ -864,7 +864,7 @@ _Generated via TradersPro Accounting Systems_
       {/* Select Customer Ledger Modal */}
       {showLedgerModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-[#1F1E1B]/70 backdrop-blur-md px-4">
-          <div className="bg-[#E9E4DE] dark:bg-[#2A2926] rounded-[28px] shadow-warm-raised w-full max-w-md overflow-hidden border border-[#CAC8C0] dark:border-[#45433E]">
+          <div className="bg-[#F2EEE9] dark:bg-[#2A2926] rounded-[28px] shadow-warm-raised w-full max-w-md overflow-hidden border border-[#CAC8C0] dark:border-[#45433E]">
             <div className="p-6 border-b border-[#CAC8C0] dark:border-[#45433E] flex justify-between items-center bg-[#F2EEE9]/50 dark:bg-[#33322E]/50">
               <div>
                 <h3 className="text-lg font-black text-[#3E3B36] dark:text-[#EDE9E3] uppercase tracking-widest">

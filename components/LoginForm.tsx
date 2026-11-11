@@ -4,7 +4,8 @@ import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { createClient } from '@/lib/supabase/client'
-import { ShieldCheck, Eye, EyeOff, ArrowLeft, Loader2 } from 'lucide-react'
+import { Eye, EyeOff, ArrowLeft, Loader2 } from 'lucide-react'
+import Logo from '@/components/common/Logo'
 
 export default function LoginForm() {
   const [email, setEmail] = useState('')
@@ -128,10 +129,7 @@ export default function LoginForm() {
   return (
     <div className="flex flex-col justify-center">
        <div className="flex items-center gap-2 mb-10">
-          <div className="w-9 h-9 bg-[#B4E0CA] text-[#1E3121] rounded-full flex items-center justify-center shadow-warm-pill">
-             <ShieldCheck className="h-5 w-5" />
-          </div>
-          <span className="text-xl font-black tracking-tight text-[#3E3B36] dark:text-[#EDE9E3]">Traders<span className="text-[#88A993]">Pro</span></span>
+          <Logo size="lg" />
        </div>
        
        <div className="mb-10 text-center">

@@ -5,12 +5,40 @@
 @layer base {
   :root {
     --background: #E0DCD6;
-    --surface: #E9E4DE;
+    --surface: #F2EEE9;
     --surface-raised: #F2EEE9;
+    --surface-subtle: #E9E4DE;
+    --surface-hover: #EDE8E2;
     --border: #CAC8C0;
     --ink: #3E3B36;
     --ink-secondary: #7A756F;
+    --action-link: #3F6B52;
     --disabled: #A09B94;
+    --primary: #B4E0CA;
+    --primary-pressed: #9CCDB4;
+    --primary-strong: #88A993;
+    --on-primary: #1E3121;
+    --warning: #E3D094;
+    --on-warning: #4A3F12;
+    --danger: #F0C9C1;
+    --on-danger: #8A2E22;
+    --info: #9DB8C9;
+    --on-info: #1F3441;
+    --radius: 20px;
+    color-scheme: light;
+  }
+
+  .dark, [data-theme="dark"] {
+    --background: #1F1E1B;
+    --surface: #2A2926;
+    --surface-raised: #33322E;
+    --surface-subtle: #33322E;
+    --surface-hover: #33322E;
+    --border: #45433E;
+    --ink: #EDE9E3;
+    --ink-secondary: #A8A39B;
+    --action-link: #B4E0CA;
+    --disabled: #5E5A54;
     --primary: #B4E0CA;
     --primary-pressed: #9CCDB4;
     --primary-strong: #88A993;
@@ -21,51 +49,6 @@
     --on-danger: #4A1D14;
     --info: #9DB8C9;
     --on-info: #1F3441;
-    --radius: 20px;
-    color-scheme: light;
-  }
-
-  @media (prefers-color-scheme: dark) {
-    :root {
-      --background: #1F1E1B;
-      --surface: #2A2926;
-      --surface-raised: #33322E;
-      --border: #45433E;
-      --ink: #EDE9E3;
-      --ink-secondary: #A8A39B;
-      --disabled: #5E5A54;
-      --primary: #B4E0CA;
-      --primary-pressed: #9CCDB4;
-      --primary-strong: #88A993;
-      --on-primary: #1E3121;
-      --warning: #E3D094;
-      --on-warning: #E3D094;
-      --danger: #D98A7B;
-      --on-danger: #D98A7B;
-      --info: #9DB8C9;
-      --on-info: #9DB8C9;
-      color-scheme: dark;
-    }
-  }
-
-  .dark, [data-theme="dark"] {
-    --background: #1F1E1B;
-    --surface: #2A2926;
-    --surface-raised: #33322E;
-    --border: #45433E;
-    --ink: #EDE9E3;
-    --ink-secondary: #A8A39B;
-    --disabled: #5E5A54;
-    --primary: #B4E0CA;
-    --primary-pressed: #9CCDB4;
-    --primary-strong: #88A993;
-    --on-primary: #1E3121;
-    --warning: #E3D094;
-    --on-warning: #E3D094;
-    --danger: #D98A7B;
-    --on-danger: #D98A7B;
-    --info: #9DB8C9;
-    --on-info: #9DB8C9;
     color-scheme: dark;
   }
 }
@@ -75,14 +58,22 @@
     scroll-behavior: smooth;
     background-color: var(--background);
     color: var(--ink);
-    color-scheme: light dark;
+    color-scheme: light;
+  }
+
+  html.dark, html[data-theme="dark"] {
+    color-scheme: dark;
   }
   
   * {
     border-color: var(--border);
     -webkit-overflow-scrolling: touch;
     scrollbar-width: thin;
-    scrollbar-color: var(--border) var(--surface);
+    scrollbar-color: #CAC8C0 #E0DCD6;
+  }
+
+  .dark *, [data-theme="dark"] * {
+    scrollbar-color: #45433E #1F1E1B;
   }
 
   ::-webkit-scrollbar {
@@ -91,16 +82,28 @@
   }
 
   ::-webkit-scrollbar-track {
-    background: var(--surface);
+    background: #E0DCD6;
   }
 
   ::-webkit-scrollbar-thumb {
-    background: var(--border);
+    background: #CAC8C0;
     border-radius: 9999px;
   }
 
   ::-webkit-scrollbar-thumb:hover {
-    background: var(--ink-secondary);
+    background: #7A756F;
+  }
+
+  .dark ::-webkit-scrollbar-track, [data-theme="dark"] ::-webkit-scrollbar-track {
+    background: #1F1E1B;
+  }
+
+  .dark ::-webkit-scrollbar-thumb, [data-theme="dark"] ::-webkit-scrollbar-thumb {
+    background: #45433E;
+  }
+
+  .dark ::-webkit-scrollbar-thumb:hover, [data-theme="dark"] ::-webkit-scrollbar-thumb:hover {
+    background: #A8A39B;
   }
   
   body {
@@ -157,6 +160,16 @@
   }
 }
 
+/* NProgress loader styling - remove any dark green lines and harsh shadows */
+#nprogress .bar {
+  background: #B4E0CA !important;
+  height: 2px !important;
+  box-shadow: none !important;
+}
+#nprogress .peg {
+  box-shadow: none !important;
+}
+
 .recharts-cartesian-grid-horizontal line {
   stroke: var(--border);
 }
@@ -165,12 +178,42 @@
   fill: var(--surfaceRaised);
 }
 
-/* Custom TradersPro UI Utilities with Warm Stone & Mint System */
+/* Custom TradersPro UI Utilities with Warm Greige & Mint System */
 .tp-card {
-  background-color: var(--surface);
-  border: 1px solid var(--border);
+  background-color: #F2EEE9;
+  border: 1px solid #CAC8C0;
   box-shadow: 0 8px 24px -4px rgba(62, 59, 54, 0.08);
   border-radius: 20px;
+}
+.dark .tp-card, [data-theme="dark"] .tp-card {
+  background-color: #2A2926;
+  border-color: #45433E;
+  box-shadow: none;
+}
+
+.tp-table-head {
+  background-color: #F2EEE9;
+  color: #3E3B36;
+  border-bottom: 1px solid #CAC8C0;
+}
+.dark .tp-table-head, [data-theme="dark"] .tp-table-head {
+  background-color: #33322E;
+  color: #EDE9E3;
+  border-color: #45433E;
+}
+
+.tp-table-row {
+  background-color: #F2EEE9;
+  transition: background-color 0.15s ease;
+}
+.tp-table-row:hover {
+  background-color: #EDE8E2;
+}
+.dark .tp-table-row, [data-theme="dark"] .tp-table-row {
+  background-color: #2A2926;
+}
+.dark .tp-table-row:hover, [data-theme="dark"] .tp-table-row:hover {
+  background-color: #33322E;
 }
 
 .tp-button-primary {

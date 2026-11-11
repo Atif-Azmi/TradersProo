@@ -203,9 +203,9 @@ _TradersPro — Professional Billing Suite_
             <p className="text-xl font-black text-[#3E3B36] dark:text-[#EDE9E3] uppercase tracking-tight italic">
               {isElite ? 'Elite Active Pass' : 'Trial Period'}
             </p>
-            <div className="w-full bg-slate-100 rounded-full h-2 mt-4 mb-4 overflow-hidden">
+            <div className="w-full bg-[#CAC8C0] dark:bg-[#45433E] rounded-full h-2 mt-4 mb-4 overflow-hidden">
               <div 
-                className={`h-2 rounded-full transition-all duration-500 ${isElite ? 'bg-emerald-500' : 'bg-[#B4E0CA]'}`} 
+                className={`h-2 rounded-full transition-all duration-500 ${isElite ? 'bg-[#3F6B52]' : 'bg-[#B4E0CA]'}`} 
                 style={{ width: isElite ? '100%' : '15%' }}
               ></div>
             </div>

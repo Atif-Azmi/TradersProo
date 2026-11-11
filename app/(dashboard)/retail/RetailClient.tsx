@@ -216,7 +216,7 @@ export default function RetailClient({ products, customers, todaySales }: Retail
         </div>
       </div>
 
-      <div className="flex flex-col sm:flex-row gap-4 justify-between bg-[#E9E4DE] dark:bg-[#2A2926] p-4 rounded-[20px] border border-[#CAC8C0] dark:border-[#45433E] shadow-warm-card">
+      <div className="flex flex-col sm:flex-row gap-4 justify-between bg-[#F2EEE9] dark:bg-[#2A2926] p-4 rounded-[20px] border border-[#CAC8C0] dark:border-[#45433E] shadow-warm-card">
         <div className="relative flex-1 max-w-md">
           <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-[#7A756F] dark:text-[#A8A39B] pointer-events-none" />
           <input
@@ -243,7 +243,7 @@ export default function RetailClient({ products, customers, todaySales }: Retail
                 <th className="px-6 py-4">Mode</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-[#CAC8C0]/50 dark:divide-[#45433E]/50">
+            <tbody className="divide-y divide-[#CAC8C0] dark:divide-[#45433E]">
                {filteredSales.length === 0 ? (
                  <tr>
                    <td colSpan={6} className="px-6 py-20 text-center text-[#7A756F] dark:text-[#A8A39B] text-[10px] font-bold uppercase tracking-widest">
@@ -262,19 +262,19 @@ export default function RetailClient({ products, customers, todaySales }: Retail
                      .join(', ') || 'N/A'
 
                    return (
-                     <tr key={sale.id} className="hover:bg-[#F2EEE9]/50 dark:hover:bg-[#33322E]/50 transition-all group">
-                       <td className="px-6 py-5 font-medium text-slate-600">{time}</td>
+                     <tr key={sale.id} className="bg-[#F2EEE9] hover:bg-[#EDE8E2] dark:bg-[#2A2926] dark:hover:bg-[#33322E] transition-all group">
+                       <td className="px-6 py-5 font-medium text-[#7A756F] dark:text-[#A8A39B]">{time}</td>
                        <td className="px-6 py-5 font-bold text-[#3E3B36] dark:text-[#EDE9E3]">{sale.invoice_number}</td>
-                       <td className="px-6 py-5 font-medium text-slate-600">{sale.tp_customers?.name || 'Walk-in'}</td>
+                       <td className="px-6 py-5 font-medium text-[#3E3B36] dark:text-[#EDE9E3]">{sale.tp_customers?.name || 'Walk-in'}</td>
                        <td className="px-6 py-5 text-[#7A756F] dark:text-[#A8A39B] max-w-xs truncate">{productsList}</td>
                        <td className="px-6 py-5 text-right font-black text-[#3E3B36] dark:text-[#EDE9E3]">₹{sale.total_amount.toLocaleString('en-IN', { minimumFractionDigits: 2 })}</td>
                        <td className="px-6 py-5">
                          <span className={`inline-flex items-center gap-1.5 py-1 px-3 rounded-full text-[10px] font-bold uppercase tracking-widest border ${
                            sale.payment_mode === 'cash' 
-                              ? 'bg-emerald-50 text-emerald-600 border-emerald-100' 
+                              ? 'bg-[#B4E0CA] text-[#1E3121] border-[#88A993]/40 shadow-sm' 
                               : sale.payment_mode === 'credit'
-                              ? 'bg-rose-50 text-rose-600 border-rose-100'
-                              : 'bg-blue-50 text-blue-600 border-blue-100'
+                              ? 'bg-[#F0C9C1] text-[#8A2E22] border-[#F0C9C1]/80 shadow-sm'
+                              : 'bg-[#9DB8C9] text-[#1F3441] border-[#9DB8C9]/60 shadow-sm'
                          }`}>
                            {sale.payment_mode === 'credit' ? 'pay later' : sale.payment_mode}
                          </span>
@@ -288,7 +288,7 @@ export default function RetailClient({ products, customers, todaySales }: Retail
         </div>
 
         {/* Mobile View Card List */}
-        <div className="block md:hidden divide-y divide-[#CAC8C0]/50 dark:divide-[#45433E]/50 bg-[#E9E4DE] dark:bg-[#2A2926]">
+        <div className="block md:hidden divide-y divide-[#CAC8C0] dark:divide-[#45433E] bg-[#F2EEE9] dark:bg-[#2A2926]">
           {filteredSales.length === 0 ? (
             <div className="p-16 text-center text-[#7A756F] dark:text-[#A8A39B] text-[10px] font-bold uppercase tracking-widest">
                No transactions recorded today
@@ -313,10 +313,10 @@ export default function RetailClient({ products, customers, todaySales }: Retail
                     </div>
                     <span className={`inline-flex items-center gap-1.5 py-1 px-2.5 rounded-full text-[9px] font-bold uppercase tracking-widest border ${
                       sale.payment_mode === 'cash' 
-                          ? 'bg-emerald-50 text-emerald-600 border-emerald-100' 
+                          ? 'bg-[#B4E0CA] text-[#1E3121] border-[#88A993]/40 shadow-sm' 
                           : sale.payment_mode === 'credit'
-                          ? 'bg-rose-50 text-rose-600 border-rose-100'
-                          : 'bg-blue-50 text-blue-600 border-blue-100'
+                          ? 'bg-[#F0C9C1] text-[#8A2E22] border-[#F0C9C1]/80 shadow-sm'
+                          : 'bg-[#9DB8C9] text-[#1F3441] border-[#9DB8C9]/60 shadow-sm'
                     }`}>
                       {sale.payment_mode === 'credit' ? 'pay later' : sale.payment_mode}
                     </span>
@@ -346,7 +346,7 @@ export default function RetailClient({ products, customers, todaySales }: Retail
       {/* Add Retail Sale Modal */}
       {showModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-[#1F1E1B]/70 backdrop-blur-md px-4">
-          <div className="bg-[#E9E4DE] dark:bg-[#2A2926] rounded-[28px] shadow-warm-raised w-full max-w-3xl overflow-hidden border border-[#CAC8C0] dark:border-[#45433E] flex flex-col max-h-[90vh]">
+          <div className="bg-[#F2EEE9] dark:bg-[#2A2926] rounded-[28px] shadow-warm-raised w-full max-w-3xl overflow-hidden border border-[#CAC8C0] dark:border-[#45433E] flex flex-col max-h-[90vh]">
             <div className="p-6 border-b border-[#CAC8C0] dark:border-[#45433E] flex justify-between items-center bg-[#F2EEE9]/50 dark:bg-[#33322E]/50">
               <div>
                 <h3 className="text-lg font-black text-[#3E3B36] dark:text-[#EDE9E3] uppercase tracking-widest">New Retail Sale</h3>

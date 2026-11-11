@@ -121,8 +121,8 @@ export default function AnimatedSplash() {
             transition={{ delay: 0.35, duration: 0.5 }}
             className="mt-6 flex flex-col items-center gap-1.5"
           >
-            <span className="text-2xl font-black tracking-tight text-[#1E3121] dark:text-[#EDE9E3] font-sans">
-              Traders<span className="text-[#88A993]">Pro</span>
+            <span className="text-2xl font-black tracking-tight text-[#3E3B36] dark:text-[#EDE9E3] font-sans">
+              Traders<span className="text-[#3F6B52] dark:text-[#B4E0CA]">Pro</span>
             </span>
             <span className="text-[10px] font-bold uppercase tracking-[0.25em] text-[#7A756F] dark:text-[#A8A39B]">
               Hardware Business Management

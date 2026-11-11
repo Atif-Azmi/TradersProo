@@ -60,7 +60,7 @@ export default function SharedBillPage({ params }: { params: { id: string } }) {
   if (loading) {
     return (
       <div className="min-h-screen bg-[#E0DCD6] dark:bg-[#1F1E1B] flex flex-col items-center justify-center p-4">
-        <div className="bg-[#E9E4DE] dark:bg-[#2A2926] p-12 rounded-[28px] shadow-warm-raised border border-[#CAC8C0] dark:border-[#45433E] flex items-center justify-center max-w-xs w-full">
+        <div className="bg-[#F2EEE9] dark:bg-[#2A2926] p-12 rounded-[28px] shadow-warm-raised border border-[#CAC8C0] dark:border-[#45433E] flex items-center justify-center max-w-xs w-full">
           <LoadingSpinner size="md" text="RETRIEVING BILL..." textColor="text-[#7A756F]" />
         </div>
       </div>
@@ -70,7 +70,7 @@ export default function SharedBillPage({ params }: { params: { id: string } }) {
   if (error || !bill) {
     return (
       <div className="min-h-screen bg-[#E0DCD6] dark:bg-[#1F1E1B] flex flex-col items-center justify-center p-4">
-        <div className="bg-[#E9E4DE] dark:bg-[#2A2926] p-10 rounded-[28px] shadow-warm-raised border border-[#CAC8C0] dark:border-[#45433E] max-w-md w-full text-center">
+        <div className="bg-[#F2EEE9] dark:bg-[#2A2926] p-10 rounded-[28px] shadow-warm-raised border border-[#CAC8C0] dark:border-[#45433E] max-w-md w-full text-center">
           <div className="w-16 h-16 bg-[#D98A7B]/20 rounded-full flex items-center justify-center mx-auto mb-6 text-[#4A1D14] dark:text-[#D98A7B]">
             <AlertCircle className="h-8 w-8" />
           </div>
@@ -98,14 +98,14 @@ export default function SharedBillPage({ params }: { params: { id: string } }) {
         
         {/* TradersPro Logo/Header */}
         <div className="text-center mb-6">
-          <h1 className="text-2xl font-black text-[#1E3121] dark:text-[#EDE9E3] tracking-widest uppercase">
-            Traders<span className="text-[#88A993]">Pro</span>
+          <h1 className="text-2xl font-black text-[#3E3B36] dark:text-[#EDE9E3] tracking-widest uppercase">
+            Traders<span className="text-[#3F6B52] dark:text-[#B4E0CA]">Pro</span>
           </h1>
           <p className="text-[10px] font-bold text-[#7A756F] dark:text-[#A8A39B] uppercase tracking-widest mt-1">SECURE BILLING PORTAL</p>
         </div>
 
         {/* Premium Floating Card */}
-        <div className="bg-[#E9E4DE] dark:bg-[#2A2926] rounded-[28px] shadow-warm-raised border border-[#CAC8C0] dark:border-[#45433E] p-8 sm:p-10 relative overflow-hidden">
+        <div className="bg-[#F2EEE9] dark:bg-[#2A2926] rounded-[28px] shadow-warm-raised border border-[#CAC8C0] dark:border-[#45433E] p-8 sm:p-10 relative overflow-hidden">
           
           {/* Subtle background badge */}
           <div className="absolute top-0 right-0 w-32 h-32 bg-[#B4E0CA]/10 rounded-bl-[8rem] flex items-start justify-end p-6 text-[#88A993]/30 pointer-events-none">

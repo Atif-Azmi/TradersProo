@@ -93,7 +93,7 @@ export default function OnboardingPage() {
   return (
     <div className="flex min-h-screen items-center justify-center bg-[#E0DCD6] dark:bg-[#1F1E1B] px-4 py-12 sm:px-6 lg:px-8 font-sans">
       <Toaster position="top-right" />
-      <div className="w-full max-w-xl space-y-10 bg-[#E9E4DE] dark:bg-[#2A2926] p-8 sm:p-14 rounded-[28px] shadow-warm-raised border border-[#CAC8C0] dark:border-[#45433E]">
+      <div className="w-full max-w-xl space-y-10 bg-[#F2EEE9] dark:bg-[#2A2926] p-8 sm:p-14 rounded-[28px] shadow-warm-raised border border-[#CAC8C0] dark:border-[#45433E]">
         <div className="text-center">
           <div className="mx-auto w-14 h-14 bg-[#B4E0CA] text-[#1E3121] rounded-full flex items-center justify-center mb-6 shadow-warm-pill">
             <Building2 className="h-7 w-7" />

@@ -21,7 +21,16 @@ export const viewport = {
 export const metadata: Metadata = {
   title: 'TradersPro — Hardware Business Management',
   description: 'Track customers, sales, stock alerts, and bulk WhatsApp reminders.',
-  manifest: '/manifest.json',
+  manifest: '/manifest.json?v=2.0.1',
+  icons: {
+    icon: [
+      { url: '/favicon.ico?v=2.0.1' },
+      { url: '/icon.png?v=2.0.1', sizes: '48x48', type: 'image/png' },
+    ],
+    apple: [
+      { url: '/apple-icon.png?v=2.0.1', sizes: '180x180', type: 'image/png' },
+    ],
+  },
   appleWebApp: {
     capable: true,
     statusBarStyle: 'black-translucent',
@@ -30,7 +39,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'TradersPro — Hardware Business Management',
     description: 'Track customers, sales, stock alerts, and bulk WhatsApp reminders.',
-    images: ['https://traders-proo.vercel.app/og-image.jpg'],
+    images: ['https://traders-proo.vercel.app/og-image.jpg?v=2.0.1'],
     url: 'https://traders-proo.vercel.app',
     type: 'website',
   },
@@ -49,6 +58,9 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${inter.variable} ${outfit.variable}`}>
       <head>
+        <link rel="icon" href="/favicon.ico?v=2.0.1" sizes="any" />
+        <link rel="icon" href="/icon.png?v=2.0.1" type="image/png" />
+        <link rel="apple-touch-icon" href="/apple-icon.png?v=2.0.1" />
         <link rel="preconnect" href="https://api.dicebear.com" />
         <link rel="preconnect" href="https://images.unsplash.com" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -61,9 +73,10 @@ export default function RootLayout({
               color="#B4E0CA"
               initialPosition={0.08}
               crawlSpeed={200}
-              height={3}
+              height={2}
               crawl={true}
               showSpinner={false}
+              shadow={false}
               easing="ease"
               speed={200}
             />

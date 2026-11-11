@@ -34,8 +34,8 @@ export default class ErrorBoundary extends Component<Props, State> {
     if (this.state.hasError) {
       return (
         <div className="min-h-screen flex items-center justify-center bg-[#E0DCD6] dark:bg-[#1F1E1B] p-4 font-sans">
-          <div className="w-full max-w-md bg-[#E9E4DE] dark:bg-[#2A2926] rounded-[24px] p-8 md:p-12 shadow-warm-raised border border-[#CAC8C0] dark:border-[#45433E] text-center space-y-6">
-            <div className="w-16 h-16 bg-[#D98A7B]/20 rounded-full flex items-center justify-center text-[#4A1D14] dark:text-[#D98A7B] mx-auto animate-bounce-subtle">
+          <div className="w-full max-w-md bg-[#F2EEE9] dark:bg-[#2A2926] rounded-[24px] p-8 md:p-12 shadow-warm-raised border border-[#CAC8C0] dark:border-[#45433E] text-center space-y-6">
+            <div className="w-16 h-16 bg-[#F0C9C1] rounded-full flex items-center justify-center text-[#8A2E22] dark:text-[#D98A7B] mx-auto shadow-sm animate-bounce-subtle">
               <ShieldAlert className="h-8 w-8" />
             </div>
             

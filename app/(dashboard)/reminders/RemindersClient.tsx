@@ -84,12 +84,12 @@ export default function RemindersClient({ initialCustomers, businessProfile }: R
                </div>
             </div>
             
-            <div className="p-4 border-b border-[#CAC8C0] dark:border-[#45433E] flex items-center justify-between bg-[#E9E4DE] dark:bg-[#2A2926]">
+            <div className="p-4 border-b border-[#CAC8C0] dark:border-[#45433E] flex items-center justify-between bg-[#F2EEE9] dark:bg-[#2A2926]">
                <button onClick={toggleSelectAll} className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-widest text-[#7A756F] dark:text-[#A8A39B] hover:text-[#3E3B36] dark:hover:text-[#EDE9E3]">
                   {selected.length === filteredCustomers.length && filteredCustomers.length > 0 ? <CheckSquare className="h-5 w-5 text-[#1E3121] dark:text-[#B4E0CA]" /> : <Square className="h-5 w-5 text-slate-200" />}
                   Select All ({filteredCustomers.length})
                </button>
-               <span className="text-[10px] font-bold uppercase tracking-widest bg-red-50 text-red-600 px-3 py-1 rounded-full border border-red-100">Total: ₹{totalDues.toLocaleString('en-IN')}</span>
+               <span className="text-[10px] font-bold uppercase tracking-widest bg-[#F0C9C1] text-[#8A2E22] px-3 py-1 rounded-full border border-[#F0C9C1]/80 shadow-sm">Total: ₹{totalDues.toLocaleString('en-IN')}</span>
             </div>
 
             <div className="overflow-y-auto flex-1 p-4 space-y-3">
@@ -102,7 +102,7 @@ export default function RemindersClient({ initialCustomers, businessProfile }: R
                            <p className="text-[10px] font-bold text-[#7A756F] dark:text-[#A8A39B] uppercase tracking-tight">{customer.phone}</p>
                         </div>
                      </div>
-                     <span className="font-black text-red-600 tracking-tight">₹{parseFloat(customer.outstanding_dues).toLocaleString('en-IN')}</span>
+                     <span className="font-black text-[#A33A2B] dark:text-[#D98A7B] tracking-tight">₹{parseFloat(customer.outstanding_dues).toLocaleString('en-IN')}</span>
                   </div>
                ))}
                {filteredCustomers.length === 0 && (
@@ -141,7 +141,7 @@ export default function RemindersClient({ initialCustomers, businessProfile }: R
             <label className="text-[10px] font-bold text-[#7A756F] dark:text-[#A8A39B] mb-2 uppercase tracking-widest ml-1 flex items-center gap-1">
                <Eye className="h-3 w-3" /> WhatsApp Preview
             </label>
-            <div className="flex-1 min-h-[100px] p-4 bg-emerald-50/20 border border-emerald-100 rounded-lg text-sm text-slate-600 whitespace-pre-wrap italic font-medium leading-relaxed mb-6">
+            <div className="flex-1 min-h-[100px] p-4 bg-[#F2EEE9] dark:bg-[#33322E] border border-[#CAC8C0] dark:border-[#45433E] rounded-lg text-sm text-[#3E3B36] dark:text-[#EDE9E3] whitespace-pre-wrap italic font-medium leading-relaxed mb-6">
                {selected.length > 0 ? getReplacedMessage(firstSelectedCustomer) : 'Select target customers to initialize preview...'}
             </div>
 

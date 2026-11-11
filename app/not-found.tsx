@@ -6,7 +6,7 @@ import { ShieldAlert, ArrowLeft } from 'lucide-react'
 export default function NotFound() {
   return (
     <div className="min-h-screen flex items-center justify-center bg-[#E0DCD6] dark:bg-[#1F1E1B] p-4 font-sans animate-in fade-in duration-500">
-      <div className="w-full max-w-md bg-[#E9E4DE] dark:bg-[#2A2926] rounded-[24px] p-8 md:p-12 shadow-warm-raised border border-[#CAC8C0] dark:border-[#45433E] text-center space-y-6">
+      <div className="w-full max-w-md bg-[#F2EEE9] dark:bg-[#2A2926] rounded-[24px] p-8 md:p-12 shadow-warm-raised border border-[#CAC8C0] dark:border-[#45433E] text-center space-y-6">
         <div className="w-16 h-16 bg-[#B4E0CA] text-[#1E3121] rounded-full flex items-center justify-center mx-auto shadow-warm-pill animate-bounce-subtle">
           <ShieldAlert className="h-8 w-8" />
         </div>

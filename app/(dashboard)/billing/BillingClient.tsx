@@ -195,30 +195,30 @@ export default function BillingClient({ userId, customers }: Props) {
       {/* Row of 3 Stat Cards */}
       <div className="grid gap-6 md:grid-cols-3 print:hidden">
         <div className="tp-card p-6 flex items-center gap-4">
-           <div className="bg-[#B4E0CA]/40 p-3 rounded-full text-[#1E3121]"><FileText className="h-5 w-5" /></div>
+           <div className="bg-[#B4E0CA] p-3 rounded-full text-[#1E3121] shadow-sm"><FileText className="h-5 w-5" /></div>
            <div>
               <p className="text-[10px] font-bold text-[#7A756F] dark:text-[#A8A39B] uppercase tracking-widest">Total Bills</p>
               <p className="text-xl font-black text-[#3E3B36] dark:text-[#EDE9E3]">{totalBills}</p>
            </div>
         </div>
         <div className="tp-card p-6 flex items-center gap-4">
-           <div className="bg-[#B4E0CA]/40 p-3 rounded-full text-[#1E3121]"><Plus className="h-5 w-5" /></div>
+           <div className="bg-[#B4E0CA] p-3 rounded-full text-[#1E3121] shadow-sm"><Plus className="h-5 w-5" /></div>
            <div>
               <p className="text-[10px] font-bold text-[#7A756F] dark:text-[#A8A39B] uppercase tracking-widest">Total Clients</p>
               <p className="text-xl font-black text-[#3E3B36] dark:text-[#EDE9E3]">{customers.length}</p>
            </div>
         </div>
         <div className="tp-card p-6 flex items-center gap-4">
-           <div className="bg-[#D98A7B]/20 p-3 rounded-full text-[#4A1D14] dark:text-[#D98A7B]"><AlertCircle className="h-5 w-5" /></div>
+           <div className="bg-[#F0C9C1] p-3 rounded-full text-[#8A2E22] shadow-sm"><AlertCircle className="h-5 w-5" /></div>
            <div>
               <p className="text-[10px] font-bold text-[#7A756F] dark:text-[#A8A39B] uppercase tracking-widest">Outstanding Bills</p>
-              <p className="text-xl font-black text-[#4A1D14] dark:text-[#D98A7B]">₹{totalOutstanding.toLocaleString('en-IN')}</p>
+              <p className="text-xl font-black text-[#A33A2B] dark:text-[#D98A7B]">₹{totalOutstanding.toLocaleString('en-IN')}</p>
            </div>
         </div>
       </div>
 
       {/* SELECT CRITERIA */}
-      <div className="bg-[#E9E4DE] dark:bg-[#2A2926] border border-[#CAC8C0] dark:border-[#45433E] rounded-[20px] p-6 shadow-warm-card relative z-40 print:hidden">
+      <div className="bg-[#F2EEE9] dark:bg-[#2A2926] border border-[#CAC8C0] dark:border-[#45433E] rounded-[20px] p-6 shadow-warm-card relative z-40 print:hidden">
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-6 items-end">
           <div className="space-y-2 relative" ref={dropdownRef}>
             <label className="text-[10px] font-bold text-[#7A756F] dark:text-[#A8A39B] uppercase tracking-widest ml-1">Bill To</label>
@@ -227,7 +227,7 @@ export default function BillingClient({ userId, customers }: Props) {
               <ChevronDown className="h-4 w-4 text-[#7A756F] dark:text-[#A8A39B]" />
             </div>
             {showCustDropdown && (
-              <div className="absolute top-full left-0 right-0 mt-2 bg-[#E9E4DE] dark:bg-[#2A2926] border border-[#CAC8C0] dark:border-[#45433E] rounded-[20px] shadow-warm-raised overflow-hidden z-50">
+              <div className="absolute top-full left-0 right-0 mt-2 bg-[#F2EEE9] dark:bg-[#2A2926] border border-[#CAC8C0] dark:border-[#45433E] rounded-[20px] shadow-warm-raised overflow-hidden z-50">
                 <div className="p-3 border-b border-[#CAC8C0]/50 dark:border-[#45433E]/50"><input autoFocus type="text" placeholder="Search..." value={custSearch} onChange={e=>setCustSearch(e.target.value)} onClick={e=>e.stopPropagation()} className="w-full bg-[#F2EEE9] dark:bg-[#33322E] text-[#3E3B36] dark:text-[#EDE9E3] placeholder:text-[#7A756F] dark:placeholder:text-[#A8A39B] border border-[#CAC8C0] dark:border-[#45433E] rounded-full px-4 py-2 text-sm font-bold focus:ring-2 focus:ring-[#B4E0CA]/60 outline-none" /></div>
                 <div className="max-h-60 overflow-y-auto">
                   {filteredCustomers.map(c => (

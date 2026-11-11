@@ -63,7 +63,7 @@ export default function LandingPage() {
             </div>
             
             <div className="relative">
-              <div className="relative rounded-[2.5rem] overflow-hidden shadow-warm-raised aspect-[4/3] w-full bg-[#E9E4DE] dark:bg-[#2A2926] border border-[#CAC8C0] dark:border-[#45433E]">
+              <div className="relative rounded-[2.5rem] overflow-hidden shadow-warm-raised aspect-[4/3] w-full bg-[#F2EEE9] dark:bg-[#2A2926] border border-[#CAC8C0] dark:border-[#45433E]">
                 <img 
                   src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&q=80&w=1200" 
                   alt="TradersPro Professional Hardware Operations Workspace" 
@@ -73,7 +73,7 @@ export default function LandingPage() {
               </div>
               
               {/* Floating Performance Card */}
-              <div className="absolute -bottom-6 -left-12 bg-[#E9E4DE] dark:bg-[#2A2926] p-6 rounded-[24px] shadow-warm-raised border border-[#CAC8C0] dark:border-[#45433E] hidden lg:block animate-bounce-subtle max-w-[240px] w-full">
+              <div className="absolute -bottom-6 -left-12 bg-[#F2EEE9] dark:bg-[#2A2926] p-6 rounded-[24px] shadow-warm-raised border border-[#CAC8C0] dark:border-[#45433E] hidden lg:block animate-bounce-subtle max-w-[240px] w-full">
                  <div className="flex items-center gap-4 mb-4">
                     <div className="w-10 h-10 bg-[#B4E0CA] rounded-full flex items-center justify-center text-[#1E3121] shadow-warm-pill">
                        <TrendingUp className="h-5 w-5" />
@@ -122,7 +122,7 @@ export default function LandingPage() {
       <footer className="px-6 lg:px-20 py-12 border-t border-[#CAC8C0] dark:border-[#45433E] bg-[#E0DCD6] dark:bg-[#1F1E1B]">
         <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-8">
           <div className="flex items-center gap-2">
-            <span className="text-xl font-black text-[#3E3B36] dark:text-[#EDE9E3] tracking-tight">Traders<span className="text-[#88A993]">Pro</span></span>
+            <span className="text-xl font-black text-[#3E3B36] dark:text-[#EDE9E3] tracking-tight">Traders<span className="text-[#3F6B52] dark:text-[#B4E0CA]">Pro</span></span>
           </div>
           <p className="text-[#7A756F] dark:text-[#A8A39B] text-[10px] font-bold uppercase tracking-[0.2em]">
             © 2026 TradersPro • Made by <a href="https://atif-dev.vercel.app/" target="_blank" rel="noopener noreferrer" className="text-[#1E3121] dark:text-[#B4E0CA] hover:underline transition-colors min-h-[44px] inline-flex items-center px-1 font-bold">Atif Azmi</a>

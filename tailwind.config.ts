@@ -16,7 +16,7 @@ const config: Config = {
         background: "var(--background, #E0DCD6)",
         onBackground: "var(--ink, #3E3B36)",
         foreground: "var(--ink, #3E3B36)",
-        surface: "var(--surface, #E9E4DE)",
+        surface: "var(--surface, #F2EEE9)",
         onSurface: "var(--ink, #3E3B36)",
         surfaceRaised: "var(--surface-raised, #F2EEE9)",
         onSurfaceRaised: "var(--ink, #3E3B36)",
@@ -54,7 +54,7 @@ const config: Config = {
         },
         onInfo: "#1F3441",
         secondary: {
-          DEFAULT: "var(--surface, #E9E4DE)",
+          DEFAULT: "var(--surface, #F2EEE9)",
           foreground: "var(--ink, #3E3B36)",
         },
         destructive: {
@@ -70,11 +70,11 @@ const config: Config = {
           foreground: "#1E3121",
         },
         popover: {
-          DEFAULT: "var(--surface, #E9E4DE)",
+          DEFAULT: "var(--surface, #F2EEE9)",
           foreground: "var(--ink, #3E3B36)",
         },
         card: {
-          DEFAULT: "var(--surface, #E9E4DE)",
+          DEFAULT: "var(--surface, #F2EEE9)",
           foreground: "var(--ink, #3E3B36)",
         },
       },

@@ -169,30 +169,30 @@ export default function AdvancesClient({ initialPayments, customers }: AdvancesC
       {/* SUMMARY BAR */}
       <div className="grid gap-6 md:grid-cols-3">
         <div className="tp-card p-6 flex items-center gap-4">
-           <div className="bg-[#B4E0CA]/40 p-3 rounded-full text-[#1E3121]"><Wallet className="h-5 w-5" /></div>
+           <div className="bg-[#B4E0CA] p-3 rounded-full text-[#1E3121] shadow-sm"><Wallet className="h-5 w-5" /></div>
            <div>
               <p className="text-[10px] font-bold text-[#7A756F] dark:text-[#A8A39B] uppercase tracking-widest">Cash in Hand</p>
               <p className="text-xl font-black text-[#3E3B36] dark:text-[#EDE9E3]">₹{cashInHand.toLocaleString('en-IN', { minimumFractionDigits: 2 })}</p>
            </div>
         </div>
         <div className="tp-card p-6 flex items-center gap-4">
-           <div className="bg-[#B4E0CA]/40 p-3 rounded-full text-[#1E3121]"><Landmark className="h-5 w-5" /></div>
+           <div className="bg-[#B4E0CA] p-3 rounded-full text-[#1E3121] shadow-sm"><Landmark className="h-5 w-5" /></div>
            <div>
               <p className="text-[10px] font-bold text-[#7A756F] dark:text-[#A8A39B] uppercase tracking-widest">Bank Balance</p>
               <p className="text-xl font-black text-[#3E3B36] dark:text-[#EDE9E3]">₹{bankBalance.toLocaleString('en-IN', { minimumFractionDigits: 2 })}</p>
            </div>
         </div>
         <div className="tp-card p-6 flex items-center gap-4">
-           <div className="bg-[#E3D094]/30 p-3 rounded-full text-[#4A3F12] dark:text-[#E3D094]"><History className="h-5 w-5" /></div>
+           <div className="bg-[#E3D094] p-3 rounded-full text-[#4A3F12] shadow-sm"><History className="h-5 w-5" /></div>
            <div>
               <p className="text-[10px] font-bold text-[#7A756F] dark:text-[#A8A39B] uppercase tracking-widest">Advances Held</p>
-              <p className="text-xl font-black text-[#4A3F12] dark:text-[#E3D094]">₹{advancesHeld.toLocaleString('en-IN', { minimumFractionDigits: 2 })}</p>
+              <p className="text-xl font-black text-[#7A5F0F] dark:text-[#E3D094]">₹{advancesHeld.toLocaleString('en-IN', { minimumFractionDigits: 2 })}</p>
            </div>
         </div>
       </div>
 
       {/* FILTER & ACTION CARD */}
-      <div className="flex flex-col sm:flex-row gap-4 justify-between bg-[#E9E4DE] dark:bg-[#2A2926] p-4 rounded-[20px] border border-[#CAC8C0] dark:border-[#45433E] shadow-warm-card">
+      <div className="flex flex-col sm:flex-row gap-4 justify-between bg-[#F2EEE9] dark:bg-[#2A2926] p-4 rounded-[20px] border border-[#CAC8C0] dark:border-[#45433E] shadow-warm-card">
         <div className="relative flex-1 max-w-md">
           <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-[#7A756F] dark:text-[#A8A39B] pointer-events-none" />
           <input 
@@ -213,7 +213,7 @@ export default function AdvancesClient({ initialPayments, customers }: AdvancesC
                 className={`px-3 py-1 rounded-full transition-all cursor-pointer ${
                   filterMode === mode 
                     ? 'bg-[#B4E0CA] text-[#1E3121] shadow-warm-pill font-black' 
-                    : 'bg-[#F2EEE9] dark:bg-[#33322E] text-[#7A756F] dark:text-[#A8A39B] border border-[#CAC8C0] dark:border-[#45433E] hover:text-[#3E3B36] dark:hover:text-[#EDE9E3]'
+                    : 'bg-[#E9E4DE] dark:bg-[#33322E] text-[#7A756F] dark:text-[#A8A39B] border border-[#CAC8C0] dark:border-[#45433E] hover:text-[#3E3B36] dark:hover:text-[#EDE9E3]'
                 }`}
               >
                 {mode}
@@ -229,7 +229,7 @@ export default function AdvancesClient({ initialPayments, customers }: AdvancesC
                 className={`px-3 py-1 rounded-full transition-all cursor-pointer ${
                   filterType === t 
                     ? 'bg-[#B4E0CA] text-[#1E3121] shadow-warm-pill font-black' 
-                    : 'bg-[#F2EEE9] dark:bg-[#33322E] text-[#7A756F] dark:text-[#A8A39B] border border-[#CAC8C0] dark:border-[#45433E] hover:text-[#3E3B36] dark:hover:text-[#EDE9E3]'
+                    : 'bg-[#E9E4DE] dark:bg-[#33322E] text-[#7A756F] dark:text-[#A8A39B] border border-[#CAC8C0] dark:border-[#45433E] hover:text-[#3E3B36] dark:hover:text-[#EDE9E3]'
                 }`}
               >
                 {t}
@@ -254,7 +254,7 @@ export default function AdvancesClient({ initialPayments, customers }: AdvancesC
                 <th className="px-6 py-4 text-right">Actions</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-[#CAC8C0]/50 dark:divide-[#45433E]/50">
+            <tbody className="divide-y divide-[#CAC8C0] dark:divide-[#45433E]">
               {filteredPayments.length === 0 ? (
                 <tr>
                   <td colSpan={6} className="px-6 py-16 text-center text-[#7A756F] dark:text-[#A8A39B] text-xs font-bold uppercase tracking-widest">
@@ -301,7 +301,7 @@ export default function AdvancesClient({ initialPayments, customers }: AdvancesC
         </div>
 
         {/* Mobile View Transaction Cards */}
-        <div className="block md:hidden divide-y divide-[#CAC8C0]/50 dark:divide-[#45433E]/50 bg-[#E9E4DE] dark:bg-[#2A2926]">
+        <div className="block md:hidden divide-y divide-[#CAC8C0] dark:divide-[#45433E] bg-[#F2EEE9] dark:bg-[#2A2926]">
           {filteredPayments.map((txn) => (
             <div key={txn.id} className="p-4 space-y-3">
               <div className="flex justify-between items-start">
@@ -365,7 +365,7 @@ export default function AdvancesClient({ initialPayments, customers }: AdvancesC
       {/* Add Payment / Advance Modal */}
       {showAddModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-[#1F1E1B]/70 backdrop-blur-md px-4">
-          <div className="bg-[#E9E4DE] dark:bg-[#2A2926] rounded-[28px] shadow-warm-raised w-full max-w-lg overflow-hidden border border-[#CAC8C0] dark:border-[#45433E]">
+          <div className="bg-[#F2EEE9] dark:bg-[#2A2926] rounded-[28px] shadow-warm-raised w-full max-w-lg overflow-hidden border border-[#CAC8C0] dark:border-[#45433E]">
             <div className="p-6 md:p-8 border-b border-[#CAC8C0] dark:border-[#45433E] flex justify-between items-center bg-[#F2EEE9]/50 dark:bg-[#33322E]/50">
               <div>
                 <h3 className="text-lg font-black text-[#3E3B36] dark:text-[#EDE9E3] uppercase tracking-widest">Add Ledger Flow</h3>
@@ -493,7 +493,7 @@ export default function AdvancesClient({ initialPayments, customers }: AdvancesC
       {/* Transaction Receipt Modal */}
       {showReceiptModal && selectedReceipt && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-[#1F1E1B]/70 backdrop-blur-md px-4">
-          <div className="bg-[#E9E4DE] dark:bg-[#2A2926] rounded-[28px] shadow-warm-raised w-full max-w-md overflow-hidden border border-[#CAC8C0] dark:border-[#45433E] flex flex-col">
+          <div className="bg-[#F2EEE9] dark:bg-[#2A2926] rounded-[28px] shadow-warm-raised w-full max-w-md overflow-hidden border border-[#CAC8C0] dark:border-[#45433E] flex flex-col">
             <div className="p-6 border-b border-[#CAC8C0] dark:border-[#45433E] flex justify-between items-center bg-[#F2EEE9]/50 dark:bg-[#33322E]/50 print:hidden">
               <span className="text-xs font-black text-[#7A756F] dark:text-[#A8A39B] uppercase tracking-widest">Receipt Preview</span>
               <button 
@@ -558,7 +558,7 @@ export default function AdvancesClient({ initialPayments, customers }: AdvancesC
                 )}
               </div>
 
-              <div className="bg-[#E9E4DE] dark:bg-[#2A2926] border border-[#CAC8C0] dark:border-[#45433E] p-6 rounded-[20px] flex flex-col items-center justify-center text-center space-y-1">
+              <div className="bg-[#F2EEE9] dark:bg-[#2A2926] border border-[#CAC8C0] dark:border-[#45433E] p-6 rounded-[20px] flex flex-col items-center justify-center text-center space-y-1">
                 <span className="text-[10px] text-[#7A756F] dark:text-[#A8A39B] font-black uppercase tracking-widest">Amount Received</span>
                 <span className="text-3xl font-black text-[#3E3B36] dark:text-[#EDE9E3]">₹{selectedReceipt.amount.toLocaleString('en-IN', { minimumFractionDigits: 2 })}</span>
               </div>

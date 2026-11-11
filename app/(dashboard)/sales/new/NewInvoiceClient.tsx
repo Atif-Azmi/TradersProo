@@ -157,7 +157,7 @@ export default function NewInvoiceClient({ initialCustomers, initialProducts }: 
         <h2 className="text-2xl font-black tracking-tight text-[#3E3B36] dark:text-[#EDE9E3]">New Invoice</h2>
       </div>
 
-      <div className="bg-[#E9E4DE] dark:bg-[#2A2926] rounded-[28px] border border-[#CAC8C0] dark:border-[#45433E] shadow-warm-raised p-8 sm:p-12 print:shadow-none print:border-0 print:p-0">
+      <div className="bg-[#F2EEE9] dark:bg-[#2A2926] rounded-[28px] border border-[#CAC8C0] dark:border-[#45433E] shadow-warm-raised p-8 sm:p-12 print:shadow-none print:border-0 print:p-0">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12 mb-12">
           <div>
             <label className="block text-[10px] font-black text-[#7A756F] dark:text-[#A8A39B] uppercase tracking-widest mb-2.5 ml-1">Customer Selection *</label>
@@ -306,7 +306,7 @@ export default function NewInvoiceClient({ initialCustomers, initialProducts }: 
                     <select 
                       value={item.product_id}
                       onChange={(e) => updateItem(item.id, 'product_id', e.target.value)}
-                      className="w-full px-3 py-2.5 border border-[#CAC8C0] dark:border-[#45433E] rounded-full text-sm focus:ring-2 focus:ring-[#B4E0CA]/60 outline-none bg-[#E9E4DE] dark:bg-[#2A2926] text-[#3E3B36] dark:text-[#EDE9E3] font-medium"
+                      className="w-full px-3 py-2.5 border border-[#CAC8C0] dark:border-[#45433E] rounded-full text-sm focus:ring-2 focus:ring-[#B4E0CA]/60 outline-none bg-[#F2EEE9] dark:bg-[#33322E] text-[#3E3B36] dark:text-[#EDE9E3] font-medium"
                     >
                       <option value="">Select Product</option>
                       {products.map(p => (
@@ -346,7 +346,7 @@ export default function NewInvoiceClient({ initialCustomers, initialProducts }: 
                        <select 
                          value={item.taxPercent}
                          onChange={(e) => updateItem(item.id, 'taxPercent', parseFloat(e.target.value) || 0)}
-                         className="w-full px-3 py-2.5 border border-[#CAC8C0] dark:border-[#45433E] rounded-full text-sm focus:ring-2 focus:ring-[#B4E0CA]/60 outline-none bg-[#E9E4DE] dark:bg-[#2A2926] text-[#3E3B36] dark:text-[#EDE9E3] font-bold"
+                         className="w-full px-3 py-2.5 border border-[#CAC8C0] dark:border-[#45433E] rounded-full text-sm focus:ring-2 focus:ring-[#B4E0CA]/60 outline-none bg-[#F2EEE9] dark:bg-[#33322E] text-[#3E3B36] dark:text-[#EDE9E3] font-bold"
                        >
                          <option value="0">0%</option>
                          <option value="5">5%</option>
@@ -458,7 +458,7 @@ export default function NewInvoiceClient({ initialCustomers, initialProducts }: 
            <button 
               onClick={() => handleSaveInvoice(false)}
               disabled={loading}
-              className="w-full sm:w-auto px-8 py-3.5 sm:py-3 bg-primary text-white text-xs font-black uppercase tracking-widest rounded-xl hover:bg-green-600 shadow-xl shadow-green-100 transition-all disabled:opacity-50 flex items-center justify-center gap-2"
+              className="w-full sm:w-auto px-8 py-3.5 sm:py-3 tp-button-primary text-xs uppercase tracking-widest transition-all disabled:opacity-50 flex items-center justify-center gap-2"
            >
              {loading ? <Loader2 className="h-4 w-4 animate-spin" /> : <Check className="h-4 w-4" />}
              Finalize Invoice

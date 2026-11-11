@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="240" height="48" viewBox="0 0 240 48" fill="none">
+  <!-- Shield Badge Mark -->
+  <g transform="translate(4, 4)">
+    <rect width="40" height="40" rx="20" fill="#B4E0CA"/>
+    <path d="M20 9C25.5 9 29.5 10.8 29.5 16C29.5 24.5 24 30.5 20 32.5C16 30.5 10.5 24.5 10.5 16C10.5 10.8 14.5 9 20 9Z" fill="#B4E0CA"/>
+    <path d="M15 20.5L18.5 24L25.5 16.5" stroke="#1E3121" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+  <!-- Wordmark -->
+  <text x="56" y="32" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Outfit', 'Inter', sans-serif" font-size="24" font-weight="900" letter-spacing="-0.5px">
+    <tspan fill="#EDE9E3">Traders</tspan><tspan fill="#B4E0CA">Pro</tspan>
+  </text>
+</svg>

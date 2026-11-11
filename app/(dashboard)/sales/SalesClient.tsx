@@ -307,21 +307,21 @@ export default function SalesClient({ userId, initialSales, shopProfile }: Sales
       {/* Row of 3 Stat Cards */}
       <div className="grid gap-6 md:grid-cols-3">
         <div className="tp-card p-6 flex items-center gap-4">
-           <div className="bg-[#B4E0CA]/40 p-3 rounded-full text-[#1E3121]"><Plus className="h-5 w-5" /></div>
+           <div className="bg-[#B4E0CA] p-3 rounded-full text-[#1E3121] shadow-sm"><Plus className="h-5 w-5" /></div>
            <div>
               <p className="text-[10px] font-bold text-[#7A756F] dark:text-[#A8A39B] uppercase tracking-widest">Today's Sales</p>
               <p className="text-xl font-black text-[#3E3B36] dark:text-[#EDE9E3]">₹{todaysSales.toLocaleString('en-IN')}</p>
            </div>
         </div>
         <div className="tp-card p-6 flex items-center gap-4">
-           <div className="bg-[#E3D094]/30 p-3 rounded-full text-[#4A3F12] dark:text-[#E3D094]"><TrendingDown className="h-5 w-5" /></div>
+           <div className="bg-[#E3D094] p-3 rounded-full text-[#4A3F12] shadow-sm"><TrendingDown className="h-5 w-5" /></div>
            <div>
               <p className="text-[10px] font-bold text-[#7A756F] dark:text-[#A8A39B] uppercase tracking-widest">Pending</p>
-              <p className="text-xl font-black text-[#4A3F12] dark:text-[#E3D094]">₹{totalPending.toLocaleString('en-IN')}</p>
+              <p className="text-xl font-black text-[#7A5F0F] dark:text-[#E3D094]">₹{totalPending.toLocaleString('en-IN')}</p>
            </div>
         </div>
         <div className="tp-card p-6 flex items-center gap-4">
-           <div className="bg-[#B4E0CA]/40 p-3 rounded-full text-[#1E3121]"><Plus className="h-5 w-5" /></div>
+           <div className="bg-[#B4E0CA] p-3 rounded-full text-[#1E3121] shadow-sm"><Plus className="h-5 w-5" /></div>
            <div>
               <p className="text-[10px] font-bold text-[#7A756F] dark:text-[#A8A39B] uppercase tracking-widest">Total Invoiced</p>
               <p className="text-xl font-black text-[#3E3B36] dark:text-[#EDE9E3]">₹{totalInvoiced.toLocaleString('en-IN')}</p>
@@ -329,14 +329,14 @@ export default function SalesClient({ userId, initialSales, shopProfile }: Sales
         </div>
       </div>
 
-      <div className="flex flex-col sm:flex-row gap-4 justify-between bg-[#E9E4DE] dark:bg-[#2A2926] p-4 rounded-[20px] border border-[#CAC8C0] dark:border-[#45433E] shadow-warm-card">
+      <div className="flex flex-col sm:flex-row gap-4 justify-between bg-[#F2EEE9] dark:bg-[#2A2926] p-4 rounded-[20px] border border-[#CAC8C0] dark:border-[#45433E] shadow-warm-card">
         <div className="flex gap-2 text-[10px] font-black uppercase tracking-widest overflow-x-auto">
           {['All', 'Paid', 'Partial', 'Pending'].map(f => (
             <button key={f} onClick={() => setFilter(f)}
               className={`px-4 py-2 rounded-full transition-all whitespace-nowrap ${
                 filter === f 
                   ? 'bg-[#B4E0CA] text-[#1E3121] shadow-warm-pill font-black' 
-                  : 'bg-[#F2EEE9] dark:bg-[#33322E] text-[#7A756F] dark:text-[#A8A39B] border border-[#CAC8C0] dark:border-[#45433E] hover:text-[#3E3B36] dark:hover:text-[#EDE9E3]'
+                  : 'bg-[#E9E4DE] dark:bg-[#33322E] text-[#7A756F] dark:text-[#A8A39B] border border-[#CAC8C0] dark:border-[#45433E] hover:text-[#3E3B36] dark:hover:text-[#EDE9E3]'
               }`}>
               {f}
             </button>
@@ -366,18 +366,18 @@ export default function SalesClient({ userId, initialSales, shopProfile }: Sales
                 <th className="px-6 py-4 text-right">Actions</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-[#CAC8C0]/50 dark:divide-[#45433E]/50">
+            <tbody className="divide-y divide-[#CAC8C0] dark:divide-[#45433E]">
               {filteredSales.map(sale => {
                 const balance = getBalance(sale)
                 return (
-                  <tr key={sale.id} className="hover:bg-[#F2EEE9]/50 dark:hover:bg-[#33322E]/50 transition-all group">
+                  <tr key={sale.id} className="bg-[#F2EEE9] hover:bg-[#EDE8E2] dark:bg-[#2A2926] dark:hover:bg-[#33322E] transition-all group">
                     <td className="px-6 py-5">
-                      <Link href={`/sales/${sale.id}`} className="font-bold text-[#1E3121] dark:text-[#B4E0CA] hover:underline">#{sale.invoice_number || '—'}</Link>
+                      <Link href={`/sales/${sale.id}`} className="font-bold text-[#3F6B52] dark:text-[#B4E0CA] hover:underline">#{sale.invoice_number || '—'}</Link>
                     </td>
                     <td className="px-6 py-5 text-[#7A756F] dark:text-[#A8A39B] font-medium">{new Date(sale.invoice_date).toLocaleDateString('en-IN')}</td>
                     <td className="px-6 py-5">
                       <div className="flex items-center gap-3">
-                         <div className="w-9 h-9 rounded-full bg-[#F2EEE9] dark:bg-[#33322E] border border-[#CAC8C0] dark:border-[#45433E] flex items-center justify-center text-[#7A756F] dark:text-[#A8A39B] font-bold text-xs">
+                         <div className="w-9 h-9 rounded-full bg-[#E9E4DE] dark:bg-[#33322E] border border-[#CAC8C0] dark:border-[#45433E] flex items-center justify-center text-[#7A756F] dark:text-[#A8A39B] font-bold text-xs">
                             {(sale.tp_customers?.name || 'W')[0].toUpperCase()}
                          </div>
                          <div>
@@ -387,12 +387,12 @@ export default function SalesClient({ userId, initialSales, shopProfile }: Sales
                     </td>
                     <td className="px-6 py-5 text-right font-black text-[#3E3B36] dark:text-[#EDE9E3]">₹{parseFloat(sale.total_amount || 0).toLocaleString('en-IN')}</td>
                     <td className="px-6 py-5 text-right font-bold text-[#1E3121] dark:text-[#B4E0CA]">₹{parseFloat(sale.amount_paid || 0).toLocaleString('en-IN')}</td>
-                    <td className="px-6 py-5 text-right font-bold text-[#4A1D14] dark:text-[#D98A7B]">₹{balance.toLocaleString('en-IN')}</td>
+                    <td className="px-6 py-5 text-right font-bold text-[#A33A2B] dark:text-[#D98A7B]">₹{balance.toLocaleString('en-IN')}</td>
                     <td className="px-6 py-5 text-center">
                       <span className={`inline-flex items-center gap-1.5 py-1 px-3 rounded-full text-[10px] font-bold uppercase tracking-widest border ${
-                        sale.payment_status === 'paid' ? 'bg-[#B4E0CA]/30 text-[#1E3121] dark:text-[#B4E0CA] border-[#88A993]/40'
-                        : sale.payment_status === 'partial' ? 'bg-[#E3D094]/30 text-[#4A3F12] dark:text-[#E3D094] border-[#E3D094]/60'
-                        : 'bg-[#D98A7B]/20 text-[#4A1D14] dark:text-[#D98A7B] border-[#D98A7B]/40'}`}>
+                        sale.payment_status === 'paid' ? 'bg-[#B4E0CA] text-[#1E3121] border-[#88A993]/40 shadow-sm'
+                        : sale.payment_status === 'partial' ? 'bg-[#E3D094] text-[#4A3F12] border-[#E3D094]/60 shadow-sm'
+                        : 'bg-[#F0C9C1] text-[#8A2E22] border-[#F0C9C1]/80 shadow-sm'}`}>
                         {sale.payment_status}
                       </span>
                     </td>
@@ -400,16 +400,16 @@ export default function SalesClient({ userId, initialSales, shopProfile }: Sales
                       <div className="flex justify-end gap-2">
                         {sale.payment_status !== 'paid' && (
                           <button onClick={() => openPaymentModal(sale)}
-                            className="px-3 py-1.5 text-[10px] font-bold uppercase text-[#1E3121] dark:text-[#B4E0CA] hover:bg-[#B4E0CA]/20 rounded-full transition-all">
+                            className="px-3 py-1.5 text-[10px] font-bold uppercase text-[#3F6B52] dark:text-[#B4E0CA] hover:bg-[#B4E0CA]/20 rounded-full transition-all">
                             Pay
                           </button>
                         )}
                         <button onClick={() => handlePrintBill(sale)}
-                          className="px-3 py-1.5 text-[10px] font-bold uppercase text-[#3E3B36] dark:text-[#EDE9E3] hover:bg-[#F2EEE9] dark:hover:bg-[#33322E] rounded-full transition-all">
+                          className="px-3 py-1.5 text-[10px] font-bold uppercase text-[#3E3B36] dark:text-[#EDE9E3] hover:bg-[#EDE8E2] dark:hover:bg-[#33322E] rounded-full transition-all">
                           Print
                         </button>
                         <button onClick={() => handleWhatsApp(sale)}
-                          className="px-3 py-1.5 text-[10px] font-bold uppercase text-[#1E3121] dark:text-[#B4E0CA] hover:bg-[#B4E0CA]/20 rounded-full transition-all">
+                          className="px-3 py-1.5 text-[10px] font-bold uppercase text-[#3F6B52] dark:text-[#B4E0CA] hover:bg-[#B4E0CA]/20 rounded-full transition-all">
                           Share
                         </button>
                       </div>
@@ -425,7 +425,7 @@ export default function SalesClient({ userId, initialSales, shopProfile }: Sales
         </div>
 
         {/* Mobile Responsive Cards View */}
-        <div className="block md:hidden divide-y divide-[#CAC8C0]/50 dark:divide-[#45433E]/50 bg-[#E9E4DE] dark:bg-[#2A2926]">
+        <div className="block md:hidden divide-y divide-[#CAC8C0] dark:divide-[#45433E] bg-[#F2EEE9] dark:bg-[#2A2926]">
           {filteredSales.map(sale => {
             const balance = getBalance(sale)
             return (
@@ -497,7 +497,7 @@ export default function SalesClient({ userId, initialSales, shopProfile }: Sales
       {/* PAYMENT MODAL */}
       {paymentModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-[#1F1E1B]/70 backdrop-blur-sm">
-          <div className="bg-[#E9E4DE] dark:bg-[#2A2926] rounded-[28px] shadow-warm-raised w-full max-w-md mx-4 overflow-hidden border border-[#CAC8C0] dark:border-[#45433E]">
+          <div className="bg-[#F2EEE9] dark:bg-[#2A2926] rounded-[28px] shadow-warm-raised w-full max-w-md mx-4 overflow-hidden border border-[#CAC8C0] dark:border-[#45433E]">
             <div className="bg-gradient-to-br from-[#B4E0CA] to-[#88A993] p-6 text-[#1E3121]">
               <div className="flex items-center justify-between mb-4">
                 <div>

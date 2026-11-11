@@ -86,7 +86,7 @@ export default function PWAInstallPrompt() {
           animate={{ opacity: 1, y: 0, scale: 1 }}
           exit={{ opacity: 0, y: 20, scale: 0.95 }}
           transition={{ type: 'spring', damping: 25, stiffness: 350 }}
-          className="relative bg-[#E9E4DE] dark:bg-[#2A2926] border border-[#CAC8C0] dark:border-[#45433E] text-[#3E3B36] dark:text-[#EDE9E3] rounded-[24px] p-5 shadow-warm-raised overflow-hidden"
+          className="relative bg-[#F2EEE9] dark:bg-[#2A2926] border border-[#CAC8C0] dark:border-[#45433E] text-[#3E3B36] dark:text-[#EDE9E3] rounded-[24px] p-5 shadow-warm-raised overflow-hidden"
         >
           {/* Top Mint Accent */}
           <div className="absolute top-0 left-0 right-0 h-[4px] bg-gradient-to-r from-[#B4E0CA] via-[#9CCDB4] to-[#88A993]" />
