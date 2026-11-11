@@ -1,9 +1,11 @@
 'use client'
 
 import { useState, useEffect } from 'react'
+import { usePathname } from 'next/navigation'
 import Sidebar from '@/components/layout/Sidebar'
 import TopBar from '@/components/layout/TopBar'
 import BottomNav from '@/components/layout/BottomNav'
+import { shouldShowBottomNav } from '@/components/layout/tabBarVisibilityHelper'
 import { useBusinessProfile } from '@/hooks/useBusinessProfile'
 import { ShieldAlert, ArrowRight, X } from 'lucide-react'
 import { Toaster } from 'react-hot-toast'
@@ -20,6 +22,8 @@ export default function DashboardLayoutClient({
   const { profile, loading } = useBusinessProfile()
   const [showBanner, setShowBanner] = useState(true)
   const [isMobile, setIsMobile] = useState(false)
+  const pathname = usePathname()
+  const isTabVisible = shouldShowBottomNav(pathname)
 
   useEffect(() => {
     const checkMobile = () => setIsMobile(window.innerWidth < 768)
@@ -82,7 +86,9 @@ export default function DashboardLayoutClient({
           </div>
         )}
 
-        <main className="flex-1 py-8 sm:py-10 pb-24 lg:pb-10">
+        <main className={`flex-1 py-8 sm:py-10 transition-all duration-300 ${
+          isTabVisible ? 'pb-24 lg:pb-10' : 'pb-8 lg:pb-10'
+        }`}>
           <div className="px-4 sm:px-6 lg:px-8">
             {children}
           </div>

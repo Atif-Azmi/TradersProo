@@ -70,9 +70,20 @@
 }
 
 .tp-button-primary {
-  @apply bg-[#0D9488] text-white font-bold px-6 py-2.5 rounded-lg hover:bg-[#0B7A70] transition-all;
+  @apply bg-[#0D9488] text-white font-bold px-6 py-2.5 rounded-lg hover:bg-[#0B7A70] active:scale-[0.98] tap-scale select-none transition-all;
 }
 
 .tp-input {
   @apply bg-slate-50 border border-slate-200 rounded-lg px-4 py-2.5 focus:ring-2 focus:ring-[#0D9488]/20 focus:border-[#0D9488] outline-none transition-all;
+}
+
+/* iOS-Grade Zero-Perceived-Delay Tap Scale */
+.tap-scale {
+  transition: transform 0.12s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.12s ease;
+  will-change: transform;
+  -webkit-tap-highlight-color: transparent;
+}
+.tap-scale:active {
+  transform: scale(0.97);
+  opacity: 0.88;
 }
